@@ -194,49 +194,121 @@ collections:
         label: "Navegação"
         file: content/site/nav.json
         fields:
-          - { label: "Início (PT)", name: "home.pt", widget: string }
-          - { label: "Início (EN)", name: "home.en", widget: string }
-          - { label: "Serviços (PT)", name: "services.pt", widget: string }
-          - { label: "Serviços (EN)", name: "services.en", widget: string }
-          - { label: "Campanha (PT)", name: "campaign.pt", widget: string }
-          - { label: "Campanha (EN)", name: "campaign.en", widget: string }
-          - { label: "Contactos (PT)", name: "contact.pt", widget: string }
-          - { label: "Contactos (EN)", name: "contact.en", widget: string }
-          - { label: "Quem Somos (PT)", name: "about.pt", widget: string }
-          - { label: "Quem Somos (EN)", name: "about.en", widget: string }
-          - { label: "\"Ver todos os serviços\" (PT)", name: "servicesViewAll.pt", widget: string }
-          - { label: "\"Ver todos os serviços\" (EN)", name: "servicesViewAll.en", widget: string }
+          - label: "Início"
+            name: home
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Serviços"
+            name: services
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Campanha"
+            name: campaign
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Contactos"
+            name: contact
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Quem Somos"
+            name: about
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "\"Ver todos os serviços\""
+            name: servicesViewAll
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
 
       - name: hero
         label: "Hero (topo da homepage)"
         file: content/site/hero.json
         fields:
-          - { label: "Etiqueta (PT)", name: "tag.pt", widget: string }
-          - { label: "Etiqueta (EN)", name: "tag.en", widget: string }
-          - { label: "Título — linha 1 (PT)", name: "titleLine1.pt", widget: string }
-          - { label: "Título — linha 1 (EN)", name: "titleLine1.en", widget: string }
-          - { label: "Título — linha 2 (PT)", name: "titleLine2.pt", widget: string }
-          - { label: "Título — linha 2 (EN)", name: "titleLine2.en", widget: string }
-          - { label: "Lema/citação (PT)", name: "motto.pt", widget: string }
-          - { label: "Lema/citação (EN)", name: "motto.en", widget: string }
-          - { label: "Texto (PT)", name: "text.pt", widget: text }
-          - { label: "Texto (EN)", name: "text.en", widget: text }
-          - { label: "Botão WhatsApp (PT)", name: "buttons.whatsapp.pt", widget: string }
-          - { label: "Botão WhatsApp (EN)", name: "buttons.whatsapp.en", widget: string }
-          - { label: "Botão Serviços (PT)", name: "buttons.services.pt", widget: string }
-          - { label: "Botão Serviços (EN)", name: "buttons.services.en", widget: string }
+          - label: "Etiqueta"
+            name: tag
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título — linha 1"
+            name: titleLine1
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título — linha 2"
+            name: titleLine2
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Lema/citação"
+            name: motto
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Texto"
+            name: text
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
+          - label: "Botões"
+            name: buttons
+            widget: object
+            fields:
+              - label: "Botão WhatsApp"
+                name: whatsapp
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Botão Serviços"
+                name: services
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
           - label: "Slider de fundo"
             name: slider
             widget: object
             fields:
-              - { label: "Rótulo do carrossel (PT)", name: "label.pt", widget: string }
-              - { label: "Rótulo do carrossel (EN)", name: "label.en", widget: string }
-              - { label: "\"Slide anterior\" (PT)", name: "previousLabel.pt", widget: string }
-              - { label: "\"Slide anterior\" (EN)", name: "previousLabel.en", widget: string }
-              - { label: "\"Próximo slide\" (PT)", name: "nextLabel.pt", widget: string }
-              - { label: "\"Próximo slide\" (EN)", name: "nextLabel.en", widget: string }
-              - { label: "\"Ir para o slide {n}\" (PT) — tem de conter {n}", name: "goToSlideLabel.pt", widget: string }
-              - { label: "\"Ir para o slide {n}\" (EN) — tem de conter {n}", name: "goToSlideLabel.en", widget: string }
+              - label: "Rótulo do carrossel"
+                name: label
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "\"Slide anterior\""
+                name: previousLabel
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "\"Próximo slide\""
+                name: nextLabel
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "\"Ir para o slide {n}\" — tem de conter {n}"
+                name: goToSlideLabel
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
               - label: "Slides (imagem ou vídeo)"
                 name: slides
                 widget: list
@@ -305,14 +377,30 @@ collections:
         label: "Sobre a empresa (resumo na homepage)"
         file: content/site/about.json
         fields:
-          - { label: "Etiqueta (PT)", name: "tag.pt", widget: string }
-          - { label: "Etiqueta (EN)", name: "tag.en", widget: string }
-          - { label: "Título (PT)", name: "title.pt", widget: string }
-          - { label: "Título (EN)", name: "title.en", widget: string }
-          - { label: "Resumo — 1º parágrafo (PT)", name: "summary.pt", widget: text }
-          - { label: "Resumo — 1º parágrafo (EN)", name: "summary.en", widget: text }
-          - { label: "Resumo — 2º parágrafo (PT)", name: "extended.pt", widget: text }
-          - { label: "Resumo — 2º parágrafo (EN)", name: "extended.en", widget: text }
+          - label: "Etiqueta"
+            name: tag
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título"
+            name: title
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Resumo — 1º parágrafo"
+            name: summary
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
+          - label: "Resumo — 2º parágrafo"
+            name: extended
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
           - label: "Texto institucional completo (página Quem Somos)"
             name: fullText
             widget: object
@@ -340,10 +428,18 @@ collections:
             fields:
               - { label: "Nome", name: name, widget: string, required: true }
               - { label: "Iniciais", name: initials, widget: string, required: true }
-              - { label: "Cargo (PT)", name: "role.pt", widget: string }
-              - { label: "Cargo (EN)", name: "role.en", widget: string }
-          - { label: "\"Saber mais\" (PT)", name: "learnMoreLabel.pt", widget: string }
-          - { label: "\"Saber mais\" (EN)", name: "learnMoreLabel.en", widget: string }
+              - label: "Cargo"
+                name: role
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+          - label: "\"Saber mais\""
+            name: learnMoreLabel
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
 
       - name: aboutPage
         label: "Página Quem Somos (equipa e valores)"
@@ -356,14 +452,30 @@ collections:
             fields:
               - { label: "Português", name: pt, widget: string, required: true }
               - { label: "English", name: en, widget: string, required: true }
-          - { label: "Etiqueta da secção equipa (PT)", name: "teamTag.pt", widget: string }
-          - { label: "Etiqueta da secção equipa (EN)", name: "teamTag.en", widget: string }
-          - { label: "Título da secção equipa (PT)", name: "teamHeading.pt", widget: string }
-          - { label: "Título da secção equipa (EN)", name: "teamHeading.en", widget: string }
-          - { label: "Etiqueta da secção valores (PT)", name: "valuesTag.pt", widget: string }
-          - { label: "Etiqueta da secção valores (EN)", name: "valuesTag.en", widget: string }
-          - { label: "Título da secção valores (PT)", name: "valuesHeading.pt", widget: string }
-          - { label: "Título da secção valores (EN)", name: "valuesHeading.en", widget: string }
+          - label: "Etiqueta da secção equipa"
+            name: teamTag
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título da secção equipa"
+            name: teamHeading
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Etiqueta da secção valores"
+            name: valuesTag
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título da secção valores"
+            name: valuesHeading
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
           - { label: "Secção de valores visível", name: valuesVisible, widget: boolean, default: true }
           - label: "Valores institucionais (exatamente 6: Missão, Visão, Sustentabilidade, Parceria, Inovação, Excelência)"
             name: values
@@ -401,13 +513,25 @@ collections:
             min: 1
             fields:
               - { label: "Nome", name: nome, widget: string, required: true }
-              - { label: "Cargo (PT)", name: "cargo.pt", widget: string }
-              - { label: "Cargo (EN)", name: "cargo.en", widget: string }
+              - label: "Cargo"
+                name: cargo
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
               - { label: "Foto", name: foto, widget: image, required: true }
-              - { label: "Frase curta (PT)", name: "frase.pt", widget: string, required: false }
-              - { label: "Frase curta (EN)", name: "frase.en", widget: string, required: false }
-              - { label: "Bio longa — só o cartão destacado (PT)", name: "bio.pt", widget: text, required: false }
-              - { label: "Bio longa — só o cartão destacado (EN)", name: "bio.en", widget: text, required: false }
+              - label: "Frase curta"
+                name: frase
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string, required: false }
+                  - { label: "English", name: en, widget: string, required: false }
+              - label: "Bio longa — só o cartão destacado"
+                name: bio
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: text, required: false }
+                  - { label: "English", name: en, widget: text, required: false }
               - label: "Badges de especialidade (opcional, até 5)"
                 name: badges
                 widget: list
@@ -426,41 +550,81 @@ collections:
             name: banner
             widget: object
             fields:
-              - { label: "Etiqueta (PT)", name: "tag.pt", widget: string }
-              - { label: "Etiqueta (EN)", name: "tag.en", widget: string }
-              - { label: "Título (PT)", name: "title.pt", widget: string }
-              - { label: "Título (EN)", name: "title.en", widget: string }
-              - { label: "Texto (PT)", name: "text.pt", widget: text }
-              - { label: "Texto (EN)", name: "text.en", widget: text }
-              - { label: "Botão (PT)", name: "button.pt", widget: string }
-              - { label: "Botão (EN)", name: "button.en", widget: string }
+              - label: "Etiqueta"
+                name: tag
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Título"
+                name: title
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Texto"
+                name: text
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: text }
+                  - { label: "English", name: en, widget: text }
+              - label: "Botão"
+                name: button
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
           - label: "Hero da página /campanha"
             name: hero
             widget: object
             fields:
               - { label: "Período (ex.: \"2025 / 2026\")", name: tag, widget: string, required: true }
-              - { label: "Introdução (PT)", name: "intro.pt", widget: text }
-              - { label: "Introdução (EN)", name: "intro.en", widget: text }
+              - label: "Introdução"
+                name: intro
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: text }
+                  - { label: "English", name: en, widget: text }
               - { label: "Imagem de banner", name: bannerImage, widget: image, required: true }
-              - { label: "Texto alternativo (PT)", name: "bannerImageAlt.pt", widget: string }
-              - { label: "Texto alternativo (EN)", name: "bannerImageAlt.en", widget: string }
+              - label: "Texto alternativo"
+                name: bannerImageAlt
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
           - label: "Citação"
             name: quote
             widget: object
             fields:
               - { label: "Autor", name: author, widget: string, required: true }
-              - { label: "Legenda (PT)", name: "citeSuffix.pt", widget: string }
-              - { label: "Legenda (EN)", name: "citeSuffix.en", widget: string }
+              - label: "Legenda"
+                name: citeSuffix
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
           - label: "Visão"
             name: vision
             widget: object
             fields:
-              - { label: "Etiqueta (PT)", name: "tag.pt", widget: string }
-              - { label: "Etiqueta (EN)", name: "tag.en", widget: string }
-              - { label: "Título (PT)", name: "title.pt", widget: string }
-              - { label: "Título (EN)", name: "title.en", widget: string }
-              - { label: "Texto (PT)", name: "text.pt", widget: text }
-              - { label: "Texto (EN)", name: "text.en", widget: text }
+              - label: "Etiqueta"
+                name: tag
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Título"
+                name: title
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Texto"
+                name: text
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: text }
+                  - { label: "English", name: en, widget: text }
           - label: "Pilares"
             name: pillars
             widget: list
@@ -470,37 +634,73 @@ collections:
                 name: icon
                 widget: select
                 options: [wheat, corn, tractor, factory, landPlot, support, handshake, calendar, mapPin, building, leaf, target, eye, bolt, trophy]
-              - { label: "Título (PT)", name: "title.pt", widget: string }
-              - { label: "Título (EN)", name: "title.en", widget: string }
-              - { label: "Texto (PT)", name: "text.pt", widget: text }
-              - { label: "Texto (EN)", name: "text.en", widget: text }
+              - label: "Título"
+                name: title
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Texto"
+                name: text
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: text }
+                  - { label: "English", name: en, widget: text }
           - label: "Cabeçalho da timeline"
             name: timelineHeading
             widget: object
             fields:
-              - { label: "Etiqueta (PT)", name: "tag.pt", widget: string }
-              - { label: "Etiqueta (EN)", name: "tag.en", widget: string }
-              - { label: "Título (PT)", name: "title.pt", widget: string }
-              - { label: "Título (EN)", name: "title.en", widget: string }
+              - label: "Etiqueta"
+                name: tag
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Título"
+                name: title
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
           - label: "Fases da timeline"
             name: timeline
             widget: list
             min: 1
             fields:
-              - { label: "Título (PT)", name: "title.pt", widget: string }
-              - { label: "Título (EN)", name: "title.en", widget: string }
-              - { label: "Texto (PT)", name: "text.pt", widget: text }
-              - { label: "Texto (EN)", name: "text.en", widget: text }
+              - label: "Título"
+                name: title
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Texto"
+                name: text
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: text }
+                  - { label: "English", name: en, widget: text }
           - label: "Chamada final (CTA)"
             name: cta
             widget: object
             fields:
-              - { label: "Título (PT)", name: "title.pt", widget: string }
-              - { label: "Título (EN)", name: "title.en", widget: string }
-              - { label: "Texto (PT)", name: "text.pt", widget: text }
-              - { label: "Texto (EN)", name: "text.en", widget: text }
-              - { label: "Botão (PT)", name: "button.pt", widget: string }
-              - { label: "Botão (EN)", name: "button.en", widget: string }
+              - label: "Título"
+                name: title
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Texto"
+                name: text
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: text }
+                  - { label: "English", name: en, widget: text }
+              - label: "Botão"
+                name: button
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
 
       - name: sections
         label: "Títulos de secções genéricas da homepage"
@@ -510,20 +710,40 @@ collections:
             name: services
             widget: object
             fields:
-              - { label: "Etiqueta (PT)", name: "tag.pt", widget: string }
-              - { label: "Etiqueta (EN)", name: "tag.en", widget: string }
-              - { label: "Título (PT)", name: "title.pt", widget: string }
-              - { label: "Título (EN)", name: "title.en", widget: string }
-              - { label: "\"Saiba mais\" (PT)", name: "learnMore.pt", widget: string }
-              - { label: "\"Saiba mais\" (EN)", name: "learnMore.en", widget: string }
+              - label: "Etiqueta"
+                name: tag
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Título"
+                name: title
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "\"Saiba mais\""
+                name: learnMore
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
           - label: "Secção \"Localização\""
             name: locations
             widget: object
             fields:
-              - { label: "Etiqueta (PT)", name: "tag.pt", widget: string }
-              - { label: "Etiqueta (EN)", name: "tag.en", widget: string }
-              - { label: "Título (PT)", name: "title.pt", widget: string }
-              - { label: "Título (EN)", name: "title.en", widget: string }
+              - label: "Etiqueta"
+                name: tag
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Título"
+                name: title
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
 
       # Mesma correção de "stats" acima — ver o comentário lá para o
       # raciocínio completo. content/site/locations.json é `{"items": [...]}`.
@@ -541,8 +761,12 @@ collections:
                 name: icon
                 widget: select
                 options: [wheat, corn, tractor, factory, landPlot, support, handshake, calendar, mapPin, building, leaf, target, eye, bolt, trophy]
-              - { label: "Tipo (PT)", name: "type.pt", widget: string }
-              - { label: "Tipo (EN)", name: "type.en", widget: string }
+              - label: "Tipo"
+                name: type
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
               - { label: "Nome do lugar", name: name, widget: string, required: true }
               - { label: "Linhas de endereço", name: address, widget: list, field: { label: "Linha", name: line, widget: string }, required: true }
 
@@ -550,27 +774,55 @@ collections:
         label: "Contactos"
         file: content/site/contacts.json
         fields:
-          - { label: "Etiqueta (PT)", name: "tag.pt", widget: string }
-          - { label: "Etiqueta (EN)", name: "tag.en", widget: string }
-          - { label: "Título (PT)", name: "title.pt", widget: string }
-          - { label: "Título (EN)", name: "title.en", widget: string }
-          - { label: "Introdução (PT)", name: "intro.pt", widget: text }
-          - { label: "Introdução (EN)", name: "intro.en", widget: text }
+          - label: "Etiqueta"
+            name: tag
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título"
+            name: title
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Introdução"
+            name: intro
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
           - { label: "Imagem de banner", name: bannerImage, widget: image, required: true }
-          - { label: "Texto alternativo (PT)", name: "bannerImageAlt.pt", widget: string }
-          - { label: "Texto alternativo (EN)", name: "bannerImageAlt.en", widget: string }
+          - label: "Texto alternativo"
+            name: bannerImageAlt
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
           - label: "WhatsApp"
             name: whatsapp
             widget: object
             fields:
               - { label: "Número", name: number, widget: string, required: true }
               - { label: "URL wa.me", name: url, widget: string, required: true }
-              - { label: "Rótulo (PT)", name: "label.pt", widget: string }
-              - { label: "Rótulo (EN)", name: "label.en", widget: string }
-          - { label: "Título do bloco telefone (PT)", name: "phoneLabel.pt", widget: string }
-          - { label: "Título do bloco telefone (EN)", name: "phoneLabel.en", widget: string }
-          - { label: "Título do bloco email (PT)", name: "emailLabel.pt", widget: string }
-          - { label: "Título do bloco email (EN)", name: "emailLabel.en", widget: string }
+              - label: "Rótulo"
+                name: label
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+          - label: "Título do bloco telefone"
+            name: phoneLabel
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título do bloco email"
+            name: emailLabel
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
           - { label: "Telefones", name: phones, widget: list, field: { label: "Número", name: number, widget: string }, required: true }
           - { label: "Emails", name: emails, widget: list, field: { label: "Email", name: address, widget: string }, required: true }
           - { label: "URL de embed do Google Maps", name: mapEmbedUrl, widget: string, required: true }
@@ -581,22 +833,42 @@ collections:
             fields:
               - { label: "Nome", name: name, widget: string, required: true }
               - { label: "Iniciais", name: initials, widget: string, required: true }
-              - { label: "Cargo (PT)", name: "role.pt", widget: string }
-              - { label: "Cargo (EN)", name: "role.en", widget: string }
+              - label: "Cargo"
+                name: role
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
               - { label: "Empresa", name: company, widget: string, required: true }
 
       - name: footer
         label: "Rodapé"
         file: content/site/footer.json
         fields:
-          - { label: "Título \"Serviços\" (PT)", name: "servicesHeading.pt", widget: string }
-          - { label: "Título \"Serviços\" (EN)", name: "servicesHeading.en", widget: string }
-          - { label: "Título \"Links\" (PT)", name: "linksHeading.pt", widget: string }
-          - { label: "Título \"Links\" (EN)", name: "linksHeading.en", widget: string }
-          - { label: "Texto legal, sem o ano (PT)", name: "legalCopy.pt", widget: string }
-          - { label: "Texto legal, sem o ano (EN)", name: "legalCopy.en", widget: string }
-          - { label: "\"Feito em\" (PT)", name: "madeIn.pt", widget: string }
-          - { label: "\"Feito em\" (EN)", name: "madeIn.en", widget: string }
+          - label: "Título \"Serviços\""
+            name: servicesHeading
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título \"Links\""
+            name: linksHeading
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Texto legal, sem o ano"
+            name: legalCopy
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "\"Feito em\""
+            name: madeIn
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
 
       - name: meta
         label: "SEO / metadados por defeito"
@@ -605,48 +877,104 @@ collections:
           - { label: "Sufixo do título (nome da empresa)", name: titleSuffix, widget: string, required: true }
           - { label: "URL canónico do site (sem barra final)", name: siteUrl, widget: string, required: true, hint: "Só o devops-engineer/architect deve alterar isto — afeta canonical, sitemap e JSON-LD." }
           - { label: "Imagem og:image (caminho em public/)", name: ogImage, widget: string, required: true }
-          - { label: "Título por defeito (PT)", name: "defaultTitle.pt", widget: string }
-          - { label: "Título por defeito (EN)", name: "defaultTitle.en", widget: string }
-          - { label: "Descrição por defeito (PT)", name: "defaultDescription.pt", widget: text }
-          - { label: "Descrição por defeito (EN)", name: "defaultDescription.en", widget: text }
+          - label: "Título por defeito"
+            name: defaultTitle
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Descrição por defeito"
+            name: defaultDescription
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
 
       - name: notFound
         label: "Página 404"
         file: content/site/notFound.json
         fields:
-          - { label: "Etiqueta (PT)", name: "tag.pt", widget: string }
-          - { label: "Etiqueta (EN)", name: "tag.en", widget: string }
-          - { label: "Título (PT)", name: "title.pt", widget: string }
-          - { label: "Título (EN)", name: "title.en", widget: string }
-          - { label: "Texto (PT)", name: "text.pt", widget: text }
-          - { label: "Texto (EN)", name: "text.en", widget: text }
-          - { label: "\"Voltar ao início\" (PT)", name: "backHome.pt", widget: string }
-          - { label: "\"Voltar ao início\" (EN)", name: "backHome.en", widget: string }
+          - label: "Etiqueta"
+            name: tag
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título"
+            name: title
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Texto"
+            name: text
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
+          - label: "\"Voltar ao início\""
+            name: backHome
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
 
       - name: servicesPage
         label: "Página de listagem /servicos"
         file: content/site/servicesPage.json
         fields:
           - { label: "Imagem de banner", name: bannerImage, widget: image, required: true }
-          - { label: "Texto alternativo (PT)", name: "bannerImageAlt.pt", widget: string }
-          - { label: "Texto alternativo (EN)", name: "bannerImageAlt.en", widget: string }
-          - { label: "Introdução (PT)", name: "intro.pt", widget: text }
-          - { label: "Introdução (EN)", name: "intro.en", widget: text }
-          - { label: "Título do CTA (PT)", name: "ctaTitle.pt", widget: string }
-          - { label: "Título do CTA (EN)", name: "ctaTitle.en", widget: string }
-          - { label: "Texto do CTA (PT)", name: "ctaText.pt", widget: text }
-          - { label: "Texto do CTA (EN)", name: "ctaText.en", widget: text }
+          - label: "Texto alternativo"
+            name: bannerImageAlt
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Introdução"
+            name: intro
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
+          - label: "Título do CTA"
+            name: ctaTitle
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Texto do CTA"
+            name: ctaText
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
 
       - name: servicePage
         label: "Textos comuns do detalhe de serviço"
         file: content/site/servicePage.json
         fields:
-          - { label: "Título \"Destaques\" (PT)", name: "highlightsHeading.pt", widget: string }
-          - { label: "Título \"Destaques\" (EN)", name: "highlightsHeading.en", widget: string }
-          - { label: "\"Voltar a Serviços\" (PT)", name: "backToServices.pt", widget: string }
-          - { label: "\"Voltar a Serviços\" (EN)", name: "backToServices.en", widget: string }
-          - { label: "Título \"Galeria\" (PT)", name: "galleryHeading.pt", widget: string }
-          - { label: "Título \"Galeria\" (EN)", name: "galleryHeading.en", widget: string }
-          - { label: "Título \"Outros serviços\" (PT)", name: "relatedHeading.pt", widget: string }
-          - { label: "Título \"Outros serviços\" (EN)", name: "relatedHeading.en", widget: string }
+          - label: "Título \"Destaques\""
+            name: highlightsHeading
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "\"Voltar a Serviços\""
+            name: backToServices
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título \"Galeria\""
+            name: galleryHeading
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Título \"Outros serviços\""
+            name: relatedHeading
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
           - { label: "Bloco \"Outros serviços\" visível", name: relatedVisible, widget: boolean, default: true }
