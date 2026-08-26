@@ -3,6 +3,7 @@
 # Especificação: project/state/task-001-migracao-stack/handoff-42-architect-sec-p5-03-ci.md
 #   (secções 3.2 "superfície e fronteira de confiança", 3.5 "configuração de P2/P3")
 # Implementação: project/state/task-001-migracao-stack/handoff-43-devops-media-guard.md
+# Correção de âmbito (SEC-P5-12): project/state/task-001-migracao-stack/handoff-44-security-engineer-sec-p5-03-fechamento.md
 #
 # Esta é a peça P3 do desenho: sem ela, o workflow P1 (.github/workflows/media-guard.yml)
 # é anulável por um único PR que reescreve o próprio workflow ao mesmo tempo que introduz o
@@ -14,19 +15,32 @@
 # indicar que a verificação ainda está pendente, TRATA ESTE FICHEIRO COMO NÃO VALIDADO até lá).
 # Por isso a ordem das regras abaixo é um contrato, não estética:
 #   1. Regra geral `*` cobre TODO o repositório e é atribuída ao dono.
-#   2. Duas exceções, sem dono, DEPOIS da regra geral, para a única superfície que o Decap
-#      publica sozinho sem revisão humana: `content/**` e `public/images/uploads/**`. Aqui quem
-#      faz o papel de revisor é o required check `media-guard`
-#      (.github/workflows/media-guard.yml), não uma pessoa.
+#   2. Exceções, sem dono, DEPOIS da regra geral, só para as pastas que o Decap CMS escreve
+#      de facto sem revisão humana — as mesmas declaradas em `public/admin/config.yml`
+#      (`folder: content/services` e cada `file: content/site/*.json`) — mais
+#      `public/images/uploads/**`. Aqui quem faz o papel de revisor é o required check
+#      `media-guard` (.github/workflows/media-guard.yml) para uploads; para `content/services/`
+#      e `content/site/` não há check equivalente — são dados JSON validados por schema no
+#      build, não código.
 #
-# Alargar a superfície sem dono (as duas linhas finais) é uma decisão de arquitetura, não uma
+# SEC-P5-12 (handoff-44): a versão anterior deste ficheiro isentava TODO o `/content/`,
+# incluindo `content/index.ts`, `content/organization.ts`, `content/routes.ts`,
+# `content/seo.ts`, `content/service-slugs.ts` e `content/schemas/index.ts` — seis módulos
+# TypeScript compilados para o bundle, não dados. Isso permitia fundir JavaScript arbitrário
+# para `main` sem check e sem revisor. A exceção abaixo está estreitada às duas pastas que o
+# Decap realmente escreve (confirmado em `public/admin/config.yml`); tudo o resto de
+# `content/`, incluindo `content/schemas/`, volta a cair na regra `*` e exige revisão.
+#
+# Alargar a superfície sem dono (as linhas finais) é uma decisão de arquitetura, não uma
 # configuração — não acrescentar novas exceções aqui sem passar pelo software-architect.
 #
 # 1. Regra geral — todo o repositório, dono do projeto.
 * @virgilio-24
 
-# 2. Exceções — superfície auto-fundível pelo Decap CMS, sem dono humano, de propósito.
-#    Protegida em alternativa pelo required check "media-guard" (uploads) e pela ausência de
-#    código executável em content/ (apenas dados YAML/Markdown consumidos em build).
-/content/
+# 2. Exceções — só as pastas de dados que o Decap CMS escreve sem revisão humana, de propósito.
+#    `content/services/` e `content/site/` protegidas por validação de schema no build
+#    (content/schemas/index.ts), não por revisão humana nem pelo media-guard.
+#    `public/images/uploads/` protegida em alternativa pelo required check "media-guard".
+/content/services/
+/content/site/
 /public/images/uploads/
