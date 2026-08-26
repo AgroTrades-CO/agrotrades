@@ -1,0 +1,39 @@
+{
+  "id": "moageira",
+  "icon": "factory",
+  "title": { "pt": "Moageira e processamento industrial", "en": "Milling & Industrial Processing" },
+  "summary": {
+    "pt": "Processamento industrial de cereais através de moageira moderna, transformando a produção agrícola em produtos acabados para o mercado moçambicano.",
+    "en": "Industrial cereal processing using modern milling equipment, transforming agricultural output into finished products for the Mozambican market."
+  },
+  "description": {
+    "pt": "A nossa unidade de processamento industrial representa um elo fundamental na cadeia de valor agrícola. Equipada com moageira moderna, a AGRO TRADES transforma os cereais produzidos localmente em farinha e outros produtos acabados, prontos para consumo. Este serviço não apenas agrega valor à produção própria como está disponível para terceiros — agricultores, cooperativas e associações — que necessitem de processar a sua colheita de forma rápida e eficiente.",
+    "en": "Our industrial processing unit represents a fundamental link in the agricultural value chain. Equipped with modern milling equipment, AGRO TRADES transforms locally produced cereals into flour and other finished products ready for consumption. This service is also available to third parties — farmers, cooperatives and associations — who need to process their harvest quickly and efficiently."
+  },
+  "highlights": {
+    "pt": [
+      "Moageira moderna de alta capacidade",
+      "Processamento de arroz, milho e outros cereais",
+      "Serviço disponível para terceiros",
+      "Garantia de qualidade no produto final",
+      "Embalagem e preparação para comercialização"
+    ],
+    "en": [
+      "High-capacity modern milling",
+      "Processing of rice, maize and other cereals",
+      "Service available to third parties",
+      "Quality assurance on final product",
+      "Packaging and preparation for trade"
+    ]
+  },
+  "homeTitle": { "pt": "Processamento industrial", "en": "Industrial Processing" },
+  "homeBlurb": {
+    "pt": "Moageira e processamento industrial de cereais para o mercado moçambicano.",
+    "en": "Milling and industrial cereal processing for the Mozambican market."
+  },
+  "bannerImage": "/images/services/moageira/banner.svg",
+  "bannerImageAlt": {
+    "pt": "Ilustração de silos e estrutura industrial de uma moageira",
+    "en": "Illustration of silos and industrial milling structure"
+  }
+}

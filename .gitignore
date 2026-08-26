@@ -33,3 +33,10 @@ Thumbs.db
 
 # Vercel
 .vercel
+
+# Bundle do Decap CMS, copiado de node_modules/decap-cms/dist para
+# public/admin/vendor/ por scripts/copy-decap-cms.mjs (Fase 5). Sempre
+# regenerado a partir da versão exata em package.json/package-lock.json —
+# nunca commitado (evita ~30 MB de bundle de terceiros no repositório
+# público). Ver handoff-38-developer-fase5.md.
+/public/admin/vendor/

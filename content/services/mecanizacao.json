@@ -1,0 +1,92 @@
+{
+  "id": "mecanizacao",
+  "icon": "tractor",
+  "title": { "pt": "Mecanização agrícola", "en": "Agricultural Mechanisation" },
+  "summary": {
+    "pt": "Aluguer e operação de equipamentos agrícolas modernos — tractores, ceifeiras e alfaias — para produtores locais, cooperativas e associações de agricultores.",
+    "en": "Rental and operation of modern agricultural equipment — tractors, harvesters and implements — for local producers, cooperatives and farmer associations."
+  },
+  "description": {
+    "pt": "O acesso à mecanização é um dos maiores desafios dos pequenos e médios agricultores moçambicanos. A AGRO TRADES oferece serviços de mecanização agrícola que permitem a qualquer produtor aceder a tractores, ceifeiras-debulhadoras, semeadores mecânicos e outras alfaias de alta performance. Trabalhamos com preços acessíveis e calendários flexíveis para garantir que a mecanização chega a quem mais precisa, na altura certa da campanha.",
+    "en": "Access to mechanisation is one of the greatest challenges for small and medium-sized Mozambican farmers. AGRO TRADES offers agricultural mechanisation services that allow any producer to access tractors, combine harvesters, mechanical seeders and other high-performance implements. We work with affordable prices and flexible schedules to ensure mechanisation reaches those who need it most, at the right time in the campaign."
+  },
+  "highlights": {
+    "pt": [
+      "Tractores e alfaias para aluguer",
+      "Ceifeiras-debulhadoras para colheita",
+      "Operadores incluídos no serviço",
+      "Preços acessíveis e calendário flexível",
+      "Manutenção e apoio técnico garantidos"
+    ],
+    "en": [
+      "Tractors and implements for hire",
+      "Combine harvesters for crop collection",
+      "Operators included in the service",
+      "Affordable prices and flexible schedule",
+      "Guaranteed maintenance and technical support"
+    ]
+  },
+  "homeBlurb": {
+    "pt": "Serviços de mecanização e preparação de terras para agricultores e cooperativas.",
+    "en": "Mechanisation and land preparation services for farmers and cooperatives."
+  },
+  "bannerImage": "/images/services/mecanizacao/banner.svg",
+  "bannerImageAlt": {
+    "pt": "Ilustração de tratores e rodas de maquinaria agrícola em tons de verde",
+    "en": "Illustration of tractors and agricultural machinery wheels in green tones"
+  },
+  "sections": [
+    {
+      "icon": "tractor",
+      "title": { "pt": "Frota de equipamentos", "en": "Equipment fleet" },
+      "text": {
+        "pt": "Disponibilizamos tratores, ceifeiras-debulhadoras e alfaias de alta performance para aluguer, com manutenção regular para garantir disponibilidade durante toda a campanha.",
+        "en": "We provide tractors, combine harvesters and high-performance implements for hire, with regular maintenance to ensure availability throughout the campaign."
+      },
+      "image": {
+        "image": "/images/services/mecanizacao/gallery-1.svg",
+        "alt": { "pt": "Ilustração de trator com alfaia acoplada", "en": "Illustration of a tractor with an attached implement" }
+      },
+      "bullets": {
+        "pt": [
+          "Tratores e ceifeiras-debulhadoras revistos antes de cada campanha",
+          "Alfaias adaptadas a diferentes tipos de solo e cultura"
+        ],
+        "en": [
+          "Tractors and combine harvesters inspected before each campaign",
+          "Implements adapted to different soil and crop types"
+        ]
+      }
+    },
+    {
+      "icon": "support",
+      "title": { "pt": "Operadores qualificados", "en": "Qualified operators" },
+      "text": {
+        "pt": "Cada equipamento é acompanhado por um operador experiente, incluído no serviço, o que reduz o risco de avarias e garante um trabalho eficiente no campo.",
+        "en": "Each piece of equipment comes with an experienced operator included in the service, reducing the risk of breakdowns and ensuring efficient fieldwork."
+      }
+    },
+    {
+      "icon": "calendar",
+      "title": { "pt": "Calendário flexível", "en": "Flexible scheduling" },
+      "text": {
+        "pt": "Coordenamos os pedidos de aluguer com o calendário da campanha agrícola, priorizando as janelas críticas de preparação, sementeira e colheita.",
+        "en": "We coordinate rental requests with the agricultural campaign calendar, prioritising the critical windows for preparation, sowing and harvest."
+      }
+    }
+  ],
+  "gallery": [
+    {
+      "image": "/images/services/mecanizacao/gallery-1.svg",
+      "alt": { "pt": "Ilustração de trator com alfaia acoplada", "en": "Illustration of a tractor with an attached implement" }
+    },
+    {
+      "image": "/images/services/mecanizacao/gallery-2.svg",
+      "alt": { "pt": "Ilustração de máquina agrícola em manutenção", "en": "Illustration of agricultural machinery under maintenance" }
+    },
+    {
+      "image": "/images/services/mecanizacao/gallery-3.svg",
+      "alt": { "pt": "Ilustração de equipamento agrícola em campo preparado", "en": "Illustration of agricultural equipment on prepared land" }
+    }
+  ]
+}

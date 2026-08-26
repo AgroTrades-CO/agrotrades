@@ -1,0 +1,19 @@
+{
+  "bannerImage": "/images/banners/servicos.svg",
+  "bannerImageAlt": {
+    "pt": "Serviços agrícolas da AGRO TRADES",
+    "en": "AGRO TRADES agricultural services"
+  },
+  "intro": {
+    "pt": "Oferecemos uma gama completa de serviços agrícolas para apoiar a produção nacional e a soberania alimentar de Moçambique.",
+    "en": "We offer a complete range of agricultural services to support national production and Mozambique's food sovereignty."
+  },
+  "ctaTitle": {
+    "pt": "Precisa de algum serviço?",
+    "en": "Do you need one of our services?"
+  },
+  "ctaText": {
+    "pt": "Entre em contacto connosco pelo WhatsApp ou por email. Estamos disponíveis para responder a todas as suas questões.",
+    "en": "Get in touch with us via WhatsApp or email. We are available to answer all your questions."
+  }
+}

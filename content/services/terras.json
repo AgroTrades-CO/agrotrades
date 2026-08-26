@@ -1,0 +1,34 @@
+{
+  "id": "terras",
+  "icon": "landPlot",
+  "title": { "pt": "Preparação de terras", "en": "Land Preparation" },
+  "summary": {
+    "pt": "Serviços completos de preparação e nivelamento de terrenos agrícolas, utilizando maquinaria especializada para optimizar as condições de cultivo.",
+    "en": "Complete land preparation and levelling services using specialist machinery to optimise growing conditions."
+  },
+  "description": {
+    "pt": "A preparação adequada do solo é a base de qualquer produção agrícola bem-sucedida. A AGRO TRADES oferece um serviço completo de preparação de terrenos que inclui limpeza, desbaste, lavoura, gradagem e nivelamento. Com equipamentos modernos e operadores experientes, preparamos solos para culturas anuais e perenes, garantindo que cada hectare esteja nas melhores condições para receber a sementeira e maximizar a produtividade.",
+    "en": "Proper soil preparation is the foundation of any successful agricultural production. AGRO TRADES offers a complete land preparation service including clearing, tilling, ploughing, harrowing and levelling. With modern equipment and experienced operators, we prepare soils for annual and perennial crops, ensuring every hectare is in the best conditions to receive seed and maximise productivity."
+  },
+  "highlights": {
+    "pt": [
+      "Limpeza e desbaste de terrenos",
+      "Lavoura profunda e gradagem",
+      "Nivelamento para irrigação eficiente",
+      "Operadores certificados e experientes",
+      "Serviço disponível para particulares e cooperativas"
+    ],
+    "en": [
+      "Land clearing and tilling",
+      "Deep ploughing and harrowing",
+      "Levelling for efficient irrigation",
+      "Certified and experienced operators",
+      "Service available for individuals and cooperatives"
+    ]
+  },
+  "bannerImage": "/images/services/terras/banner.svg",
+  "bannerImageAlt": {
+    "pt": "Ilustração de terreno nivelado com linhas de sulcos em tons de terra",
+    "en": "Illustration of levelled land with furrow lines in earth tones"
+  }
+}

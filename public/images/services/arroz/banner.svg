@@ -1,0 +1,20 @@
+<svg width="1600" height="600" viewBox="0 0 1600 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a6622"/>
+      <stop offset="100%" stop-color="#3a8c2f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="600" fill="url(#g)"/>
+  <g stroke="#e8f5e4" stroke-width="3" stroke-linecap="round" opacity="0.35">
+    <path d="M120 560 V420 M120 480 c0-40 30-64 64-64 M120 480 c0-40-30-64-64-64"/>
+    <path d="M260 560 V400 M260 460 c0-40 30-64 64-64 M260 460 c0-40-30-64-64-64"/>
+    <path d="M400 560 V380 M400 440 c0-40 30-64 64-64 M400 440 c0-40-30-64-64-64"/>
+    <path d="M540 560 V420 M540 480 c0-40 30-64 64-64 M540 480 c0-40-30-64-64-64"/>
+    <path d="M1060 560 V400 M1060 460 c0-40 30-64 64-64 M1060 460 c0-40-30-64-64-64"/>
+    <path d="M1200 560 V380 M1200 440 c0-40 30-64 64-64 M1200 440 c0-40-30-64-64-64"/>
+    <path d="M1340 560 V420 M1340 480 c0-40 30-64 64-64 M1340 480 c0-40-30-64-64-64"/>
+    <path d="M1480 560 V400 M1480 460 c0-40 30-64 64-64 M1480 460 c0-40-30-64-64-64"/>
+  </g>
+  <ellipse cx="800" cy="620" rx="900" ry="140" fill="#8b6914" opacity="0.18"/>
+</svg>

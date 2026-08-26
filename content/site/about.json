@@ -1,0 +1,41 @@
+{
+  "tag": { "pt": "Sobre a empresa", "en": "About us" },
+  "title": { "pt": "Quem somos", "en": "Who we are" },
+  "summary": {
+    "pt": "A AGRO TRADES, LDA é uma empresa moçambicana dedicada ao desenvolvimento agrícola, com foco na produção de arroz, outros cereais e legumes, preparação de terras, mecanização agrícola, apoio técnico no campo, comercialização agrícola e processamento industrial.",
+    "en": "AGRO TRADES, LDA is a Mozambican company dedicated to agricultural development, focusing on rice production, other cereals and vegetables, land preparation, agricultural mechanisation, technical field support, agricultural marketing and industrial processing."
+  },
+  "extended": {
+    "pt": "A empresa contribui para o fortalecimento da soberania alimentar em Moçambique, promovendo o trabalho no campo, a valorização da terra, a criação de emprego e o aumento da produção nacional.",
+    "en": "The company contributes to strengthening food sovereignty in Mozambique, promoting fieldwork, land appreciation, job creation and increased national production."
+  },
+  "fullText": {
+    "pt": [
+      "A AGRO TRADES, LDA é uma empresa moçambicana dedicada ao desenvolvimento agrícola, com foco na produção de arroz, outros cereais e legumes, preparação de terras, mecanização agrícola, apoio técnico no campo, comercialização agrícola e processamento industrial.",
+      "A empresa contribui para o fortalecimento da soberania alimentar em Moçambique, promovendo o trabalho no campo, a valorização da terra, a criação de emprego e o aumento da produção nacional.",
+      "Sedeada no Distrito de Moma, Província de Nampula, a AGRO TRADES combina o conhecimento local do território com práticas agronómicas modernas, cobrindo toda a cadeia de valor agrícola — desde a preparação do terreno até à comercialização do produto final.",
+      "Acreditamos que o desenvolvimento agrícola sustentável só é possível através de parcerias sólidas com pequenos e médios agricultores, cooperativas e instituições públicas, apoiando quem trabalha a terra com acesso a mecanização, apoio técnico e escoamento justo da produção.",
+      "Alinhados com as directivas do Governo moçambicano para a Campanha Agrícola, participamos activamente no aumento da produção nacional, na criação de emprego local e na valorização do trabalho no campo como motor de desenvolvimento económico e social."
+    ],
+    "en": [
+      "AGRO TRADES, LDA is a Mozambican company dedicated to agricultural development, focusing on rice production, other cereals and vegetables, land preparation, agricultural mechanisation, technical field support, agricultural marketing and industrial processing.",
+      "The company contributes to strengthening food sovereignty in Mozambique, promoting fieldwork, land appreciation, job creation and increased national production.",
+      "Headquartered in the Moma District, Nampula Province, AGRO TRADES combines local knowledge of the territory with modern agronomic practices, covering the entire agricultural value chain — from land preparation to marketing the final product.",
+      "We believe sustainable agricultural development is only possible through solid partnerships with small and medium-sized farmers, cooperatives and public institutions, supporting those who work the land with access to mechanisation, technical support and fair outlets for their production.",
+      "Aligned with the Mozambican Government's directives for the Agricultural Campaign, we actively participate in increasing national production, creating local jobs and valuing fieldwork as a driver of economic and social development."
+    ]
+  },
+  "tags": [
+    { "icon": "wheat", "label": { "pt": "Produção de Arroz", "en": "Rice Production" } },
+    { "icon": "tractor", "label": { "pt": "Mecanização", "en": "Mechanisation" } },
+    { "icon": "corn", "label": { "pt": "Cereais", "en": "Cereals" } },
+    { "icon": "factory", "label": { "pt": "Processamento Industrial", "en": "Industrial Processing" } },
+    { "icon": "mapPin", "label": { "pt": "Nampula", "en": "Nampula" } }
+  ],
+  "ceo": {
+    "name": "Eng. Cipriano",
+    "initials": "EC",
+    "role": { "pt": "CEO", "en": "CEO" }
+  },
+  "learnMoreLabel": { "pt": "Saber mais", "en": "Learn more" }
+}

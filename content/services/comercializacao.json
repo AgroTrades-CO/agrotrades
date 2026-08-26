@@ -1,0 +1,34 @@
+{
+  "id": "comercializacao",
+  "icon": "handshake",
+  "title": { "pt": "Comercialização agrícola", "en": "Agricultural Marketing" },
+  "summary": {
+    "pt": "Apoio na comercialização da produção agrícola, ligando os produtores ao mercado e garantindo escoamento eficiente da produção a preços justos.",
+    "en": "Support in marketing agricultural production, connecting producers to the market and ensuring efficient sale at fair prices."
+  },
+  "description": {
+    "pt": "Um dos maiores obstáculos à prosperidade dos agricultores moçambicanos é a dificuldade em escoar a produção a preços justos. A AGRO TRADES actua como intermediário de confiança, ligando produtores locais a compradores, mercados regionais e circuitos de distribuição estabelecidos. Apoiamos negociações, facilitamos logística e garantimos transparência em todas as transacções, assegurando que o produtor receba uma remuneração justa pelo seu trabalho.",
+    "en": "One of the biggest obstacles to the prosperity of Mozambican farmers is the difficulty in selling production at fair prices. AGRO TRADES acts as a trusted intermediary, connecting local producers to buyers, regional markets and established distribution channels. We support negotiations, facilitate logistics and ensure transparency in all transactions, making sure the producer receives fair remuneration for their work."
+  },
+  "highlights": {
+    "pt": [
+      "Ligação directa a compradores e mercados",
+      "Apoio em negociações comerciais",
+      "Logística e transporte da produção",
+      "Preços justos e transparência total",
+      "Rede de contactos regional estabelecida"
+    ],
+    "en": [
+      "Direct link to buyers and markets",
+      "Support in commercial negotiations",
+      "Production logistics and transport",
+      "Fair prices and full transparency",
+      "Established regional contact network"
+    ]
+  },
+  "bannerImage": "/images/services/comercializacao/banner.svg",
+  "bannerImageAlt": {
+    "pt": "Ilustração de aperto de mãos representando parceria comercial",
+    "en": "Illustration of a handshake representing a business partnership"
+  }
+}

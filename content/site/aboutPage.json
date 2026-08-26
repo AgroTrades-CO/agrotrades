@@ -1,0 +1,62 @@
+{
+  "bannerImage": "/images/banners/quem-somos.svg",
+  "bannerImageAlt": {
+    "pt": "Equipa e terras da AGRO TRADES",
+    "en": "AGRO TRADES team and land"
+  },
+  "teamTag": { "pt": "A nossa gente", "en": "Our people" },
+  "teamHeading": { "pt": "A nossa equipa", "en": "Our team" },
+  "valuesTag": { "pt": "Os nossos valores", "en": "Our values" },
+  "valuesHeading": { "pt": "O que nos guia", "en": "What guides us" },
+  "valuesVisible": true,
+  "values": [
+    {
+      "icon": "target",
+      "title": { "pt": "Missão", "en": "Mission" },
+      "text": {
+        "pt": "Impulsionar o desenvolvimento agrícola de Moçambique, produzindo alimentos de qualidade e criando valor para produtores, comunidades e parceiros.",
+        "en": "Drive Mozambique's agricultural development, producing quality food and creating value for producers, communities and partners."
+      }
+    },
+    {
+      "icon": "eye",
+      "title": { "pt": "Visão", "en": "Vision" },
+      "text": {
+        "pt": "Ser referência nacional em produção agrícola integrada, reconhecida pela qualidade, inovação e impacto positivo na segurança alimentar do país.",
+        "en": "Be a national reference in integrated agricultural production, recognised for quality, innovation and positive impact on the country's food security."
+      }
+    },
+    {
+      "icon": "leaf",
+      "title": { "pt": "Sustentabilidade", "en": "Sustainability" },
+      "text": {
+        "pt": "Adoptamos práticas agrícolas responsáveis que preservam o solo, a água e os recursos naturais para as gerações futuras.",
+        "en": "We adopt responsible agricultural practices that preserve soil, water and natural resources for future generations."
+      }
+    },
+    {
+      "icon": "handshake",
+      "title": { "pt": "Parceria", "en": "Partnership" },
+      "text": {
+        "pt": "Trabalhamos lado a lado com agricultores, cooperativas e instituições, construindo relações de confiança e benefício mútuo.",
+        "en": "We work side by side with farmers, cooperatives and institutions, building relationships of trust and mutual benefit."
+      }
+    },
+    {
+      "icon": "bolt",
+      "title": { "pt": "Inovação", "en": "Innovation" },
+      "text": {
+        "pt": "Investimos em técnicas modernas de cultivo, mecanização e processamento para aumentar a produtividade e a eficiência.",
+        "en": "We invest in modern cultivation, mechanisation and processing techniques to increase productivity and efficiency."
+      }
+    },
+    {
+      "icon": "trophy",
+      "title": { "pt": "Excelência", "en": "Excellence" },
+      "text": {
+        "pt": "Perseguimos os mais altos padrões de qualidade em cada etapa da cadeia de produção, do campo ao consumidor.",
+        "en": "We pursue the highest quality standards at every stage of the production chain, from field to consumer."
+      }
+    }
+  ]
+}

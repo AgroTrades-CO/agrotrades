@@ -1,0 +1,121 @@
+{
+  "banner": {
+    "tag": { "pt": "Empresa Agrícola Moçambicana", "en": "Mozambican Agricultural Company" },
+    "title": { "pt": "Campanha Agrícola 2025/2026", "en": "Agricultural Campaign 2025/2026" },
+    "text": {
+      "pt": "Iniciámos as operações da nova campanha agrícola, alinhada com o incentivo do Presidente da República Daniel Chapo. A soberania alimentar começa com a valorização da terra.",
+      "en": "We have started operations for the new agricultural campaign, aligned with the initiative of President Daniel Chapo. Food sovereignty begins with valuing the land."
+    },
+    "button": { "pt": "Saber mais", "en": "Learn more" }
+  },
+  "hero": {
+    "tag": "2025 / 2026",
+    "intro": {
+      "pt": "A AGRO TRADES, LDA deu início às operações da Campanha Agrícola 2025/2026, alinhada com o incentivo do Presidente da República, Daniel Chapo.",
+      "en": "AGRO TRADES, LDA has started operations for the 2025/2026 Agricultural Campaign, aligned with the initiative of the President of the Republic, Daniel Chapo."
+    },
+    "bannerImage": "/images/banners/campanha.svg",
+    "bannerImageAlt": {
+      "pt": "Campos agrícolas da Campanha 2025/2026 da AGRO TRADES",
+      "en": "AGRO TRADES 2025/2026 Campaign agricultural fields"
+    }
+  },
+  "quote": {
+    "author": "Presidente Daniel Chapo",
+    "citeSuffix": {
+      "pt": "Lema da Campanha Agrícola 2025/2026",
+      "en": "Motto of the 2025/2026 Agricultural Campaign"
+    }
+  },
+  "vision": {
+    "tag": { "pt": "A nossa visão", "en": "Our vision" },
+    "title": { "pt": "Soberania alimentar começa na terra", "en": "Food sovereignty begins with the land" },
+    "text": {
+      "pt": "A AGRO TRADES acredita que a soberania alimentar começa com a valorização da terra, do produtor e do trabalho agrícola. A Campanha 2025/2026 representa o nosso compromisso com o desenvolvimento agrícola de Moçambique.",
+      "en": "AGRO TRADES believes that food sovereignty begins with valuing the land, the producer and agricultural work. The 2025/2026 Campaign represents our commitment to Mozambique's agricultural development."
+    }
+  },
+  "timelineHeading": {
+    "tag": { "pt": "Calendário", "en": "Calendar" },
+    "title": { "pt": "Fases da campanha", "en": "Campaign phases" }
+  },
+  "pillars": [
+    {
+      "icon": "wheat",
+      "title": { "pt": "Produção alimentar", "en": "Food production" },
+      "text": {
+        "pt": "Aumento da produção nacional de arroz, cereais e legumes para o mercado interno.",
+        "en": "Increase in national production of rice, cereals and vegetables for the domestic market."
+      }
+    },
+    {
+      "icon": "support",
+      "title": { "pt": "Criação de emprego", "en": "Job creation" },
+      "text": {
+        "pt": "Geração de emprego directo e indirecto nas comunidades rurais de Nampula.",
+        "en": "Direct and indirect job creation in rural communities in Nampula."
+      }
+    },
+    {
+      "icon": "landPlot",
+      "title": { "pt": "Valorização da terra", "en": "Land appreciation" },
+      "text": {
+        "pt": "Preparação e mecanização de terras para potenciar a produção agrícola local.",
+        "en": "Land preparation and mechanisation to boost local agricultural production."
+      }
+    },
+    {
+      "icon": "factory",
+      "title": { "pt": "Processamento local", "en": "Local processing" },
+      "text": {
+        "pt": "Transformação industrial da produção agrícola, agregando valor e reduzindo importações.",
+        "en": "Industrial transformation of agricultural production, adding value and reducing imports."
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "title": { "pt": "Preparação de terras", "en": "Land preparation" },
+      "text": {
+        "pt": "Início da preparação e mobilização dos terrenos no Distrito de Moma, Posto Administrativo de Chalaua. Mecanização e nivelamento das áreas de cultivo.",
+        "en": "Start of land preparation and mobilisation in the Moma District, Chalaua Administrative Post. Mechanisation and levelling of cultivation areas."
+      }
+    },
+    {
+      "title": { "pt": "Campanha de sementeira", "en": "Planting campaign" },
+      "text": {
+        "pt": "Sementeira de arroz, milho e outros cereais com sementes melhoradas. Apoio técnico às famílias camponesas da zona de influência.",
+        "en": "Planting of rice, maize and other cereals with improved seeds. Technical support to smallholder families in the area of influence."
+      }
+    },
+    {
+      "title": { "pt": "Acompanhamento agronómico", "en": "Agronomic monitoring" },
+      "text": {
+        "pt": "Monitorização do crescimento das culturas, controlo de pragas e doenças, e fertilização adequada para maximizar a produção.",
+        "en": "Monitoring crop growth, pest and disease control, and proper fertilisation to maximise production."
+      }
+    },
+    {
+      "title": { "pt": "Colheita e processamento", "en": "Harvest and processing" },
+      "text": {
+        "pt": "Colheita mecanizada e transporte para a moageira de processamento industrial. Embalagem e distribuição no mercado nacional.",
+        "en": "Mechanised harvest and transport to the industrial milling unit. Packaging and distribution in the national market."
+      }
+    },
+    {
+      "title": { "pt": "Comercialização", "en": "Marketing" },
+      "text": {
+        "pt": "Escoamento da produção nos mercados de Nampula e outras províncias, contribuindo para a estabilização dos preços dos alimentos.",
+        "en": "Sale of production in Nampula and other provincial markets, contributing to stabilising food prices."
+      }
+    }
+  ],
+  "cta": {
+    "title": { "pt": "Junte-se à campanha", "en": "Join the campaign" },
+    "text": {
+      "pt": "Precisa de apoio técnico, mecanização ou parceria agrícola para a campanha 2025/2026? Entre em contacto connosco.",
+      "en": "Need technical support, mechanisation or an agricultural partnership for the 2025/2026 campaign? Get in touch with us."
+    },
+    "button": { "pt": "Fale connosco no WhatsApp", "en": "Contact us on WhatsApp" }
+  }
+}

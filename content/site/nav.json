@@ -1,0 +1,8 @@
+{
+  "home": { "pt": "Início", "en": "Home" },
+  "services": { "pt": "Serviços", "en": "Services" },
+  "campaign": { "pt": "Campanha 2025/26", "en": "Campaign 2025/26" },
+  "contact": { "pt": "Contactos", "en": "Contacts" },
+  "about": { "pt": "Quem Somos", "en": "About Us" },
+  "servicesViewAll": { "pt": "Ver todos os serviços", "en": "View all services" }
+}

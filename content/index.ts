@@ -1,0 +1,188 @@
+/**
+ * Camada de conteúdo — Fase 2 da migração.
+ *
+ * Carrega os ficheiros JSON de `content/services` e `content/site`,
+ * valida-os contra os schemas Zod de `content/schemas`, e exporta objetos
+ * já tipados para os componentes consumirem. Só a versão PT é servida
+ * nesta fase (i18n real é Fase 3), mas a estrutura de dados guarda sempre
+ * `{ pt, en }`.
+ *
+ * A validação corre aqui, ao nível do módulo — isto é, na primeira vez que
+ * qualquer componente importar algo deste ficheiro. Como o `app/layout.tsx`
+ * (usado por todas as rotas) importa `Header`/`Footer`/`WhatsappFloat`, que
+ * por sua vez importam este módulo, a validação corre sempre no build,
+ * mesmo para coleções (como `team` ou `contacts`) ainda não renderizadas em
+ * nenhuma página nesta fase. Se faltar `pt`/`en` num campo obrigatório, ou
+ * faltar um serviço, o `next build` falha aqui com uma mensagem legível.
+ */
+
+import { z } from "zod";
+
+import aboutJson from "./site/about.json";
+import aboutPageJson from "./site/aboutPage.json";
+import campanhaJson from "./site/campanha.json";
+import contactsJson from "./site/contacts.json";
+import footerJson from "./site/footer.json";
+import heroJson from "./site/hero.json";
+import locationsJson from "./site/locations.json";
+import metaJson from "./site/meta.json";
+import navJson from "./site/nav.json";
+import notFoundJson from "./site/notFound.json";
+import sectionsJson from "./site/sections.json";
+import servicePageJson from "./site/servicePage.json";
+import servicesPageJson from "./site/servicesPage.json";
+import statsJson from "./site/stats.json";
+import teamJson from "./site/team.json";
+
+import apoioTecnico from "./services/apoio-tecnico.json";
+import arroz from "./services/arroz.json";
+import campanhaService from "./services/campanha.json";
+import cereais from "./services/cereais.json";
+import comercializacao from "./services/comercializacao.json";
+import mecanizacao from "./services/mecanizacao.json";
+import moageira from "./services/moageira.json";
+import terras from "./services/terras.json";
+
+import {
+  aboutPageSchema,
+  aboutSchema,
+  campanhaSchema,
+  contactsSchema,
+  footerSchema,
+  heroSchema,
+  locationsSchema,
+  metaSchema,
+  navSchema,
+  notFoundSchema,
+  resolveSectionLayout,
+  sectionsSchema,
+  servicePageSchema,
+  servicesPageSchema,
+  servicesSchema,
+  statsSchema,
+  teamSchema,
+  youtubeEmbedUrl,
+  type AboutPage,
+  type BilingualString,
+  type Service,
+} from "./schemas";
+
+/** Idioma servido pelo site — PT na raiz, EN sob /en (Fase 3, D-4). */
+export type Lang = "pt" | "en";
+
+/** Devolve o texto no idioma pedido. */
+export function pick(field: BilingualString, lang: Lang): string {
+  return field[lang];
+}
+
+function parseContent<T>(schema: z.ZodType<T>, data: unknown, label: string): T {
+  const result = schema.safeParse(data);
+  if (!result.success) {
+    const details = result.error.issues
+      .map((issue) => `  - ${issue.path.join(".") || "(raiz)"}: ${issue.message}`)
+      .join("\n");
+    throw new Error(
+      `Conteúdo inválido em "${label}":\n${details}\n\n` +
+        `Corrija o ficheiro JSON correspondente em content/ antes de repetir o build.`
+    );
+  }
+  return result.data;
+}
+
+// Mantém a ordem historicamente usada no array SERVICES de js/main.js.
+export const services = parseContent(
+  servicesSchema,
+  [arroz, cereais, moageira, terras, campanhaService, mecanizacao, apoioTecnico, comercializacao],
+  "content/services/*.json"
+);
+
+export const nav = parseContent(navSchema, navJson, "content/site/nav.json");
+export const hero = parseContent(heroSchema, heroJson, "content/site/hero.json");
+export const stats = parseContent(statsSchema, statsJson, "content/site/stats.json");
+export const about = parseContent(aboutSchema, aboutJson, "content/site/about.json");
+export const aboutPage = parseContent(aboutPageSchema, aboutPageJson, "content/site/aboutPage.json");
+export const team = parseContent(teamSchema, teamJson, "content/site/team.json");
+export const campanha = parseContent(campanhaSchema, campanhaJson, "content/site/campanha.json");
+export const sections = parseContent(sectionsSchema, sectionsJson, "content/site/sections.json");
+export const locations = parseContent(locationsSchema, locationsJson, "content/site/locations.json");
+export const contacts = parseContent(contactsSchema, contactsJson, "content/site/contacts.json");
+export const footer = parseContent(footerSchema, footerJson, "content/site/footer.json");
+export const meta = parseContent(metaSchema, metaJson, "content/site/meta.json");
+export const notFoundContent = parseContent(notFoundSchema, notFoundJson, "content/site/notFound.json");
+export const servicesPage = parseContent(servicesPageSchema, servicesPageJson, "content/site/servicesPage.json");
+export const servicePage = parseContent(servicePageSchema, servicePageJson, "content/site/servicePage.json");
+
+export { resolveSectionLayout, youtubeEmbedUrl };
+
+/**
+ * Derivações únicas de visibilidade (FR-6, handoff-34 secção D.5) — a regra
+ * de filtragem por `visible`/`<bloco>Visible` existe UMA VEZ aqui, nunca nos
+ * componentes. Proibido `.filter(x => x.visible)` dentro de um componente.
+ */
+
+/** Lista bruta de slides do hero, só para debug/CMS — os componentes usam
+ *  sempre `visibleHeroSlides`. */
+export const heroSlides = hero.slider.slides;
+/** Slides visíveis do hero, na ordem do ficheiro. Garantidamente não-vazio
+ *  pelo `.refine` do schema (pelo menos 1 slide `visible: true`). */
+export const visibleHeroSlides = heroSlides.filter((s) => s.visible);
+
+/** Secções do detalhe de serviço visíveis, na ordem do ficheiro. */
+export function visibleSections(service: Service) {
+  return (service.sections ?? []).filter((s) => s.visible);
+}
+
+/** Itens de galeria visíveis, só se o bloco galeria estiver ligado. */
+export function visibleGallery(service: Service) {
+  return service.galleryVisible ? (service.gallery ?? []).filter((i) => i.visible) : [];
+}
+
+/** Valores institucionais visíveis, só se o bloco valores estiver ligado. */
+export function visibleValues(page: AboutPage) {
+  return page.valuesVisible ? page.values.filter((v) => v.visible) : [];
+}
+
+/**
+ * Serviços relacionados no detalhe (Fase 2, design-spec-fase2 secção 2a):
+ * os 3 próximos serviços na ORDEM CANÓNICA deste array `services` (definida
+ * acima, herdada do antigo SERVICES de js/main.js), com wrap-around, nunca
+ * incluindo o próprio serviço. A ordem deste array tem, portanto, significado
+ * editorial — não reordenar sem intenção.
+ */
+export function relatedServices(currentId: string): Service[] {
+  const total = services.length;
+  const currentIndex = services.findIndex((s) => s.id === currentId);
+  if (currentIndex === -1) return [];
+  return [1, 2, 3].map((offset) => services[(currentIndex + offset) % total]);
+}
+
+/** Constrói o `<title>` de uma página a partir do título próprio + sufixo da marca. */
+export function buildTitle(pageTitle: string): string {
+  return `${pageTitle} — ${meta.titleSuffix}`;
+}
+
+export type {
+  About,
+  AboutPage,
+  Campanha,
+  ContentImage,
+  Contacts,
+  Footer,
+  GalleryImage,
+  Hero,
+  HeroSlide,
+  Location,
+  Nav,
+  NotFoundContent,
+  Sections,
+  ResolvedSectionLayout,
+  Service,
+  ServicePage,
+  ServiceSection,
+  ServiceSectionLayout,
+  ServicesPage,
+  SiteMeta,
+  StatItem,
+  TeamMember,
+  ValueItem,
+} from "./schemas";

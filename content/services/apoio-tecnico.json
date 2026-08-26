@@ -1,0 +1,34 @@
+{
+  "id": "apoio-tecnico",
+  "icon": "support",
+  "title": { "pt": "Apoio técnico no campo", "en": "Field Technical Support" },
+  "summary": {
+    "pt": "Assistência técnica especializada directamente no campo, incluindo orientação sobre boas práticas agrícolas, uso de sementes melhoradas e controlo de pragas.",
+    "en": "Specialist technical assistance directly in the field, covering good agricultural practices, improved seed use and pest control."
+  },
+  "description": {
+    "pt": "O nosso serviço de apoio técnico leva conhecimento especializado directamente ao campo, onde é mais necessário. Técnicos agrícolas qualificados acompanham os agricultores parceiros desde a preparação do solo até à colheita, fornecendo orientação prática sobre selecção de sementes, densidades de sementeira, adubação, gestão da água e controlo de pragas e doenças. Este serviço é especialmente valioso para agricultores que fazem a transição para práticas mais modernas e produtivas.",
+    "en": "Our technical support service brings specialist knowledge directly to the field where it is most needed. Qualified agricultural technicians accompany partner farmers from soil preparation to harvest, providing practical guidance on seed selection, planting densities, fertilisation, water management and pest and disease control. This service is especially valuable for farmers transitioning to more modern and productive practices."
+  },
+  "highlights": {
+    "pt": [
+      "Técnicos qualificados no campo",
+      "Orientação sobre selecção de sementes",
+      "Gestão de pragas e doenças",
+      "Formação em boas práticas agrícolas",
+      "Acompanhamento desde a sementeira até à colheita"
+    ],
+    "en": [
+      "Qualified technicians in the field",
+      "Seed selection guidance",
+      "Pest and disease management",
+      "Good agricultural practice training",
+      "Monitoring from sowing to harvest"
+    ]
+  },
+  "bannerImage": "/images/services/apoio-tecnico/banner.svg",
+  "bannerImageAlt": {
+    "pt": "Ilustração de um símbolo de apoio técnico em tons de verde",
+    "en": "Illustration of a technical support symbol in green tones"
+  }
+}
