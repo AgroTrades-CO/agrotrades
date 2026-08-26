@@ -1,8 +1,11 @@
 {
   "items": [
     {
-      "nome": "Nome Exemplo",
-      "cargo": { "pt": "Cargo Exemplo", "en": "Example Role" },
+      "nome": "Cipriano",
+      "cargo": {
+        "pt": "Cargo Exemplo",
+        "en": "Example Role"
+      },
       "foto": "/images/team/placeholder.svg",
       "frase": {
         "pt": "Frase inspiradora de exemplo.",
@@ -13,28 +16,55 @@
         "en": "Leads AGRO TRADES with a focus on the sustainable growth of agricultural production and on strengthening partnerships with local producers and cooperatives in the Nampula region."
       },
       "badges": [
-        { "pt": "Produção de Arroz", "en": "Rice Production" },
-        { "pt": "Gestão Agrícola", "en": "Agricultural Management" },
-        { "pt": "Parcerias Estratégicas", "en": "Strategic Partnerships" }
-      ]
+        {
+          "pt": "Produção de Arroz",
+          "en": "Rice Production"
+        },
+        {
+          "pt": "Gestão Agrícola",
+          "en": "Agricultural Management"
+        },
+        {
+          "pt": "Parcerias Estratégicas",
+          "en": "Strategic Partnerships"
+        }
+      ],
+      "cargo.pt": "CEO",
+      "cargo.en": "CEO"
     },
     {
       "nome": "Nome Exemplo 2",
-      "cargo": { "pt": "Cargo Exemplo", "en": "Example Role" },
+      "cargo": {
+        "pt": "Cargo Exemplo",
+        "en": "Example Role"
+      },
       "foto": "/images/team/placeholder.svg",
       "frase": {
         "pt": "Frase inspiradora de exemplo.",
         "en": "Example inspiring quote."
       },
       "badges": [
-        { "pt": "Mecanização", "en": "Mechanisation" },
-        { "pt": "Operações de Campo", "en": "Field Operations" }
-      ]
+        {
+          "pt": "Mecanização",
+          "en": "Mechanisation"
+        },
+        {
+          "pt": "Operações de Campo",
+          "en": "Field Operations"
+        }
+      ],
+      "cargo.pt": "Maquinista",
+      "cargo.en": "Worker"
     },
     {
       "nome": "Nome Exemplo 3",
-      "cargo": { "pt": "Cargo Exemplo", "en": "Example Role" },
-      "foto": "/images/team/placeholder.svg"
+      "cargo": {
+        "pt": "Cargo Exemplo",
+        "en": "Example Role"
+      },
+      "foto": "/images/team/placeholder.svg",
+      "cargo.pt": "Vendedor",
+      "cargo.en": "Saler"
     }
   ]
 }
