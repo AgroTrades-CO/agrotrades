@@ -1,6 +1,8 @@
-[
-  { "value": "2+", "label": { "pt": "Anos de actividade", "en": "Years of activity" } },
-  { "value": "∞", "label": { "pt": "Hectares cultivados", "en": "Hectares cultivated" } },
-  { "value": "8", "label": { "pt": "Serviços agrícolas", "en": "Agricultural services" } },
-  { "value": "MZ", "label": { "pt": "Distrito de Moma", "en": "Moma District" } }
-]
+{
+  "items": [
+    { "value": "2+", "label": { "pt": "Anos de actividade", "en": "Years of activity" } },
+    { "value": "∞", "label": { "pt": "Hectares cultivados", "en": "Hectares cultivated" } },
+    { "value": "8", "label": { "pt": "Serviços agrícolas", "en": "Agricultural services" } },
+    { "value": "MZ", "label": { "pt": "Distrito de Moma", "en": "Moma District" } }
+  ]
+}
