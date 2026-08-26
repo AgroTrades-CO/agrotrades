@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AGRO TRADES — Gestão de conteúdo</title>
+    <!--
+      noindex "de higiene" (não é controlo de acesso — esse vive no GitHub e
+      nas rotas de servidor do proxy OAuth, ver architecture-proposal.md
+      secção 9.6). robots.txt já tem Disallow: /admin (app/robots.ts).
+    -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="data:," />
+    <!--
+      Caminho ABSOLUTO obrigatório: o Next.js redireciona /admin/ (com barra)
+      para /admin (sem barra, 308), e o bundle do Decap por omissão pede
+      config.yml com URL RELATIVO — que depois de perder a barra final
+      resolve contra a raiz do site (/config.yml, 404), não contra /admin/.
+      Esta tag evita a resolução relativa por completo.
+    -->
+    <link rel="cms-config-url" href="/admin/config.yml" type="text/yaml" />
+    <style>
+      /* Evita o "flash" de página em branco enquanto o bundle carrega. */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #fafafa;
+        font-family: system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      Bundle do Decap CMS AUTO-HOSPEDADO, servido do próprio domínio
+      (restrição vinculativa 36 / SEC-05) — NUNCA de um CDN de terceiros
+      (unpkg, jsdelivr, etc.). Versão exata fixada em package.json
+      ("decap-cms": "3.15.1", sem "^"/"~"), lockfile commitado
+      (package-lock.json). Os ficheiros em /admin/vendor/decap-cms/ são
+      copiados de node_modules/decap-cms/dist por
+      scripts/copy-decap-cms.mjs (ver package.json: postinstall/predev/prebuild)
+      — nunca commitados, sempre regenerados a partir da versão pinada.
+
+      Sem manual init: o próprio bundle lê /admin/config.yml e inicializa-se
+      (comportamento documentado do decap-cms.js standalone).
+    -->
+    <script src="/admin/vendor/decap-cms/decap-cms.js"></script>
+  </body>
+</html>
