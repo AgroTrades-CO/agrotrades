@@ -3,6 +3,7 @@
 # Especificação: project/state/task-001-migracao-stack/handoff-42-architect-sec-p5-03-ci.md
 #   (secções 3.3 "regra de validação" e 3.4 "restrições de implementação")
 # Implementação: project/state/task-001-migracao-stack/handoff-43-devops-media-guard.md
+# Correção SEC-P5-14 (comparação de prefixo case-insensitive): handoff-44-security-engineer-sec-p5-03-fechamento.md
 #
 # O QUE ISTO PROTEGE: um editor autenticado (token OAuth `public_repo` do Decap CMS) publica
 # um ficheiro na media library (`public/images/uploads/`) servida na mesma origem que `/admin`.
@@ -76,6 +77,7 @@ jobs:
           const BASE_SHA = process.env.BASE_SHA;
           const HEAD_SHA = process.env.HEAD_SHA;
           const UPLOADS_PREFIX = 'public/images/uploads/';
+          const UPLOADS_PREFIX_LOWER = UPLOADS_PREFIX.toLowerCase();
           const MAX_SIZE = 5000000; // 5.000.000 bytes — mesmo valor de media_library.max_file_size em config.yml
           const NAME_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,99}\.(jpg|jpeg|png|webp|gif|avif)$/i;
           const DENY_HINTS = ['.svg', '.svgz', '.htm', '.html', '.xhtml', '.xml'];
@@ -142,7 +144,28 @@ jobs:
 
           const uploadFiles = changedFiles.filter((f) => f.startsWith(UPLOADS_PREFIX));
 
-          if (uploadFiles.length === 0) {
+          // SEC-P5-14: `startsWith` sobre o caminho exato deixa passar sem inspeção qualquer
+          // variante de maiúsculas/minúsculas do prefixo (ex.: "public/images/Uploads/x.svg"),
+          // que o GitHub trata como caminho diferente mas que o `next.config.mjs` (que também
+          // faz matching de caminho case-sensitive) NÃO protege com a CSP restrita — ficaria
+          // servido sob a CSP global permissiva. Em vez de normalizar silenciosamente para
+          // minúsculas e validar na mesma (o que esconderia o problema do autor do PR),
+          // detetamos o caso ambíguo — casa em minúsculas mas não byte a byte — e recusamos
+          // explicitamente, com mensagem própria a pedir a correção do caminho.
+          const caseMismatchFiles = changedFiles.filter(
+            (f) => !f.startsWith(UPLOADS_PREFIX) && f.toLowerCase().startsWith(UPLOADS_PREFIX_LOWER)
+          );
+
+          for (const file of caseMismatchFiles) {
+            fail(
+              `${file}: o caminho corresponde a "${UPLOADS_PREFIX}" ignorando maiúsculas/minúsculas, ` +
+                `mas não byte a byte. Só é aceite exatamente "${UPLOADS_PREFIX}" (tudo em minúsculas). ` +
+                'Renomeie a pasta/ficheiro para usar exatamente esse caminho e volte a submeter — não é ' +
+                'permitido contornar esta validação alterando a capitalização do caminho.'
+            );
+          }
+
+          if (uploadFiles.length === 0 && failures.length === 0) {
             console.log('media-guard: nenhuma alteração sob public/images/uploads/ neste PR. PASS.');
             process.exit(0);
           }
