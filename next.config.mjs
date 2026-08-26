@@ -159,6 +159,13 @@ const nextConfig = {
         //     `github.com` cobre a troca de código do próprio popup OAuth;
         //     `objects.githubusercontent.com` é onde o GitHub redireciona
         //     downloads de ficheiros grandes do repositório.
+        //   - connect-src blob:: o Decap faz `fetch()` de URLs blob: para
+        //     o backup local de rascunhos (`persistLocalDraftBackup`,
+        //     IndexedDB) — sem isto, guardar uma entrada com ficheiro
+        //     anexado falha em silêncio com "TypeError: Failed to fetch"
+        //     (só visível na consola, não no separador Network, porque a
+        //     CSP bloqueia antes do pedido sair). img-src já tinha blob:
+        //     para pré-visualização; connect-src faltava.
         //   - img-src avatars.githubusercontent.com: avatar do utilizador
         //     autenticado, mostrado pela UI do Decap.
         //   - Continua SEM nenhum CDN de terceiros em script-src (nunca
@@ -179,7 +186,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https://avatars.githubusercontent.com",
               "font-src 'self' data:",
-              "connect-src 'self' https://api.github.com https://github.com https://objects.githubusercontent.com",
+              "connect-src 'self' blob: https://api.github.com https://github.com https://objects.githubusercontent.com",
               "frame-src 'none'",
               "object-src 'none'",
               "base-uri 'self'",
