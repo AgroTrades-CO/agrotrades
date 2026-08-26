@@ -3,8 +3,8 @@
     {
       "nome": "Cipriano",
       "cargo": {
-        "pt": "Cargo Exemplo",
-        "en": "Example Role"
+        "pt": "CEO",
+        "en": "CEO"
       },
       "foto": "/images/team/placeholder.svg",
       "frase": {
@@ -28,15 +28,13 @@
           "pt": "Parcerias Estratégicas",
           "en": "Strategic Partnerships"
         }
-      ],
-      "cargo.pt": "CEO",
-      "cargo.en": "CEO"
+      ]
     },
     {
       "nome": "Nome Exemplo 2",
       "cargo": {
-        "pt": "Cargo Exemplo",
-        "en": "Example Role"
+        "pt": "Maquinista",
+        "en": "Worker"
       },
       "foto": "/images/team/placeholder.svg",
       "frase": {
@@ -52,19 +50,15 @@
           "pt": "Operações de Campo",
           "en": "Field Operations"
         }
-      ],
-      "cargo.pt": "Maquinista",
-      "cargo.en": "Worker"
+      ]
     },
     {
       "nome": "Nome Exemplo 3",
       "cargo": {
-        "pt": "Cargo Exemplo",
-        "en": "Example Role"
+        "pt": "Vendedor",
+        "en": "Saler"
       },
-      "foto": "/images/team/placeholder.svg",
-      "cargo.pt": "Vendedor",
-      "cargo.en": "Saler"
+      "foto": "/images/team/placeholder.svg"
     }
   ]
 }
