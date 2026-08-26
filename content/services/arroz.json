@@ -63,13 +63,13 @@
         "en": "Harvest & quality"
       },
       "text": {
-        "pt": "Colheita mecanizada no momento certo de maturação, seguida de secagem e controlo de qualidade para garantir arroz consistente para o mercado local e regional em Nampula.",
-        "en": "Mechanised harvesting at the right moment of maturity, followed by drying and quality control to ensure consistent rice for local and regional markets in Nampula."
+        "pt": "Colheita mecanizada no momento certo de maturação, seguida de secagem e controlo de qualidade para garantir arroz consistente para o mercado local e regional.",
+        "en": "Mechanised harvesting at the right moment of maturity, followed by drying and quality control to ensure consistent rice for local and regional markets."
       },
       "visible": true
     }
   ],
-  "bannerImage": "/images/services/arroz/banner.svg",
+  "bannerImage": "/images/uploads/photo-1586201375761-83865001e31c.avif",
   "gallery": [
     {
       "image": "/images/services/arroz/gallery-1.svg",
@@ -111,7 +111,7 @@
   },
   "id": "arroz",
   "homeBlurb": {
-    "pt": "Cultivo e produção de arroz de qualidade no Distrito de Moma, Província de Nampula e vendido na Cidade de Nampula.",
+    "pt": "Cultivo e produção de arroz de qualidade no Distrito de Moma, Província de Nampula",
     "en": "Quality rice cultivation and production in the Moma District, Nampula Province."
   },
   "description": {
