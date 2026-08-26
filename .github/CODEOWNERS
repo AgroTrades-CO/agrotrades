@@ -1,0 +1,32 @@
+# CODEOWNERS — SEC-P5-03 / SEC-P5-09 (task-001-migracao-stack, Fase 5)
+#
+# Especificação: project/state/task-001-migracao-stack/handoff-42-architect-sec-p5-03-ci.md
+#   (secções 3.2 "superfície e fronteira de confiança", 3.5 "configuração de P2/P3")
+# Implementação: project/state/task-001-migracao-stack/handoff-43-devops-media-guard.md
+#
+# Esta é a peça P3 do desenho: sem ela, o workflow P1 (.github/workflows/media-guard.yml)
+# é anulável por um único PR que reescreve o próprio workflow ao mesmo tempo que introduz o
+# ficheiro malicioso — porque em `pull_request` a definição do workflow vem do PR. P3 é o que
+# tira poder de auto-fusão de um editor sobre `.github/**` e sobre todo o código-fonte.
+#
+# GitHub CODEOWNERS não tem "negação" — vale sempre a ÚLTIMA regra que faz match do caminho
+# (comportamento confirmado empiricamente, ver handoff-43, secção VALIDATIONS — se essa secção
+# indicar que a verificação ainda está pendente, TRATA ESTE FICHEIRO COMO NÃO VALIDADO até lá).
+# Por isso a ordem das regras abaixo é um contrato, não estética:
+#   1. Regra geral `*` cobre TODO o repositório e é atribuída ao dono.
+#   2. Duas exceções, sem dono, DEPOIS da regra geral, para a única superfície que o Decap
+#      publica sozinho sem revisão humana: `content/**` e `public/images/uploads/**`. Aqui quem
+#      faz o papel de revisor é o required check `media-guard`
+#      (.github/workflows/media-guard.yml), não uma pessoa.
+#
+# Alargar a superfície sem dono (as duas linhas finais) é uma decisão de arquitetura, não uma
+# configuração — não acrescentar novas exceções aqui sem passar pelo software-architect.
+#
+# 1. Regra geral — todo o repositório, dono do projeto.
+* @virgilio-24
+
+# 2. Exceções — superfície auto-fundível pelo Decap CMS, sem dono humano, de propósito.
+#    Protegida em alternativa pelo required check "media-guard" (uploads) e pela ausência de
+#    código executável em content/ (apenas dados YAML/Markdown consumidos em build).
+/content/
+/public/images/uploads/

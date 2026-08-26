@@ -1,0 +1,220 @@
+# media-guard — SEC-P5-03 / SEC-P5-09 (task-001-migracao-stack, Fase 5)
+#
+# Especificação: project/state/task-001-migracao-stack/handoff-42-architect-sec-p5-03-ci.md
+#   (secções 3.3 "regra de validação" e 3.4 "restrições de implementação")
+# Implementação: project/state/task-001-migracao-stack/handoff-43-devops-media-guard.md
+#
+# O QUE ISTO PROTEGE: um editor autenticado (token OAuth `public_repo` do Decap CMS) publica
+# um ficheiro na media library (`public/images/uploads/`) servida na mesma origem que `/admin`.
+# Um SVG (ou HTML/XML disfarçado de imagem) com script ativo, aberto por outro editor, pode
+# ler o `localStorage` dessa origem e exfiltrar o token OAuth desse outro editor. Este workflow
+# é o único controlo que atua no ponto que o editor não controla: o merge para `main`.
+#
+# ESTE FICHEIRO É INEFICAZ SOZINHO. Em `pull_request`, a definição deste workflow vem do
+# próprio PR — um editor com escrita pode alterar este ficheiro e o SVG no mesmo PR, mantendo
+# o nome do check, e o check "passa". O que impede isso é `.github/CODEOWNERS` (P3) com
+# "Require review from Code Owners" ligado sobre `/.github/**`, obrigatório em conjunto com
+# este workflow (P1) e com o required status check em `main` (P2). Ver handoff-42, ISSUES 2.
+#
+# NOME DO JOB — CONTRATO, NÃO RENOMEAR:
+#   job: media-guard
+# É esta string (não o nome do workflow) que tem de ser registada como required status check
+# na proteção do branch `main`. Renomear o job desliga o controlo e bloqueia todos os merges em
+# simultâneo (um required check que deixa de reportar bloqueia o PR para sempre).
+#
+# Regras de implementação que este ficheiro não pode violar (handoff-42, secção 3.4):
+#   - evento `pull_request`, NUNCA `pull_request_target` (esse corre com segredos do repo base
+#     em código vindo do PR — seria o melhor vetor de comprometimento do repositório);
+#   - `permissions: contents: read` e nada mais — o check não escreve;
+#   - sem `paths:` no trigger e sem `if:` que salte o job — o job corre sempre e termina em
+#     sucesso imediato se o PR não tocar em `public/images/uploads/` (um required check que não
+#     reporta bloqueia PRs para sempre, incluindo os do dono — handoff-42, ISSUES 1);
+#   - nenhum código vindo do PR é executado: a lógica de validação vive inteiramente dentro
+#     deste ficheiro (heredoc Node abaixo), não em `npm ci` + script do repositório, nem em
+#     dependências instaladas a partir do `package.json` do PR;
+#   - ações de terceiros fixadas por SHA, nunca por tag (actions/checkout@v4.2.2 abaixo).
+
+name: media-guard
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+
+permissions:
+  contents: read
+
+jobs:
+  media-guard:
+    name: media-guard
+    runs-on: ubuntu-latest
+    steps:
+      # fetch-depth: 0 garante que o histórico completo do commit de merge (que inclui ambos
+      # os pais, base e head) está disponível para calcular o merge-base no passo seguinte.
+      # Não executa nenhum código do repositório — apenas obtém a árvore de ficheiros para
+      # inspeção (diff de nomes + leitura de bytes), o que é precisamente o objeto deste job.
+      - name: Checkout (merge ref, histórico completo)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Validar ficheiros em public/images/uploads/
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          node <<'MEDIA_GUARD_EOF'
+          'use strict';
+          const { execFileSync } = require('node:child_process');
+          const fs = require('node:fs');
+
+          const BASE_SHA = process.env.BASE_SHA;
+          const HEAD_SHA = process.env.HEAD_SHA;
+          const UPLOADS_PREFIX = 'public/images/uploads/';
+          const MAX_SIZE = 5000000; // 5.000.000 bytes — mesmo valor de media_library.max_file_size em config.yml
+          const NAME_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,99}\.(jpg|jpeg|png|webp|gif|avif)$/i;
+          const DENY_HINTS = ['.svg', '.svgz', '.htm', '.html', '.xhtml', '.xml'];
+
+          function isPng(buf) {
+            return buf.length >= 4 && buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47;
+          }
+          function isJpeg(buf) {
+            return buf.length >= 3 && buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff;
+          }
+          function isGif(buf) {
+            if (buf.length < 6) return false;
+            const sig = buf.toString('ascii', 0, 6);
+            return sig === 'GIF87a' || sig === 'GIF89a';
+          }
+          function isWebp(buf) {
+            return (
+              buf.length >= 12 &&
+              buf.toString('ascii', 0, 4) === 'RIFF' &&
+              buf.toString('ascii', 8, 12) === 'WEBP'
+            );
+          }
+          function isAvif(buf) {
+            return buf.length >= 12 && buf.toString('ascii', 4, 12) === 'ftypavif';
+          }
+
+          const SIGNATURE_CHECK = {
+            png: isPng,
+            jpg: isJpeg,
+            jpeg: isJpeg,
+            gif: isGif,
+            webp: isWebp,
+            avif: isAvif,
+          };
+
+          function fail(msg) {
+            failures.push(msg);
+          }
+
+          const failures = [];
+
+          if (!BASE_SHA || !HEAD_SHA) {
+            console.error('media-guard: BASE_SHA/HEAD_SHA em falta no contexto do evento pull_request.');
+            process.exit(1);
+          }
+
+          let diffOutput;
+          try {
+            diffOutput = execFileSync(
+              'git',
+              ['diff', '--diff-filter=ACMR', '-M', '-C', '--name-only', `${BASE_SHA}...${HEAD_SHA}`],
+              { encoding: 'utf8' }
+            );
+          } catch (err) {
+            console.error('media-guard: falha ao calcular o diff contra o merge-base.');
+            console.error(String(err && err.message ? err.message : err));
+            process.exit(1);
+          }
+
+          const changedFiles = diffOutput
+            .split('\n')
+            .map((line) => line.trim())
+            .filter(Boolean);
+
+          const uploadFiles = changedFiles.filter((f) => f.startsWith(UPLOADS_PREFIX));
+
+          if (uploadFiles.length === 0) {
+            console.log('media-guard: nenhuma alteração sob public/images/uploads/ neste PR. PASS.');
+            process.exit(0);
+          }
+
+          for (const file of uploadFiles) {
+            const rel = file.slice(UPLOADS_PREFIX.length);
+
+            const pathOk = rel.length > 0 && !rel.includes('/') && !rel.includes('..') && !rel.startsWith('.');
+            if (!pathOk) {
+              fail(
+                `${file}: caminho inválido. Só é permitido public/images/uploads/<nome-de-ficheiro>, ` +
+                  'sem subdiretórios, sem "..", sem nome iniciado por ponto.'
+              );
+              continue;
+            }
+
+            const match = rel.match(NAME_RE);
+            if (!match) {
+              const lower = rel.toLowerCase();
+              const hint = DENY_HINTS.find((ext) => lower.endsWith(ext));
+              fail(
+                `${file}: extensão/nome não permitido. Só são aceites .jpg, .jpeg, .png, .webp, .gif, .avif.` +
+                  (hint
+                    ? ` "${hint}" não é uma imagem raster suportada.`
+                    : '') +
+                  ' Converta para PNG/JPG/WebP e volte a carregar.'
+              );
+              continue;
+            }
+
+            const ext = match[1].toLowerCase();
+
+            if (!fs.existsSync(file)) {
+              fail(`${file}: ficheiro não encontrado no checkout (estado inesperado do PR).`);
+              continue;
+            }
+
+            const stat = fs.statSync(file);
+            if (!stat.isFile()) {
+              fail(`${file}: não é um ficheiro regular.`);
+              continue;
+            }
+            if (stat.size > MAX_SIZE) {
+              fail(`${file}: ${stat.size} bytes excede o limite de ${MAX_SIZE} bytes (5 MB). Reduza o tamanho da imagem.`);
+              continue;
+            }
+
+            const buf = fs.readFileSync(file);
+            const sigCheck = SIGNATURE_CHECK[ext];
+            if (!sigCheck || !sigCheck(buf)) {
+              fail(
+                `${file}: os bytes iniciais do ficheiro não correspondem à extensão ".${ext}" declarada ` +
+                  '(assinatura inválida). Isto pode indicar um ficheiro disfarçado de imagem (ex.: SVG/HTML ' +
+                  'com extensão trocada). Converta para PNG/JPG/WebP genuíno e volte a carregar.'
+              );
+              continue;
+            }
+
+            console.log(`media-guard: OK — ${file} (${ext}, ${stat.size} bytes)`);
+          }
+
+          if (failures.length > 0) {
+            console.error('\nmedia-guard: FALHOU. Ficheiro(s) rejeitado(s) em public/images/uploads/:\n');
+            for (const msg of failures) {
+              console.error(' - ' + msg);
+            }
+            console.error(
+              '\nApenas imagens raster genuínas (PNG, JPG, WEBP, GIF, AVIF), até 5 MB, são aceites em ' +
+                'public/images/uploads/. Corrija o(s) ficheiro(s) e volte a submeter.'
+            );
+            process.exit(1);
+          }
+
+          console.log('\nmedia-guard: PASS — todos os ficheiros alterados em public/images/uploads/ foram validados.');
+          MEDIA_GUARD_EOF
