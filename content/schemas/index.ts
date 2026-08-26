@@ -71,8 +71,8 @@ export const localImagePath = z
   .string()
   .trim()
   .regex(
-    /^\/images\/[A-Za-z0-9][A-Za-z0-9._/-]*\.(svg|jpg|jpeg|png|webp)$/,
-    "o caminho tem de ser local e começar por '/images/' (ex.: '/images/services/arroz/banner.jpg'), com extensão svg/jpg/jpeg/png/webp — URLs externas não são permitidas (CSP img-src 'self')"
+    /^\/images\/[A-Za-z0-9][A-Za-z0-9._/-]*\.(svg|jpg|jpeg|png|webp|gif|avif)$/,
+    "o caminho tem de ser local e começar por '/images/' (ex.: '/images/services/arroz/banner.jpg'), com extensão svg/jpg/jpeg/png/webp/gif/avif — URLs externas não são permitidas (CSP img-src 'self')"
   )
   .refine((v) => !v.includes(".."), "o caminho não pode conter '..'");
 export type LocalImagePath = z.infer<typeof localImagePath>;

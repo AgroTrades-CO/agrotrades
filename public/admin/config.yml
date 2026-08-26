@@ -153,13 +153,14 @@ collections:
             widget: object
             required: false
             fields:
-              - { label: "Imagem", name: image, widget: image, required: true }
+              - { label: "Imagem", name: image, widget: image, required: false }
               - label: "Texto alternativo"
                 name: alt
                 widget: object
+                required: false
                 fields:
-                  - { label: "Português", name: pt, widget: string, required: true }
-                  - { label: "English", name: en, widget: string, required: true }
+                  - { label: "Português", name: pt, widget: string, required: false }
+                  - { label: "English", name: en, widget: string, required: false }
           - { label: "Layout (só com imagem)", name: layout, widget: select, options: [split, feature], required: false }
           - label: "Bullets (só com imagem)"
             name: bullets
@@ -273,20 +274,21 @@ collections:
                           - { label: "Português", name: pt, widget: string, required: true }
                           - { label: "English", name: en, widget: string, required: true }
 
-      # NOTA (verificar no teste manual, ver handoff-38 secção "COMO TESTAR
-      # LOCALMENTE"): content/site/stats.json é um ARRAY JSON no topo, não um
-      # objeto. `name: ""` no único campo de nível de topo é a convenção do
-      # Decap para "o ficheiro inteiro é este campo" em vez de aninhar sob
-      # uma chave. Confirmar, ao gravar uma alteração de teste, que o
-      # ficheiro resultante continua um array `[...]` e não passa a
-      # `{"": [...]}\` — caso contrário o build falha no Zod (statsSchema
-      # espera um array).
+      # BUG CORRIGIDO (achado ao testar /admin num browser real): a
+      # convenção `name: ""` para "o ficheiro inteiro é este campo" não
+      # funciona neste Decap 3.15.1 para coleções `file` — a lista aparecia
+      # sempre com 0 itens e o botão "+" não fazia nada, mesmo com dados
+      # reais no ficheiro. content/site/stats.json passou a ser um objeto
+      # `{"items": [...]}`, e o campo abaixo usa `name: items` para
+      # corresponder. `content/index.ts` lê `statsJson.items` (não o JSON
+      # bruto); `statsSchema` continua a validar um array normal, sem
+      # mudanças. Mesma correção aplicada a "team" e "locations" abaixo.
       - name: stats
         label: "Estatísticas (stats-bar)"
         file: content/site/stats.json
         fields:
           - label: "Estatísticas (exatamente 4)"
-            name: ""
+            name: items
             widget: list
             min: 4
             max: 4
@@ -387,14 +389,14 @@ collections:
                   - { label: "Português", name: pt, widget: text, required: true }
                   - { label: "English", name: en, widget: text, required: true }
 
-      # NOTA — mesma convenção `name: ""` explicada acima em "stats"; mesma
-      # verificação a fazer no teste manual (content/site/team.json é array).
+      # Mesma correção de "stats" acima — ver o comentário lá para o
+      # raciocínio completo. content/site/team.json é `{"items": [...]}`.
       - name: team
         label: "Equipa (Quem Somos)"
         file: content/site/team.json
         fields:
           - label: "Membros da equipa (o primeiro é o cartão destacado)"
-            name: ""
+            name: items
             widget: list
             min: 1
             fields:
@@ -523,14 +525,14 @@ collections:
               - { label: "Título (PT)", name: "title.pt", widget: string }
               - { label: "Título (EN)", name: "title.en", widget: string }
 
-      # NOTA — mesma convenção `name: ""` explicada acima em "stats"; mesma
-      # verificação a fazer no teste manual (content/site/locations.json é array).
+      # Mesma correção de "stats" acima — ver o comentário lá para o
+      # raciocínio completo. content/site/locations.json é `{"items": [...]}`.
       - name: locations
         label: "Localizações"
         file: content/site/locations.json
         fields:
           - label: "Localizações"
-            name: ""
+            name: items
             widget: list
             min: 1
             fields:

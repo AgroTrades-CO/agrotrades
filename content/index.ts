@@ -98,13 +98,13 @@ export const services = parseContent(
 
 export const nav = parseContent(navSchema, navJson, "content/site/nav.json");
 export const hero = parseContent(heroSchema, heroJson, "content/site/hero.json");
-export const stats = parseContent(statsSchema, statsJson, "content/site/stats.json");
+export const stats = parseContent(statsSchema, statsJson.items, "content/site/stats.json");
 export const about = parseContent(aboutSchema, aboutJson, "content/site/about.json");
 export const aboutPage = parseContent(aboutPageSchema, aboutPageJson, "content/site/aboutPage.json");
-export const team = parseContent(teamSchema, teamJson, "content/site/team.json");
+export const team = parseContent(teamSchema, teamJson.items, "content/site/team.json");
 export const campanha = parseContent(campanhaSchema, campanhaJson, "content/site/campanha.json");
 export const sections = parseContent(sectionsSchema, sectionsJson, "content/site/sections.json");
-export const locations = parseContent(locationsSchema, locationsJson, "content/site/locations.json");
+export const locations = parseContent(locationsSchema, locationsJson.items, "content/site/locations.json");
 export const contacts = parseContent(contactsSchema, contactsJson, "content/site/contacts.json");
 export const footer = parseContent(footerSchema, footerJson, "content/site/footer.json");
 export const meta = parseContent(metaSchema, metaJson, "content/site/meta.json");
