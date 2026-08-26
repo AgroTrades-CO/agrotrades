@@ -84,8 +84,20 @@ utilizador:
 - **Imagens e vídeo:** commitados no próprio repositório (media folder do Decap). Vídeo grande é
   má prática em Git — usar embed do YouTube em vez de commitar o binário.
 - **i18n:** routing por locale gerado no build (PT na raiz `/`, EN em `/en/`), não troca client-side.
+- **`og:image` (Fase 4):** mantém-se o logótipo atual (`images/logo.jpeg`) — decisão confirmada
+  pelo utilizador, sem imagem dedicada de partilha por agora. Pode ser revisitado no futuro.
 - **Fora de âmbito nesta migração:** formulário de contacto (recolheria dados pessoais, reclassifica
   a tarefa — ver secção seguinte). Mantém-se apenas o CTA WhatsApp.
+- **Adição de âmbito pós-Fase 1 (aprovada pelo utilizador):** nova página **"Quem Somos"** no menu
+  de navegação, com todo o texto institucional já existente (o que hoje está na secção "Sobre a
+  empresa" da homepage) **mais uma secção de Equipa** (nome, cargo, foto, frase curta opcional por
+  membro) que não existe no site atual. A secção "Sobre a empresa" da homepage mantém-se como está
+  hoje (resumo), passando a incluir um link "Saber mais" para a página completa — não é substituída.
+  Dados da equipa: arrancar com placeholders (2-3 membros de exemplo), a preencher depois pelo
+  utilizador via Decap CMS — não bloqueia a implementação. Isto não é uma decisão de arquitetura
+  nova: cabe no modelo de conteúdo já definido (mais uma coleção `team` + rota `/quem-somos`, campos
+  traduzíveis `{pt,en}` como as restantes). A incorporar nas Fases 2 (modelo de conteúdo) e 3
+  (rotas) do plano faseado, sem precisar de repetir o ciclo de arquitetura.
 - **`ux-ui-designer` não necessário** em nenhuma fase (paridade visual + UI própria do Decap).
 
 **Plano faseado (0–7), cada fase com entregável verificável e aprovação humana antes da seguinte;
