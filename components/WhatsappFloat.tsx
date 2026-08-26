@@ -1,11 +1,10 @@
+import { contacts } from "@/content";
 import { IconWhatsapp } from "./icons";
-
-const WHATSAPP_URL = "https://wa.me/258841031220";
 
 export function WhatsappFloat() {
   return (
     <a
-      href={WHATSAPP_URL}
+      href={contacts.whatsapp.url}
       target="_blank"
       rel="noopener"
       className="whatsapp-float"

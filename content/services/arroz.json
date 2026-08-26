@@ -1,0 +1,126 @@
+{
+  "id": "arroz",
+  "icon": "wheat",
+  "title": {
+    "pt": "Produção de arroz",
+    "en": "Rice Production"
+  },
+  "summary": {
+    "pt": "Cultivo e produção de arroz de qualidade no Distrito de Moma, com técnicas modernas e sustentáveis para maximizar a colheita e contribuir para a segurança alimentar.",
+    "en": "Quality rice cultivation in the Moma District using modern sustainable techniques to maximise harvests and contribute to food security."
+  },
+  "description": {
+    "pt": "A AGRO TRADES dedica-se ao cultivo intensivo de arroz no Distrito de Moma, Nampula, aproveitando as condições climáticas e hidrográficas favoráveis da região. Utilizamos variedades de alto rendimento combinadas com práticas agronómicas modernas, incluindo controlo rigoroso de água, fertilização adequada e gestão integrada de pragas. O nosso processo garante arroz de elevada qualidade, destinado tanto ao mercado local como ao abastecimento regional, contribuindo directamente para a soberania alimentar de Moçambique.",
+    "en": "AGRO TRADES focuses on intensive rice cultivation in the Moma District, Nampula, leveraging the region's favourable climatic and hydrographic conditions. We use high-yield varieties combined with modern agronomic practices, including strict water management, proper fertilisation and integrated pest control. Our process ensures high-quality rice destined for both local and regional markets, directly contributing to Mozambique's food sovereignty."
+  },
+  "highlights": {
+    "pt": [
+      "Variedades de alto rendimento adaptadas ao clima local",
+      "Gestão integrada de água e fertilização",
+      "Controlo de pragas com métodos sustentáveis",
+      "Colheita mecanizada para maior eficiência",
+      "Contribuição directa para a segurança alimentar nacional"
+    ],
+    "en": [
+      "High-yield varieties adapted to local climate",
+      "Integrated water and fertilisation management",
+      "Sustainable pest control methods",
+      "Mechanised harvesting for greater efficiency",
+      "Direct contribution to national food security"
+    ]
+  },
+  "homeBlurb": {
+    "pt": "Cultivo e produção de arroz de qualidade no Distrito de Moma, Província de Nampula.",
+    "en": "Quality rice cultivation and production in the Moma District, Nampula Province."
+  },
+  "bannerImage": "/images/services/arroz/banner.svg",
+  "bannerImageAlt": {
+    "pt": "Ilustração de campos de arroz da AGRO TRADES em tons de verde",
+    "en": "Illustration of AGRO TRADES rice fields in green tones"
+  },
+  "sections": [
+    {
+      "icon": "wheat",
+      "title": {
+        "pt": "Variedades e sementeira",
+        "en": "Varieties & sowing"
+      },
+      "text": {
+        "pt": "Selecionamos variedades de alto rendimento adaptadas ao clima de Moma e conduzimos a sementeira com densidade calculada para maximizar a germinação e o vigor inicial das plantas.",
+        "en": "We select high-yield varieties adapted to Moma's climate and carry out sowing with calculated density to maximise germination and early plant vigour."
+      },
+      "image": {
+        "image": "/images/services/arroz/gallery-1.svg",
+        "alt": {
+          "pt": "Ilustração de parcelas de arroz alagadas",
+          "en": "Illustration of flooded rice plots"
+        }
+      }
+    },
+    {
+      "icon": "landPlot",
+      "title": {
+        "pt": "Gestão de água e solo",
+        "en": "Water & soil management"
+      },
+      "text": {
+        "pt": "Controlo rigoroso dos níveis de água nas parcelas alagadas, combinado com fertilização adequada e monitorização contínua do solo ao longo do ciclo de cultivo.",
+        "en": "Strict control of water levels in flooded plots, combined with proper fertilisation and continuous soil monitoring throughout the growing cycle."
+      },
+      "image": {
+        "image": "/images/services/arroz/gallery-2.svg",
+        "alt": {
+          "pt": "Ilustração de canais de irrigação em campo de arroz",
+          "en": "Illustration of irrigation channels in a rice field"
+        }
+      },
+      "layout": "feature",
+      "bullets": {
+        "pt": [
+          "Monitorização contínua dos níveis de água",
+          "Fertilização adequada a cada fase do ciclo",
+          "Solo avaliado regularmente para ajustar o plano de cultivo"
+        ],
+        "en": [
+          "Continuous monitoring of water levels",
+          "Proper fertilisation at each stage of the cycle",
+          "Soil regularly assessed to adjust the growing plan"
+        ]
+      }
+    },
+    {
+      "icon": "support",
+      "title": {
+        "pt": "Colheita e qualidade",
+        "en": "Harvest & quality"
+      },
+      "text": {
+        "pt": "Colheita mecanizada no momento certo de maturação, seguida de secagem e controlo de qualidade para garantir arroz consistente para o mercado local e regional.",
+        "en": "Mechanised harvesting at the right moment of maturity, followed by drying and quality control to ensure consistent rice for local and regional markets."
+      }
+    }
+  ],
+  "gallery": [
+    {
+      "image": "/images/services/arroz/gallery-1.svg",
+      "alt": {
+        "pt": "Ilustração de parcelas de arroz alagadas",
+        "en": "Illustration of flooded rice plots"
+      }
+    },
+    {
+      "image": "/images/services/arroz/gallery-2.svg",
+      "alt": {
+        "pt": "Ilustração de canais de irrigação em campo de arroz",
+        "en": "Illustration of irrigation channels in a rice field"
+      }
+    },
+    {
+      "image": "/images/services/arroz/gallery-3.svg",
+      "alt": {
+        "pt": "Ilustração de grãos de arroz colhidos",
+        "en": "Illustration of harvested rice grains"
+      }
+    }
+  ]
+}

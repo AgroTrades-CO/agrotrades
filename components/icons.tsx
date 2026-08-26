@@ -150,11 +150,86 @@ export function IconLeaf(props: IconProps) {
   );
 }
 
+/** Mission (target). */
+export function IconTarget(props: IconProps) {
+  return (
+    <Base {...props}>
+      <circle cx="12" cy="12" r="8.5" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+    </Base>
+  );
+}
+
+/** Vision (eye). */
+export function IconEye(props: IconProps) {
+  return (
+    <Base {...props}>
+      <path d="M2 12s3.8-7 10-7 10 7 10 7-3.8 7-10 7-10-7-10-7Z" />
+      <circle cx="12" cy="12" r="3" />
+    </Base>
+  );
+}
+
+/** Innovation (lightning bolt). */
+export function IconBolt(props: IconProps) {
+  return (
+    <Base {...props}>
+      <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" strokeLinejoin="round" />
+    </Base>
+  );
+}
+
+/** Excellence (trophy). */
+export function IconTrophy(props: IconProps) {
+  return (
+    <Base {...props}>
+      <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" />
+      <path d="M7 5H4v2a3 3 0 0 0 3 3" />
+      <path d="M17 5h3v2a3 3 0 0 1-3 3" />
+      <path d="M12 14v3" />
+      <path d="M9 21h6" />
+      <path d="M9.5 17.5h5l.6 3.5h-6.2l.6-3.5Z" />
+    </Base>
+  );
+}
+
 export function IconArrowRight(props: IconProps) {
   return (
     <Base {...props}>
       <path d="M5 12h14" />
       <path d="M12 5l7 7-7 7" />
+    </Base>
+  );
+}
+
+/**
+ * Chrome de navegação (não é conteúdo editável via CMS) — export solto, fora
+ * do enum `iconName`/`icon-map.tsx`, por decisão do software-architect
+ * (handoff-26, Fase 2). Convenção do projeto: ícones de conteúdo -> enum
+ * `iconName` + `icon-map.tsx`; ícones estruturais de UI -> export solto.
+ */
+export function IconChevronDown(props: IconProps) {
+  return (
+    <Base width={12} height={12} {...props}>
+      <path d="M5 8l7 8 7-8" />
+    </Base>
+  );
+}
+
+/** Setas de navegação do slider do hero (FR-1, design-spec-fase3 1.3). */
+export function IconChevronLeft(props: IconProps) {
+  return (
+    <Base width={20} height={20} {...props}>
+      <path d="M15 4l-8 8 8 8" />
+    </Base>
+  );
+}
+
+export function IconChevronRight(props: IconProps) {
+  return (
+    <Base width={20} height={20} {...props}>
+      <path d="M9 4l8 8-8 8" />
     </Base>
   );
 }

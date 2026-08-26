@@ -1,0 +1,9 @@
+{
+  "tag": { "pt": "Erro 404", "en": "Error 404" },
+  "title": { "pt": "Página não encontrada", "en": "Page not found" },
+  "text": {
+    "pt": "A página que procura não existe ou foi movida.",
+    "en": "The page you are looking for does not exist or has been moved."
+  },
+  "backHome": { "pt": "Voltar ao início", "en": "Back to home" }
+}

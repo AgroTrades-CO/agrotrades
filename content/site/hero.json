@@ -1,0 +1,52 @@
+{
+  "tag": { "pt": "Empresa Agrícola Moçambicana", "en": "Mozambican Agricultural Company" },
+  "titleLine1": { "pt": "Soberania começa", "en": "Sovereignty starts" },
+  "titleLine2": { "pt": "no prato.", "en": "on the plate." },
+  "motto": {
+    "pt": "\"Trabalhar a terra é criar riqueza para Moçambique\"",
+    "en": "\"Working the land is creating wealth for Mozambique\""
+  },
+  "text": {
+    "pt": "Somos uma empresa moçambicana dedicada à produção agrícola, com foco no arroz, cereais, legumes, mecanização agrícola e processamento industrial.",
+    "en": "We are a Mozambican company dedicated to agricultural production, focused on rice, cereals, vegetables, agricultural mechanisation and industrial processing."
+  },
+  "buttons": {
+    "whatsapp": { "pt": "Fale connosco no WhatsApp", "en": "Contact us on WhatsApp" },
+    "services": { "pt": "Ver serviços", "en": "Our services" }
+  },
+  "slider": {
+    "label": { "pt": "Destaques", "en": "Highlights" },
+    "previousLabel": { "pt": "Slide anterior", "en": "Previous slide" },
+    "nextLabel": { "pt": "Próximo slide", "en": "Next slide" },
+    "goToSlideLabel": { "pt": "Ir para o slide {n}", "en": "Go to slide {n}" },
+    "slides": [
+      {
+        "visible": true,
+        "type": "image",
+        "image": "/images/services/arroz/banner.svg",
+        "alt": {
+          "pt": "Campos de arroz da AGRO TRADES em Nampula",
+          "en": "AGRO TRADES rice fields in Nampula"
+        }
+      },
+      {
+        "visible": true,
+        "type": "image",
+        "image": "/images/services/mecanizacao/banner.svg",
+        "alt": {
+          "pt": "Mecanização agrícola da AGRO TRADES",
+          "en": "AGRO TRADES agricultural mechanisation"
+        }
+      },
+      {
+        "visible": true,
+        "type": "video",
+        "youtubeId": "dQw4w9WgXcQ",
+        "caption": {
+          "pt": "Vídeo institucional da AGRO TRADES (placeholder de teste — substituir por vídeo real via Decap CMS)",
+          "en": "AGRO TRADES institutional video (test placeholder — replace with real footage via Decap CMS)"
+        }
+      }
+    ]
+  }
+}

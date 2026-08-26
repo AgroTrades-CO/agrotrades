@@ -75,21 +75,97 @@ nav {
   border-radius: 2px; transition: all 0.3s;
 }
 
+/* ── NAV: dropdown "Serviços" (Fase 2) ── */
+.nav-services-item { position: relative; }
+.nav-services-trigger {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 500; color: var(--text-muted);
+  background: none; border: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 8px 14px; border-radius: 8px; transition: all 0.2s;
+}
+.nav-services-trigger:hover, .nav-services-trigger.active {
+  color: var(--green); background: var(--green-light);
+}
+.nav-services-chevron { transition: transform 0.2s; flex-shrink: 0; }
+
+.nav-services-panel {
+  display: none;
+  position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  z-index: 110;
+  background: white; border: 1px solid var(--border); border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12); padding: 12px;
+  min-width: 420px;
+}
+.nav-services-panel.open { display: block; }
+.nav-services-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(200px, 1fr)); gap: 4px;
+}
+.nav-services-link {
+  display: flex; align-items: center; gap: 10px; padding: 8px 10px;
+  border-radius: 8px; text-decoration: none; color: var(--text);
+  font-size: 13px; font-weight: 500; line-height: 1.3;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-services-link:hover, .nav-services-link:focus-visible {
+  background: var(--green-light); color: var(--green-dark);
+}
+.nav-services-thumb { border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+.nav-services-viewall {
+  display: block; grid-column: 1 / -1;
+  border-top: 1px solid var(--border); margin-top: 8px; padding-top: 12px;
+  color: var(--orange); font-weight: 600; font-size: 13px; text-decoration: none;
+}
+.nav-services-viewall:hover { color: var(--orange-dark); }
+
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
   display: flex; align-items: center;
   padding: var(--nav-h) 5% 0;
   position: relative; overflow: hidden;
+  /* Fallback visível antes do 1º slide pintar / se o slider falhar por
+     algum motivo — mesmo gradiente usado no overlay (design-spec-fase3 1.2). */
   background: linear-gradient(160deg, #0d3d06 0%, #1a5c10 40%, #2a7a1a 70%, #3d9e28 100%);
 }
 
-.hero-bg-pattern {
-  position: absolute; inset: 0; opacity: 0.06;
-  background-image: repeating-linear-gradient(
-    45deg, #fff 0, #fff 1px, transparent 0, transparent 50%
-  );
-  background-size: 30px 30px;
+/* ── HERO SLIDER (FR-1, design-spec-fase3 secção 1) ── */
+.hero-slider {
+  position: absolute; inset: 0; z-index: 0;
+}
+.hero-slide {
+  position: absolute; inset: 0;
+  opacity: 0; visibility: hidden;
+  transition: opacity 0.6s ease;
+}
+.hero-slide--active { opacity: 1; visibility: visible; z-index: 1; }
+.hero-slide-media { object-fit: cover; }
+iframe.hero-slide-media { width: 100%; height: 100%; border: 0; display: block; }
+.hero-slider-overlay {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(160deg, rgba(13,61,6,0.88) 0%, rgba(26,92,16,0.72) 40%, rgba(42,122,26,0.55) 100%);
+}
+.hero-slider-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 3;
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3);
+  color: white; cursor: pointer; transition: background 0.2s;
+}
+.hero-slider-arrow:hover { background: rgba(255,255,255,0.2); }
+.hero-slider-arrow--prev { left: 20px; }
+.hero-slider-arrow--next { right: 20px; }
+.hero-slider-dots {
+  position: absolute; bottom: 20px; left: 0; right: 0; z-index: 3;
+  display: flex; justify-content: center; gap: 8px;
+}
+.hero-slider-dot {
+  width: 9px; height: 9px; border-radius: 50%; padding: 0; border: none;
+  background: rgba(255,255,255,0.4); cursor: pointer; transition: background 0.2s, transform 0.2s;
+}
+.hero-slider-dot--active { background: var(--orange); transform: scale(1.2); }
+@media (max-width: 768px) {
+  .hero-slider-arrow { opacity: 0.55; width: 36px; height: 36px; }
 }
 
 .hero-content {
@@ -210,16 +286,34 @@ section { padding: 80px 5%; }
   content: ''; position: absolute; top: 0; left: 0; right: 0;
   height: 3px; background: linear-gradient(90deg, var(--green), var(--orange));
   transform: scaleX(0); transform-origin: left;
-  transition: transform 0.3s;
+  transition: transform 0.3s; z-index: 2;
 }
 .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
 .service-card:hover::before { transform: scaleX(1); }
+
+/* Cartão com imagem de capa (redesign): a imagem cola-se às margens do
+   cartão, o padding volta a aplicar-se só ao bloco de texto abaixo dela. */
+.service-card--with-cover { padding: 0; }
+.service-card-cover {
+  position: relative; width: 100%; height: 160px;
+  border-radius: 16px 16px 0 0; overflow: hidden;
+}
+.service-card-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.service-card-body { padding: 36px 28px 28px; display: flex; flex-direction: column; flex: 1; }
 
 .service-icon {
   width: 52px; height: 52px; border-radius: 12px;
   background: var(--green-light); display: flex; align-items: center;
   justify-content: center; font-size: 24px; margin-bottom: 16px;
   color: var(--green-dark);
+}
+/* Badge do ícone sobreposto ao canto inferior-esquerdo da imagem de capa:
+   segue a imagem no fluxo normal, mas sobe por cima dela com margem
+   negativa (metade da própria altura), criando o efeito de sobreposição. */
+.service-icon--badge {
+  background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  margin-top: -26px; margin-left: 20px; margin-bottom: 0;
+  position: relative; z-index: 1;
 }
 .service-card {
   display: flex; flex-direction: column;
@@ -279,6 +373,188 @@ section { padding: 80px 5%; }
   .sd-highlights-box { position: static; }
 }
 
+/* ── SERVICE DETAIL: hero com imagem de fundo (redesign) ── */
+.sd-hero {
+  padding: calc(var(--nav-h) + 60px) 5% 60px;
+  position: relative; overflow: hidden;
+  min-height: 380px; display: flex; align-items: flex-end;
+}
+@media (max-width: 768px) { .sd-hero { min-height: 320px; } }
+.sd-hero-image {
+  position: absolute; inset: 0; z-index: 0;
+  object-fit: cover; width: 100%; height: 100%;
+}
+.sd-hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(160deg, rgba(13,61,6,0.88) 0%, rgba(26,92,16,0.72) 40%, rgba(42,122,26,0.55) 100%);
+}
+.sd-hero .page-hero-content { position: relative; z-index: 2; }
+
+/* ── SERVICE DETAIL: descrição por secções temáticas (redesign) ── */
+.sd-sections { display: flex; flex-direction: column; gap: 24px; margin-top: 24px; }
+.sd-section-card {
+  border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px;
+}
+.sd-section-card--alt { background: var(--off-white); }
+.sd-section-card--base { background: white; }
+.sd-section-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+}
+.sd-section-icon {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: var(--green-light); color: var(--green-dark);
+  display: flex; align-items: center; justify-content: center;
+}
+.sd-section-card h3 { font-size: 15px; font-weight: 600; }
+.sd-section-card p {
+  font-size: 16px; color: var(--text-muted); line-height: 1.9;
+}
+
+/* ── SERVICE DETAIL: secções com imagem — "split"/"feature" (Fase 2) ── */
+.sd-section-split {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+}
+.sd-section-split-image {
+  aspect-ratio: 4 / 3; border-radius: 16px; border: 1px solid var(--border);
+  overflow: hidden;
+}
+.sd-section-split-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sd-section-split-text p {
+  font-size: 16px; color: var(--text-muted); line-height: 1.9;
+}
+/* Imagem sempre primeiro no DOM (ordem de leitura/mobile); o `order` só
+   move visualmente a coluna de texto no desktop, nunca a imagem. */
+.sd-section-split--reverse .sd-section-split-text { order: -1; }
+
+.sd-section-feature {
+  background: var(--green-light); border-radius: 20px; padding: 40px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+}
+.sd-section-feature-image {
+  aspect-ratio: 4 / 3; border-radius: 16px; overflow: hidden;
+  order: 2;
+}
+.sd-section-feature-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sd-section-feature-text { order: 1; }
+.sd-section-feature-title {
+  font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+  color: var(--green-dark); margin-bottom: 10px;
+}
+.sd-section-feature-text p {
+  font-size: 16px; color: var(--text-muted); line-height: 1.9;
+}
+
+.sd-section-bullets {
+  list-style: none; display: flex; flex-direction: column; gap: 8px;
+  margin-top: 14px;
+}
+.sd-section-bullets li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 15px; color: var(--text); line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .sd-section-split, .sd-section-feature { grid-template-columns: 1fr; }
+  .sd-section-split--reverse .sd-section-split-text { order: 0; }
+  .sd-section-feature-image, .sd-section-feature-text { order: 0; }
+}
+
+/* ── SERVICE DETAIL: outros serviços relacionados (Fase 2) ── */
+.sd-related-section { margin-top: 56px; }
+
+/* ── SERVICE DETAIL: galeria de imagens (redesign) ── */
+.sd-gallery-section { margin-top: 56px; }
+.sd-gallery-title { font-size: 1.4rem; margin-bottom: 8px; }
+.sd-gallery-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px; margin-top: 24px;
+}
+.sd-gallery-item {
+  aspect-ratio: 4 / 3; border-radius: 12px; border: 1px solid var(--border);
+  overflow: hidden;
+}
+.sd-gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.3s;
+}
+.sd-gallery-item:hover img { transform: scale(1.03); }
+
+/* ── VALUES (secção "O que nos guia" da página Quem Somos) ── */
+.pillar--value { text-align: center; }
+.pillar-icon-circle {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--green-light); color: var(--green-dark);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px;
+}
+
+/* ── TEAM: cartão destacado (redesign) ── */
+.team-featured {
+  max-width: 1100px; margin: 0 auto;
+  display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: center;
+  background: white; border: 1px solid var(--border); border-radius: 20px;
+  padding: 40px; box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+}
+@media (max-width: 640px) {
+  .team-featured { grid-template-columns: 1fr; text-align: center; }
+  .team-featured .about-tags { justify-content: center; }
+}
+.team-featured-photo {
+  width: 200px; height: 200px; border-radius: 50%; overflow: hidden;
+  border: 4px solid var(--green-light); margin: 0 auto;
+}
+.team-featured-photo img { width: 100%; height: 100%; object-fit: cover; }
+.team-featured-name {
+  font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700;
+}
+.team-featured-bio {
+  font-size: 15px; color: var(--text-muted); line-height: 1.8; margin: 14px 0 18px;
+}
+.team-grid--rest { margin-top: 32px; }
+.team-role--grid { text-transform: uppercase; font-size: 12px; letter-spacing: 0.04em; }
+.team-card .about-tags { justify-content: center; margin-top: 12px; }
+.team-card .about-tag {
+  font-size: 12px; padding: 4px 10px;
+}
+
+/* ── CAMPANHA (página /campanha) ── */
+.quote-block {
+  background: linear-gradient(135deg, #0d3d06, #1a5c10);
+  border-radius: 20px; padding: 48px; margin: 48px 0; text-align: center;
+}
+.quote-block blockquote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  color: white; font-style: italic; line-height: 1.5; margin-bottom: 16px;
+}
+.quote-block cite { color: var(--orange); font-size: 14px; font-style: normal; font-weight: 500; }
+
+.pillar-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px; margin-top: 32px;
+}
+.pillar {
+  background: white; border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px; text-align: center;
+}
+.pillar .icon { color: var(--green); margin-bottom: 12px; display: flex; justify-content: center; }
+.pillar h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+.pillar p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+.timeline { position: relative; padding-left: 40px; margin-top: 40px; }
+.timeline::before {
+  content: ''; position: absolute; left: 12px; top: 0; bottom: 0;
+  width: 2px; background: var(--green-light);
+}
+.timeline-item { position: relative; margin-bottom: 36px; }
+.timeline-item::before {
+  content: ''; position: absolute; left: -34px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--green); border: 2px solid white; box-shadow: 0 0 0 2px var(--green);
+}
+.timeline-item h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.timeline-item p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
 /* ── CAMPANHA BANNER ── */
 .campanha-banner {
   background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
@@ -332,6 +608,26 @@ section { padding: 80px 5%; }
   display: inline-flex; align-items: center; gap: 6px;
 }
 .about-tag svg { flex-shrink: 0; }
+
+/* ── TEAM (página "Quem Somos") ── */
+.team-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px; margin-top: 40px;
+}
+.team-card {
+  background: white; border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px; text-align: center;
+}
+.team-photo {
+  width: 96px; height: 96px; border-radius: 50%; overflow: hidden;
+  margin: 0 auto 16px; background: var(--green-light);
+}
+.team-photo img { width: 100%; height: 100%; object-fit: cover; }
+.team-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.team-role { font-size: 13px; color: var(--green-dark); font-weight: 500; margin-bottom: 10px; }
+.team-quote {
+  font-size: 13px; color: var(--text-muted); font-style: italic; line-height: 1.6;
+}
 
 /* ── LOCATIONS ── */
 .locations-grid {
@@ -459,4 +755,21 @@ footer ul a:hover { color: var(--orange); }
   .hero { min-height: auto; padding: calc(var(--nav-h) + 40px) 5% 60px; }
   .stats-bar { grid-template-columns: repeat(2, 1fr); }
   .stat-item:nth-child(2) { border-right: none; }
+
+  /* Dropdown "Serviços" vira expansão inline tipo acordeão dentro do menu
+     hambúrguer — sem overlay, sem miniaturas (design-spec-fase2 3b). */
+  .nav-services-item { position: static; }
+  .nav-services-trigger {
+    width: 100%; justify-content: space-between; padding: 8px 14px;
+  }
+  .nav-services-panel {
+    position: static; transform: none; box-shadow: none; border: none;
+    border-radius: 0; padding: 0 0 0 16px; min-width: 0;
+  }
+  .nav-services-grid { display: flex; flex-direction: column; gap: 0; }
+  .nav-services-link {
+    padding: 8px 0; font-size: 13px; border-radius: 0;
+  }
+  .nav-services-thumb { display: none; }
+  .nav-services-viewall { border-top: none; margin-top: 4px; padding-top: 8px; padding-left: 0; }
 }

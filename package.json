@@ -3,22 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/copy-decap-cms.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/copy-decap-cms.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "node scripts/copy-decap-cms.mjs"
   },
   "dependencies": {
+    "decap-cms": "3.15.1",
     "next": "16.3.2",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "zod": "4.4.3"
   },
   "devDependencies": {
-    "typescript": "7.0.2",
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "eslint": "^9.0.0",
-    "eslint-config-next": "16.3.2"
+    "eslint-config-next": "16.3.2",
+    "typescript": "7.0.2"
   }
 }

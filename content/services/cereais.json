@@ -1,0 +1,39 @@
+{
+  "id": "cereais",
+  "icon": "corn",
+  "title": { "pt": "Produção de cereais e legumes", "en": "Cereals & Vegetables" },
+  "summary": {
+    "pt": "Diversificação agrícola com produção de milho, feijão, amendoim e outros legumes e cereais essenciais para o consumo local e a comercialização.",
+    "en": "Agricultural diversification with maize, beans, peanuts and other essential cereals and vegetables for local consumption and trade."
+  },
+  "description": {
+    "pt": "Para além do arroz, a AGRO TRADES aposta numa produção diversificada que inclui milho, feijão, amendoim, gergelim e outros cultivos essenciais. Esta diversificação não só reduz os riscos associados à monocultura como assegura um abastecimento contínuo de alimentos básicos às comunidades locais. Trabalhamos com agricultores parceiros para expandir as áreas de cultivo e implementar rotação de culturas, melhorando a saúde do solo e a produtividade a longo prazo.",
+    "en": "Beyond rice, AGRO TRADES invests in diversified production including maize, beans, peanuts, sesame and other essential crops. This diversification not only reduces monoculture risks but ensures a continuous supply of staple foods to local communities. We work with partner farmers to expand cultivation areas and implement crop rotation, improving soil health and long-term productivity."
+  },
+  "highlights": {
+    "pt": [
+      "Milho, feijão, amendoim e gergelim",
+      "Rotação de culturas para saúde do solo",
+      "Parceria com agricultores locais",
+      "Sementes melhoradas de alto rendimento",
+      "Escoamento garantido para o mercado regional"
+    ],
+    "en": [
+      "Maize, beans, peanuts and sesame",
+      "Crop rotation for soil health",
+      "Partnership with local farmers",
+      "Improved high-yield seeds",
+      "Guaranteed outlet to regional markets"
+    ]
+  },
+  "homeTitle": { "pt": "Cereais e legumes", "en": "Cereals & Vegetables" },
+  "homeBlurb": {
+    "pt": "Produção diversificada de cereais e legumes para consumo local e comercialização.",
+    "en": "Diversified production of cereals and vegetables for local consumption and trade."
+  },
+  "bannerImage": "/images/services/cereais/banner.svg",
+  "bannerImageAlt": {
+    "pt": "Ilustração de grãos de cereais em tons de laranja e terra",
+    "en": "Illustration of cereal grains in orange and earth tones"
+  }
+}

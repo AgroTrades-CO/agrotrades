@@ -1,0 +1,11 @@
+{
+  "services": {
+    "tag": { "pt": "O que fazemos", "en": "What we do" },
+    "title": { "pt": "Os nossos serviços", "en": "Our services" },
+    "learnMore": { "pt": "Saiba mais", "en": "Learn more" }
+  },
+  "locations": {
+    "tag": { "pt": "Localização", "en": "Location" },
+    "title": { "pt": "Onde estamos", "en": "Where we are" }
+  }
+}

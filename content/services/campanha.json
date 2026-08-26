@@ -1,0 +1,35 @@
+{
+  "id": "campanha",
+  "icon": "calendar",
+  "title": { "pt": "Campanha agrícola 2025/2026", "en": "Agricultural Campaign 2025/2026" },
+  "summary": {
+    "pt": "Participação activa na campanha agrícola nacional, alinhada com as directivas do Governo moçambicano para o aumento da produção alimentar.",
+    "en": "Active participation in the national agricultural campaign, aligned with the Mozambican Government's directives to increase food production."
+  },
+  "description": {
+    "pt": "A AGRO TRADES participa activamente na Campanha Agrícola 2025/2026, respondendo ao apelo do Governo moçambicano para o aumento significativo da produção alimentar. A nossa participação abrange o alargamento das áreas cultivadas, o aumento da produtividade por hectare, e o apoio técnico a pequenos agricultores da região de Nampula. Estamos comprometidos com as metas nacionais de soberania alimentar e alinhados com as directivas presidenciais para o desenvolvimento do sector agrário.",
+    "en": "AGRO TRADES actively participates in the 2025/2026 Agricultural Campaign, responding to the Mozambican Government's call for a significant increase in food production. Our participation covers expanding cultivated areas, increasing productivity per hectare, and providing technical support to smallholder farmers in the Nampula region. We are committed to national food sovereignty goals and aligned with presidential directives for agricultural sector development."
+  },
+  "highlights": {
+    "pt": [
+      "Alargamento das áreas de cultivo",
+      "Apoio a pequenos agricultores",
+      "Alinhamento com metas governamentais",
+      "Foco na soberania alimentar",
+      "Relatórios de progresso periódicos"
+    ],
+    "en": [
+      "Expansion of cultivated areas",
+      "Support for smallholder farmers",
+      "Alignment with government targets",
+      "Focus on food sovereignty",
+      "Periodic progress reports"
+    ]
+  },
+  "homeTitle": { "pt": "Campanha 2025/2026", "en": "Campaign 2025/2026" },
+  "bannerImage": "/images/services/campanha/banner.svg",
+  "bannerImageAlt": {
+    "pt": "Ilustração de calendário representando a campanha agrícola",
+    "en": "Illustration of a calendar representing the agricultural campaign"
+  }
+}
