@@ -1,17 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { footer, hero, nav, services, type Lang } from "@/content";
-import { path } from "@/content/routes";
+import { footer, nav, services, visibleFooterServiceLinks, waLink, type Lang } from "@/content";
+import { path, type PageKey } from "@/content/routes";
 
-// Mesma seleção e ordem de serviços/links do footer original (index.html):
-// arroz -> /servicos, mecanização -> /servicos, moageira -> /servicos,
-// campanha -> /campanha.
-const FOOTER_SERVICE_LINKS = [
-  { id: "arroz", page: "services" as const },
-  { id: "mecanizacao", page: "services" as const },
-  { id: "moageira", page: "services" as const },
-  { id: "campanha", page: "campaign" as const },
-];
+// Caso especial de routing: "campanha" é um serviço normal (content/services)
+// mas o link do rodapé aponta para a página dedicada /campanha, não para a
+// listagem genérica de serviços. Decisão de rota, por isso fica no código —
+// o resto (quais serviços aparecem, ordem, visibilidade) é editorial (CMS).
+const FOOTER_SERVICE_PAGE_OVERRIDE: Partial<Record<string, PageKey>> = {
+  campanha: "campaign",
+};
 
 export function Footer({ lang }: { lang: Lang }) {
   const year = new Date().getFullYear();
@@ -22,6 +20,14 @@ export function Footer({ lang }: { lang: Lang }) {
     return (service.homeTitle ?? service.title)[lang];
   }
 
+  const navLinks = [
+    { key: "home", href: path("home", lang), label: nav.home[lang], visible: nav.home.visible },
+    { key: "services", href: path("services", lang), label: nav.services[lang], visible: nav.services.visible },
+    { key: "campaign", href: path("campaign", lang), label: nav.campaign[lang], visible: nav.campaign.visible },
+    { key: "contact", href: path("contact", lang), label: nav.contact[lang], visible: nav.contact.visible },
+    { key: "about", href: path("about", lang), label: nav.about[lang], visible: nav.about.visible },
+  ].filter((link) => link.visible);
+
   return (
     <footer>
       <div className="footer-grid">
@@ -29,14 +35,16 @@ export function Footer({ lang }: { lang: Lang }) {
           <div className="footer-logo">
             <Image src="/images/logo.png" alt="AGRO TRADES LDA" width={48} height={48} />
           </div>
-          <p className="footer-desc">{hero.text[lang]}</p>
+          <p className="footer-desc">{footer.description[lang]}</p>
         </div>
         <div>
           <h4>{footer.servicesHeading[lang]}</h4>
           <ul>
-            {FOOTER_SERVICE_LINKS.map(({ id, page: pageKey }) => (
-              <li key={id}>
-                <Link href={path(pageKey, lang)}>{serviceLabel(id)}</Link>
+            {visibleFooterServiceLinks.map(({ serviceId }) => (
+              <li key={serviceId}>
+                <Link href={path(FOOTER_SERVICE_PAGE_OVERRIDE[serviceId] ?? "services", lang)}>
+                  {serviceLabel(serviceId)}
+                </Link>
               </li>
             ))}
           </ul>
@@ -44,16 +52,27 @@ export function Footer({ lang }: { lang: Lang }) {
         <div>
           <h4>{footer.linksHeading[lang]}</h4>
           <ul>
-            <li><Link href={path("home", lang)}>{nav.home[lang]}</Link></li>
-            <li><Link href={path("services", lang)}>{nav.services[lang]}</Link></li>
-            <li><Link href={path("campaign", lang)}>{nav.campaign[lang]}</Link></li>
-            <li><Link href={path("contact", lang)}>{nav.contact[lang]}</Link></li>
-            <li><Link href={path("about", lang)}>{nav.about[lang]}</Link></li>
+            {navLinks.map((link) => (
+              <li key={link.key}>
+                <Link href={link.href}>{link.label}</Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
       <div className="footer-bottom">
-        <span>&copy; {year} {footer.legalCopy[lang]}</span>
+        <span>
+          &copy; {year} {footer.legalCopy[lang]}
+          {footer.signature.visible && (
+            <>
+              {" "}
+              by{" "}
+              <a href={waLink(footer.signature.whatsappNumber)} target="_blank" rel="noopener">
+                {footer.signature.name}
+              </a>
+            </>
+          )}
+        </span>
         <span>{footer.madeIn[lang]}</span>
       </div>
     </footer>

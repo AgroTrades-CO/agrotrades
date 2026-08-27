@@ -198,30 +198,35 @@ collections:
             name: home
             widget: object
             fields:
+              - { label: "Visível (menu e rodapé)", name: visible, widget: boolean, default: true }
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
           - label: "Serviços"
             name: services
             widget: object
             fields:
+              - { label: "Visível (menu e rodapé)", name: visible, widget: boolean, default: true }
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
           - label: "Campanha"
             name: campaign
             widget: object
             fields:
+              - { label: "Visível (menu e rodapé)", name: visible, widget: boolean, default: true }
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
           - label: "Contactos"
             name: contact
             widget: object
             fields:
+              - { label: "Visível (menu e rodapé)", name: visible, widget: boolean, default: true }
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
           - label: "Quem Somos"
             name: about
             widget: object
             fields:
+              - { label: "Visível (menu e rodapé)", name: visible, widget: boolean, default: true }
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
           - label: "\"Ver todos os serviços\""
@@ -548,6 +553,9 @@ collections:
                 fields:
                   - { label: "Português", name: pt, widget: string, required: true }
                   - { label: "English", name: en, widget: string, required: true }
+              - { label: "Telefone (opcional)", name: phone, widget: string, required: false }
+              - { label: "WhatsApp (opcional, formato internacional, ex.: +351912345678)", name: whatsapp, widget: string, required: false }
+              - { label: "Email (opcional)", name: email, widget: string, required: false }
 
       - name: campanha
         label: "Campanha (banner homepage + página /campanha)"
@@ -883,6 +891,25 @@ collections:
             fields:
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
+          - label: "Parágrafo por baixo do logótipo"
+            name: description
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
+          - label: "Serviços listados no rodapé (ordem = ordem aqui)"
+            name: serviceLinks
+            widget: list
+            fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
+              - label: "Serviço"
+                name: serviceId
+                widget: relation
+                collection: services
+                value_field: id
+                search_fields: [title.pt, id]
+                display_fields: [title.pt]
+                hint: "O rótulo mostrado vem do título do próprio serviço — edite-o na coleção Serviços."
           - label: "Texto legal, sem o ano"
             name: legalCopy
             widget: object
@@ -895,6 +922,13 @@ collections:
             fields:
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
+          - label: "Assinatura (\"by ...\", a seguir aos direitos reservados)"
+            name: signature
+            widget: object
+            fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
+              - { label: "Nome", name: name, widget: string, required: true }
+              - { label: "Número de WhatsApp (formato internacional, ex.: +351912345678)", name: whatsappNumber, widget: string, required: true }
 
       - name: meta
         label: "SEO / metadados por defeito"

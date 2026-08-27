@@ -107,6 +107,15 @@ export const sections = parseContent(sectionsSchema, sectionsJson, "content/site
 export const locations = parseContent(locationsSchema, locationsJson.items, "content/site/locations.json");
 export const contacts = parseContent(contactsSchema, contactsJson, "content/site/contacts.json");
 export const footer = parseContent(footerSchema, footerJson, "content/site/footer.json");
+
+for (const link of footer.serviceLinks) {
+  if (!services.some((s) => s.id === link.serviceId)) {
+    throw new Error(
+      `content/site/footer.json: "serviceLinks" referencia um serviço inexistente "${link.serviceId}". ` +
+        `Corrija o id (tem de bater certo com um id em content/services/*.json) antes de repetir o build.`
+    );
+  }
+}
 export const meta = parseContent(metaSchema, metaJson, "content/site/meta.json");
 export const notFoundContent = parseContent(notFoundSchema, notFoundJson, "content/site/notFound.json");
 export const servicesPage = parseContent(servicesPageSchema, servicesPageJson, "content/site/servicesPage.json");
@@ -169,6 +178,15 @@ export const visiblePhones = contacts.phones.filter((p) => p.visible);
 /** Emails visíveis da página de contactos. */
 export const visibleEmails = contacts.emails.filter((e) => e.visible);
 
+/** Referências de serviço visíveis na lista "Serviços" do rodapé, na ordem do ficheiro. */
+export const visibleFooterServiceLinks = footer.serviceLinks.filter((l) => l.visible);
+
+/** Constrói um link wa.me a partir de um número — só mantém dígitos, nunca escrito à mão. */
+export function waLink(number: string): string {
+  const digits = number.replace(/\D/g, "");
+  return `https://wa.me/${digits}`;
+}
+
 /**
  * Serviços relacionados no detalhe (Fase 2, design-spec-fase2 secção 2a):
  * os 3 próximos serviços na ORDEM CANÓNICA deste array `services` (definida
@@ -195,11 +213,13 @@ export type {
   ContentImage,
   Contacts,
   Footer,
+  FooterServiceLink,
   GalleryImage,
   Hero,
   HeroSlide,
   Location,
   Nav,
+  NavItem,
   NotFoundContent,
   Paragraph,
   PhoneEntry,

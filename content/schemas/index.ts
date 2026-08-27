@@ -254,17 +254,32 @@ export const servicesSchema = z
 
 // ── NAV ───────────────────────────────────────────────────────────────────
 
-export const navSchema = z.object({
-  home: bilingualString,
-  services: bilingualString,
-  campaign: bilingualString,
-  contact: bilingualString,
-  /** "Quem Somos" — conteúdo já preparado; a rota só é construída na Fase 3. */
-  about: bilingualString,
-  /** Rótulo do último item do dropdown "Serviços" (desktop) e da sublista mobile (Fase 2). */
-  servicesViewAll: bilingualString,
+/** Item de menu com visibilidade própria — usado tanto no cabeçalho como na
+ *  coluna "Links" do rodapé (mesma fonte, para nunca dessincronizar). */
+export const navItemSchema = z.object({
+  visible: visibleFlag,
+  pt: z.string().trim().min(1),
+  en: z.string().trim().min(1),
 });
+
+export const navSchema = z
+  .object({
+    home: navItemSchema,
+    services: navItemSchema,
+    campaign: navItemSchema,
+    contact: navItemSchema,
+    /** "Quem Somos" — conteúdo já preparado; a rota só é construída na Fase 3. */
+    about: navItemSchema,
+    /** Rótulo do último item do dropdown "Serviços" (desktop) e da sublista mobile (Fase 2).
+     *  Não é um item de menu por si só — não tem `visible` próprio. */
+    servicesViewAll: bilingualString,
+  })
+  .refine(
+    (nav) => [nav.home, nav.services, nav.campaign, nav.contact, nav.about].some((item) => item.visible),
+    "pelo menos um item do menu tem de estar visível — ligue 'Visível' em pelo menos um item de content/site/nav.json"
+  );
 export type Nav = z.infer<typeof navSchema>;
+export type NavItem = z.infer<typeof navItemSchema>;
 
 // ── HERO ──────────────────────────────────────────────────────────────────
 
@@ -380,6 +395,10 @@ export const teamMemberSchema = z.object({
   bio: bilingualString.optional(),
   /** Badges de especialidade (.about-tag). Traduzíveis, para consistência com o resto do schema. */
   badges: z.array(bilingualString).min(1).max(5).optional(),
+  /** Contactos opcionais — só aparecem no cartão se preenchidos no admin. */
+  phone: z.string().trim().min(1).optional(),
+  whatsapp: z.string().trim().min(1).optional(),
+  email: z.string().trim().email().optional(),
 });
 export type TeamMember = z.infer<typeof teamMemberSchema>;
 
@@ -539,12 +558,30 @@ export type Contacts = z.infer<typeof contactsSchema>;
 
 // ── FOOTER ───────────────────────────────────────────────────────────────
 
+/** Referência a um serviço real (coleção `services`) na lista "Serviços" do
+ *  rodapé. O rótulo vem sempre do próprio serviço (`homeTitle`/`title`) —
+ *  este item só guarda qual serviço mostrar, a ordem e a visibilidade. */
+export const footerServiceLinkSchema = z.object({
+  visible: visibleFlag,
+  serviceId: z.string().trim().min(1),
+});
+export type FooterServiceLink = z.infer<typeof footerServiceLinkSchema>;
+
 export const footerSchema = z.object({
   servicesHeading: bilingualString,
   linksHeading: bilingualString,
+  /** Parágrafo por baixo do logótipo — próprio, não reutiliza `hero.text`. */
+  description: bilingualString,
+  serviceLinks: z.array(footerServiceLinkSchema),
   /** Texto legal, sem o "© <ano>" — o ano é calculado em runtime. */
   legalCopy: bilingualString,
   madeIn: bilingualString,
+  /** Assinatura "by <nome>" a seguir aos direitos reservados, com link de WhatsApp. */
+  signature: z.object({
+    visible: visibleFlag,
+    name: z.string().trim().min(1),
+    whatsappNumber: z.string().trim().min(1),
+  }),
 });
 export type Footer = z.infer<typeof footerSchema>;
 

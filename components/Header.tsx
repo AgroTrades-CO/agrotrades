@@ -20,10 +20,10 @@ export function Header({ lang }: { lang: Lang }) {
   const servicesActive = pathname.startsWith(path("services", lang));
 
   const navLinksAfter = [
-    { href: path("campaign", lang), label: nav.campaign[lang] },
-    { href: path("contact", lang), label: nav.contact[lang] },
-    { href: path("about", lang), label: nav.about[lang] },
-  ];
+    { href: path("campaign", lang), label: nav.campaign[lang], visible: nav.campaign.visible },
+    { href: path("contact", lang), label: nav.contact[lang], visible: nav.contact.visible },
+    { href: path("about", lang), label: nav.about[lang], visible: nav.about.visible },
+  ].filter((link) => link.visible);
 
   const otherLangHref = alternatePath(pathname, lang);
 
@@ -63,18 +63,21 @@ export function Header({ lang }: { lang: Lang }) {
       </Link>
 
       <ul className={`nav-links${open ? " open" : ""}`}>
-        <li>
-          <Link href={path("home", lang)} className={pathname === path("home", lang) ? "active" : undefined}>
-            {nav.home[lang]}
-          </Link>
-        </li>
+        {nav.home.visible && (
+          <li>
+            <Link href={path("home", lang)} className={pathname === path("home", lang) ? "active" : undefined}>
+              {nav.home[lang]}
+            </Link>
+          </li>
+        )}
 
-        <li
-          className="nav-services-item"
-          ref={servicesLiRef}
-          onMouseEnter={() => setServicesOpen(true)}
-          onMouseLeave={() => setServicesOpen(false)}
-        >
+        {nav.services.visible && (
+          <li
+            className="nav-services-item"
+            ref={servicesLiRef}
+            onMouseEnter={() => setServicesOpen(true)}
+            onMouseLeave={() => setServicesOpen(false)}
+          >
           <button
             type="button"
             ref={servicesTriggerRef}
@@ -158,6 +161,7 @@ export function Header({ lang }: { lang: Lang }) {
             </Link>
           </div>
         </li>
+        )}
 
         {navLinksAfter.map((link) => (
           <li key={link.href}>

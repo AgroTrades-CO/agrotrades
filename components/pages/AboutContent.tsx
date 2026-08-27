@@ -1,6 +1,41 @@
 import Image from "next/image";
-import { about, aboutPage, visibleAboutTags, visibleFullText, visibleTeam, visibleValues, type Lang } from "@/content";
+import {
+  about,
+  aboutPage,
+  visibleAboutTags,
+  visibleFullText,
+  visibleTeam,
+  visibleValues,
+  waLink,
+  type Lang,
+  type TeamMember,
+} from "@/content";
 import { Icon } from "@/components/icon-map";
+import { IconWhatsapp } from "@/components/icons";
+
+// Só aparece se pelo menos um contacto tiver sido preenchido no admin.
+function TeamContacts({ member }: { member: TeamMember }) {
+  if (!member.phone && !member.whatsapp && !member.email) return null;
+  return (
+    <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
+      {member.phone && (
+        <a href={`tel:${member.phone}`} aria-label="Telefone">
+          <Icon name="handshake" width={16} height={16} />
+        </a>
+      )}
+      {member.whatsapp && (
+        <a href={waLink(member.whatsapp)} target="_blank" rel="noopener" aria-label="WhatsApp">
+          <IconWhatsapp width={16} height={16} />
+        </a>
+      )}
+      {member.email && (
+        <a href={`mailto:${member.email}`} aria-label="Email">
+          <Icon name="mapPin" width={16} height={16} />
+        </a>
+      )}
+    </div>
+  );
+}
 
 export function AboutContent({ lang }: { lang: Lang }) {
   const values = visibleValues(aboutPage);
@@ -84,6 +119,7 @@ export function AboutContent({ lang }: { lang: Lang }) {
                     ))}
                   </div>
                 )}
+                <TeamContacts member={team[0]} />
               </div>
             </div>
           )}
@@ -107,6 +143,7 @@ export function AboutContent({ lang }: { lang: Lang }) {
                       ))}
                     </div>
                   )}
+                  <TeamContacts member={member} />
                 </div>
               ))}
             </div>
