@@ -43,7 +43,15 @@
 
       Sem manual init: o próprio bundle lê /admin/config.yml e inicializa-se
       (comportamento documentado do decap-cms.js standalone).
+
+      /admin/vendor/locale-pt.js regista as traduções pt da própria interface
+      do Decap (botões, mensagens — os rótulos dos campos já vêm do
+      config.yml) via `CMS.registerLocale`. Tem de carregar DEPOIS do bundle
+      principal (que expõe `window.CMS`) e ANTES de `config.yml` terminar de
+      carregar (fetch é assíncrono — há sempre essa janela). Gerado pelo
+      mesmo script, nunca commitado.
     -->
     <script src="/admin/vendor/decap-cms/decap-cms.js"></script>
+    <script src="/admin/vendor/locale-pt.js"></script>
   </body>
 </html>

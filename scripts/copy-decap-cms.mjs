@@ -16,7 +16,7 @@
 // tamanho do deploy) nem os chunks duplicados `*.cms.js` (alias legado do
 // pacote que `decap-cms.js` nunca referencia — confirmado por inspeção do
 // bundle).
-import { existsSync, mkdirSync, readdirSync, copyFileSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, copyFileSync, rmSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -25,6 +25,15 @@ const projectRoot = join(__dirname, "..");
 
 const SRC_DIR = join(projectRoot, "node_modules", "decap-cms", "dist");
 const DEST_DIR = join(projectRoot, "public", "admin", "vendor", "decap-cms");
+const VENDOR_DIR = join(projectRoot, "public", "admin", "vendor");
+
+// Traduções pt do próprio interface do Decap (botões "Guardar"/"Publicar",
+// mensagens de erro, etc. — os RÓTULOS dos campos já vinham de config.yml,
+// isto traduz o resto da UI). `decap-cms-locales` é dependência transitiva
+// de `decap-cms` (fixada no lockfile, não precisa de entrada própria em
+// package.json). Gerado, tal como o bundle principal — nunca commitado.
+const LOCALE_SRC = join(projectRoot, "node_modules", "decap-cms-locales", "dist", "esm", "pt", "index.js");
+const LOCALE_DEST = join(VENDOR_DIR, "locale-pt.js");
 
 if (!existsSync(SRC_DIR)) {
   console.error(
@@ -62,4 +71,16 @@ for (const file of readdirSync(SRC_DIR)) {
   }
 }
 
-console.log(`[copy-decap-cms] ${copied} ficheiros copiados para public/admin/vendor/decap-cms/ (self-hosted, versão exata do package.json).`);
+if (existsSync(LOCALE_SRC)) {
+  const esm = readFileSync(LOCALE_SRC, "utf8");
+  // O ficheiro fonte é `const pt = {...}; export default pt;` — troca-se o
+  // `export default` (só válido em módulos ES) por um registo direto no
+  // objeto `CMS` global que o bundle principal expõe ao carregar.
+  const script = `${esm.replace(/export default pt;\s*$/, "")}\nif (typeof CMS !== "undefined") { CMS.registerLocale("pt", pt); }\n`;
+  writeFileSync(LOCALE_DEST, script);
+  copied += 1;
+} else {
+  console.warn(`[copy-decap-cms] Não encontrei ${LOCALE_SRC} — a interface do admin fica em inglês.`);
+}
+
+console.log(`[copy-decap-cms] ${copied} ficheiros copiados para public/admin/vendor/ (self-hosted, versão exata do package.json).`);

@@ -23,6 +23,12 @@ backend:
   base_url: http://localhost:3000
   auth_endpoint: api/auth
 
+# Traduz os textos da PRÓPRIA interface do Decap (botões, mensagens de erro,
+# fluxo de trabalho editorial) — os rótulos dos campos já vinham traduzidos
+# via `label:` em cada campo abaixo, isto trata do resto. Requer
+# `CMS.registerLocale("pt", ...)` ter corrido antes (ver public/admin/index.html).
+locale: pt
+
 # editorial_workflow (não commits diretos): restrição vinculativa 28 da
 # arquitetura — main fica protegida (PR + revisão de terceiro) antes de
 # existir um segundo colaborador. O editorial_workflow é o modo de
