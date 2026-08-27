@@ -4,7 +4,9 @@ import {
   campanha,
   contacts,
   hero,
-  sections,
+  homeAbout,
+  locationsHeading,
+  servicesHeading,
   services,
   visibleAboutTags,
   visibleHeroSlides,
@@ -85,7 +87,7 @@ export function HomeContent({ lang }: { lang: Lang }) {
               <span className="section-tag">{about.tag[lang]}</span>
               <h2 className="section-title">{about.title[lang]}</h2>
               <p className="section-sub">{about.summary[lang]}</p>
-              {about.extended.visible && (
+              {homeAbout.extended.visible && (
                 <p
                   style={{
                     fontSize: 16,
@@ -94,7 +96,7 @@ export function HomeContent({ lang }: { lang: Lang }) {
                     marginTop: 16,
                   }}
                 >
-                  {about.extended[lang]}
+                  {homeAbout.extended[lang]}
                 </p>
               )}
               <div className="about-tags">
@@ -105,7 +107,7 @@ export function HomeContent({ lang }: { lang: Lang }) {
                 ))}
               </div>
               <Link href={path("about", lang)} className="btn-saiba-mais" style={{ marginTop: 20 }}>
-                {about.learnMoreLabel[lang]} <IconArrowRight width={14} height={14} />
+                {homeAbout.learnMoreLabel[lang]} <IconArrowRight width={14} height={14} />
               </Link>
             </div>
             <div className="about-visual">
@@ -115,7 +117,7 @@ export function HomeContent({ lang }: { lang: Lang }) {
                   &mdash; {campanha.quote.author} &nbsp;&middot;&nbsp; {campanha.banner.title[lang]}
                 </p>
               </div>
-              {about.ceo.visible && (
+              {homeAbout.ceo.visible && (
                 <div
                   style={{
                     marginTop: 20,
@@ -142,11 +144,11 @@ export function HomeContent({ lang }: { lang: Lang }) {
                       flexShrink: 0,
                     }}
                   >
-                    {about.ceo.initials}
+                    {homeAbout.ceo.initials}
                   </div>
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: 15 }}>{about.ceo.name}</div>
-                    <div style={{ fontSize: 13, color: "var(--text-muted)" }}>{about.ceo.role[lang]}</div>
+                    <div style={{ fontWeight: 600, fontSize: 15 }}>{homeAbout.ceo.name}</div>
+                    <div style={{ fontSize: 13, color: "var(--text-muted)" }}>{homeAbout.ceo.role[lang]}</div>
                   </div>
                 </div>
               )}
@@ -168,8 +170,8 @@ export function HomeContent({ lang }: { lang: Lang }) {
             }}
           >
             <div>
-              <span className="section-tag">{sections.services.tag[lang]}</span>
-              <h2 className="section-title">{sections.services.title[lang]}</h2>
+              <span className="section-tag">{servicesHeading.tag[lang]}</span>
+              <h2 className="section-title">{servicesHeading.title[lang]}</h2>
             </div>
             <Link href={path("services", lang)} className="btn-primary">
               {hero.buttons.services[lang]}
@@ -201,8 +203,8 @@ export function HomeContent({ lang }: { lang: Lang }) {
       {/* LOCATIONS */}
       <section style={{ background: "white" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <span className="section-tag">{sections.locations.tag[lang]}</span>
-          <h2 className="section-title">{sections.locations.title[lang]}</h2>
+          <span className="section-tag">{locationsHeading.tag[lang]}</span>
+          <h2 className="section-title">{locationsHeading.title[lang]}</h2>
           <div className="locations-grid">
             {visibleLocations.map((location) => (
               <div className="location-card" key={location.id}>

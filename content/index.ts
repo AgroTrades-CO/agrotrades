@@ -18,21 +18,16 @@
 
 import { z } from "zod";
 
-import aboutJson from "./site/about.json";
-import aboutPageJson from "./site/aboutPage.json";
 import campanhaJson from "./site/campanha.json";
 import contactsJson from "./site/contacts.json";
 import footerJson from "./site/footer.json";
-import heroJson from "./site/hero.json";
-import locationsJson from "./site/locations.json";
+import homeJson from "./site/home.json";
 import metaJson from "./site/meta.json";
 import navJson from "./site/nav.json";
 import notFoundJson from "./site/notFound.json";
-import sectionsJson from "./site/sections.json";
+import quemSomosJson from "./site/quemSomos.json";
 import servicePageJson from "./site/servicePage.json";
 import servicesPageJson from "./site/servicesPage.json";
-import statsJson from "./site/stats.json";
-import teamJson from "./site/team.json";
 
 import apoioTecnico from "./services/apoio-tecnico.json";
 import arroz from "./services/arroz.json";
@@ -44,23 +39,18 @@ import moageira from "./services/moageira.json";
 import terras from "./services/terras.json";
 
 import {
-  aboutPageSchema,
-  aboutSchema,
   campanhaSchema,
   contactsSchema,
   footerSchema,
-  heroSchema,
-  locationsSchema,
+  homeSchema,
   metaSchema,
   navSchema,
   notFoundSchema,
+  quemSomosSchema,
   resolveSectionLayout,
-  sectionsSchema,
   servicePageSchema,
   servicesPageSchema,
   servicesSchema,
-  statsSchema,
-  teamSchema,
   youtubeEmbedUrl,
   type AboutPage,
   type BilingualString,
@@ -97,15 +87,46 @@ export const services = parseContent(
 );
 
 export const nav = parseContent(navSchema, navJson, "content/site/nav.json");
-export const hero = parseContent(heroSchema, heroJson, "content/site/hero.json");
-export const stats = parseContent(statsSchema, statsJson.items, "content/site/stats.json");
-export const about = parseContent(aboutSchema, aboutJson, "content/site/about.json");
-export const aboutPage = parseContent(aboutPageSchema, aboutPageJson, "content/site/aboutPage.json");
-export const team = parseContent(teamSchema, teamJson.items, "content/site/team.json");
+
+// "Homepage" no admin — hero + stats + cabeçalho de localizações + parte
+// exclusiva de "about" (2º parágrafo, CEO, "Saber mais").
+const home = parseContent(homeSchema, homeJson, "content/site/home.json");
+export const hero = home.hero;
+export const stats = home.stats.items;
+export const locationsHeading = home.locationsHeading;
+/** Campos de "about" exclusivos da Homepage — usados só em HomeContent.tsx. */
+export const homeAbout = home.about;
+
+// "Quem Somos" no admin — junta about (campos partilhados com a Homepage) +
+// aboutPage + team num só ficheiro. `about`/`aboutPage`/`team` mantêm a
+// mesma forma de sempre para os componentes não precisarem de mudar.
+const quemSomos = parseContent(quemSomosSchema, quemSomosJson, "content/site/quemSomos.json");
+export const about = {
+  tag: quemSomos.tag,
+  title: quemSomos.title,
+  summary: quemSomos.summary,
+  fullText: quemSomos.fullText,
+  tags: quemSomos.tags,
+};
+export const aboutPage = {
+  bannerImage: quemSomos.bannerImage,
+  bannerImageAlt: quemSomos.bannerImageAlt,
+  teamTag: quemSomos.teamTag,
+  teamHeading: quemSomos.teamHeading,
+  valuesTag: quemSomos.valuesTag,
+  valuesHeading: quemSomos.valuesHeading,
+  valuesVisible: quemSomos.valuesVisible,
+  values: quemSomos.values,
+};
+export const team = quemSomos.team.items;
+
 export const campanha = parseContent(campanhaSchema, campanhaJson, "content/site/campanha.json");
-export const sections = parseContent(sectionsSchema, sectionsJson, "content/site/sections.json");
-export const locations = parseContent(locationsSchema, locationsJson.items, "content/site/locations.json");
+
+// "Contactos" no admin absorve também as localizações (também mostradas na
+// Homepage) — `locations` mantém a mesma forma de sempre.
 export const contacts = parseContent(contactsSchema, contactsJson, "content/site/contacts.json");
+export const locations = contacts.locations;
+
 export const footer = parseContent(footerSchema, footerJson, "content/site/footer.json");
 
 for (const link of footer.serviceLinks) {
@@ -119,6 +140,8 @@ for (const link of footer.serviceLinks) {
 export const meta = parseContent(metaSchema, metaJson, "content/site/meta.json");
 export const notFoundContent = parseContent(notFoundSchema, notFoundJson, "content/site/notFound.json");
 export const servicesPage = parseContent(servicesPageSchema, servicesPageJson, "content/site/servicesPage.json");
+/** Cabeçalho da secção "Serviços" — usado na Homepage, na listagem e nos cartões de serviço. */
+export const servicesHeading = servicesPage.sectionHeading;
 export const servicePage = parseContent(servicePageSchema, servicePageJson, "content/site/servicePage.json");
 
 export { resolveSectionLayout, youtubeEmbedUrl };
@@ -224,7 +247,6 @@ export type {
   Paragraph,
   PhoneEntry,
   EmailEntry,
-  Sections,
   ResolvedSectionLayout,
   Service,
   ServicePage,

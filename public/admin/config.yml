@@ -187,6 +187,15 @@ collections:
               - { label: "English", name: en, widget: string, required: true }
 
   # ── CONTEÚDO DO SITE (ficheiros únicos, content/site/*.json) ─────────────
+  #
+  # Uma entrada por PÁGINA REAL do site (Homepage, Quem Somos, Serviços,
+  # Campanha, Contactos), não uma por ficheiro técnico — para que editar uma
+  # página não obrigue a saltar entre várias entradas do menu. Alguns campos
+  # são mostrados em mais do que uma página (ex.: o resumo "sobre a empresa"
+  # aparece na Homepage E em Quem Somos); nesses casos o campo vive na
+  # página onde faz mais sentido editorialmente e as outras páginas lêem o
+  # mesmo valor à distância — nunca duplicado (evita dessincronizar
+  # traduções). Assinalado com "hint" no campo de origem.
   - name: site
     label: "Site"
     files:
@@ -236,179 +245,217 @@ collections:
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
 
-      - name: hero
-        label: "Hero (topo da homepage)"
-        file: content/site/hero.json
+      - name: home
+        label: "Homepage"
+        file: content/site/home.json
         fields:
-          - label: "Etiqueta"
-            name: tag
+          - label: "Hero (topo da homepage)"
+            name: hero
             widget: object
             fields:
-              - { label: "Português", name: pt, widget: string }
-              - { label: "English", name: en, widget: string }
-          - label: "Título — linha 1"
-            name: titleLine1
-            widget: object
-            fields:
-              - { label: "Português", name: pt, widget: string }
-              - { label: "English", name: en, widget: string }
-          - label: "Título — linha 2"
-            name: titleLine2
-            widget: object
-            fields:
-              - { label: "Português", name: pt, widget: string }
-              - { label: "English", name: en, widget: string }
-          - label: "Lema/citação"
-            name: motto
-            widget: object
-            fields:
-              - { label: "Português", name: pt, widget: string }
-              - { label: "English", name: en, widget: string }
-          - label: "Texto"
-            name: text
-            widget: object
-            fields:
-              - { label: "Português", name: pt, widget: text }
-              - { label: "English", name: en, widget: text }
-          - label: "Botões"
-            name: buttons
-            widget: object
-            fields:
-              - label: "Botão WhatsApp"
-                name: whatsapp
+              - label: "Etiqueta"
+                name: tag
                 widget: object
                 fields:
                   - { label: "Português", name: pt, widget: string }
                   - { label: "English", name: en, widget: string }
-              - label: "Botão Serviços"
-                name: services
+              - label: "Título — linha 1"
+                name: titleLine1
                 widget: object
                 fields:
                   - { label: "Português", name: pt, widget: string }
                   - { label: "English", name: en, widget: string }
-          - label: "Slider de fundo"
-            name: slider
+              - label: "Título — linha 2"
+                name: titleLine2
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Lema/citação"
+                name: motto
+                widget: object
+                hint: "Também aparece na citação da página /campanha."
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Texto"
+                name: text
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: text }
+                  - { label: "English", name: en, widget: text }
+              - label: "Botões"
+                name: buttons
+                widget: object
+                fields:
+                  - label: "Botão WhatsApp"
+                    name: whatsapp
+                    widget: object
+                    fields:
+                      - { label: "Português", name: pt, widget: string }
+                      - { label: "English", name: en, widget: string }
+                  - label: "Botão Serviços"
+                    name: services
+                    widget: object
+                    fields:
+                      - { label: "Português", name: pt, widget: string }
+                      - { label: "English", name: en, widget: string }
+              - label: "Slider de fundo"
+                name: slider
+                widget: object
+                fields:
+                  - label: "Rótulo do carrossel"
+                    name: label
+                    widget: object
+                    fields:
+                      - { label: "Português", name: pt, widget: string }
+                      - { label: "English", name: en, widget: string }
+                  - label: "\"Slide anterior\""
+                    name: previousLabel
+                    widget: object
+                    fields:
+                      - { label: "Português", name: pt, widget: string }
+                      - { label: "English", name: en, widget: string }
+                  - label: "\"Próximo slide\""
+                    name: nextLabel
+                    widget: object
+                    fields:
+                      - { label: "Português", name: pt, widget: string }
+                      - { label: "English", name: en, widget: string }
+                  - label: "\"Ir para o slide {n}\" — tem de conter {n}"
+                    name: goToSlideLabel
+                    widget: object
+                    fields:
+                      - { label: "Português", name: pt, widget: string }
+                      - { label: "English", name: en, widget: string }
+                  - label: "Slides (imagem ou vídeo)"
+                    name: slides
+                    widget: list
+                    min: 1
+                    max: 6
+                    types:
+                      - name: image
+                        label: "Slide de imagem"
+                        widget: object
+                        fields:
+                          - { label: "Visível", name: visible, widget: boolean, default: true }
+                          - { label: "Tipo (não alterar)", name: type, widget: hidden, default: image }
+                          - { label: "Imagem", name: image, widget: image, required: true }
+                          - label: "Texto alternativo"
+                            name: alt
+                            widget: object
+                            fields:
+                              - { label: "Português", name: pt, widget: string, required: true }
+                              - { label: "English", name: en, widget: string, required: true }
+                      - name: video
+                        label: "Slide de vídeo (YouTube)"
+                        widget: object
+                        fields:
+                          - { label: "Visível", name: visible, widget: boolean, default: true }
+                          - { label: "Tipo (não alterar)", name: type, widget: hidden, default: video }
+                          - label: "ID do vídeo do YouTube"
+                            name: youtubeId
+                            widget: string
+                            required: true
+                            pattern: ["^[A-Za-z0-9_-]{11}$", "Indique apenas o ID do vídeo (11 caracteres), não o URL completo"]
+                          - label: "Legenda / descrição do vídeo"
+                            name: caption
+                            widget: object
+                            fields:
+                              - { label: "Português", name: pt, widget: string, required: true }
+                              - { label: "English", name: en, widget: string, required: true }
+          - label: "Estatísticas (stats-bar)"
+            name: stats
             widget: object
             fields:
-              - label: "Rótulo do carrossel"
-                name: label
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: string }
-                  - { label: "English", name: en, widget: string }
-              - label: "\"Slide anterior\""
-                name: previousLabel
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: string }
-                  - { label: "English", name: en, widget: string }
-              - label: "\"Próximo slide\""
-                name: nextLabel
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: string }
-                  - { label: "English", name: en, widget: string }
-              - label: "\"Ir para o slide {n}\" — tem de conter {n}"
-                name: goToSlideLabel
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: string }
-                  - { label: "English", name: en, widget: string }
-              - label: "Slides (imagem ou vídeo)"
-                name: slides
+              - label: "Estatísticas (exatamente 4)"
+                name: items
                 widget: list
-                min: 1
-                max: 6
-                types:
-                  - name: image
-                    label: "Slide de imagem"
+                min: 4
+                max: 4
+                fields:
+                  - { label: "Visível", name: visible, widget: boolean, default: true }
+                  - { label: "Valor (ex.: \"2+\", \"8\", \"MZ\")", name: value, widget: string, required: true }
+                  - label: "Rótulo"
+                    name: label
                     widget: object
                     fields:
-                      - { label: "Visível", name: visible, widget: boolean, default: true }
-                      - { label: "Tipo (não alterar)", name: type, widget: hidden, default: image }
-                      - { label: "Imagem", name: image, widget: image, required: true }
-                      - label: "Texto alternativo"
-                        name: alt
-                        widget: object
-                        fields:
-                          - { label: "Português", name: pt, widget: string, required: true }
-                          - { label: "English", name: en, widget: string, required: true }
-                  - name: video
-                    label: "Slide de vídeo (YouTube)"
-                    widget: object
-                    fields:
-                      - { label: "Visível", name: visible, widget: boolean, default: true }
-                      - { label: "Tipo (não alterar)", name: type, widget: hidden, default: video }
-                      - label: "ID do vídeo do YouTube"
-                        name: youtubeId
-                        widget: string
-                        required: true
-                        pattern: ["^[A-Za-z0-9_-]{11}$", "Indique apenas o ID do vídeo (11 caracteres), não o URL completo"]
-                      - label: "Legenda / descrição do vídeo"
-                        name: caption
-                        widget: object
-                        fields:
-                          - { label: "Português", name: pt, widget: string, required: true }
-                          - { label: "English", name: en, widget: string, required: true }
-
-      # BUG CORRIGIDO (achado ao testar /admin num browser real): a
-      # convenção `name: ""` para "o ficheiro inteiro é este campo" não
-      # funciona neste Decap 3.15.1 para coleções `file` — a lista aparecia
-      # sempre com 0 itens e o botão "+" não fazia nada, mesmo com dados
-      # reais no ficheiro. content/site/stats.json passou a ser um objeto
-      # `{"items": [...]}`, e o campo abaixo usa `name: items` para
-      # corresponder. `content/index.ts` lê `statsJson.items` (não o JSON
-      # bruto); `statsSchema` continua a validar um array normal, sem
-      # mudanças. Mesma correção aplicada a "team" e "locations" abaixo.
-      - name: stats
-        label: "Estatísticas (stats-bar)"
-        file: content/site/stats.json
-        fields:
-          - label: "Estatísticas (exatamente 4)"
-            name: items
-            widget: list
-            min: 4
-            max: 4
+                      - { label: "Português", name: pt, widget: string, required: true }
+                      - { label: "English", name: en, widget: string, required: true }
+          - label: "Secção \"Localização\" (título — as localizações em si vivem em Contactos)"
+            name: locationsHeading
+            widget: object
             fields:
-              - { label: "Visível", name: visible, widget: boolean, default: true }
-              - { label: "Valor (ex.: \"2+\", \"8\", \"MZ\")", name: value, widget: string, required: true }
-              - label: "Rótulo"
-                name: label
+              - label: "Etiqueta"
+                name: tag
                 widget: object
                 fields:
-                  - { label: "Português", name: pt, widget: string, required: true }
-                  - { label: "English", name: en, widget: string, required: true }
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Título"
+                name: title
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+          - label: "Sobre a empresa — resumo (continuação)"
+            name: about
+            widget: object
+            hint: "A etiqueta, título, 1º parágrafo e etiquetas (about-tags) são geridos em \"Quem Somos\" — aparecem aqui também."
+            fields:
+              - label: "Resumo — 2º parágrafo"
+                name: extended
+                widget: object
+                fields:
+                  - { label: "Visível", name: visible, widget: boolean, default: true }
+                  - { label: "Português", name: pt, widget: text }
+                  - { label: "English", name: en, widget: text }
+              - label: "CEO"
+                name: ceo
+                widget: object
+                fields:
+                  - { label: "Visível", name: visible, widget: boolean, default: true }
+                  - { label: "Nome", name: name, widget: string, required: true }
+                  - { label: "Iniciais", name: initials, widget: string, required: true }
+                  - label: "Cargo"
+                    name: role
+                    widget: object
+                    fields:
+                      - { label: "Português", name: pt, widget: string }
+                      - { label: "English", name: en, widget: string }
+              - label: "\"Saber mais\""
+                name: learnMoreLabel
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
 
-      - name: about
-        label: "Sobre a empresa (resumo na homepage)"
-        file: content/site/about.json
+      - name: quemSomos
+        label: "Quem Somos"
+        file: content/site/quemSomos.json
         fields:
           - label: "Etiqueta"
             name: tag
             widget: object
+            hint: "Também aparece no resumo \"Sobre a empresa\" da Homepage."
             fields:
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
           - label: "Título"
             name: title
             widget: object
+            hint: "Também aparece no resumo \"Sobre a empresa\" da Homepage."
             fields:
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
           - label: "Resumo — 1º parágrafo"
             name: summary
             widget: object
+            hint: "Também aparece no resumo \"Sobre a empresa\" da Homepage (o 2º parágrafo é editado lá)."
             fields:
               - { label: "Português", name: pt, widget: text }
               - { label: "English", name: en, widget: text }
-          - label: "Resumo — 2º parágrafo"
-            name: extended
-            widget: object
-            fields:
-              - { label: "Visível", name: visible, widget: boolean, default: true }
-              - { label: "Português", name: pt, widget: text }
-              - { label: "English", name: en, widget: text }
-          - label: "Texto institucional completo (página Quem Somos)"
+          - label: "Texto institucional completo"
             name: fullText
             widget: list
             min: 1
@@ -420,6 +467,7 @@ collections:
             name: tags
             widget: list
             min: 1
+            hint: "Também aparecem no resumo \"Sobre a empresa\" da Homepage."
             fields:
               - { label: "Visível", name: visible, widget: boolean, default: true }
               - label: "Ícone"
@@ -432,30 +480,6 @@ collections:
                 fields:
                   - { label: "Português", name: pt, widget: string, required: true }
                   - { label: "English", name: en, widget: string, required: true }
-          - label: "CEO"
-            name: ceo
-            widget: object
-            fields:
-              - { label: "Visível", name: visible, widget: boolean, default: true }
-              - { label: "Nome", name: name, widget: string, required: true }
-              - { label: "Iniciais", name: initials, widget: string, required: true }
-              - label: "Cargo"
-                name: role
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: string }
-                  - { label: "English", name: en, widget: string }
-          - label: "\"Saber mais\""
-            name: learnMoreLabel
-            widget: object
-            fields:
-              - { label: "Português", name: pt, widget: string }
-              - { label: "English", name: en, widget: string }
-
-      - name: aboutPage
-        label: "Página Quem Somos (equipa e valores)"
-        file: content/site/aboutPage.json
-        fields:
           - { label: "Imagem de banner", name: bannerImage, widget: image, required: true }
           - label: "Texto alternativo do banner"
             name: bannerImageAlt
@@ -511,59 +535,57 @@ collections:
                 fields:
                   - { label: "Português", name: pt, widget: text, required: true }
                   - { label: "English", name: en, widget: text, required: true }
-
-      # Mesma correção de "stats" acima — ver o comentário lá para o
-      # raciocínio completo. content/site/team.json é `{"items": [...]}`.
-      - name: team
-        label: "Equipa (Quem Somos)"
-        file: content/site/team.json
-        fields:
-          - label: "Membros da equipa (o primeiro é o cartão destacado)"
-            name: items
-            widget: list
-            min: 1
+          - label: "Equipa"
+            name: team
+            widget: object
             fields:
-              - { label: "Visível", name: visible, widget: boolean, default: true }
-              - { label: "Nome", name: nome, widget: string, required: true }
-              - label: "Cargo"
-                name: cargo
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: string }
-                  - { label: "English", name: en, widget: string }
-              - { label: "Foto", name: foto, widget: image, required: true }
-              - label: "Frase curta"
-                name: frase
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: string, required: false }
-                  - { label: "English", name: en, widget: string, required: false }
-              - label: "Bio longa — só o cartão destacado"
-                name: bio
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: text, required: false }
-                  - { label: "English", name: en, widget: text, required: false }
-              - label: "Badges de especialidade (opcional, até 5)"
-                name: badges
+              - label: "Membros da equipa (o primeiro é o cartão destacado)"
+                name: items
                 widget: list
-                required: false
                 min: 1
-                max: 5
                 fields:
-                  - { label: "Português", name: pt, widget: string, required: true }
-                  - { label: "English", name: en, widget: string, required: true }
-              - { label: "Telefone (opcional)", name: phone, widget: string, required: false }
-              - { label: "WhatsApp (opcional, formato internacional, ex.: +351912345678)", name: whatsapp, widget: string, required: false }
-              - { label: "Email (opcional)", name: email, widget: string, required: false }
+                  - { label: "Visível", name: visible, widget: boolean, default: true }
+                  - { label: "Nome", name: nome, widget: string, required: true }
+                  - label: "Cargo"
+                    name: cargo
+                    widget: object
+                    fields:
+                      - { label: "Português", name: pt, widget: string }
+                      - { label: "English", name: en, widget: string }
+                  - { label: "Foto", name: foto, widget: image, required: true }
+                  - label: "Frase curta"
+                    name: frase
+                    widget: object
+                    fields:
+                      - { label: "Português", name: pt, widget: string, required: false }
+                      - { label: "English", name: en, widget: string, required: false }
+                  - label: "Bio longa — só o cartão destacado"
+                    name: bio
+                    widget: object
+                    fields:
+                      - { label: "Português", name: pt, widget: text, required: false }
+                      - { label: "English", name: en, widget: text, required: false }
+                  - label: "Badges de especialidade (opcional, até 5)"
+                    name: badges
+                    widget: list
+                    required: false
+                    min: 1
+                    max: 5
+                    fields:
+                      - { label: "Português", name: pt, widget: string, required: true }
+                      - { label: "English", name: en, widget: string, required: true }
+                  - { label: "Telefone (opcional)", name: phone, widget: string, required: false }
+                  - { label: "WhatsApp (opcional, formato internacional, ex.: +351912345678)", name: whatsapp, widget: string, required: false }
+                  - { label: "Email (opcional)", name: email, widget: string, required: false }
 
       - name: campanha
-        label: "Campanha (banner homepage + página /campanha)"
+        label: "Campanha"
         file: content/site/campanha.json
         fields:
           - label: "Banner (homepage)"
             name: banner
             widget: object
+            hint: "O título também é usado no hero desta página, logo abaixo."
             fields:
               - label: "Etiqueta"
                 name: tag
@@ -589,7 +611,7 @@ collections:
                 fields:
                   - { label: "Português", name: pt, widget: string }
                   - { label: "English", name: en, widget: string }
-          - label: "Hero da página /campanha"
+          - label: "Hero da página"
             name: hero
             widget: object
             fields:
@@ -610,6 +632,7 @@ collections:
           - label: "Citação"
             name: quote
             widget: object
+            hint: "O autor também aparece na citação da Homepage (o lema em si é editado em Homepage → Hero)."
             fields:
               - { label: "Autor", name: author, widget: string, required: true }
               - label: "Legenda"
@@ -722,13 +745,21 @@ collections:
                   - { label: "Português", name: pt, widget: string }
                   - { label: "English", name: en, widget: string }
 
-      - name: sections
-        label: "Títulos de secções genéricas da homepage"
-        file: content/site/sections.json
+      - name: servicesPage
+        label: "Serviços"
+        file: content/site/servicesPage.json
         fields:
-          - label: "Secção \"Serviços\""
-            name: services
+          - { label: "Imagem de banner", name: bannerImage, widget: image, required: true }
+          - label: "Texto alternativo"
+            name: bannerImageAlt
             widget: object
+            fields:
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Cabeçalho da secção \"Serviços\" (grelha)"
+            name: sectionHeading
+            widget: object
+            hint: "Também aparece na Homepage e nos cartões de serviço."
             fields:
               - label: "Etiqueta"
                 name: tag
@@ -748,48 +779,24 @@ collections:
                 fields:
                   - { label: "Português", name: pt, widget: string }
                   - { label: "English", name: en, widget: string }
-          - label: "Secção \"Localização\""
-            name: locations
+          - label: "Introdução"
+            name: intro
             widget: object
             fields:
-              - label: "Etiqueta"
-                name: tag
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: string }
-                  - { label: "English", name: en, widget: string }
-              - label: "Título"
-                name: title
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: string }
-                  - { label: "English", name: en, widget: string }
-
-      # Mesma correção de "stats" acima — ver o comentário lá para o
-      # raciocínio completo. content/site/locations.json é `{"items": [...]}`.
-      - name: locations
-        label: "Localizações"
-        file: content/site/locations.json
-        fields:
-          - label: "Localizações"
-            name: items
-            widget: list
-            min: 1
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
+          - label: "Título do CTA"
+            name: ctaTitle
+            widget: object
             fields:
-              - { label: "Visível", name: visible, widget: boolean, default: true }
-              - { label: "ID (não alterar)", name: id, widget: string, required: true }
-              - label: "Ícone"
-                name: icon
-                widget: select
-                options: [wheat, corn, tractor, factory, landPlot, support, handshake, calendar, mapPin, building, leaf, target, eye, bolt, trophy]
-              - label: "Tipo"
-                name: type
-                widget: object
-                fields:
-                  - { label: "Português", name: pt, widget: string }
-                  - { label: "English", name: en, widget: string }
-              - { label: "Nome do lugar", name: name, widget: string, required: true }
-              - { label: "Linhas de endereço", name: address, widget: list, field: { label: "Linha", name: line, widget: string }, required: true }
+              - { label: "Português", name: pt, widget: string }
+              - { label: "English", name: en, widget: string }
+          - label: "Texto do CTA"
+            name: ctaText
+            widget: object
+            fields:
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
 
       - name: contacts
         label: "Contactos"
@@ -874,6 +881,26 @@ collections:
                   - { label: "Português", name: pt, widget: string }
                   - { label: "English", name: en, widget: string }
               - { label: "Empresa", name: company, widget: string, required: true }
+          - label: "Localizações"
+            name: locations
+            widget: list
+            min: 1
+            hint: "Também aparecem na Homepage."
+            fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
+              - { label: "ID (não alterar)", name: id, widget: string, required: true }
+              - label: "Ícone"
+                name: icon
+                widget: select
+                options: [wheat, corn, tractor, factory, landPlot, support, handshake, calendar, mapPin, building, leaf, target, eye, bolt, trophy]
+              - label: "Tipo"
+                name: type
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - { label: "Nome do lugar", name: name, widget: string, required: true }
+              - { label: "Linhas de endereço", name: address, widget: list, field: { label: "Linha", name: line, widget: string }, required: true }
 
       - name: footer
         label: "Rodapé"
@@ -978,36 +1005,6 @@ collections:
             fields:
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
-
-      - name: servicesPage
-        label: "Página de listagem /servicos"
-        file: content/site/servicesPage.json
-        fields:
-          - { label: "Imagem de banner", name: bannerImage, widget: image, required: true }
-          - label: "Texto alternativo"
-            name: bannerImageAlt
-            widget: object
-            fields:
-              - { label: "Português", name: pt, widget: string }
-              - { label: "English", name: en, widget: string }
-          - label: "Introdução"
-            name: intro
-            widget: object
-            fields:
-              - { label: "Português", name: pt, widget: text }
-              - { label: "English", name: en, widget: text }
-          - label: "Título do CTA"
-            name: ctaTitle
-            widget: object
-            fields:
-              - { label: "Português", name: pt, widget: string }
-              - { label: "English", name: en, widget: string }
-          - label: "Texto do CTA"
-            name: ctaText
-            widget: object
-            fields:
-              - { label: "Português", name: pt, widget: text }
-              - { label: "English", name: en, widget: text }
 
       - name: servicePage
         label: "Textos comuns do detalhe de serviço"

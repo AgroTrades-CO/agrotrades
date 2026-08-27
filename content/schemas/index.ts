@@ -193,7 +193,7 @@ export const heroSlidesSchema = z
   .max(6, "o slider do hero aceita no máximo 6 slides")
   .refine(
     (slides) => slides.some((s) => s.visible),
-    "pelo menos um slide do hero tem de estar visível — ligue 'Secção visível' em pelo menos um slide de content/site/hero.json"
+    "pelo menos um slide do hero tem de estar visível — ligue 'Secção visível' em pelo menos um slide de content/site/home.json (Hero)"
   );
 
 /** Único sítio onde o URL do embed do YouTube é construído (handoff-34,
@@ -312,6 +312,7 @@ export type Hero = z.infer<typeof heroSchema>;
 
 // ── STATS ─────────────────────────────────────────────────────────────────
 
+
 export const statItemSchema = z.object({
   visible: visibleFlag,
   /** "2+", "∞", "8", "MZ" — não é texto traduzível, fica como está. */
@@ -342,6 +343,12 @@ export const paragraphSchema = z.object({
 });
 export type Paragraph = z.infer<typeof paragraphSchema>;
 
+/**
+ * Campos de "about" partilhados por duas páginas reais (Homepage e "Quem
+ * Somos") — fisicamente vivem em content/site/quemSomos.json (entrada
+ * "Quem Somos" do admin) e a Homepage lê os mesmos valores à distância
+ * (nunca duplicados; ver plano "Uma entrada no admin por página real").
+ */
 export const aboutSchema = z.object({
   tag: bilingualString,
   title: bilingualString,
@@ -352,18 +359,27 @@ export const aboutSchema = z.object({
    * página); ver plano de implementação, secção "excluído".
    */
   summary: bilingualString,
-  /** Segundo parágrafo mostrado hoje na homepage (about_p2). Só usado aqui. */
-  extended: z.object({
-    visible: visibleFlag,
-    pt: z.string().trim().min(1),
-    en: z.string().trim().min(1),
-  }),
   /**
    * Texto institucional completo para a página "Quem Somos". Cada parágrafo
    * tem o seu próprio `visible` (convenção de item de lista).
    */
   fullText: z.array(paragraphSchema).min(1),
   tags: z.array(aboutTagSchema).min(1),
+});
+export type About = z.infer<typeof aboutSchema>;
+
+/**
+ * Campos de "about" exclusivos da Homepage — segundo parágrafo, CEO e
+ * "Saber mais" (não aparecem em "Quem Somos"). Vivem em
+ * content/site/home.json, entrada "Homepage" do admin.
+ */
+export const homeAboutSchema = z.object({
+  /** Segundo parágrafo mostrado hoje na homepage (about_p2). Só usado aqui. */
+  extended: z.object({
+    visible: visibleFlag,
+    pt: z.string().trim().min(1),
+    en: z.string().trim().min(1),
+  }),
   ceo: z.object({
     visible: visibleFlag,
     name: z.string().trim().min(1),
@@ -378,7 +394,19 @@ export const aboutSchema = z.object({
    */
   learnMoreLabel: bilingualString,
 });
-export type About = z.infer<typeof aboutSchema>;
+export type HomeAbout = z.infer<typeof homeAboutSchema>;
+
+// ── HOMEPAGE (entrada única "Homepage" do admin — hero + stats + cabeçalho
+//    de localizações + parte exclusiva de "about") ─────────────────────────
+
+export const homeSchema = z.object({
+  hero: heroSchema,
+  stats: z.object({ items: statsSchema }),
+  /** Só o título/etiqueta — as localizações em si vivem em "Contactos". */
+  locationsHeading: z.object({ tag: bilingualString, title: bilingualString }),
+  about: homeAboutSchema,
+});
+export type Home = z.infer<typeof homeSchema>;
 
 // ── TEAM (nova, para a futura página "Quem Somos") ─────────────────────────
 
@@ -478,22 +506,6 @@ export const campanhaSchema = z.object({
 });
 export type Campanha = z.infer<typeof campanhaSchema>;
 
-// ── SECTIONS (títulos/tags de secções genéricas da homepage) ──────────────
-
-export const sectionsSchema = z.object({
-  services: z.object({
-    tag: bilingualString,
-    title: bilingualString,
-    /** Rótulo do link "Saiba mais" nos cartões de serviço (homepage e listagem). */
-    learnMore: bilingualString,
-  }),
-  locations: z.object({
-    tag: bilingualString,
-    title: bilingualString,
-  }),
-});
-export type Sections = z.infer<typeof sectionsSchema>;
-
 // ── LOCATIONS ────────────────────────────────────────────────────────────
 
 export const locationSchema = z.object({
@@ -553,6 +565,9 @@ export const contactsSchema = z.object({
     role: bilingualString,
     company: z.string().trim().min(1),
   }),
+  /** Também mostradas na Homepage — vivem aqui porque "Contactos" é a página
+   *  onde faz mais sentido editá-las (ver plano "uma entrada por página"). */
+  locations: locationsSchema,
 });
 export type Contacts = z.infer<typeof contactsSchema>;
 
@@ -630,6 +645,13 @@ export const servicesPageSchema = z.object({
   /** Banner de imagem do topo da listagem (FR-2) — obrigatório, sem toggle. */
   bannerImage: localImagePath,
   bannerImageAlt: bilingualString,
+  /** Também mostrado na Homepage e nos cartões de serviço (ServiceCard). */
+  sectionHeading: z.object({
+    tag: bilingualString,
+    title: bilingualString,
+    /** Rótulo do link "Saiba mais" nos cartões de serviço (homepage e listagem). */
+    learnMore: bilingualString,
+  }),
   intro: bilingualString,
   ctaTitle: bilingualString,
   ctaText: bilingualString,
@@ -677,3 +699,13 @@ export const aboutPageSchema = z.object({
   values: z.array(valueItemSchema).length(6, "têm de existir exactamente 6 valores institucionais"),
 });
 export type AboutPage = z.infer<typeof aboutPageSchema>;
+
+// ── QUEM SOMOS (entrada única "Quem Somos" do admin — junta about + aboutPage
+//    + team num só ficheiro, content/site/quemSomos.json) ──────────────────
+
+export const quemSomosSchema = z.object({
+  ...aboutSchema.shape,
+  ...aboutPageSchema.shape,
+  team: z.object({ items: teamSchema }),
+});
+export type QuemSomos = z.infer<typeof quemSomosSchema>;

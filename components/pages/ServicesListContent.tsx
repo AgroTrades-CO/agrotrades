@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { contacts, sections, services, servicesPage, type Lang } from "@/content";
+import { contacts, servicesHeading, services, servicesPage, type Lang } from "@/content";
 import { path } from "@/content/routes";
 import { IconWhatsapp } from "@/components/icons";
 import { ServiceCard } from "@/components/ServiceCard";
@@ -18,8 +18,8 @@ export function ServicesListContent({ lang }: { lang: Lang }) {
         />
         <div className="sd-hero-overlay" />
         <div className="page-hero-content">
-          <span className="hero-tag">{sections.services.tag[lang]}</span>
-          <h1>{sections.services.title[lang]}</h1>
+          <span className="hero-tag">{servicesHeading.tag[lang]}</span>
+          <h1>{servicesHeading.title[lang]}</h1>
           <p>{servicesPage.intro[lang]}</p>
         </div>
       </div>

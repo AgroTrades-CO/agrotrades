@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { sections, type Lang, type Service } from "@/content";
+import { servicesHeading, type Lang, type Service } from "@/content";
 import { serviceDetailPath } from "@/content/routes";
 import { Icon } from "@/components/icon-map";
 
@@ -23,7 +23,7 @@ export function ServiceCard({ service, lang }: { service: Service; lang: Lang })
         <h3>{service.title[lang]}</h3>
         <p>{service.summary[lang]}</p>
         <Link href={serviceDetailPath(service.id, lang)} className="btn-saiba-mais">
-          {sections.services.learnMore[lang]} &rarr;
+          {servicesHeading.learnMore[lang]} &rarr;
         </Link>
       </div>
     </div>

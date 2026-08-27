@@ -4,6 +4,11 @@
     "pt": "Serviços agrícolas da AGRO TRADES",
     "en": "AGRO TRADES agricultural services"
   },
+  "sectionHeading": {
+    "tag": { "pt": "O que fazemos", "en": "What we do" },
+    "title": { "pt": "Os nossos serviços", "en": "Our services" },
+    "learnMore": { "pt": "Saiba mais", "en": "Learn more" }
+  },
   "intro": {
     "pt": "Oferecemos uma gama completa de serviços agrícolas para apoiar a produção nacional e a soberania alimentar de Moçambique.",
     "en": "We offer a complete range of agricultural services to support national production and Mozambique's food sovereignty."
