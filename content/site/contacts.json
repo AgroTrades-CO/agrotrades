@@ -1,37 +1,67 @@
 {
-  "tag": { "pt": "Fale connosco", "en": "Get in touch" },
-  "title": { "pt": "Contactos", "en": "Contacts" },
+  "phones": [
+    {
+      "visible": true,
+      "number": "+258841031220"
+    },
+    {
+      "visible": true,
+      "number": "+258871031210"
+    }
+  ],
+  "phoneLabel": {
+    "pt": "Telefone / WhatsApp",
+    "en": "Phone / WhatsApp"
+  },
   "intro": {
     "pt": "Estamos disponíveis para responder a todas as suas questões. Fale connosco pelo WhatsApp, por email ou visite o nosso escritório em Nampula.",
     "en": "We are available to answer all your questions. Contact us via WhatsApp, email, or visit our office in Nampula."
   },
+  "ceo": {
+    "visible": false,
+    "name": "Eng. Cipriano",
+    "initials": "EC",
+    "role": {
+      "pt": "CEO",
+      "en": "CEO"
+    },
+    "company": "AGRO TRADES, LDA"
+  },
   "bannerImage": "/images/banners/contactos.svg",
+  "mapsLink": "https://maps.google.com/?q=Rua+de+Tete+370+Nampula+Mocambique",
+  "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.1234567890!2d39.2819!3d-15.1165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDA2JzU5LjQiUyAzOcKwMTYnNTQuOCJF!5e0!3m2!1spt!2smz!4v1234567890",
+  "whatsapp": {
+    "number": "+258841031220",
+    "url": "https://wa.me/258841031220",
+    "label": {
+      "pt": "Fale connosco no WhatsApp",
+      "en": "Contact us on WhatsApp"
+    }
+  },
+  "emails": [
+    {
+      "visible": true,
+      "address": "agrotrades99@gmail.com"
+    },
+    {
+      "visible": true,
+      "address": "ciprianoa532@gmail.com"
+    }
+  ],
+  "emailLabel": {
+    "pt": "Email",
+    "en": "Email"
+  },
+  "title": {
+    "pt": "Contactos",
+    "en": "Contacts"
+  },
   "bannerImageAlt": {
     "pt": "Escritório da AGRO TRADES em Nampula",
     "en": "AGRO TRADES office in Nampula"
   },
-  "whatsapp": {
-    "number": "+258841031220",
-    "url": "https://wa.me/258841031220",
-    "label": { "pt": "Fale connosco no WhatsApp", "en": "Contact us on WhatsApp" }
-  },
-  "phoneLabel": { "pt": "Telefone / WhatsApp", "en": "Phone / WhatsApp" },
-  "emailLabel": { "pt": "Email", "en": "Email" },
-  "phones": [
-    { "visible": true, "number": "+258841031220" },
-    { "visible": true, "number": "+258871031210" }
-  ],
-  "emails": [
-    { "visible": true, "address": "agrotrades99@gmail.com" },
-    { "visible": true, "address": "ciprianoa532@gmail.com" }
-  ],
-  "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.1234567890!2d39.2819!3d-15.1165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTXCsDA2JzU5LjQiUyAzOcKwMTYnNTQuOCJF!5e0!3m2!1spt!2smz!4v1234567890",
-  "mapsLink": "https://maps.google.com/?q=Rua+de+Tete+370+Nampula+Mocambique",
-  "ceo": {
-    "visible": true,
-    "name": "Eng. Cipriano",
-    "initials": "EC",
-    "role": { "pt": "CEO", "en": "CEO" },
-    "company": "AGRO TRADES, LDA"
+  "tag": {
+    "pt": "Fale connosco",
+    "en": "Get in touch"
   }
 }
