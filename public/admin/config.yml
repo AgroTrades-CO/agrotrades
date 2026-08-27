@@ -20,7 +20,7 @@ backend:
   name: github
   repo: AgroTrades/agrotrades
   branch: main
-  base_url: https://agrotrades.co.mz
+  base_url: http://localhost:3000
   auth_endpoint: api/auth
 
 # editorial_workflow (não commits diretos): restrição vinculativa 28 da
