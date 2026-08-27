@@ -34,6 +34,9 @@ Thumbs.db
 # Vercel
 .vercel
 
+# Claude Code local config
+.claude/
+
 # Bundle do Decap CMS, copiado de node_modules/decap-cms/dist para
 # public/admin/vendor/ por scripts/copy-decap-cms.mjs (Fase 5). Sempre
 # regenerado a partir da versão exata em package.json/package-lock.json —
