@@ -1,6 +1,12 @@
 {
-  "tag": { "pt": "Sobre a empresa", "en": "About us" },
-  "title": { "pt": "Quem somos", "en": "Who we are" },
+  "tag": {
+    "pt": "Sobre a empresa",
+    "en": "About us"
+  },
+  "title": {
+    "pt": "Quem somos",
+    "en": "Who we are"
+  },
   "summary": {
     "pt": "A AGRO TRADES, LDA é uma empresa moçambicana dedicada ao desenvolvimento agrícola, com foco na produção de arroz, outros cereais e legumes, preparação de terras, mecanização agrícola, apoio técnico no campo, comercialização agrícola e processamento industrial.",
     "en": "AGRO TRADES, LDA is a Mozambican company dedicated to agricultural development, focusing on rice production, other cereals and vegetables, land preparation, agricultural mechanisation, technical field support, agricultural marketing and industrial processing."
@@ -38,17 +44,58 @@
     }
   ],
   "tags": [
-    { "visible": true, "icon": "wheat", "label": { "pt": "Produção de Arroz", "en": "Rice Production" } },
-    { "visible": true, "icon": "tractor", "label": { "pt": "Mecanização", "en": "Mechanisation" } },
-    { "visible": true, "icon": "corn", "label": { "pt": "Cereais", "en": "Cereals" } },
-    { "visible": true, "icon": "factory", "label": { "pt": "Processamento Industrial", "en": "Industrial Processing" } },
-    { "visible": true, "icon": "mapPin", "label": { "pt": "Nampula", "en": "Nampula" } }
+    {
+      "visible": true,
+      "icon": "wheat",
+      "label": {
+        "pt": "Produção de Arroz",
+        "en": "Rice Production"
+      }
+    },
+    {
+      "visible": true,
+      "icon": "tractor",
+      "label": {
+        "pt": "Mecanização",
+        "en": "Mechanisation"
+      }
+    },
+    {
+      "visible": true,
+      "icon": "corn",
+      "label": {
+        "pt": "Cereais",
+        "en": "Cereals"
+      }
+    },
+    {
+      "visible": true,
+      "icon": "factory",
+      "label": {
+        "pt": "Processamento Industrial",
+        "en": "Industrial Processing"
+      }
+    },
+    {
+      "visible": true,
+      "icon": "mapPin",
+      "label": {
+        "pt": "Nampula",
+        "en": "Nampula"
+      }
+    }
   ],
   "ceo": {
-    "visible": true,
+    "visible": false,
     "name": "Eng. Cipriano",
     "initials": "EC",
-    "role": { "pt": "CEO", "en": "CEO" }
+    "role": {
+      "pt": "CEO",
+      "en": "CEO"
+    }
   },
-  "learnMoreLabel": { "pt": "Saber mais", "en": "Learn more" }
+  "learnMoreLabel": {
+    "pt": "Saber mais",
+    "en": "Learn more"
+  }
 }
