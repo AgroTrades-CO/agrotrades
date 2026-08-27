@@ -1,6 +1,7 @@
 {
   "items": [
     {
+      "visible": true,
       "id": "escritorio",
       "icon": "building",
       "type": { "pt": "Escritório Sede", "en": "Head Office" },
@@ -12,6 +13,7 @@
       ]
     },
     {
+      "visible": true,
       "id": "machamba",
       "icon": "leaf",
       "type": { "pt": "Machamba", "en": "Farm" },

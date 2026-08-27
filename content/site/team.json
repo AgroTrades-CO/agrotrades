@@ -1,6 +1,7 @@
 {
   "items": [
     {
+      "visible": true,
       "nome": "Cipriano",
       "cargo": {
         "pt": "CEO",
@@ -31,6 +32,7 @@
       ]
     },
     {
+      "visible": true,
       "nome": "Nome Exemplo 2",
       "cargo": {
         "pt": "Maquinista",
@@ -53,6 +55,7 @@
       ]
     },
     {
+      "visible": true,
       "nome": "Nome Exemplo 3",
       "cargo": {
         "pt": "Vendedor",

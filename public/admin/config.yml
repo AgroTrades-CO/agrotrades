@@ -365,6 +365,7 @@ collections:
             min: 4
             max: 4
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - { label: "Valor (ex.: \"2+\", \"8\", \"MZ\")", name: value, widget: string, required: true }
               - label: "Rótulo"
                 name: label
@@ -399,19 +400,23 @@ collections:
             name: extended
             widget: object
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - { label: "Português", name: pt, widget: text }
               - { label: "English", name: en, widget: text }
           - label: "Texto institucional completo (página Quem Somos)"
             name: fullText
-            widget: object
+            widget: list
+            min: 1
             fields:
-              - { label: "Português", name: pt, widget: list, field: { label: "Parágrafo", name: paragraph, widget: text } }
-              - { label: "English", name: en, widget: list, field: { label: "Paragraph", name: paragraph, widget: text } }
+              - { label: "Visível", name: visible, widget: boolean, default: true }
+              - { label: "Português", name: pt, widget: text }
+              - { label: "English", name: en, widget: text }
           - label: "Etiquetas (about-tags)"
             name: tags
             widget: list
             min: 1
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - label: "Ícone"
                 name: icon
                 widget: select
@@ -426,6 +431,7 @@ collections:
             name: ceo
             widget: object
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - { label: "Nome", name: name, widget: string, required: true }
               - { label: "Iniciais", name: initials, widget: string, required: true }
               - label: "Cargo"
@@ -512,6 +518,7 @@ collections:
             widget: list
             min: 1
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - { label: "Nome", name: nome, widget: string, required: true }
               - label: "Cargo"
                 name: cargo
@@ -607,6 +614,7 @@ collections:
             name: vision
             widget: object
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - label: "Etiqueta"
                 name: tag
                 widget: object
@@ -630,6 +638,7 @@ collections:
             widget: list
             min: 1
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - label: "Ícone"
                 name: icon
                 widget: select
@@ -662,11 +671,13 @@ collections:
                 fields:
                   - { label: "Português", name: pt, widget: string }
                   - { label: "English", name: en, widget: string }
+          - { label: "Secção timeline visível (cabeçalho + fases)", name: timelineVisible, widget: boolean, default: true }
           - label: "Fases da timeline"
             name: timeline
             widget: list
             min: 1
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - label: "Título"
                 name: title
                 widget: object
@@ -683,6 +694,7 @@ collections:
             name: cta
             widget: object
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - label: "Título"
                 name: title
                 widget: object
@@ -756,6 +768,7 @@ collections:
             widget: list
             min: 1
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - { label: "ID (não alterar)", name: id, widget: string, required: true }
               - label: "Ícone"
                 name: icon
@@ -823,14 +836,27 @@ collections:
             fields:
               - { label: "Português", name: pt, widget: string }
               - { label: "English", name: en, widget: string }
-          - { label: "Telefones", name: phones, widget: list, field: { label: "Número", name: number, widget: string }, required: true }
-          - { label: "Emails", name: emails, widget: list, field: { label: "Email", name: address, widget: string }, required: true }
+          - label: "Telefones"
+            name: phones
+            widget: list
+            min: 1
+            fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
+              - { label: "Número", name: number, widget: string, required: true }
+          - label: "Emails"
+            name: emails
+            widget: list
+            min: 1
+            fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
+              - { label: "Email", name: address, widget: string, required: true }
           - { label: "URL de embed do Google Maps", name: mapEmbedUrl, widget: string, required: true }
           - { label: "Link do Google Maps", name: mapsLink, widget: string, required: true }
           - label: "CEO"
             name: ceo
             widget: object
             fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
               - { label: "Nome", name: name, widget: string, required: true }
               - { label: "Iniciais", name: initials, widget: string, required: true }
               - label: "Cargo"

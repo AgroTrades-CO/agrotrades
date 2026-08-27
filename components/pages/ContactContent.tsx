@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { contacts, locations, type Lang } from "@/content";
+import { contacts, visibleEmails, visibleLocations, visiblePhones, type Lang } from "@/content";
 import { Icon } from "@/components/icon-map";
 import { IconWhatsapp } from "@/components/icons";
 
@@ -37,9 +37,9 @@ export function ContactContent({ lang }: { lang: Lang }) {
                 </div>
                 <div>
                   <h4>{contacts.phoneLabel[lang]}</h4>
-                  {contacts.phones.map((phone) => (
-                    <a key={phone} href={`tel:${phone}`}>
-                      {phone}
+                  {visiblePhones.map((phone) => (
+                    <a key={phone.number} href={`tel:${phone.number}`}>
+                      {phone.number}
                     </a>
                   ))}
                 </div>
@@ -51,15 +51,15 @@ export function ContactContent({ lang }: { lang: Lang }) {
                 </div>
                 <div>
                   <h4>{contacts.emailLabel[lang]}</h4>
-                  {contacts.emails.map((email) => (
-                    <a key={email} href={`mailto:${email}`}>
-                      {email}
+                  {visibleEmails.map((email) => (
+                    <a key={email.address} href={`mailto:${email.address}`}>
+                      {email.address}
                     </a>
                   ))}
                 </div>
               </div>
 
-              {locations.map((location) => (
+              {visibleLocations.map((location) => (
                 <div className="contact-item" key={location.id}>
                   <div className="contact-icon">
                     <Icon name={location.icon} width={18} height={18} />
@@ -78,41 +78,43 @@ export function ContactContent({ lang }: { lang: Lang }) {
                 </div>
               ))}
 
-              <div
-                style={{
-                  background: "var(--green-light)",
-                  borderRadius: 14,
-                  padding: 20,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
-                }}
-              >
+              {contacts.ceo.visible && (
                 <div
                   style={{
-                    width: 52,
-                    height: 52,
-                    borderRadius: "50%",
-                    background: "var(--green)",
+                    background: "var(--green-light)",
+                    borderRadius: 14,
+                    padding: 20,
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    color: "white",
-                    fontWeight: 700,
-                    fontSize: 20,
-                    flexShrink: 0,
+                    gap: 16,
                   }}
                 >
-                  {contacts.ceo.initials}
-                </div>
-                <div>
-                  <div style={{ fontWeight: 600, fontSize: 16 }}>{contacts.ceo.name}</div>
-                  <div style={{ fontSize: 13, color: "var(--green-dark)", fontWeight: 500 }}>
-                    {contacts.ceo.role[lang]}
+                  <div
+                    style={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: "50%",
+                      background: "var(--green)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "white",
+                      fontWeight: 700,
+                      fontSize: 20,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {contacts.ceo.initials}
                   </div>
-                  <div style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 2 }}>{contacts.ceo.company}</div>
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: 16 }}>{contacts.ceo.name}</div>
+                    <div style={{ fontSize: 13, color: "var(--green-dark)", fontWeight: 500 }}>
+                      {contacts.ceo.role[lang]}
+                    </div>
+                    <div style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 2 }}>{contacts.ceo.company}</div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             <div>
@@ -138,7 +140,7 @@ export function ContactContent({ lang }: { lang: Lang }) {
               </div>
               <p style={{ fontSize: 12, color: "var(--text-muted)", marginTop: 8, textAlign: "center" }}>
                 <a href={contacts.mapsLink} target="_blank" rel="noopener">
-                  {locations[0]?.address.join(" — ")}
+                  {visibleLocations[0]?.address.join(" — ")}
                 </a>
               </p>
             </div>

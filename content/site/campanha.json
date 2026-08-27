@@ -28,6 +28,7 @@
     }
   },
   "vision": {
+    "visible": true,
     "tag": { "pt": "A nossa visão", "en": "Our vision" },
     "title": { "pt": "Soberania alimentar começa na terra", "en": "Food sovereignty begins with the land" },
     "text": {
@@ -41,6 +42,7 @@
   },
   "pillars": [
     {
+      "visible": true,
       "icon": "wheat",
       "title": { "pt": "Produção alimentar", "en": "Food production" },
       "text": {
@@ -49,6 +51,7 @@
       }
     },
     {
+      "visible": true,
       "icon": "support",
       "title": { "pt": "Criação de emprego", "en": "Job creation" },
       "text": {
@@ -57,6 +60,7 @@
       }
     },
     {
+      "visible": true,
       "icon": "landPlot",
       "title": { "pt": "Valorização da terra", "en": "Land appreciation" },
       "text": {
@@ -65,6 +69,7 @@
       }
     },
     {
+      "visible": true,
       "icon": "factory",
       "title": { "pt": "Processamento local", "en": "Local processing" },
       "text": {
@@ -73,8 +78,10 @@
       }
     }
   ],
+  "timelineVisible": true,
   "timeline": [
     {
+      "visible": true,
       "title": { "pt": "Preparação de terras", "en": "Land preparation" },
       "text": {
         "pt": "Início da preparação e mobilização dos terrenos no Distrito de Moma, Posto Administrativo de Chalaua. Mecanização e nivelamento das áreas de cultivo.",
@@ -82,6 +89,7 @@
       }
     },
     {
+      "visible": true,
       "title": { "pt": "Campanha de sementeira", "en": "Planting campaign" },
       "text": {
         "pt": "Sementeira de arroz, milho e outros cereais com sementes melhoradas. Apoio técnico às famílias camponesas da zona de influência.",
@@ -89,6 +97,7 @@
       }
     },
     {
+      "visible": true,
       "title": { "pt": "Acompanhamento agronómico", "en": "Agronomic monitoring" },
       "text": {
         "pt": "Monitorização do crescimento das culturas, controlo de pragas e doenças, e fertilização adequada para maximizar a produção.",
@@ -96,6 +105,7 @@
       }
     },
     {
+      "visible": true,
       "title": { "pt": "Colheita e processamento", "en": "Harvest and processing" },
       "text": {
         "pt": "Colheita mecanizada e transporte para a moageira de processamento industrial. Embalagem e distribuição no mercado nacional.",
@@ -103,6 +113,7 @@
       }
     },
     {
+      "visible": true,
       "title": { "pt": "Comercialização", "en": "Marketing" },
       "text": {
         "pt": "Escoamento da produção nos mercados de Nampula e outras províncias, contribuindo para a estabilização dos preços dos alimentos.",
@@ -111,6 +122,7 @@
     }
   ],
   "cta": {
+    "visible": true,
     "title": { "pt": "Junte-se à campanha", "en": "Join the campaign" },
     "text": {
       "pt": "Precisa de apoio técnico, mecanização ou parceria agrícola para a campanha 2025/2026? Entre em contacto connosco.",

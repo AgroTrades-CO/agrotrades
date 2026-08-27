@@ -142,6 +142,33 @@ export function visibleValues(page: AboutPage) {
   return page.valuesVisible ? page.values.filter((v) => v.visible) : [];
 }
 
+/** Etiquetas "about-tag" visíveis (usadas na homepage e em "Quem Somos"). */
+export const visibleAboutTags = about.tags.filter((t) => t.visible);
+
+/** Parágrafos visíveis do texto institucional completo ("Quem Somos"). */
+export const visibleFullText = about.fullText.filter((p) => p.visible);
+
+/** Estatísticas visíveis da stats-bar. */
+export const visibleStats = stats.filter((s) => s.visible);
+
+/** Pilares visíveis da página /campanha. */
+export const visiblePillars = campanha.pillars.filter((p) => p.visible);
+
+/** Fases da timeline visíveis, só se o bloco timeline estiver ligado. */
+export const visibleTimeline = campanha.timelineVisible ? campanha.timeline.filter((t) => t.visible) : [];
+
+/** Membros da equipa visíveis, na ordem do ficheiro (o primeiro é o cartão destacado). */
+export const visibleTeam = team.filter((m) => m.visible);
+
+/** Localizações visíveis (usadas na homepage e na página de contactos). */
+export const visibleLocations = locations.filter((l) => l.visible);
+
+/** Telefones visíveis da página de contactos. */
+export const visiblePhones = contacts.phones.filter((p) => p.visible);
+
+/** Emails visíveis da página de contactos. */
+export const visibleEmails = contacts.emails.filter((e) => e.visible);
+
 /**
  * Serviços relacionados no detalhe (Fase 2, design-spec-fase2 secção 2a):
  * os 3 próximos serviços na ORDEM CANÓNICA deste array `services` (definida
@@ -174,6 +201,9 @@ export type {
   Location,
   Nav,
   NotFoundContent,
+  Paragraph,
+  PhoneEntry,
+  EmailEntry,
   Sections,
   ResolvedSectionLayout,
   Service,

@@ -1,6 +1,7 @@
 {
   "items": [
     {
+      "visible": true,
       "value": "2+",
       "label": {
         "pt": "Anos de actividade",
@@ -8,6 +9,7 @@
       }
     },
     {
+      "visible": true,
       "value": "100",
       "label": {
         "pt": "Hectares cultivados",
@@ -15,6 +17,7 @@
       }
     },
     {
+      "visible": true,
       "value": "8",
       "label": {
         "pt": "Serviços agrícolas",
@@ -22,6 +25,7 @@
       }
     },
     {
+      "visible": true,
       "value": "MZ",
       "label": {
         "pt": "Distrito de Moma",

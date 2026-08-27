@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { about, aboutPage, team, visibleValues, type Lang } from "@/content";
+import { about, aboutPage, visibleAboutTags, visibleFullText, visibleTeam, visibleValues, type Lang } from "@/content";
 import { Icon } from "@/components/icon-map";
 
 export function AboutContent({ lang }: { lang: Lang }) {
   const values = visibleValues(aboutPage);
+  const team = visibleTeam;
 
   return (
     <>
@@ -25,13 +26,13 @@ export function AboutContent({ lang }: { lang: Lang }) {
 
       <section style={{ background: "white" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          {about.fullText[lang].map((paragraph) => (
-            <p key={paragraph} className="section-sub" style={{ maxWidth: "none", marginBottom: 20 }}>
-              {paragraph}
+          {visibleFullText.map((paragraph) => (
+            <p key={paragraph.pt} className="section-sub" style={{ maxWidth: "none", marginBottom: 20 }}>
+              {paragraph[lang]}
             </p>
           ))}
           <div className="about-tags">
-            {about.tags.map((tag) => (
+            {visibleAboutTags.map((tag) => (
               <span className="about-tag" key={tag.label.pt}>
                 <Icon name={tag.icon} width={16} height={16} /> {tag.label[lang]}
               </span>

@@ -298,6 +298,7 @@ export type Hero = z.infer<typeof heroSchema>;
 // ── STATS ─────────────────────────────────────────────────────────────────
 
 export const statItemSchema = z.object({
+  visible: visibleFlag,
   /** "2+", "∞", "8", "MZ" — não é texto traduzível, fica como está. */
   value: z.string().trim().min(1),
   label: bilingualString,
@@ -311,25 +312,45 @@ export const statsSchema = z
 // ── ABOUT (expandida para a futura página "Quem Somos") ────────────────────
 
 export const aboutTagSchema = z.object({
+  visible: visibleFlag,
   icon: iconName,
   label: bilingualString,
 });
 
+/** Parágrafo individual de `about.fullText` (FR-6.2 estendido): `visible` por
+ *  parágrafo, `pt`/`en` sempre emparelhados no mesmo item (não duas listas
+ *  paralelas) para nunca desalinhar as traduções ao ativar/desativar. */
+export const paragraphSchema = z.object({
+  visible: visibleFlag,
+  pt: z.string().trim().min(1),
+  en: z.string().trim().min(1),
+});
+export type Paragraph = z.infer<typeof paragraphSchema>;
+
 export const aboutSchema = z.object({
   tag: bilingualString,
   title: bilingualString,
-  /** Parágrafo curto mostrado hoje na homepage (about_p). */
-  summary: bilingualString,
-  /** Segundo parágrafo mostrado hoje na homepage (about_p2). */
-  extended: bilingualString,
   /**
-   * Texto institucional completo para a futura página "Quem Somos"
-   * (Fase 3). Hoje corresponde a summary + extended; o utilizador poderá
-   * expandir esta lista via Decap CMS sem tocar em código.
+   * Parágrafo curto mostrado hoje na homepage (about_p). Reutilizado também
+   * na intro do hero da página "Quem Somos" (AboutContent) — por isso NÃO
+   * tem `visible` próprio (desativar na homepage apagaria a intro da outra
+   * página); ver plano de implementação, secção "excluído".
    */
-  fullText: bilingualStringList,
+  summary: bilingualString,
+  /** Segundo parágrafo mostrado hoje na homepage (about_p2). Só usado aqui. */
+  extended: z.object({
+    visible: visibleFlag,
+    pt: z.string().trim().min(1),
+    en: z.string().trim().min(1),
+  }),
+  /**
+   * Texto institucional completo para a página "Quem Somos". Cada parágrafo
+   * tem o seu próprio `visible` (convenção de item de lista).
+   */
+  fullText: z.array(paragraphSchema).min(1),
   tags: z.array(aboutTagSchema).min(1),
   ceo: z.object({
+    visible: visibleFlag,
     name: z.string().trim().min(1),
     initials: z.string().trim().min(1),
     role: bilingualString,
@@ -347,6 +368,7 @@ export type About = z.infer<typeof aboutSchema>;
 // ── TEAM (nova, para a futura página "Quem Somos") ─────────────────────────
 
 export const teamMemberSchema = z.object({
+  visible: visibleFlag,
   /** Nome próprio — não é campo traduzível. */
   nome: z.string().trim().min(1),
   cargo: bilingualString,
@@ -368,18 +390,24 @@ export const teamSchema = z
 // ── CAMPANHA (banner da homepage + conteúdo da futura página /campanha) ────
 
 export const pillarSchema = z.object({
+  visible: visibleFlag,
   icon: iconName,
   title: bilingualString,
   text: bilingualString,
 });
 
 export const timelineItemSchema = z.object({
+  visible: visibleFlag,
   title: bilingualString,
   text: bilingualString,
 });
 
 export const campanhaSchema = z.object({
-  /** Banner exibido hoje na homepage. */
+  /**
+   * Banner exibido hoje na homepage. `title` é reutilizado no hero da
+   * própria página /campanha (CampaignContent) — por isso este bloco NÃO
+   * tem `visible` próprio (ver plano de implementação, secção "excluído").
+   */
   banner: z.object({
     tag: bilingualString,
     title: bilingualString,
@@ -396,12 +424,18 @@ export const campanhaSchema = z.object({
     bannerImage: localImagePath,
     bannerImageAlt: bilingualString,
   }),
+  /**
+   * `author` é reutilizado na homepage (HomeContent) e na página /campanha
+   * (CampaignContent) — por isso este bloco também NÃO tem `visible` próprio.
+   */
   quote: z.object({
     /** Nome/título do autor da citação — não é campo traduzível. */
     author: z.string().trim().min(1),
     citeSuffix: bilingualString,
   }),
+  /** Só usado na página /campanha — seguro ter `visible` próprio. */
   vision: z.object({
+    visible: visibleFlag,
     tag: bilingualString,
     title: bilingualString,
     text: bilingualString,
@@ -411,8 +445,13 @@ export const campanhaSchema = z.object({
     tag: bilingualString,
     title: bilingualString,
   }),
+  /** Interruptor do bloco timeline inteiro (cabeçalho + lista), convenção
+   *  `<bloco>Visible` — `timelineHeading` e `timeline` são irmãos aqui. */
+  timelineVisible: visibleFlag,
   timeline: z.array(timelineItemSchema).min(1),
+  /** Só usado na página /campanha — seguro ter `visible` próprio. */
   cta: z.object({
+    visible: visibleFlag,
     title: bilingualString,
     text: bilingualString,
     button: bilingualString,
@@ -439,6 +478,7 @@ export type Sections = z.infer<typeof sectionsSchema>;
 // ── LOCATIONS ────────────────────────────────────────────────────────────
 
 export const locationSchema = z.object({
+  visible: visibleFlag,
   id: z.string().trim().min(1),
   icon: iconName,
   type: bilingualString,
@@ -452,6 +492,20 @@ export type Location = z.infer<typeof locationSchema>;
 export const locationsSchema = z.array(locationSchema).min(1);
 
 // ── CONTACTS ─────────────────────────────────────────────────────────────
+
+/** Telefone individual com visibilidade própria (convenção de item de lista). */
+export const phoneEntrySchema = z.object({
+  visible: visibleFlag,
+  number: z.string().trim().min(1),
+});
+export type PhoneEntry = z.infer<typeof phoneEntrySchema>;
+
+/** Email individual com visibilidade própria (convenção de item de lista). */
+export const emailEntrySchema = z.object({
+  visible: visibleFlag,
+  address: z.string().trim().email(),
+});
+export type EmailEntry = z.infer<typeof emailEntrySchema>;
 
 export const contactsSchema = z.object({
   tag: bilingualString,
@@ -469,11 +523,12 @@ export const contactsSchema = z.object({
   phoneLabel: bilingualString,
   /** Título do bloco de emails na página de contactos. */
   emailLabel: bilingualString,
-  phones: z.array(z.string().trim().min(1)).min(1),
-  emails: z.array(z.string().trim().email()).min(1),
+  phones: z.array(phoneEntrySchema).min(1),
+  emails: z.array(emailEntrySchema).min(1),
   mapEmbedUrl: httpUrl,
   mapsLink: httpUrl,
   ceo: z.object({
+    visible: visibleFlag,
     name: z.string().trim().min(1),
     initials: z.string().trim().min(1),
     role: bilingualString,

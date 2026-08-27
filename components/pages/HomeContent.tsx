@@ -1,5 +1,18 @@
 import Link from "next/link";
-import { about, campanha, contacts, hero, locations, sections, services, stats, visibleHeroSlides, type Lang, type Service } from "@/content";
+import {
+  about,
+  campanha,
+  contacts,
+  hero,
+  sections,
+  services,
+  visibleAboutTags,
+  visibleHeroSlides,
+  visibleLocations,
+  visibleStats,
+  type Lang,
+  type Service,
+} from "@/content";
 import { path } from "@/content/routes";
 import { Icon } from "@/components/icon-map";
 import { IconArrowRight, IconWhatsapp } from "@/components/icons";
@@ -56,7 +69,7 @@ export function HomeContent({ lang }: { lang: Lang }) {
 
       {/* STATS */}
       <div className="stats-bar">
-        {stats.map((stat) => (
+        {visibleStats.map((stat) => (
           <div className="stat-item" key={stat.label.pt}>
             <span className="stat-num">{stat.value}</span>
             <span className="stat-label">{stat.label[lang]}</span>
@@ -72,18 +85,20 @@ export function HomeContent({ lang }: { lang: Lang }) {
               <span className="section-tag">{about.tag[lang]}</span>
               <h2 className="section-title">{about.title[lang]}</h2>
               <p className="section-sub">{about.summary[lang]}</p>
-              <p
-                style={{
-                  fontSize: 16,
-                  color: "var(--text-muted)",
-                  lineHeight: 1.8,
-                  marginTop: 16,
-                }}
-              >
-                {about.extended[lang]}
-              </p>
+              {about.extended.visible && (
+                <p
+                  style={{
+                    fontSize: 16,
+                    color: "var(--text-muted)",
+                    lineHeight: 1.8,
+                    marginTop: 16,
+                  }}
+                >
+                  {about.extended[lang]}
+                </p>
+              )}
               <div className="about-tags">
-                {about.tags.map((tag) => (
+                {visibleAboutTags.map((tag) => (
                   <span className="about-tag" key={tag.label.pt}>
                     <Icon name={tag.icon} width={16} height={16} /> {tag.label[lang]}
                   </span>
@@ -100,39 +115,41 @@ export function HomeContent({ lang }: { lang: Lang }) {
                   &mdash; {campanha.quote.author} &nbsp;&middot;&nbsp; {campanha.banner.title[lang]}
                 </p>
               </div>
-              <div
-                style={{
-                  marginTop: 20,
-                  background: "var(--green-light)",
-                  borderRadius: 16,
-                  padding: 24,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
-                }}
-              >
+              {about.ceo.visible && (
                 <div
                   style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: "50%",
-                    background: "var(--green)",
+                    marginTop: 20,
+                    background: "var(--green-light)",
+                    borderRadius: 16,
+                    padding: 24,
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    color: "white",
-                    fontWeight: 700,
-                    fontSize: 18,
-                    flexShrink: 0,
+                    gap: 16,
                   }}
                 >
-                  {about.ceo.initials}
+                  <div
+                    style={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: "50%",
+                      background: "var(--green)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "white",
+                      fontWeight: 700,
+                      fontSize: 18,
+                      flexShrink: 0,
+                    }}
+                  >
+                    {about.ceo.initials}
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 600, fontSize: 15 }}>{about.ceo.name}</div>
+                    <div style={{ fontSize: 13, color: "var(--text-muted)" }}>{about.ceo.role[lang]}</div>
+                  </div>
                 </div>
-                <div>
-                  <div style={{ fontWeight: 600, fontSize: 15 }}>{about.ceo.name}</div>
-                  <div style={{ fontSize: 13, color: "var(--text-muted)" }}>{about.ceo.role[lang]}</div>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -187,7 +204,7 @@ export function HomeContent({ lang }: { lang: Lang }) {
           <span className="section-tag">{sections.locations.tag[lang]}</span>
           <h2 className="section-title">{sections.locations.title[lang]}</h2>
           <div className="locations-grid">
-            {locations.map((location) => (
+            {visibleLocations.map((location) => (
               <div className="location-card" key={location.id}>
                 <div className="loc-icon">
                   <Icon name={location.icon} width={28} height={28} />

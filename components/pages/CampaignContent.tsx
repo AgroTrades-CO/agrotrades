@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { campanha, hero, type Lang } from "@/content";
+import { campanha, hero, visiblePillars, visibleTimeline, type Lang } from "@/content";
 import { Icon } from "@/components/icon-map";
 import { IconWhatsapp } from "@/components/icons";
 
@@ -31,12 +31,16 @@ export function CampaignContent({ lang }: { lang: Lang }) {
             </cite>
           </div>
 
-          <span className="section-tag">{campanha.vision.tag[lang]}</span>
-          <h2 className="section-title">{campanha.vision.title[lang]}</h2>
-          <p className="section-sub">{campanha.vision.text[lang]}</p>
+          {campanha.vision.visible && (
+            <>
+              <span className="section-tag">{campanha.vision.tag[lang]}</span>
+              <h2 className="section-title">{campanha.vision.title[lang]}</h2>
+              <p className="section-sub">{campanha.vision.text[lang]}</p>
+            </>
+          )}
 
           <div className="pillar-grid">
-            {campanha.pillars.map((pillar) => (
+            {visiblePillars.map((pillar) => (
               <div className="pillar" key={pillar.title.pt}>
                 <div className="icon">
                   <Icon name={pillar.icon} width={32} height={32} />
@@ -47,38 +51,42 @@ export function CampaignContent({ lang }: { lang: Lang }) {
             ))}
           </div>
 
-          <div style={{ marginTop: 64 }}>
-            <span className="section-tag">{campanha.timelineHeading.tag[lang]}</span>
-            <h2 className="section-title">{campanha.timelineHeading.title[lang]}</h2>
-            <div className="timeline">
-              {campanha.timeline.map((item) => (
-                <div className="timeline-item" key={item.title.pt}>
-                  <h3>{item.title[lang]}</h3>
-                  <p>{item.text[lang]}</p>
-                </div>
-              ))}
+          {campanha.timelineVisible && (
+            <div style={{ marginTop: 64 }}>
+              <span className="section-tag">{campanha.timelineHeading.tag[lang]}</span>
+              <h2 className="section-title">{campanha.timelineHeading.title[lang]}</h2>
+              <div className="timeline">
+                {visibleTimeline.map((item) => (
+                  <div className="timeline-item" key={item.title.pt}>
+                    <h3>{item.title[lang]}</h3>
+                    <p>{item.text[lang]}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
       {/* CTA */}
-      <div className="campanha-banner" style={{ margin: 0, borderRadius: 0 }}>
-        <div>
-          <h2>{campanha.cta.title[lang]}</h2>
-          <p>{campanha.cta.text[lang]}</p>
+      {campanha.cta.visible && (
+        <div className="campanha-banner" style={{ margin: 0, borderRadius: 0 }}>
+          <div>
+            <h2>{campanha.cta.title[lang]}</h2>
+            <p>{campanha.cta.text[lang]}</p>
+          </div>
+          <a
+            href="https://wa.me/258841031220"
+            target="_blank"
+            rel="noopener"
+            className="btn-primary"
+            style={{ background: "var(--orange)" }}
+          >
+            <IconWhatsapp width={18} height={18} />
+            <span>{campanha.cta.button[lang]}</span>
+          </a>
         </div>
-        <a
-          href="https://wa.me/258841031220"
-          target="_blank"
-          rel="noopener"
-          className="btn-primary"
-          style={{ background: "var(--orange)" }}
-        >
-          <IconWhatsapp width={18} height={18} />
-          <span>{campanha.cta.button[lang]}</span>
-        </a>
-      </div>
+      )}
     </>
   );
 }
