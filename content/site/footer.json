@@ -1,21 +1,42 @@
 {
-  "servicesHeading": { "pt": "Serviços", "en": "Services" },
-  "linksHeading": { "pt": "Links", "en": "Links" },
+  "servicesHeading": {
+    "pt": "Serviços",
+    "en": "Services"
+  },
+  "linksHeading": {
+    "pt": "Links",
+    "en": "Links"
+  },
   "description": {
     "pt": "Somos uma empresa moçambicana dedicada à produção agrícola, com foco no arroz, cereais, legumes, mecanização agrícola e processamento industrial.",
     "en": "We are a Mozambican company dedicated to agricultural production, focused on rice, cereals, vegetables, agricultural mechanisation and industrial processing."
   },
   "serviceLinks": [
-    { "visible": true, "serviceId": "arroz" },
-    { "visible": true, "serviceId": "mecanizacao" },
-    { "visible": true, "serviceId": "moageira" },
-    { "visible": true, "serviceId": "campanha" }
+    {
+      "visible": true,
+      "serviceId": "arroz"
+    },
+    {
+      "visible": true,
+      "serviceId": "mecanizacao"
+    },
+    {
+      "visible": true,
+      "serviceId": "moageira"
+    },
+    {
+      "visible": true,
+      "serviceId": "cereais"
+    }
   ],
   "legalCopy": {
     "pt": "AGRO TRADES, LDA. Todos os direitos reservados.",
     "en": "AGRO TRADES, LDA. All rights reserved."
   },
-  "madeIn": { "pt": "Nampula, Moçambique", "en": "Nampula, Mozambique" },
+  "madeIn": {
+    "pt": "Nampula, Moçambique",
+    "en": "Nampula, Mozambique"
+  },
   "signature": {
     "visible": true,
     "name": "Virgilio Lavieque",
