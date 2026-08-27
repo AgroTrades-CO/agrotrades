@@ -63,16 +63,15 @@ export function Footer({ lang }: { lang: Lang }) {
       <div className="footer-bottom">
         <span>
           &copy; {year} {footer.legalCopy[lang]}
-          {footer.signature.visible && (
-            <>
-              {" "}
-              by{" "}
-              <a href={waLink(footer.signature.whatsappNumber)} target="_blank" rel="noopener">
-                {footer.signature.name}
-              </a>
-            </>
-          )}
         </span>
+        {footer.signature.visible && (
+          <span className="footer-signature">
+            by{" "}
+            <a href={waLink(footer.signature.whatsappNumber)} target="_blank" rel="noopener">
+              {footer.signature.name}
+            </a>
+          </span>
+        )}
         <span>{footer.madeIn[lang]}</span>
       </div>
     </footer>

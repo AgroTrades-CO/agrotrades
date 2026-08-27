@@ -705,6 +705,9 @@ footer ul a:hover { color: var(--orange); }
   justify-content: space-between; align-items: center;
   font-size: 13px; flex-wrap: wrap; gap: 8px;
 }
+.footer-signature { flex: 1; text-align: center; }
+.footer-signature a { color: inherit; text-decoration: none; }
+.footer-signature a:hover { color: var(--orange); }
 
 /* ── PAGE HERO (inner pages) ── */
 .page-hero {
