@@ -2,6 +2,7 @@ import Image from "next/image";
 import { contacts, visibleEmails, visibleLocations, visiblePhones, type Lang } from "@/content";
 import { Icon } from "@/components/icon-map";
 import { IconWhatsapp } from "@/components/icons";
+import { ContactForm } from "@/components/ContactForm";
 
 export function ContactContent({ lang }: { lang: Lang }) {
   return (
@@ -145,6 +146,8 @@ export function ContactContent({ lang }: { lang: Lang }) {
               </p>
             </div>
           </div>
+
+          <ContactForm form={contacts.contactForm} lang={lang} />
         </div>
       </section>
     </>

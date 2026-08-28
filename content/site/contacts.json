@@ -89,5 +89,45 @@
         "Província de Nampula, Moçambique"
       ]
     }
-  ]
+  ],
+  "contactForm": {
+    "visible": true,
+    "recipientEmail": "agrotrades99@gmail.com",
+    "heading": {
+      "pt": "Envie-nos uma mensagem",
+      "en": "Send us a message"
+    },
+    "nameLabel": {
+      "pt": "Nome",
+      "en": "Name"
+    },
+    "emailLabel": {
+      "pt": "Email",
+      "en": "Email"
+    },
+    "phoneLabel": {
+      "pt": "Telefone (opcional)",
+      "en": "Phone (optional)"
+    },
+    "subjectLabel": {
+      "pt": "Assunto",
+      "en": "Subject"
+    },
+    "messageLabel": {
+      "pt": "Mensagem",
+      "en": "Message"
+    },
+    "submitLabel": {
+      "pt": "Enviar mensagem",
+      "en": "Send message"
+    },
+    "successMessage": {
+      "pt": "Mensagem enviada. Entraremos em contacto brevemente.",
+      "en": "Message sent. We'll be in touch soon."
+    },
+    "errorMessage": {
+      "pt": "Não foi possível enviar a mensagem. Tente novamente ou use o WhatsApp acima.",
+      "en": "Couldn't send the message. Try again or use WhatsApp above."
+    }
+  }
 }

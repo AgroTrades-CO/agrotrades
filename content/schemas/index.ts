@@ -568,6 +568,22 @@ export const contactsSchema = z.object({
   /** Também mostradas na Homepage — vivem aqui porque "Contactos" é a página
    *  onde faz mais sentido editá-las (ver plano "uma entrada por página"). */
   locations: locationsSchema,
+  /** Formulário de contacto (envia email via Resend, app/api/contact/route.ts).
+   *  `visible: false` esconde o formulário do site E faz a rota recusar
+   *  submissões diretas — nunca só um `display:none`. */
+  contactForm: z.object({
+    visible: visibleFlag,
+    recipientEmail: z.string().trim().email(),
+    heading: bilingualString,
+    nameLabel: bilingualString,
+    emailLabel: bilingualString,
+    phoneLabel: bilingualString,
+    subjectLabel: bilingualString,
+    messageLabel: bilingualString,
+    submitLabel: bilingualString,
+    successMessage: bilingualString,
+    errorMessage: bilingualString,
+  }),
 });
 export type Contacts = z.infer<typeof contactsSchema>;
 

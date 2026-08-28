@@ -907,6 +907,67 @@ collections:
                   - { label: "English", name: en, widget: string }
               - { label: "Nome do lugar", name: name, widget: string, required: true }
               - { label: "Linhas de endereço", name: address, widget: list, field: { label: "Linha", name: line, widget: string }, required: true }
+          - label: "Formulário de contacto"
+            name: contactForm
+            widget: object
+            hint: "Envia email através do Resend (app/api/contact) — não guarda nada, só reencaminha."
+            fields:
+              - { label: "Visível", name: visible, widget: boolean, default: true }
+              - { label: "Email de destino", name: recipientEmail, widget: string, required: true, hint: "Para onde seguem as mensagens do formulário." }
+              - label: "Cabeçalho"
+                name: heading
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Rótulo do campo \"Nome\""
+                name: nameLabel
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Rótulo do campo \"Email\""
+                name: emailLabel
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Rótulo do campo \"Telefone\""
+                name: phoneLabel
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Rótulo do campo \"Assunto\""
+                name: subjectLabel
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Rótulo do campo \"Mensagem\""
+                name: messageLabel
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Texto do botão"
+                name: submitLabel
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Mensagem de sucesso"
+                name: successMessage
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
+              - label: "Mensagem de erro"
+                name: errorMessage
+                widget: object
+                fields:
+                  - { label: "Português", name: pt, widget: string }
+                  - { label: "English", name: en, widget: string }
 
       - name: footer
         label: "Rodapé"
