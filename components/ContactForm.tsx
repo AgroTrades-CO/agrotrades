@@ -22,9 +22,12 @@ export function ContactForm({ form, lang }: { form: Contacts["contactForm"]; lan
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    // Capturar o form antes de qualquer await: o React põe event.currentTarget
+    // a null quando o dispatch síncrono termina.
+    const formElement = event.currentTarget;
     setStatus("sending");
 
-    const data = new FormData(event.currentTarget);
+    const data = new FormData(formElement);
     const payload = {
       name: String(data.get("name") ?? ""),
       email: String(data.get("email") ?? ""),
@@ -41,11 +44,13 @@ export function ContactForm({ form, lang }: { form: Contacts["contactForm"]; lan
         body: JSON.stringify(payload),
       });
       if (!response.ok) throw new Error("request failed");
-      setStatus("success");
-      event.currentTarget.reset();
     } catch {
       setStatus("error");
+      return;
     }
+    // Fora do try: nada depois de um envio bem-sucedido pode passar o estado a "error".
+    setStatus("success");
+    formElement.reset();
   }
 
   return (
