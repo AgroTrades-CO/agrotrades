@@ -25,7 +25,7 @@
 function escapeForInlineScript(json: string): string {
   // Neutraliza qualquer sequência "</" para que um valor nunca possa fechar
   // a tag <script> prematuramente (defesa em profundidade — o token do
-  // GitHub e o ID numérico não deveriam conter isto, mas não confiamos nisso).
+  // GitHub não deveria conter isto, mas não confiamos nisso).
   return json.replace(/</g, "\\u003c");
 }
 

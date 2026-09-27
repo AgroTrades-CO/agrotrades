@@ -21,7 +21,7 @@ import {
  *   valor do pedido (restrição 3/9.2 — "não construídos a partir de
  *   valores do pedido").
  * - `state`: CSPRNG (`crypto.randomUUID`, >=128 bits), uso único, guardado
- *   num cookie PRÓPRIO e distinto do cookie de sessão: httpOnly, Secure,
+ *   num cookie próprio: httpOnly, Secure,
  *   SameSite=Lax (tem de sobreviver à navegação de retorno vinda de
  *   github.com — Strict não seria enviado), Path restrito à rota de
  *   callback, TTL <=10 min (restrição 31/32).

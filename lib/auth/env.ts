@@ -12,7 +12,6 @@
 export interface OAuthConfig {
   githubClientId: string;
   githubClientSecret: string;
-  sessionSecret: string;
   /**
    * Origem única e fixa deste deployment (ex.: "https://agrotrades.co.mz"),
    * usada para: (a) construir o `redirect_uri` enviado ao GitHub — nunca
@@ -58,13 +57,12 @@ function isValidOrigin(value: string): boolean {
 export function readOAuthConfig(): OAuthConfig | null {
   const githubClientId = process.env.GITHUB_OAUTH_CLIENT_ID;
   const githubClientSecret = process.env.GITHUB_OAUTH_CLIENT_SECRET;
-  const sessionSecret = process.env.SESSION_SECRET;
   const allowedOrigin = process.env.OAUTH_ALLOWED_ORIGIN;
 
-  if (!githubClientId || !githubClientSecret || !sessionSecret || !allowedOrigin) {
+  if (!githubClientId || !githubClientSecret || !allowedOrigin) {
     console.error(
       "[lib/auth/env] Configuração do proxy OAuth incompleta — confirme GITHUB_OAUTH_CLIENT_ID, " +
-        "GITHUB_OAUTH_CLIENT_SECRET, SESSION_SECRET e OAUTH_ALLOWED_ORIGIN " +
+        "GITHUB_OAUTH_CLIENT_SECRET e OAUTH_ALLOWED_ORIGIN " +
         "(ver handoff-38-developer-fase5.md, secção \"VARIÁVEIS DE AMBIENTE NECESSÁRIAS\")."
     );
     return null;
@@ -77,10 +75,5 @@ export function readOAuthConfig(): OAuthConfig | null {
     return null;
   }
 
-  if (sessionSecret.length < 32) {
-    console.error("[lib/auth/env] SESSION_SECRET demasiado curto — use pelo menos 32 caracteres aleatórios.");
-    return null;
-  }
-
-  return { githubClientId, githubClientSecret, sessionSecret, allowedOrigin };
+  return { githubClientId, githubClientSecret, allowedOrigin };
 }
