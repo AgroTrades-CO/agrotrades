@@ -3,7 +3,8 @@
 **Task:** 001-migracao-stack
 **Agente:** software-architect (Gate 2)
 **Versão:** 5 — **fecha os achados SEC-01 a SEC-09 e as ambiguidades AMB-01 a AMB-08 da revisão
-antecipada do `security-engineer`** (`handoff-03-security-engineer-preview.md`)
+antecipada do `security-engineer`** (`handoff-03-security-engineer-preview.md`). **Revisão v6
+(2026-09-26, task-007): Fase 6 cancelada e cookie de sessão removido** — ver histórico de versões.
 **Estado:** decisões de stack **FECHADAS pelo utilizador** (secção 0.1). O desenho técnico que delas
 decorre continua a ser proposta do Architect.
 **Base:** `project/context.md`, `requirements.md` (FR-01..FR-17, NFR-01..NFR-06, AC-01..AC-14),
@@ -14,8 +15,16 @@ decorre continua a ser proposta do Architect.
 > **v2** — Next.js + Vercel + Firestore + Firebase Auth + Cloudinary + painel `/admin` próprio.
 > **v3** — Decap CMS com backend GitHub; conteúdo e media em ficheiros versionados.
 > **v4** — acrescenta o ecrã próprio de gestão de utilizadores em `/admin/users`.
-> **v5 (esta)** — não altera a stack nem o âmbito. **Fecha as lacunas de segurança** encontradas na
+> **v5** — não altera a stack nem o âmbito. **Fecha as lacunas de segurança** encontradas na
 > revisão antecipada do desenho: nove achados (dois `high`) e oito ambiguidades.
+> **v6 (2026-09-26, task-007-remove-unused-session)** — **Fase 6 cancelada e cookie de sessão
+> removido; gestão de editores passa para a Organização GitHub** (convites nativos, 2FA obrigatório,
+> audit log; editores = papel Write; administradores = owners da organização). Aprovado pelo
+> utilizador em 2026-09-26. Motivo: a Fase 6 exigia a credencial mais privilegiada do sistema
+> (`Administration: write`) para replicar funções que a organização já fornece nativamente; e o
+> cookie de sessão emitido na Fase 5 não tinha nenhum consumidor. O texto das secções afetadas
+> **mantém-se como registo**, marcado "REVOGADO (task-007)" — não implementar. Implementação
+> original da sessão recuperável no commit `9acc5c1`.
 >
 > **O que a v5 muda, em substância.** A v4 tinha os vetores certos identificados pelas razões
 > certas, mas assentava numa premissa que não enunciava: que manter a allowlist fora do repositório
@@ -43,7 +52,7 @@ decorre continua a ser proposta do Architect.
 | 9 | Repositório Git ainda não existe, **será criado** | Pré-requisito da Fase 0 |
 | 10 | **Repositório público** | Confirmado — ver 7A.8 |
 | 11 | **Acesso inicial: uma única pessoa** com permissão de escrita | Confirmado |
-| 12 | **Ecrã próprio de gestão de utilizadores** em `/admin/users` | Confirmado |
+| 12 | **Ecrã próprio de gestão de utilizadores** em `/admin/users` | **Revogada (task-007, 2026-09-26)** — gestão feita na Organização GitHub |
 | 13 | **Repositório único** (código + conteúdo juntos), **não** separado — com as mitigações do SEC-01 como restrições vinculativas | **Novo na v5** — decidido pelo utilizador após lhe ser apresentado o SEC-01. Ver 3.3 e 9.8 |
 
 ### 0.2 O que desapareceu da v2 (não implementar, não referenciar)
@@ -242,6 +251,12 @@ a saída para outro hosting aberta.
 
 ## 7A. Decisão D-8 — Ecrã de gestão de utilizadores
 
+> **REVOGADO pela task-007-remove-unused-session (2026-09-26) — não implementar.** A Fase 6 foi
+> cancelada e o cookie de sessão emitido na Fase 5 foi removido do código. A gestão de editores faz-se
+> na interface nativa da Organização GitHub (2FA obrigatório, audit log, editores com papel Write,
+> administradores = owners). Toda a secção 7A, incluindo a tabela de sessão de 7A.3, mantém-se
+> apenas como registo de decisão. Ver `project/state/task-007-remove-unused-session/`.
+
 **Objetivo:** convidar e remover pessoas para edição de conteúdo sem ir à interface do GitHub, via
 API de colaboradores do repositório.
 
@@ -324,6 +339,10 @@ mesma resposta indistinguível de 9.6. Isto não se perde no meio de um problema
 **Como o servidor obtém a identidade (AMB-08).** No callback, o servidor troca o `code` pelo token e
 chama **`GET /user` na API do GitHub, no servidor, com o token acabado de trocar**, para obter o ID
 numérico verificado. **Nunca** de um valor vindo do cliente, da query string ou do corpo do pedido.
+
+> **REVOGADO (task-007):** o cookie de sessão descrito abaixo foi implementado na Fase 5 e
+> **removido** na task-007 (nunca teve consumidor); a chamada `GET /user` no callback, que só servia
+> para o payload da sessão, foi removida também.
 
 **Sessão (SEC-02, SEC-04).** O ecrã **não** lê o token que o Decap guarda no `localStorage`. O
 callback emite um cookie de sessão assinado:
@@ -493,7 +512,7 @@ FR-16/NFR-02. **Não é blocker.**
 |---|---|---|
 | Site público (Fases 1-4) | Não | Páginas estáticas geradas de ficheiros, sem sessão, sem input. **Confirmado pelo `security-engineer`: nada trava as Fases 1-4.** |
 | **Proxy OAuth + Decap CMS (Fase 5)** | **SIM — autenticação** | Confirmação humana + revisão do `security-engineer` **contra o código** antes de aceitar. |
-| **Ecrã de gestão de utilizadores (Fase 6)** | **SIM — autorização privilegiada** | Gate próprio. Superfície mais privilegiada do sistema. |
+| ~~**Ecrã de gestão de utilizadores (Fase 6)**~~ | **CANCELADA (task-007, 2026-09-26)** | Era: gate próprio, superfície mais privilegiada do sistema. Substituída pela gestão nativa da Organização GitHub. |
 | Media no repositório | Não | Ficheiros commitados por quem já tem escrita. |
 
 ### 9.2 Open redirect no proxy OAuth
@@ -526,6 +545,10 @@ torna a mitigação completa.
 
 ### 9.5 Escalonamento de privilégio no ecrã de gestão
 
+> **REVOGADO (task-007, 2026-09-26):** o ecrã de gestão (Fase 6) foi cancelado; mantém-se como
+> registo. O requisito "escrita não implica poder convidar" é cumprido nativamente pelo GitHub
+> (papel Write não gere acesso; só Admin do repositório / Owner da organização).
+
 | Caminho | Mitigação |
 |---|---|
 | Chamar a API diretamente sem passar pelo ecrã | Verificação **na rota de servidor, a cada pedido**, das **duas** condições de 7A.2. Esconder botões não é autorização. |
@@ -537,6 +560,9 @@ torna a mitigação completa.
 | CSRF | `SameSite=Strict` **mais** validação de `Origin` que **falha fechada** se o header faltar. |
 
 ### 9.6 Resposta única para não-autorizados (AMB-01)
+
+> **REVOGADO (task-007, 2026-09-26):** aplicava-se às rotas da Fase 6, cancelada. Mantém-se como
+> registo e como boa prática para futuras rotas com controlo de acesso.
 
 A v4 dizia "**404 ou 403**, sem detalhe". **Um "ou" numa regra de segurança é um oráculo à espera de
 acontecer:** se o código devolver 403 a quem tem sessão e 404 a quem não tem, confirma-se a
@@ -589,10 +615,12 @@ precisamente o entregável da Fase 6.
 configuração**, agora vinculativa:
 
 1. **Segredos privilegiados apenas no ambiente Production** (restrição 27):
-   `GITHUB_APP_PRIVATE_KEY`, `GITHUB_APP_INSTALLATION_ID`, `ADMIN_GITHUB_USER_IDS`,
-   `SESSION_SECRET` e `client_secret` **nunca** definidos para Preview nem Development. Preview usa
-   **GitHub App e OAuth App distintas, instaladas num repositório-sandbox descartável**, e uma
-   allowlist de teste. Um segredo de teste roubado não vale nada. Marcar as variáveis como sensíveis
+   o `client_secret` da OAuth App **nunca** definido para Preview nem Development. Preview usa
+   **uma OAuth App distinta, ligada a um repositório-sandbox descartável**. Um segredo de teste
+   roubado não vale nada. *(v6, task-007: a lista original incluía também `GITHUB_APP_PRIVATE_KEY`,
+   `GITHUB_APP_INSTALLATION_ID`, `ADMIN_GITHUB_USER_IDS`, `SESSION_SECRET`, uma GitHub App de
+   sandbox e uma allowlist de teste — deixaram de existir com o cancelamento da Fase 6 e a remoção
+   do cookie de sessão. A mitigação continua válida para o `client_secret`.)* Marcar as variáveis como sensíveis
    na Vercel, para não serem legíveis de volta no painel.
 2. **Proteção de `main` como pré-condição** (restrição 28): sem push direto; PR com revisão de
    alguém que não seja o autor; **configurada ANTES de convidar o primeiro editor adicional**. É
@@ -649,6 +677,9 @@ cookies com requisitos **opostos** (AMB-02).
 
 **Fecho — dois cookies distintos, com políticas distintas:**
 
+> **v6 (task-007, 2026-09-26):** a coluna "Cookie de sessão" está **REVOGADA** — o cookie foi
+> removido do código. O cookie de `state` mantém-se integralmente como descrito.
+
 | | Cookie de `state` | Cookie de sessão |
 |---|---|---|
 | `SameSite` | **`Lax`** (tem de sobreviver ao retorno do GitHub) | **`Strict`** |
@@ -702,7 +733,8 @@ sandbox, nunca as de produção** (9.8/9.11). **O domínio de produção só é 
 - **Fase 5:** estava BLOCKED por SEC-02, SEC-04, SEC-05 e SEC-06. **Fechados nesta v5** (7A.3, 9.9,
   9.10, 9.11) → **desbloqueada no desenho**.
 - **Fase 6:** estava BLOCKED por SEC-01, SEC-02, SEC-03, SEC-06 e SEC-07. **Fechados nesta v5** (9.8
-  com a decisão 13, 7A.2, 7A.4, 9.11, 7A.7) → **desbloqueada no desenho**.
+  com a decisão 13, 7A.2, 7A.4, 9.11, 7A.7) → **desbloqueada no desenho**. **v6: CANCELADA
+  (task-007, 2026-09-26)** — ver "Fase 6" abaixo.
 - **Isto não é aprovação de implementação.** Desenho aprovado nunca é implementação aprovada: ambas
   as fases continuam a exigir **revisão do `security-engineer` contra o código**, com evidência
   reproduzível, **mais confirmação humana** antes de implementar. O Gate 4 **não** está dado.
@@ -711,11 +743,12 @@ sandbox, nunca as de produção** (9.8/9.11). **O domínio de produção só é 
 
 ### Fase 0 — Pré-requisitos, contas e separação de ambientes (sem código)
 **Âmbito:** criar o repositório Git remoto, **público**; criar o projeto Vercel **sem método de
-pagamento**; criar **duas** OAuth Apps e **duas** GitHub Apps (produção e não-produção), a de
-não-produção instalada num **repositório-sandbox descartável**; definir um **alias estável** para o
+pagamento**; criar **duas** OAuth Apps ~~e **duas** GitHub Apps~~ (produção e não-produção), a de
+não-produção ligada a um **repositório-sandbox descartável**; definir um **alias estável** para o
 ambiente de preview; definir as variáveis de ambiente **apenas em Production** para as de produção
-(restrição 27), marcadas como sensíveis; definir `ADMIN_GITHUB_USER_IDS` com o ID numérico da pessoa
-inicial; `.gitignore` com `.env*` **antes do primeiro commit**.
+(restrição 27), marcadas como sensíveis; ~~definir `ADMIN_GITHUB_USER_IDS` com o ID numérico da pessoa
+inicial;~~ `.gitignore` com `.env*` **antes do primeiro commit**.
+*(v6, task-007: as GitHub Apps e `ADMIN_GITHUB_USER_IDS` só serviam a Fase 6, cancelada.)*
 **Entregável:** contas, apps, alias e variáveis criadas, com prova de que **as variáveis sensíveis
 não existem em Preview nem Development**; ninguém além da pessoa inicial com acesso de escrita.
 **Decisão humana:** confirmar a pessoa inicial (decisão 11) e ponderar mover o repositório para uma
@@ -776,8 +809,9 @@ estrita ativa.
 `config.yml`; CSP própria de `/admin` por header de rota; proxy OAuth com allowlist fixa de
 `redirect_uri` sobre **alias estável** (9.11), `targetOrigin` literal (9.3), **cookie de `state`
 `SameSite=Lax`, TTL ≤ 10 min, uso único, CSPRNG ≥ 128 bits** (9.10), scope `public_repo`, segredos só
-em Production; identidade via `GET /user` no servidor (AMB-08); **emissão do cookie de sessão
-`SameSite=Strict`, TTL ≤ 60 min, HMAC-SHA256 com `SESSION_SECRET` dedicado, payload mínimo** (7A.3);
+em Production; ~~identidade via `GET /user` no servidor (AMB-08); **emissão do cookie de sessão
+`SameSite=Strict`, TTL ≤ 60 min, HMAC-SHA256 com `SESSION_SECRET` dedicado, payload mínimo** (7A.3);~~
+*(v6: implementado na Fase 5 e removido na task-007 — sem consumidor)*
 `media_folder` com limite de tamanho; `noindex` em `/admin`; `editorial_workflow`.
 **Executado em preview com credenciais de sandbox.**
 **Entregável:** um editor entra com conta GitHub, altera o resumo PT do serviço "arroz", publica, e a
@@ -787,7 +821,20 @@ alteração aparece no site em poucos minutos sem tocar em código — **AC-11**
 
 ---
 
-### Fase 6 — Ecrã de gestão de utilizadores
+### Fase 6 — Ecrã de gestão de utilizadores — **CANCELADA**
+> ### CANCELADA em 2026-09-26 (task-007-remove-unused-session), aprovado pelo utilizador
+> **Motivo:** exigiria a credencial mais privilegiada do sistema (GitHub App com
+> `Administration: write`, que permite mudar visibilidade, desativar a proteção de `main`,
+> transferir e apagar o repositório) para replicar funções que a Organização GitHub já fornece
+> nativamente (convites, remoção, 2FA obrigatório, audit log).
+> **Substituição (configuração, a aplicar pelo `devops-engineer`):** exigir 2FA na organização;
+> permissões base dos membros "No permission" ou "Read"; editores com papel **Write** no
+> repositório (equipa `editores` ou colaboradores externos), **nunca** *team maintainer*;
+> administradores = owners da organização (1-2 no máximo); desativar o convite de colaboradores
+> externos por Admins de repositório se não houver Admins além dos owners. A **restrição 28**
+> (proteção de `main`) mantém-se como pré-condição de convidar o primeiro editor adicional.
+> O texto abaixo mantém-se como registo — **não implementar**.
+
 > ### RISCO ELEVADO — AUTORIZAÇÃO PRIVILEGIADA
 > Gate próprio, separado do da Fase 5. Desenho desbloqueado pela v5 (SEC-01/02/03/06/07 fechados).
 > **Continua a exigir revisão do `security-engineer` CONTRA O CÓDIGO e confirmação humana.**
@@ -824,21 +871,24 @@ intacta até validação. O `devops-engineer` confirma **antes** do cutover.
 ## 11. Sobre o `ux-ui-designer`
 
 **Não é necessário em nenhuma fase.** Fases 1-4 visam paridade visual; a Fase 5 usa o interface do
-Decap sem personalização; a Fase 6 é um ecrã administrativo mínimo (lista de pessoas, campo de
-username, convidar/remover) para uma ou duas pessoas internas, reutilizando paleta e tipografia já
-definidas.
+Decap sem personalização. *(v6, task-007: a menção à Fase 6 — ecrã administrativo mínimo — foi
+retirada com o cancelamento dessa fase.)*
 
 ---
 
 ## 12. Restrições vinculativas para o Developer
 
+> **v6 (task-007, 2026-09-26):** restrições marcadas "[REVOGADA — task-007]" deixaram de se aplicar
+> com o cancelamento da Fase 6 e a remoção do cookie de sessão. O texto original mantém-se riscado
+> como registo.
+
 **Segredos e credenciais**
-1. `client_secret`, chave privada da GitHub App, `installation_id`, `ADMIN_GITHUB_USER_IDS` e
-   `SESSION_SECRET` **apenas** em variáveis de ambiente do servidor. Nunca em
+1. `client_secret` ~~, chave privada da GitHub App, `installation_id`, `ADMIN_GITHUB_USER_IDS` e
+   `SESSION_SECRET`~~ **apenas** em variáveis de ambiente do servidor. Nunca em
    `public/admin/config.yml`, nunca em `NEXT_PUBLIC_`, nunca no repositório — que é público. `.env*`
    no `.gitignore` **antes** do primeiro commit. Segredo commitado tem de ser **rotacionado**.
-2. Tokens de instalação gerados por pedido, de curta duração, nunca guardados, nunca devolvidos ao
-   cliente, nunca escritos em logs.
+2. [REVOGADA — task-007, parte de tokens de instalação] ~~Tokens de instalação gerados por pedido,
+   de curta duração, nunca guardados, nunca devolvidos ao cliente, nunca escritos em logs.~~
 
 **Fluxo OAuth (Fase 5)**
 3. `redirect_uri` validado contra allowlist fixa no servidor, nunca refletido nem reconstruído.
@@ -847,15 +897,15 @@ definidas.
 5. Parâmetro `state` obrigatório, verificado no callback.
 6. Scope `public_repo`, não `repo`.
 
-**Gestão de utilizadores (Fase 6)**
-7. **A allowlist de administradores nunca fica no repositório** — variável de ambiente da Vercel.
-8. Allowlist por **ID numérico** do GitHub, nunca por username.
-9. Autorização verificada **na rota de servidor, a cada pedido**. Esconder botões não é autorização.
-10. `permission: "push"` fixado no código do servidor; nunca vem do cliente.
-11. **Nenhum endpoint proxy genérico para a API do GitHub.**
-12. Proteção CSRF em todas as mutações: cookie `SameSite=Strict` mais validação de `Origin`.
-13. Guardas contra auto-remoção e remoção do proprietário; confirmação explícita antes de remover.
-14. `/admin/users` responde de forma indistinguível a anónimos e a editores sem privilégio.
+**Gestão de utilizadores (Fase 6) — [REVOGADAS — task-007], Fase 6 cancelada**
+7. [REVOGADA — task-007] ~~**A allowlist de administradores nunca fica no repositório** — variável de ambiente da Vercel.~~
+8. [REVOGADA — task-007] ~~Allowlist por **ID numérico** do GitHub, nunca por username.~~
+9. [REVOGADA — task-007] ~~Autorização verificada **na rota de servidor, a cada pedido**. Esconder botões não é autorização.~~
+10. [REVOGADA — task-007] ~~`permission: "push"` fixado no código do servidor; nunca vem do cliente.~~
+11. [REVOGADA — task-007] ~~**Nenhum endpoint proxy genérico para a API do GitHub.**~~
+12. [REVOGADA — task-007] ~~Proteção CSRF em todas as mutações: cookie `SameSite=Strict` mais validação de `Origin`.~~
+13. [REVOGADA — task-007] ~~Guardas contra auto-remoção e remoção do proprietário; confirmação explícita antes de remover.~~
+14. [REVOGADA — task-007] ~~`/admin/users` responde de forma indistinguível a anónimos e a editores sem privilégio.~~
 
 **Gerais**
 15. Não iniciar a Fase 5 nem a Fase 6 sem confirmação humana e revisão do `security-engineer`. São
@@ -875,32 +925,36 @@ definidas.
 26. Não implementar formulários que recolham dados pessoais de visitantes nesta tarefa.
 
 **Acrescentadas na v5 pelo `security-engineer` (27-38) — vinculativas nas Fases 5 e 6**
-27. Segredos privilegiados (`GITHUB_APP_PRIVATE_KEY`, `GITHUB_APP_INSTALLATION_ID`,
-    `ADMIN_GITHUB_USER_IDS`, `SESSION_SECRET`) definidos **apenas** no ambiente **Production** da
-    Vercel. Nunca em Preview nem Development. Preview usa credenciais descartáveis e
-    repositório-sandbox.
+27. Segredos privilegiados (`client_secret` da OAuth App ~~, `GITHUB_APP_PRIVATE_KEY`,
+    `GITHUB_APP_INSTALLATION_ID`, `ADMIN_GITHUB_USER_IDS`, `SESSION_SECRET`~~) definidos **apenas**
+    no ambiente **Production** da Vercel. Nunca em Preview nem Development. Preview usa credenciais
+    descartáveis e repositório-sandbox. *(v6, task-007: variáveis da App, allowlist e
+    `SESSION_SECRET` deixaram de existir.)*
 28. **Proteção de `main`** (sem push direto; PR com revisão de terceiro) configurada **ANTES** de
-    convidar o primeiro editor adicional. **Pré-condição do entregável da Fase 6, não recomendação.**
-29. Autorização privilegiada exige **DUAS condições por pedido**: ID na allowlist **E** permissão de
-    escrita atual confirmada em tempo real contra a API do GitHub.
-30. Cookie de sessão: **TTL absoluto ≤ 60 min, sem renovação deslizante**; HMAC-SHA256 com
+    convidar o primeiro editor adicional. ~~**Pré-condição do entregável da Fase 6, não recomendação.**~~
+    **v6: pré-condição do ato de convidar o primeiro editor adicional, seja qual for o meio (hoje, a
+    interface da Organização GitHub) — não recomendação.** Protege contra o SEC-01 para o
+    `client_secret`, que continua a existir.
+29. [REVOGADA — task-007] ~~Autorização privilegiada exige **DUAS condições por pedido**: ID na allowlist **E** permissão de
+    escrita atual confirmada em tempo real contra a API do GitHub.~~
+30. [REVOGADA — task-007; cookie removido do código] ~~Cookie de sessão: **TTL absoluto ≤ 60 min, sem renovação deslizante**; HMAC-SHA256 com
     `SESSION_SECRET` dedicado; algoritmo **fixado no código, nunca lido do token**; comparação em
-    tempo constante; **payload mínimo** (ID numérico + expiração), sem token GitHub.
-31. **Dois cookies distintos:** `state` (`httpOnly`, `Secure`, **`SameSite=Lax`**, `Path` restrito ao
-    callback, TTL ≤ 10 min, **uso único, apagado no callback antes de validar**) e sessão
-    (**`SameSite=Strict`**).
+    tempo constante; **payload mínimo** (ID numérico + expiração), sem token GitHub.~~
+31. ~~**Dois cookies distintos:**~~ Cookie de `state` (`httpOnly`, `Secure`, **`SameSite=Lax`**,
+    `Path` restrito ao callback, TTL ≤ 10 min, **uso único, apagado no callback antes de validar**)
+    ~~e sessão (**`SameSite=Strict`**)~~. *(v6, task-007: só o cookie de `state` se mantém.)*
 32. `state` gerado com **CSPRNG, ≥ 128 bits**, comparado em tempo constante. **Nunca
     `Math.random()`**.
 33. Validação de `Origin` **FALHA FECHADA** quando o header está ausente. `SameSite` sozinho **não é**
     proteção CSRF suficiente.
-34. `username` validado por **allowlist de formato** (regex de username do GitHub) **E** codificado
-    com `encodeURIComponent` antes de entrar em qualquer caminho de URL da API do GitHub.
-35. Guardas de auto-remoção e de remoção do proprietário comparadas por **ID numérico** e aplicadas
-    **na rota de servidor**. Confirmação na UI é adicional, nunca substitutiva.
+34. [REVOGADA — task-007] ~~`username` validado por **allowlist de formato** (regex de username do GitHub) **E** codificado
+    com `encodeURIComponent` antes de entrar em qualquer caminho de URL da API do GitHub.~~
+35. [REVOGADA — task-007] ~~Guardas de auto-remoção e de remoção do proprietário comparadas por **ID numérico** e aplicadas
+    **na rota de servidor**. Confirmação na UI é adicional, nunca substitutiva.~~
 36. Bundle do Decap **auto-hospedado, versão exata, lockfile commitado**. Se CDN: versão exata + SRI.
     CSP permissiva **confinada a `/admin` por header de rota**; nunca relaxar a CSP global da Fase 4.
-37. **Um único código de resposta para todos os não-autorizados (404)**, na página e na API, gerado
-    **pelo mesmo caminho de código**. Sem ramo 403/404 distinto.
-38. Tokens de instalação nunca guardados — **incluindo em variáveis de módulo**, que persistem entre
+37. [REVOGADA — task-007] ~~**Um único código de resposta para todos os não-autorizados (404)**, na página e na API, gerado
+    **pelo mesmo caminho de código**. Sem ramo 403/404 distinto.~~
+38. ~~Tokens de instalação nunca guardados — **incluindo em variáveis de módulo**, que persistem entre
     invocações quentes. Chave privada em **base64** numa env var; erros de parsing nunca imprimem a
-    chave. `code`, `state`, cookie e PEM **proibidos em logs**.
+    chave.~~ [parte da App REVOGADA — task-007] `code`, `state`, cookie ~~e PEM~~ **proibidos em logs**.

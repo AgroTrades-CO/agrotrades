@@ -74,13 +74,18 @@ utilizador:
   `public_repo` em vez de `repo`, que daria acesso a todos os repositórios privados de cada
   editor). Consequência a comunicar a quem for convidado: os seus commits/username ficam
   publicamente visíveis e associados à empresa.
-- **Gestão de utilizadores (quem pode editar):** ecrã próprio `/admin/users`, separado do Decap,
-  que usa uma **GitHub App** instalada só neste repositório com permissão granular
-  `Administration: write` (nunca um token clássico com scope `repo`, nunca `Contents: write` nessa
-  credencial). Dois papéis distintos: *editor* = acesso de escrita no GitHub; *administrador* =
-  quem pode convidar/remover editores, decidido por uma allowlist de IDs numéricos **em variável
-  de ambiente da Vercel**, nunca num ficheiro do repositório (senão qualquer editor podia
-  conceder-se esse poder a si próprio). Um administrador inicial confirmado para arrancar.
+- **Gestão de utilizadores (quem pode editar):** feita na interface nativa da **Organização
+  GitHub** — convites com aceitação explícita, remoção, **2FA obrigatório** e **audit log** da
+  organização. Dois papéis distintos: *editor* = papel **Write** no repositório (via equipa ou
+  colaborador externo; nunca *team maintainer*); *administrador* = **owner da organização** (1-2
+  no máximo, com 2FA), o único que convida/remove editores — o papel Write não gere acesso. Sem
+  ecrã próprio, sem GitHub App, sem cookie de sessão. Pré-condição mantida: proteção de `main`
+  (restrição 28) antes de convidar o primeiro editor adicional.
+  *Histórico:* a decisão original (ecrã `/admin/users` + GitHub App com `Administration: write` +
+  allowlist de administradores em variável de ambiente, "Fase 6") foi **CANCELADA em 2026-09-26
+  pela task-007-remove-unused-session** — eliminava a credencial mais privilegiada do sistema sem
+  ganho face às funções nativas da organização. Ver `task-007-remove-unused-session/` e
+  `architecture-proposal.md` v6.
 - **Imagens e vídeo:** commitados no próprio repositório (media folder do Decap). Vídeo grande é
   má prática em Git — usar embed do YouTube em vez de commitar o binário.
 - **i18n:** routing por locale gerado no build (PT na raiz `/`, EN em `/en/`), não troca client-side.
@@ -101,11 +106,12 @@ utilizador:
 - **`ux-ui-designer` não necessário** em nenhuma fase (paridade visual + UI própria do Decap).
 
 **Plano faseado (0–7), cada fase com entregável verificável e aprovação humana antes da seguinte;
-domínio de produção só tocado na fase de cutover final.** Três gates de confirmação humana
-obrigatória + `security-engineer` antes de qualquer código, cada um separado dos outros: (1) fase
-do Decap CMS + proxy OAuth GitHub, (2) fase do ecrã de gestão de utilizadores (credencial mais
-privilegiada do sistema — aprovar a 1 não aprova a 2), (3) cutover de produção. Ver `architecture-
-proposal.md` secção 12 para a lista completa de restrições vinculativas para o developer.
+domínio de produção só tocado na fase de cutover final.** Dois gates de confirmação humana
+obrigatória + `security-engineer` antes de qualquer código, separados um do outro: (1) fase do
+Decap CMS + proxy OAuth GitHub (concluída na task-001), (2) cutover de produção. (Existia um
+terceiro gate para a Fase 6 — ecrã de gestão de utilizadores — que deixou de existir com o
+cancelamento dessa fase em 2026-09-26, task-007.) Ver `architecture-proposal.md` secção 12 para a
+lista completa de restrições vinculativas para o developer.
 
 ## Convenções específicas deste projeto
 
