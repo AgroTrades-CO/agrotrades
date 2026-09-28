@@ -23,6 +23,8 @@ const eslintConfig = defineConfig([
     'js/**',
     'css/**',
     '*.html',
+    // Worktrees de agentes Claude (incluem .next/ e node_modules/ próprios).
+    '.claude/**',
   ]),
 ])
 
