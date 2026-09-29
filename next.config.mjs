@@ -76,7 +76,37 @@ const nextConfig = {
     // um erro no console. Esta exceção aplica-se apenas quando
     // NODE_ENV !== 'production'; a CSP de produção mantém-se inalterada.
     const isDev = process.env.NODE_ENV !== "production";
-    return [
+    // Diretivas da CSP GLOBAL. A CSP da pré-visualização da TinaCMS (abaixo)
+    // é derivada desta mesma lista, para herdar qualquer correção futura sem
+    // cópia manual (task-017, architecture.md 16.5).
+    const globalCsp = [
+      "default-src 'self'",
+      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${turnstileOrigin}`,
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data:",
+      "connect-src 'self'",
+      // Fase 3 (handoff-34, secção F): abre `frame-src`, ausente até
+      // aqui (herdava `default-src 'self'`, bloqueando qualquer
+      // iframe de terceiros). Dois hosts nomeados, nada mais:
+      //   - youtube-nocookie.com: embed do slider do hero (FR-1),
+      //     domínio sem cookies de tracking; nunca youtube.com.
+      //   - www.google.com: corrige um bug pré-existente (RISCO-3 do
+      //     handoff-34) — o iframe do Google Maps em
+      //     ContactContent.tsx já existia e já estava bloqueado por
+      //     esta CSP não declarar `frame-src`.
+      // Qualquer alargamento a outros hosts exige nova revisão de
+      // arquitetura/segurança — não acrescentar hosts aqui de ânimo leve.
+      //   - challenges.cloudflare.com: iframe do Turnstile (task-006,
+      //     exceção aprovada, ver comentário antes de `headers()`).
+      `frame-src 'self' https://www.youtube-nocookie.com https://www.google.com ${turnstileOrigin}`,
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'none'",
+      "upgrade-insecure-requests",
+    ];
+    const entries = [
       {
         source: "/:path*",
         headers: [
@@ -90,36 +120,7 @@ const nextConfig = {
           // uma consequência silenciosa deste ficheiro.
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-          {
-            key: "Content-Security-Policy",
-            value: [
-              "default-src 'self'",
-              `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${turnstileOrigin}`,
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data:",
-              "connect-src 'self'",
-              // Fase 3 (handoff-34, secção F): abre `frame-src`, ausente até
-              // aqui (herdava `default-src 'self'`, bloqueando qualquer
-              // iframe de terceiros). Dois hosts nomeados, nada mais:
-              //   - youtube-nocookie.com: embed do slider do hero (FR-1),
-              //     domínio sem cookies de tracking; nunca youtube.com.
-              //   - www.google.com: corrige um bug pré-existente (RISCO-3 do
-              //     handoff-34) — o iframe do Google Maps em
-              //     ContactContent.tsx já existia e já estava bloqueado por
-              //     esta CSP não declarar `frame-src`.
-              // Qualquer alargamento a outros hosts exige nova revisão de
-              // arquitetura/segurança — não acrescentar hosts aqui de ânimo leve.
-              //   - challenges.cloudflare.com: iframe do Turnstile (task-006,
-              //     exceção aprovada, ver comentário antes de `headers()`).
-              `frame-src 'self' https://www.youtube-nocookie.com https://www.google.com ${turnstileOrigin}`,
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'none'",
-              "upgrade-insecure-requests",
-            ].join("; "),
-          },
+          { key: "Content-Security-Policy", value: globalCsp.join("; ") },
         ],
       },
       {
@@ -149,7 +150,72 @@ const nextConfig = {
         ],
       },
     ];
+
+    // Pré-visualização editável da TinaCMS (task-017, architecture 5.2/6,
+    // SEC-T-08/SEC-T-09): a CSP GLOBAL com uma única diferença,
+    // `frame-ancestors 'self'` (o admin mostra estas páginas num iframe da
+    // MESMA origem). `X-Frame-Options: SAMEORIGIN` já vem da entrada global
+    // (só a mesma chave é substituída, headers.md "Header Overriding
+    // Behavior"). `X-Robots-Tag` além do `robots` da página. Sem Draft Mode
+    // estas rotas dão 404; nenhuma página pública passa por aqui.
+    const previewCsp = globalCsp
+      .map((d) => (d === "frame-ancestors 'none'" ? "frame-ancestors 'self'" : d))
+      .join("; ");
+    for (const source of ["/editor-preview/:path*", "/en/editor-preview/:path*"]) {
+      entries.push({
+        source,
+        headers: [
+          { key: "Content-Security-Policy", value: previewCsp },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      });
+    }
+
+    // Admin da TinaCMS em MODO LOCAL (fase 3, só `next dev` via
+    // `npm run tina:dev`): o index.html gerado em public/admin/ carrega o
+    // admin do servidor Vite do `tinacms dev` e fala com a API GraphQL local,
+    // ambos em localhost:<TINA_LOCAL_PORT>. Nunca em produção: o build não
+    // gera o admin (scripts/tina-build.mjs) e esta entrada não existe.
+    // A CSP do admin em produção (Tina Cloud, hosts enumerados) é da fase 4.
+    if (isDev) {
+      const tinaOrigin = `http://localhost:${tinaLocalPort()}`;
+      entries.push({
+        source: "/admin/:path*",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              `script-src 'self' 'unsafe-inline' 'unsafe-eval' ${tinaOrigin}`,
+              `style-src 'self' 'unsafe-inline' ${tinaOrigin} https://fonts.googleapis.com`,
+              `font-src 'self' data: ${tinaOrigin} https://fonts.gstatic.com`,
+              `img-src 'self' data: blob: ${tinaOrigin}`,
+              `connect-src 'self' ${tinaOrigin} ws://localhost:${tinaLocalPort()}`,
+              "frame-src 'self'",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'none'",
+            ].join("; "),
+          },
+        ],
+      });
+    }
+    return entries;
+  },
+  // Admin da TinaCMS em modo local: `/admin` -> `/admin/index.html` só em
+  // `next dev` (fase 3). Em produção `/admin` continua 404 até à fase 4.
+  async rewrites() {
+    if (process.env.NODE_ENV === "production") return [];
+    return [{ source: "/admin", destination: "/admin/index.html" }];
   },
 };
+
+/** Porta da API local do `tinacms dev` (definida por scripts/tina-dev.mjs). */
+function tinaLocalPort() {
+  const port = process.env.TINA_LOCAL_PORT ?? "4001";
+  if (!/^[0-9]{2,5}$/.test(port)) throw new Error("TINA_LOCAL_PORT inválida");
+  return port;
+}
 
 export default nextConfig;

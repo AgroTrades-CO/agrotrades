@@ -15,13 +15,22 @@ import {
 import { Icon } from "@/components/icon-map";
 import { IconWhatsapp } from "@/components/icons";
 import { ServiceCard } from "@/components/ServiceCard";
+import { tinaAttr, type TinaAttr, type TinaFieldFn } from "@/components/tina/edit-binding";
 
 /** Lista de bullets opcional, partilhada pelas variantes "split"/"feature"
  *  (design-spec-fase2 1d) — nunca lida em secções sem imagem. */
-function SectionBullets({ bullets, lang }: { bullets: ServiceSection["bullets"]; lang: Lang }) {
+function SectionBullets({
+  bullets,
+  lang,
+  edit = {},
+}: {
+  bullets: ServiceSection["bullets"];
+  lang: Lang;
+  edit?: TinaAttr;
+}) {
   if (!bullets) return null;
   return (
-    <ul className="sd-section-bullets">
+    <ul className="sd-section-bullets" {...edit}>
       {bullets[lang].map((item) => (
         <li key={item}>
           <span className="sd-check">&#10003;</span>
@@ -32,7 +41,20 @@ function SectionBullets({ bullets, lang }: { bullets: ServiceSection["bullets"];
   );
 }
 
-export function ServiceDetailContent({ service, lang }: { service: Service; lang: Lang }) {
+/**
+ * `tf` (opcional) só é passada pela pré-visualização da TinaCMS
+ * (/editor-preview, task-017) — no site público fica `undefined` e nenhum
+ * atributo `data-tina-field` é escrito (ver components/tina/edit-binding.ts).
+ */
+export function ServiceDetailContent({
+  service,
+  lang,
+  tf,
+}: {
+  service: Service;
+  lang: Lang;
+  tf?: TinaFieldFn;
+}) {
   const sections = visibleSections(service);
   const gallery = visibleGallery(service);
   const hasSections = sections.length > 0;
@@ -53,16 +75,18 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
           fill
           className="sd-hero-image"
         />
-        <div className="sd-hero-overlay" />
+        <div className="sd-hero-overlay" {...tinaAttr(tf, service, "bannerImage")} />
         <div className="page-hero-content">
           <Link href={path("services", lang)} className="sd-back" style={{ color: "rgba(255,255,255,0.7)" }}>
             &larr; <span>{servicePage.backToServices[lang]}</span>
           </Link>
-          <div style={{ marginBottom: 16, color: "white" }}>
+          <div style={{ marginBottom: 16, color: "white" }} {...tinaAttr(tf, service, "icon")}>
             <Icon name={service.icon} width={44} height={44} />
           </div>
-          <h1 style={{ marginBottom: 16 }}>{service.title[lang]}</h1>
-          <p>{service.summary[lang]}</p>
+          <h1 style={{ marginBottom: 16 }} {...tinaAttr(tf, service, "title")}>
+            {service.title[lang]}
+          </h1>
+          <p {...tinaAttr(tf, service, "summary")}>{service.summary[lang]}</p>
         </div>
       </div>
 
@@ -72,7 +96,9 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
             <div>
               {hasSections ? (
                 <>
-                  <p className="sd-description">{service.description[lang]}</p>
+                  <p className="sd-description" {...tinaAttr(tf, service, "description")}>
+                    {service.description[lang]}
+                  </p>
                   <div className="sd-sections">
                     {sections.map((section, index) => {
                       const layout = resolveSectionLayout(section);
@@ -82,14 +108,15 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
                           <div
                             className={`sd-section-card ${index % 2 === 0 ? "sd-section-card--alt" : "sd-section-card--base"}`}
                             key={section.title[lang]}
+                            {...tinaAttr(tf, section)}
                           >
                             <div className="sd-section-head">
                               <span className="sd-section-icon" aria-hidden="true">
                                 <Icon name={section.icon ?? service.icon} width={16} height={16} />
                               </span>
-                              <h3>{section.title[lang]}</h3>
+                              <h3 {...tinaAttr(tf, section, "title")}>{section.title[lang]}</h3>
                             </div>
-                            <p>{section.text[lang]}</p>
+                            <p {...tinaAttr(tf, section, "text")}>{section.text[lang]}</p>
                           </div>
                         );
                       }
@@ -97,7 +124,7 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
                       if (layout === "feature") {
                         return (
                           <div className="sd-section-feature" key={section.title[lang]}>
-                            <div className="sd-section-feature-image">
+                            <div className="sd-section-feature-image" {...tinaAttr(tf, section, "image")}>
                               <Image
                                 src={section.image!.image}
                                 alt={section.image!.alt[lang]}
@@ -106,9 +133,15 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
                               />
                             </div>
                             <div className="sd-section-feature-text">
-                              <h3 className="sd-section-feature-title">{section.title[lang]}</h3>
-                              <p>{section.text[lang]}</p>
-                              <SectionBullets bullets={section.bullets} lang={lang} />
+                              <h3 className="sd-section-feature-title" {...tinaAttr(tf, section, "title")}>
+                                {section.title[lang]}
+                              </h3>
+                              <p {...tinaAttr(tf, section, "text")}>{section.text[lang]}</p>
+                              <SectionBullets
+                                bullets={section.bullets}
+                                lang={lang}
+                                edit={tinaAttr(tf, section, "bullets")}
+                              />
                             </div>
                           </div>
                         );
@@ -122,7 +155,7 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
                           className={`sd-section-split${isLeft ? "" : " sd-section-split--reverse"}`}
                           key={section.title[lang]}
                         >
-                          <div className="sd-section-split-image">
+                          <div className="sd-section-split-image" {...tinaAttr(tf, section, "image")}>
                             <Image
                               src={section.image!.image}
                               alt={section.image!.alt[lang]}
@@ -135,10 +168,14 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
                               <span className="sd-section-icon" aria-hidden="true">
                                 <Icon name={section.icon ?? service.icon} width={16} height={16} />
                               </span>
-                              <h3>{section.title[lang]}</h3>
+                              <h3 {...tinaAttr(tf, section, "title")}>{section.title[lang]}</h3>
                             </div>
-                            <p>{section.text[lang]}</p>
-                            <SectionBullets bullets={section.bullets} lang={lang} />
+                            <p {...tinaAttr(tf, section, "text")}>{section.text[lang]}</p>
+                            <SectionBullets
+                              bullets={section.bullets}
+                              lang={lang}
+                              edit={tinaAttr(tf, section, "bullets")}
+                            />
                           </div>
                         </div>
                       );
@@ -146,7 +183,9 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
                   </div>
                 </>
               ) : (
-                <p className="sd-description">{service.description[lang]}</p>
+                <p className="sd-description" {...tinaAttr(tf, service, "description")}>
+                  {service.description[lang]}
+                </p>
               )}
 
               <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -176,7 +215,7 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
             </div>
             <div className="sd-highlights-box">
               <h3>{servicePage.highlightsHeading[lang]}</h3>
-              <ul>
+              <ul {...tinaAttr(tf, service, "highlights")}>
                 {service.highlights[lang].map((item) => (
                   <li key={item}>
                     <span className="sd-check">&#10003;</span>
@@ -194,7 +233,7 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
               </h2>
               <div className="sd-gallery-grid">
                 {gallery.map((item) => (
-                  <div className="sd-gallery-item" key={item.image}>
+                  <div className="sd-gallery-item" key={item.image} {...tinaAttr(tf, item)}>
                     <Image src={item.image} alt={item.alt[lang]} width={480} height={360} />
                   </div>
                 ))}

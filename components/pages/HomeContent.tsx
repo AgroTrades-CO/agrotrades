@@ -1,31 +1,61 @@
 import Link from "next/link";
 import {
-  about,
+  about as siteAbout,
   campanha,
   contacts,
-  hero,
-  homeAbout,
-  locationsHeading,
+  hero as siteHero,
+  homeAbout as siteHomeAbout,
+  locationsHeading as siteLocationsHeading,
   servicesHeading,
   services,
-  visibleAboutTags,
-  visibleHeroSlides,
+  visibleAboutTags as siteVisibleAboutTags,
+  visibleHeroSlides as siteVisibleHeroSlides,
   visibleLocations,
-  visibleStats,
+  visibleStats as siteVisibleStats,
   type Lang,
   type Service,
 } from "@/content";
+import type { HomeAbout } from "@/content/schemas";
 import { path } from "@/content/routes";
 import { Icon } from "@/components/icon-map";
 import { IconArrowRight, IconWhatsapp } from "@/components/icons";
 import { HeroSlider } from "@/components/HeroSlider";
 import { ServiceCard } from "@/components/ServiceCard";
+import { tinaAttr, type TinaFieldFn } from "@/components/tina/edit-binding";
 
 // Mesma seleção e ordem de serviços do preview da homepage original (index.html):
 // arroz, cereais, mecanização, moageira.
 const PREVIEW_SERVICE_IDS = ["arroz", "cereais", "mecanizacao", "moageira"] as const;
 
-export function HomeContent({ lang }: { lang: Lang }) {
+/**
+ * Dados editáveis da homepage. O site público usa sempre os valores de
+ * `@/content` (validados no build); só a pré-visualização da TinaCMS
+ * (/editor-preview, task-017) passa `data` com o conteúdo em edição e `tf`
+ * (clicar para editar). Sem `data`/`tf` o resultado é exatamente o anterior.
+ */
+export type HomeData = {
+  hero: typeof siteHero;
+  visibleHeroSlides: typeof siteVisibleHeroSlides;
+  visibleStats: typeof siteVisibleStats;
+  homeAbout: HomeAbout;
+  locationsHeading: typeof siteLocationsHeading;
+  about: Pick<typeof siteAbout, "tag" | "title" | "summary">;
+  visibleAboutTags: typeof siteVisibleAboutTags;
+};
+
+const SITE_HOME_DATA: HomeData = {
+  hero: siteHero,
+  visibleHeroSlides: siteVisibleHeroSlides,
+  visibleStats: siteVisibleStats,
+  homeAbout: siteHomeAbout,
+  locationsHeading: siteLocationsHeading,
+  about: siteAbout,
+  visibleAboutTags: siteVisibleAboutTags,
+};
+
+export function HomeContent({ lang, data, tf }: { lang: Lang; data?: HomeData; tf?: TinaFieldFn }) {
+  const { hero, visibleHeroSlides, visibleStats, homeAbout, locationsHeading, about, visibleAboutTags } =
+    data ?? SITE_HOME_DATA;
   // Resolve o override homeTitle/homeBlurb ANTES de entrar no ServiceCard
   // (design-spec-fase3 secção 3, opção (a) — o componente não conhece o
   // conceito "override da homepage").
@@ -44,25 +74,39 @@ export function HomeContent({ lang }: { lang: Lang }) {
   return (
     <>
       {/* HERO */}
-      <section className="hero">
-        <HeroSlider slider={hero.slider} slides={visibleHeroSlides} lang={lang} />
+      <section className="hero" {...tinaAttr(tf, hero.slider, "slides")}>
+        {/* Na pré-visualização, acrescentar/esconder slides volta a montar o carrossel. */}
+        <HeroSlider
+          slider={hero.slider}
+          slides={visibleHeroSlides}
+          lang={lang}
+          key={data ? visibleHeroSlides.length : undefined}
+        />
         <div className="hero-slider-overlay" />
         <div className="hero-content">
-          <div className="hero-tag fade-up">{hero.tag[lang]}</div>
+          <div className="hero-tag fade-up" {...tinaAttr(tf, hero, "tag")}>
+            {hero.tag[lang]}
+          </div>
           <h1 className="fade-up-2">
-            <span>{hero.titleLine1[lang]}</span>
+            <span {...tinaAttr(tf, hero, "titleLine1")}>{hero.titleLine1[lang]}</span>
             <br />
-            <span style={{ color: "var(--orange)" }}>{hero.titleLine2[lang]}</span>
+            <span style={{ color: "var(--orange)" }} {...tinaAttr(tf, hero, "titleLine2")}>
+              {hero.titleLine2[lang]}
+            </span>
           </h1>
-          <p className="hero-motto fade-up-2">{hero.motto[lang]}</p>
-          <p className="fade-up-3">{hero.text[lang]}</p>
+          <p className="hero-motto fade-up-2" {...tinaAttr(tf, hero, "motto")}>
+            {hero.motto[lang]}
+          </p>
+          <p className="fade-up-3" {...tinaAttr(tf, hero, "text")}>
+            {hero.text[lang]}
+          </p>
           <div className="hero-btns fade-up-3">
             <a href={contacts.whatsapp.url} className="btn-primary" target="_blank" rel="noopener">
               <IconWhatsapp />
-              <span>{hero.buttons.whatsapp[lang]}</span>
+              <span {...tinaAttr(tf, hero.buttons, "whatsapp")}>{hero.buttons.whatsapp[lang]}</span>
             </a>
             <Link href={path("services", lang)} className="btn-secondary">
-              <span>{hero.buttons.services[lang]}</span>
+              <span {...tinaAttr(tf, hero.buttons, "services")}>{hero.buttons.services[lang]}</span>
               <IconArrowRight width={16} height={16} />
             </Link>
           </div>
@@ -73,8 +117,12 @@ export function HomeContent({ lang }: { lang: Lang }) {
       <div className="stats-bar">
         {visibleStats.map((stat) => (
           <div className="stat-item" key={stat.label.pt}>
-            <span className="stat-num">{stat.value}</span>
-            <span className="stat-label">{stat.label[lang]}</span>
+            <span className="stat-num" {...tinaAttr(tf, stat, "value")}>
+              {stat.value}
+            </span>
+            <span className="stat-label" {...tinaAttr(tf, stat, "label")}>
+              {stat.label[lang]}
+            </span>
           </div>
         ))}
       </div>
@@ -84,9 +132,15 @@ export function HomeContent({ lang }: { lang: Lang }) {
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <div className="about-grid">
             <div>
-              <span className="section-tag">{about.tag[lang]}</span>
-              <h2 className="section-title">{about.title[lang]}</h2>
-              <p className="section-sub">{about.summary[lang]}</p>
+              <span className="section-tag" {...tinaAttr(tf, about, "tag")}>
+                {about.tag[lang]}
+              </span>
+              <h2 className="section-title" {...tinaAttr(tf, about, "title")}>
+                {about.title[lang]}
+              </h2>
+              <p className="section-sub" {...tinaAttr(tf, about, "summary")}>
+                {about.summary[lang]}
+              </p>
               {homeAbout.extended.visible && (
                 <p
                   style={{
@@ -95,24 +149,30 @@ export function HomeContent({ lang }: { lang: Lang }) {
                     lineHeight: 1.8,
                     marginTop: 16,
                   }}
+                  {...tinaAttr(tf, homeAbout, "extended")}
                 >
                   {homeAbout.extended[lang]}
                 </p>
               )}
               <div className="about-tags">
                 {visibleAboutTags.map((tag) => (
-                  <span className="about-tag" key={tag.label.pt}>
+                  <span className="about-tag" key={tag.label.pt} {...tinaAttr(tf, tag)}>
                     <Icon name={tag.icon} width={16} height={16} /> {tag.label[lang]}
                   </span>
                 ))}
               </div>
-              <Link href={path("about", lang)} className="btn-saiba-mais" style={{ marginTop: 20 }}>
+              <Link
+                href={path("about", lang)}
+                className="btn-saiba-mais"
+                style={{ marginTop: 20 }}
+                {...tinaAttr(tf, homeAbout, "learnMoreLabel")}
+              >
                 {homeAbout.learnMoreLabel[lang]} <IconArrowRight width={14} height={14} />
               </Link>
             </div>
             <div className="about-visual">
               <div className="about-card">
-                <blockquote>{hero.motto[lang]}</blockquote>
+                <blockquote {...tinaAttr(tf, hero, "motto")}>{hero.motto[lang]}</blockquote>
                 <p className="quote-author">
                   &mdash; {campanha.quote.author} &nbsp;&middot;&nbsp; {campanha.banner.title[lang]}
                 </p>
@@ -128,6 +188,7 @@ export function HomeContent({ lang }: { lang: Lang }) {
                     alignItems: "center",
                     gap: 16,
                   }}
+                  {...tinaAttr(tf, homeAbout, "ceo")}
                 >
                   <div
                     style={{
@@ -203,8 +264,12 @@ export function HomeContent({ lang }: { lang: Lang }) {
       {/* LOCATIONS */}
       <section style={{ background: "white" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <span className="section-tag">{locationsHeading.tag[lang]}</span>
-          <h2 className="section-title">{locationsHeading.title[lang]}</h2>
+          <span className="section-tag" {...tinaAttr(tf, locationsHeading, "tag")}>
+            {locationsHeading.tag[lang]}
+          </span>
+          <h2 className="section-title" {...tinaAttr(tf, locationsHeading, "title")}>
+            {locationsHeading.title[lang]}
+          </h2>
           <div className="locations-grid">
             {visibleLocations.map((location) => (
               <div className="location-card" key={location.id}>
