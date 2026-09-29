@@ -1,0 +1,126 @@
+{
+  "id": "arroz-amakua",
+  "icon": "wheat",
+  "title": { "pt": "Arroz Amakua", "en": "Arroz Amakua" },
+  "summary": {
+    "pt": "O Arroz da Machamba: arroz 100% moçambicano, cultivado no vale de Chalaua, em Moma, e processado pela AGRO TRADES.",
+    "en": "O Arroz da Machamba: 100% Mozambican rice, grown in the Chalaua valley, Moma, and processed by AGRO TRADES."
+  },
+  "description": {
+    "pt": "O Arroz Amakua nasce do projeto Fome Zero da AGRO TRADES, alinhado com o Objetivo de Desenvolvimento Sustentável 2 das Nações Unidas. Cultivamos, colhemos e processamos arroz no vale de Chalaua, Distrito de Moma, Província de Nampula, para reduzir a dependência de arroz importado e levar às famílias moçambicanas um produto nacional de qualidade.",
+    "en": "Arroz Amakua comes from the AGRO TRADES Zero Hunger project, aligned with United Nations Sustainable Development Goal 2. We grow, harvest and process rice in the Chalaua valley, Moma District, Nampula Province, to reduce dependence on imported rice and bring Mozambican families a quality national product."
+  },
+  "highlights": {
+    "pt": [
+      "100% cultivado em Moçambique (Chalaua, Moma)",
+      "Grão longo branco, polido e naturalmente aromático",
+      "Seleção ótica por cor, com poucos grãos partidos",
+      "Sem conservantes artificiais",
+      "Saco de 25 kg"
+    ],
+    "en": [
+      "100% grown in Mozambique (Chalaua, Moma)",
+      "Long-grain white rice, polished and naturally fragrant",
+      "Optical colour sorting for few broken grains",
+      "No artificial preservatives",
+      "25 kg bag"
+    ]
+  },
+  "bannerImage": "/images/uploads/arroz-floracao-03.webp",
+  "bannerImageAlt": {
+    "pt": "Espigas de arroz douradas num campo ao sol",
+    "en": "Golden ears of rice in a sunlit field"
+  },
+  "sections": [
+    {
+      "visible": true,
+      "icon": "tractor",
+      "title": { "pt": "Do campo ao saco", "en": "From field to bag" },
+      "text": {
+        "pt": "Preparamos a terra e semeamos com máquinas modernas, colhemos com ceifeiras de lagartas adaptadas aos terrenos alagados do vale e processamos o arroz na nossa moageira: descasque, polimento e seleção ótica por cor.",
+        "en": "We prepare the land and sow with modern machinery, harvest with tracked combines suited to the valley's flooded land, and process the rice in our own mill: hulling, polishing and optical colour sorting."
+      },
+      "image": {
+        "image": "/images/uploads/arroz-floracao-01.webp",
+        "alt": {
+          "pt": "Campo de arroz com espigas e árvores ao fundo",
+          "en": "Rice field with ears of rice and trees in the background"
+        }
+      }
+    },
+    {
+      "visible": true,
+      "icon": "wheat",
+      "title": { "pt": "Piloto validado", "en": "Proven pilot" },
+      "text": {
+        "pt": "Na fase piloto cultivámos e colhemos 20 hectares em Chalaua. O primeiro lote foi apresentado na Feira Económica Provincial de Nampula (FENA) e esgotou.",
+        "en": "In the pilot phase we grew and harvested 20 hectares in Chalaua. The first batch was presented at the Nampula Provincial Economic Fair (FENA) and sold out."
+      }
+    },
+    {
+      "visible": true,
+      "icon": "landPlot",
+      "title": { "pt": "Próximo passo: 100 hectares", "en": "Next step: 100 hectares" },
+      "text": {
+        "pt": "A meta é chegar a 100 hectares totalmente mecanizados, com capacidade de processamento de 10 a 15 toneladas por dia.",
+        "en": "The target is 100 fully mechanised hectares, with a processing capacity of 10 to 15 tonnes per day."
+      }
+    },
+    {
+      "visible": true,
+      "icon": "support",
+      "layout": "feature",
+      "title": { "pt": "Impacto nas comunidades", "en": "Community impact" },
+      "text": {
+        "pt": "O projeto cria valor para quem vive e trabalha no campo em Moma.",
+        "en": "The project creates value for people who live and work on the land in Moma."
+      },
+      "image": {
+        "image": "/images/uploads/arroz-floracao-02.webp",
+        "alt": {
+          "pt": "Espigas de arroz em primeiro plano num campo de cultivo",
+          "en": "Ears of rice in the foreground of a cultivated field"
+        }
+      },
+      "bullets": {
+        "pt": [
+          "Compra de arroz em casca a pequenos produtores a preços justos e transparentes",
+          "Emprego formal e formação técnica para jovens e mulheres",
+          "Menos intermediários entre o produtor e as famílias"
+        ],
+        "en": [
+          "Paddy rice bought from smallholder farmers at fair, transparent prices",
+          "Formal jobs and technical training for young people and women",
+          "Fewer middlemen between farmers and families"
+        ]
+      }
+    }
+  ],
+  "galleryVisible": true,
+  "gallery": [
+    {
+      "visible": true,
+      "image": "/images/uploads/arroz-floracao-01.webp",
+      "alt": {
+        "pt": "Campo de arroz com espigas e árvores ao fundo",
+        "en": "Rice field with ears of rice and trees in the background"
+      }
+    },
+    {
+      "visible": true,
+      "image": "/images/uploads/arroz-floracao-02.webp",
+      "alt": {
+        "pt": "Espigas de arroz em primeiro plano num campo de cultivo",
+        "en": "Ears of rice in the foreground of a cultivated field"
+      }
+    },
+    {
+      "visible": true,
+      "image": "/images/uploads/arroz-floracao-03.webp",
+      "alt": {
+        "pt": "Espigas de arroz douradas num campo ao sol",
+        "en": "Golden ears of rice in a sunlit field"
+      }
+    }
+  ]
+}
