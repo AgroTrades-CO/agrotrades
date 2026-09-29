@@ -1,7 +1,10 @@
 {
   "id": "cereais",
   "icon": "corn",
-  "title": { "pt": "Produção de cereais e legumes", "en": "Cereals & Vegetables" },
+  "title": {
+    "pt": "Produção de cereais e legumes",
+    "en": "Cereals & Vegetables"
+  },
   "summary": {
     "pt": "Diversificação agrícola com produção de milho, feijão, amendoim e outros legumes e cereais essenciais para o consumo local e a comercialização.",
     "en": "Agricultural diversification with maize, beans, peanuts and other essential cereals and vegetables for local consumption and trade."
@@ -26,7 +29,10 @@
       "Guaranteed outlet to regional markets"
     ]
   },
-  "homeTitle": { "pt": "Cereais e legumes", "en": "Cereals & Vegetables" },
+  "homeTitle": {
+    "pt": "Cereais e legumes",
+    "en": "Cereals & Vegetables"
+  },
   "homeBlurb": {
     "pt": "Produção diversificada de cereais e legumes para consumo local e comercialização.",
     "en": "Diversified production of cereals and vegetables for local consumption and trade."

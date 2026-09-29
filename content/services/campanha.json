@@ -1,7 +1,10 @@
 {
   "id": "campanha",
   "icon": "calendar",
-  "title": { "pt": "Campanha agrícola 2025/2026", "en": "Agricultural Campaign 2025/2026" },
+  "title": {
+    "pt": "Campanha agrícola 2025/2026",
+    "en": "Agricultural Campaign 2025/2026"
+  },
   "summary": {
     "pt": "Participação activa na campanha agrícola nacional, alinhada com as directivas do Governo moçambicano para o aumento da produção alimentar.",
     "en": "Active participation in the national agricultural campaign, aligned with the Mozambican Government's directives to increase food production."
@@ -26,7 +29,10 @@
       "Periodic progress reports"
     ]
   },
-  "homeTitle": { "pt": "Campanha 2025/2026", "en": "Campaign 2025/2026" },
+  "homeTitle": {
+    "pt": "Campanha 2025/2026",
+    "en": "Campaign 2025/2026"
+  },
   "bannerImage": "/images/services/campanha/banner.svg",
   "bannerImageAlt": {
     "pt": "Ilustração de calendário representando a campanha agrícola",

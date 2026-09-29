@@ -69,7 +69,10 @@
       "visible": true,
       "id": "escritorio",
       "icon": "building",
-      "type": { "pt": "Escritório Sede", "en": "Head Office" },
+      "type": {
+        "pt": "Escritório Sede",
+        "en": "Head Office"
+      },
       "name": "Cidade de Nampula",
       "address": [
         "Rua de Tete, n.º 370, Limoeiros",
@@ -81,7 +84,10 @@
       "visible": true,
       "id": "machamba",
       "icon": "leaf",
-      "type": { "pt": "Machamba", "en": "Farm" },
+      "type": {
+        "pt": "Machamba",
+        "en": "Farm"
+      },
       "name": "Distrito de Moma",
       "address": [
         "Posto Administrativo de Chalaua",

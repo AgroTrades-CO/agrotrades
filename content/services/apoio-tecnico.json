@@ -1,7 +1,10 @@
 {
   "id": "apoio-tecnico",
   "icon": "support",
-  "title": { "pt": "Apoio técnico no campo", "en": "Field Technical Support" },
+  "title": {
+    "pt": "Apoio técnico no campo",
+    "en": "Field Technical Support"
+  },
   "summary": {
     "pt": "Assistência técnica especializada directamente no campo, incluindo orientação sobre boas práticas agrícolas, uso de sementes melhoradas e controlo de pragas.",
     "en": "Specialist technical assistance directly in the field, covering good agricultural practices, improved seed use and pest control."

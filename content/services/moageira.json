@@ -1,7 +1,10 @@
 {
   "id": "moageira",
   "icon": "factory",
-  "title": { "pt": "Moageira e processamento industrial", "en": "Milling & Industrial Processing" },
+  "title": {
+    "pt": "Moageira e processamento industrial",
+    "en": "Milling & Industrial Processing"
+  },
   "summary": {
     "pt": "Processamento industrial de cereais através de moageira moderna, transformando a produção agrícola em produtos acabados para o mercado moçambicano.",
     "en": "Industrial cereal processing using modern milling equipment, transforming agricultural output into finished products for the Mozambican market."
@@ -26,7 +29,10 @@
       "Packaging and preparation for trade"
     ]
   },
-  "homeTitle": { "pt": "Processamento industrial", "en": "Industrial Processing" },
+  "homeTitle": {
+    "pt": "Processamento industrial",
+    "en": "Industrial Processing"
+  },
   "homeBlurb": {
     "pt": "Moageira e processamento industrial de cereais para o mercado moçambicano.",
     "en": "Milling and industrial cereal processing for the Mozambican market."

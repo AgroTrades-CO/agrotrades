@@ -1,7 +1,10 @@
 {
   "id": "mecanizacao",
   "icon": "tractor",
-  "title": { "pt": "Mecanização agrícola", "en": "Agricultural Mechanisation" },
+  "title": {
+    "pt": "Mecanização agrícola",
+    "en": "Agricultural Mechanisation"
+  },
   "summary": {
     "pt": "Aluguer e operação de equipamentos agrícolas modernos — tractores, ceifeiras e alfaias — para produtores locais, cooperativas e associações de agricultores.",
     "en": "Rental and operation of modern agricultural equipment — tractors, harvesters and implements — for local producers, cooperatives and farmer associations."
@@ -38,14 +41,20 @@
   "sections": [
     {
       "icon": "tractor",
-      "title": { "pt": "Frota de equipamentos", "en": "Equipment fleet" },
+      "title": {
+        "pt": "Frota de equipamentos",
+        "en": "Equipment fleet"
+      },
       "text": {
         "pt": "Disponibilizamos tratores, ceifeiras-debulhadoras e alfaias de alta performance para aluguer, com manutenção regular para garantir disponibilidade durante toda a campanha.",
         "en": "We provide tractors, combine harvesters and high-performance implements for hire, with regular maintenance to ensure availability throughout the campaign."
       },
       "image": {
         "image": "/images/services/mecanizacao/gallery-1.svg",
-        "alt": { "pt": "Ilustração de trator com alfaia acoplada", "en": "Illustration of a tractor with an attached implement" }
+        "alt": {
+          "pt": "Ilustração de trator com alfaia acoplada",
+          "en": "Illustration of a tractor with an attached implement"
+        }
       },
       "bullets": {
         "pt": [
@@ -60,7 +69,10 @@
     },
     {
       "icon": "support",
-      "title": { "pt": "Operadores qualificados", "en": "Qualified operators" },
+      "title": {
+        "pt": "Operadores qualificados",
+        "en": "Qualified operators"
+      },
       "text": {
         "pt": "Cada equipamento é acompanhado por um operador experiente, incluído no serviço, o que reduz o risco de avarias e garante um trabalho eficiente no campo.",
         "en": "Each piece of equipment comes with an experienced operator included in the service, reducing the risk of breakdowns and ensuring efficient fieldwork."
@@ -68,7 +80,10 @@
     },
     {
       "icon": "calendar",
-      "title": { "pt": "Calendário flexível", "en": "Flexible scheduling" },
+      "title": {
+        "pt": "Calendário flexível",
+        "en": "Flexible scheduling"
+      },
       "text": {
         "pt": "Coordenamos os pedidos de aluguer com o calendário da campanha agrícola, priorizando as janelas críticas de preparação, sementeira e colheita.",
         "en": "We coordinate rental requests with the agricultural campaign calendar, prioritising the critical windows for preparation, sowing and harvest."
@@ -78,15 +93,24 @@
   "gallery": [
     {
       "image": "/images/services/mecanizacao/gallery-1.svg",
-      "alt": { "pt": "Ilustração de trator com alfaia acoplada", "en": "Illustration of a tractor with an attached implement" }
+      "alt": {
+        "pt": "Ilustração de trator com alfaia acoplada",
+        "en": "Illustration of a tractor with an attached implement"
+      }
     },
     {
       "image": "/images/services/mecanizacao/gallery-2.svg",
-      "alt": { "pt": "Ilustração de máquina agrícola em manutenção", "en": "Illustration of agricultural machinery under maintenance" }
+      "alt": {
+        "pt": "Ilustração de máquina agrícola em manutenção",
+        "en": "Illustration of agricultural machinery under maintenance"
+      }
     },
     {
       "image": "/images/services/mecanizacao/gallery-3.svg",
-      "alt": { "pt": "Ilustração de equipamento agrícola em campo preparado", "en": "Illustration of agricultural equipment on prepared land" }
+      "alt": {
+        "pt": "Ilustração de equipamento agrícola em campo preparado",
+        "en": "Illustration of agricultural equipment on prepared land"
+      }
     }
   ]
 }
