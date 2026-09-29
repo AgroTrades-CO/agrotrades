@@ -37,6 +37,9 @@ Thumbs.db
 # Claude Code local config
 .claude/
 
+# Documentação de trabalho (fica fora do repositório público)
+/project/
+
 # Bundle do Decap CMS, copiado de node_modules/decap-cms/dist para
 # public/admin/vendor/ por scripts/copy-decap-cms.mjs (Fase 5). Sempre
 # regenerado a partir da versão exata em package.json/package-lock.json —
