@@ -1,0 +1,4 @@
+# Conteúdo gerido pela TinaCMS (task-017, CR-F2-06): a Tina grava os JSON de
+# content/ com LF e sem \n final (JSON.stringify(obj, null, 2)). Fixar LF na
+# working tree evita diferenças falsas com core.autocrlf=true no Windows.
+content/**/*.json text eol=lf
