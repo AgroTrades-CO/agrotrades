@@ -103,7 +103,7 @@
     "items": [
       {
         "visible": true,
-        "nome": "Cipriano",
+        "nome": "Eng. António Cipriano Júnior",
         "cargo": { "pt": "CEO", "en": "CEO" },
         "foto": "/images/team/placeholder.svg",
         "frase": { "pt": "Frase inspiradora de exemplo.", "en": "Example inspiring quote." },
