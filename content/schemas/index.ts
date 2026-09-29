@@ -570,10 +570,14 @@ export const contactsSchema = z.object({
   locations: locationsSchema,
   /** Formulário de contacto (envia email via Resend, app/api/contact/route.ts).
    *  `visible: false` esconde o formulário do site E faz a rota recusar
-   *  submissões diretas — nunca só um `display:none`. */
+   *  submissões diretas — nunca só um `display:none`.
+   *
+   *  O email de destino NÃO vive aqui (task-006, SEC-C-01): `content/site/`
+   *  é gravado pelo CMS sem revisão, por isso nenhum valor com efeito de
+   *  segurança pode estar neste objeto. O destino é a variável de ambiente
+   *  `CONTACT_RECIPIENT_EMAIL` (lib/contact/env.ts). */
   contactForm: z.object({
     visible: visibleFlag,
-    recipientEmail: z.string().trim().email(),
     heading: bilingualString,
     nameLabel: bilingualString,
     emailLabel: bilingualString,
@@ -583,6 +587,24 @@ export const contactsSchema = z.object({
     submitLabel: bilingualString,
     successMessage: bilingualString,
     errorMessage: bilingualString,
+    /** Mensagem curta mostrada quando o widget anti-spam (Cloudflare
+     *  Turnstile) falha e o botão fica desativado (task-006). */
+    verificationErrorMessage: bilingualString,
+    /** Aviso de privacidade mostrado antes do botão de envio (task-006, B3).
+     *  Obrigatório: sem ele o build falha. Texto simples (sem HTML/Markdown),
+     *  curto — não é a política de privacidade completa. */
+    privacyNotice: z.object({
+      pt: z
+        .string()
+        .trim()
+        .min(1, "o campo 'pt' é obrigatório e não pode estar vazio")
+        .max(1500, "o aviso de privacidade 'pt' não pode passar de 1500 caracteres"),
+      en: z
+        .string()
+        .trim()
+        .min(1, "o campo 'en' é obrigatório e não pode estar vazio")
+        .max(1500, "o aviso de privacidade 'en' não pode passar de 1500 caracteres"),
+    }),
   }),
 });
 export type Contacts = z.infer<typeof contactsSchema>;

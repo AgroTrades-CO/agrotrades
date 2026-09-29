@@ -910,10 +910,9 @@ collections:
           - label: "Formulário de contacto"
             name: contactForm
             widget: object
-            hint: "Envia email através do Resend (app/api/contact) — não guarda nada, só reencaminha."
+            hint: "Envia email através do Resend (app/api/contact). A aplicação não guarda as mensagens; ficam na caixa de destino e no registo do Resend. O email de destino é configurado pelo administrador no alojamento, não aqui."
             fields:
               - { label: "Visível", name: visible, widget: boolean, default: true }
-              - { label: "Email de destino", name: recipientEmail, widget: string, required: true, hint: "Para onde seguem as mensagens do formulário." }
               - label: "Cabeçalho"
                 name: heading
                 widget: object
@@ -968,6 +967,20 @@ collections:
                 fields:
                   - { label: "Português", name: pt, widget: string }
                   - { label: "English", name: en, widget: string }
+              - label: "Mensagem de falha da verificação anti-spam"
+                name: verificationErrorMessage
+                widget: object
+                hint: "Mostrada quando a verificação da Cloudflare falha e o botão fica desativado. Curta."
+                fields:
+                  - { label: "Português", name: pt, widget: string, required: true }
+                  - { label: "English", name: en, widget: string, required: true }
+              - label: "Aviso de privacidade"
+                name: privacyNotice
+                widget: object
+                hint: "Aviso mostrado junto ao botão de envio. Texto PROVISÓRIO: falta o prazo de conservação e o enquadramento legal, a definir pelo responsável da empresa."
+                fields:
+                  - { label: "Português", name: pt, widget: text, required: true }
+                  - { label: "English", name: en, widget: text, required: true }
 
       - name: footer
         label: "Rodapé"

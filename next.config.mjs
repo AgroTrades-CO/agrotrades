@@ -65,7 +65,20 @@ const nextConfig = {
   // terceiros" do pedido. O mesmo raciocínio aplica-se a
   // `style-src 'unsafe-inline'`, necessário para os atributos `style`
   // inline usados pelos componentes de página (ex.: NotFoundContent).
+  //
+  // EXCEÇÃO APROVADA (task-006-contact-form-security, gates.md, "Confirmação
+  // humana do desenho", ponto 2, 2026-09-26): `https://challenges.cloudflare.com`
+  // entra em `script-src` e `frame-src` da CSP GLOBAL, para o Cloudflare
+  // Turnstile do formulário de contacto. Foi escolhida a CSP global (e não
+  // uma CSP só para /contactos e /en/contact) porque a CSP é do documento:
+  // numa navegação client-side (`next/link`) para as páginas de contacto o
+  // documento mantém a CSP da página de origem e o widget seria bloqueado.
+  // A CSP só AUTORIZA o host; o script só é efetivamente carregado em
+  // components/ContactForm.tsx (páginas de contacto, com site key). Não
+  // acrescentar outros hosts nem carregar este script noutras páginas sem
+  // nova revisão de arquitetura/segurança.
   async headers() {
+    const turnstileOrigin = "https://challenges.cloudflare.com";
     // Em desenvolvimento (`npm run dev`), o Next.js/Turbopack usa eval()
     // para Fast Refresh e outras funcionalidades de debugging (nunca em
     // produção — ver aviso do próprio React). Sem 'unsafe-eval' em
@@ -91,7 +104,7 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+              `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${turnstileOrigin}`,
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data:",
@@ -107,7 +120,9 @@ const nextConfig = {
               //     esta CSP não declarar `frame-src`.
               // Qualquer alargamento a outros hosts exige nova revisão de
               // arquitetura/segurança — não acrescentar hosts aqui de ânimo leve.
-              "frame-src 'self' https://www.youtube-nocookie.com https://www.google.com",
+              //   - challenges.cloudflare.com: iframe do Turnstile (task-006,
+              //     exceção aprovada, ver comentário antes de `headers()`).
+              `frame-src 'self' https://www.youtube-nocookie.com https://www.google.com ${turnstileOrigin}`,
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",

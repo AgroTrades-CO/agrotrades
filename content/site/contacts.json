@@ -92,7 +92,6 @@
   ],
   "contactForm": {
     "visible": true,
-    "recipientEmail": "agrotrades99@gmail.com",
     "heading": {
       "pt": "Envie-nos uma mensagem",
       "en": "Send us a message"
@@ -128,6 +127,14 @@
     "errorMessage": {
       "pt": "Não foi possível enviar a mensagem. Tente novamente ou use o WhatsApp acima.",
       "en": "Couldn't send the message. Try again or use WhatsApp above."
+    },
+    "verificationErrorMessage": {
+      "pt": "A verificação anti-spam falhou. Recarregue a página ou use o WhatsApp acima.",
+      "en": "The anti-spam check failed. Reload the page or use WhatsApp above."
+    },
+    "privacyNotice": {
+      "pt": "Os dados que enviar neste formulário (nome, email, telefone, assunto e mensagem) são usados apenas para responder ao seu pedido e não são usados para marketing. A mensagem é entregue por email à AGRO TRADES, LDA (Rua de Tete, n.º 370, Nampula) através do serviço Resend e fica guardada na nossa caixa de correio. A proteção contra spam é feita pela Cloudflare, que trata dados técnicos do seu dispositivo. Alguns destes prestadores tratam dados fora de Moçambique. Para pedir acesso, correção ou eliminação dos seus dados, escreva para agrotrades99@gmail.com.",
+      "en": "The data you submit in this form (name, email, phone, subject and message) is used only to reply to your request and is not used for marketing. The message is delivered by email to AGRO TRADES, LDA (Rua de Tete, 370, Nampula) through the Resend service and is kept in our mailbox. Spam protection is provided by Cloudflare, which processes technical data about your device. Some of these providers process data outside Mozambique. To request access to, correction or deletion of your data, write to agrotrades99@gmail.com."
     }
   }
 }

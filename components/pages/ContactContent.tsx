@@ -3,8 +3,13 @@ import { contacts, visibleEmails, visibleLocations, visiblePhones, type Lang } f
 import { Icon } from "@/components/icon-map";
 import { IconWhatsapp } from "@/components/icons";
 import { ContactForm } from "@/components/ContactForm";
+import { readTurnstileSiteKey } from "@/lib/contact/env";
 
 export function ContactContent({ lang }: { lang: Lang }) {
+  // Lida no servidor durante o prerender (task-006, architecture.md 3.3): num
+  // deploy de produção, site key em falta ou de teste faz falhar o build.
+  const turnstileSiteKey = contacts.contactForm.visible ? readTurnstileSiteKey() : null;
+
   return (
     <>
       <div className="page-hero sd-hero">
@@ -147,7 +152,7 @@ export function ContactContent({ lang }: { lang: Lang }) {
             </div>
           </div>
 
-          <ContactForm form={contacts.contactForm} lang={lang} />
+          <ContactForm form={contacts.contactForm} lang={lang} siteKey={turnstileSiteKey} />
         </div>
       </section>
     </>
