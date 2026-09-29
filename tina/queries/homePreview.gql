@@ -1,0 +1,11 @@
+# Pré-visualização da página inicial: o site lê a secção "Sobre a empresa"
+# de dois ficheiros (home.json e quemSomos.json), por isso a pré-visualização
+# abre os dois documentos. O Tina mostra um formulário por documento.
+query homePreview {
+  paginaInicial(relativePath: "home.json") {
+    ...PaginaInicialParts
+  }
+  quemSomos(relativePath: "quemSomos.json") {
+    ...QuemSomosParts
+  }
+}

@@ -23,6 +23,9 @@ const eslintConfig = defineConfig([
     '*.html',
     // Worktrees de agentes Claude (incluem .next/ e node_modules/ próprios).
     '.claude/**',
+    // TinaCMS (task-017): tipos/queries gerados e admin gerado em public/.
+    'tina/__generated__/**',
+    'public/admin/**',
   ]),
 ])
 
