@@ -40,7 +40,7 @@
           }
         },
         {
-          "visible": true,
+          "visible": false,
           "type": "video",
           "youtubeId": "dQw4w9WgXcQ",
           "caption": {
