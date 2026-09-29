@@ -2,15 +2,20 @@
 
 /**
  * Pré-visualização editável da página inicial (TinaCMS, task-017).
- * Reutiliza o MESMO componente do site (`HomeContent`), com os dados em
- * edição (recebidos do admin por `useTina`, nunca saem do browser) e a
- * ligação clicar-para-editar. Só usado pelas rotas /editor-preview e
+ * Reutiliza a MESMA vista do site (`HomeView`), com os dados em edição
+ * (recebidos do admin por `useTina`, nunca saem do browser) e a ligação
+ * clicar-para-editar. Só usado pelas rotas /editor-preview e
  * /en/editor-preview; nada disto entra no site público.
+ *
+ * R-VIEW (architecture.md 18.1.5): nenhum valor de @/content aqui — o
+ * conteúdo publicado que não se edita nesta página chega por `published`,
+ * construído no servidor pela página de pré-visualização. Importar valores
+ * de @/content no browser mudaria o bundle das páginas públicas (AC-15).
  */
 import { useTina } from "tinacms/dist/react";
 import type { HomePreviewQuery, HomePreviewQueryVariables } from "@/tina/__generated__/types";
-import { HomeContent, type HomeData } from "@/components/pages/HomeContent";
-import { visibleHeroSlides as siteVisibleHeroSlides, type Lang } from "@/content";
+import type { Lang } from "@/content";
+import { HomeView, type HomeViewData } from "@/components/pages/HomeView";
 import { PreviewLangSwitch } from "./PreviewLangSwitch";
 import { isVisible, stripNulls, tf, toHeroSlide } from "./normalize";
 
@@ -21,6 +26,7 @@ export function HomePreview(props: {
   variables: HomePreviewQueryVariables;
   data: HomePreviewQuery;
   lang: Lang;
+  published: HomeViewData;
 }) {
   const { data } = useTina({ query: props.query, variables: props.variables, data: props.data });
   const home = stripNulls(data.paginaInicial) as unknown as AnyRecord & {
@@ -35,20 +41,21 @@ export function HomePreview(props: {
   const visibleSlides = slides.filter(isVisible);
 
   const homeData = {
+    ...props.published,
     hero: { ...home.hero, slider: { ...home.hero.slider, slides } },
     // O site exige pelo menos um slide visível (validado no build); durante
     // a edição, se não houver nenhum, mantém-se o fundo publicado.
-    visibleHeroSlides: visibleSlides.length > 0 ? visibleSlides : siteVisibleHeroSlides,
+    visibleHeroSlides: visibleSlides.length > 0 ? visibleSlides : props.published.visibleHeroSlides,
     visibleStats: (home.stats.items ?? []).filter(isVisible),
     homeAbout: home.about,
     locationsHeading: home.locationsHeading,
     about: quemSomos,
     visibleAboutTags: (quemSomos.tags ?? []).filter(isVisible),
-  } as unknown as HomeData;
+  } as unknown as HomeViewData;
 
   return (
     <>
-      <HomeContent lang={props.lang} data={homeData} tf={tf} />
+      <HomeView lang={props.lang} data={homeData} tf={tf} />
       <PreviewLangSwitch lang={props.lang} hrefPt="/editor-preview" hrefEn="/en/editor-preview" />
     </>
   );

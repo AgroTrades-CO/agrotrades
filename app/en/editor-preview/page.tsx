@@ -8,6 +8,7 @@ import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import { getTinaClient } from "@/lib/tina/client";
 import { HomePreview } from "@/components/tina/HomePreview";
+import { getHomeViewData } from "@/lib/view-data/home";
 
 export const dynamic = "force-dynamic";
 
@@ -20,5 +21,13 @@ export default async function EditorPreviewHomePageEn() {
   const { isEnabled } = await draftMode();
   if (!isEnabled) notFound();
   const result = await getTinaClient().queries.homePreview();
-  return <HomePreview query={result.query} variables={result.variables} data={result.data} lang="en" />;
+  return (
+    <HomePreview
+      query={result.query}
+      variables={result.variables}
+      data={result.data}
+      lang="en"
+      published={getHomeViewData("en")}
+    />
+  );
 }

@@ -47,7 +47,6 @@ import {
   navSchema,
   notFoundSchema,
   quemSomosSchema,
-  resolveSectionLayout,
   servicePageSchema,
   servicesPageSchema,
   servicesSchema,
@@ -144,7 +143,8 @@ export const servicesPage = parseContent(servicesPageSchema, servicesPageJson, "
 export const servicesHeading = servicesPage.sectionHeading;
 export const servicePage = parseContent(servicePageSchema, servicePageJson, "content/site/servicePage.json");
 
-export { resolveSectionLayout, youtubeEmbedUrl };
+export { youtubeEmbedUrl };
+export type { ResolvedSectionLayout } from "./derive";
 
 /**
  * Derivações únicas de visibilidade (FR-6, handoff-34 secção D.5) — a regra
@@ -159,15 +159,7 @@ export const heroSlides = hero.slider.slides;
  *  pelo `.refine` do schema (pelo menos 1 slide `visible: true`). */
 export const visibleHeroSlides = heroSlides.filter((s) => s.visible);
 
-/** Secções do detalhe de serviço visíveis, na ordem do ficheiro. */
-export function visibleSections(service: Service) {
-  return (service.sections ?? []).filter((s) => s.visible);
-}
-
-/** Itens de galeria visíveis, só se o bloco galeria estiver ligado. */
-export function visibleGallery(service: Service) {
-  return service.galleryVisible ? (service.gallery ?? []).filter((i) => i.visible) : [];
-}
+// `visibleSections` e `visibleGallery` vivem em content/derive.ts (task-017, A-12).
 
 /** Valores institucionais visíveis, só se o bloco valores estiver ligado. */
 export function visibleValues(page: AboutPage) {
@@ -247,7 +239,6 @@ export type {
   Paragraph,
   PhoneEntry,
   EmailEntry,
-  ResolvedSectionLayout,
   Service,
   ServicePage,
   ServiceSection,

@@ -9,6 +9,8 @@ import { notFound } from "next/navigation";
 import { getTinaClient } from "@/lib/tina/client";
 import { ServicePreview } from "@/components/tina/ServicePreview";
 import { services } from "@/content";
+import { serviceEnSlug } from "@/content/service-slugs";
+import { getServiceDetailViewData } from "@/lib/view-data/service";
 
 export const dynamic = "force-dynamic";
 
@@ -30,7 +32,9 @@ export default async function EditorPreviewServicePage({ params }: { params: Pro
       variables={result.variables}
       data={result.data}
       lang="pt"
-      id={service.id}
+      published={getServiceDetailViewData(service, "pt")}
+      hrefPt={`/editor-preview/servicos/${service.id}`}
+      hrefEn={`/en/editor-preview/services/${serviceEnSlug(service.id)}`}
     />
   );
 }

@@ -2,14 +2,17 @@
 
 /**
  * Pré-visualização editável da página de um serviço (TinaCMS, task-017).
- * Reutiliza o MESMO componente do site (`ServiceDetailContent`). Só usado
- * pelas rotas /editor-preview/servicos/[id] e /en/editor-preview/services/[slug].
+ * Reutiliza a MESMA vista do site (`ServiceDetailView`). Só usado pelas rotas
+ * /editor-preview/servicos/[id] e /en/editor-preview/services/[slug].
+ *
+ * R-VIEW (architecture.md 18.1.5): nenhum valor de @/content aqui — o
+ * conteúdo publicado (serviços relacionados, textos comuns, contactos) e os
+ * endereços PT/EN chegam por props, construídos no servidor.
  */
 import { useTina } from "tinacms/dist/react";
 import type { ServicoQuery, ServicoQueryVariables } from "@/tina/__generated__/types";
-import { ServiceDetailContent } from "@/components/pages/ServiceDetailContent";
-import { services, type Lang, type Service } from "@/content";
-import { serviceEnSlug } from "@/content/service-slugs";
+import type { Lang, Service } from "@/content";
+import { ServiceDetailView, type ServiceDetailViewData } from "@/components/pages/ServiceDetailView";
 import { PreviewLangSwitch } from "./PreviewLangSwitch";
 import { hasImage, stripNulls, tf } from "./normalize";
 
@@ -20,8 +23,10 @@ export function ServicePreview(props: {
   variables: ServicoQueryVariables;
   data: ServicoQuery;
   lang: Lang;
-  /** Id do serviço (nome do ficheiro), validado pela rota. */
-  id: string;
+  /** Dados publicados do serviço e da página, construídos no servidor. */
+  published: ServiceDetailViewData;
+  hrefPt: string;
+  hrefEn: string;
 }) {
   const { data } = useTina({ query: props.query, variables: props.variables, data: props.data });
   const raw = stripNulls(data.servico) as unknown as AnyRecord & {
@@ -30,14 +35,14 @@ export function ServicePreview(props: {
     sections?: (AnyRecord & { image?: { image?: string } })[];
     gallery?: (AnyRecord & { image?: string })[];
   };
-  const published = services.find((s) => s.id === props.id);
+  const published = props.published.service;
 
   const service = {
     ...raw,
     // O endereço vem da rota (ficheiro), não do valor em edição.
-    id: props.id,
+    id: published.id,
     // Imagem de topo apagada durante a edição: mostra a publicada.
-    bannerImage: hasImage(raw.bannerImage) ? raw.bannerImage : published?.bannerImage,
+    bannerImage: hasImage(raw.bannerImage) ? raw.bannerImage : published.bannerImage,
     // `visible` ausente = visível (default do schema Zod do site).
     galleryVisible: raw.galleryVisible !== false,
     // Secção com imagem ainda por escolher: mostra-se como cartão de texto.
@@ -53,12 +58,8 @@ export function ServicePreview(props: {
 
   return (
     <>
-      <ServiceDetailContent service={service} lang={props.lang} tf={tf} />
-      <PreviewLangSwitch
-        lang={props.lang}
-        hrefPt={`/editor-preview/servicos/${props.id}`}
-        hrefEn={`/en/editor-preview/services/${serviceEnSlug(props.id)}`}
-      />
+      <ServiceDetailView lang={props.lang} data={{ ...props.published, service }} tf={tf} />
+      <PreviewLangSwitch lang={props.lang} hrefPt={props.hrefPt} hrefEn={props.hrefEn} />
     </>
   );
 }

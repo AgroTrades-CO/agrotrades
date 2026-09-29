@@ -142,13 +142,8 @@ export const serviceSectionSchema = z
   });
 export type ServiceSection = z.infer<typeof serviceSectionSchema>;
 
-/** Layout resolvido para apresentação — derivação única, sem duplicar a regra
- *  por componente (recomendação vinculativa do software-architect, handoff-26). */
-export type ResolvedSectionLayout = "card" | "split" | "feature";
-export function resolveSectionLayout(section: ServiceSection): ResolvedSectionLayout {
-  if (!section.image) return "card";
-  return section.layout ?? "split";
-}
+// `resolveSectionLayout` e o tipo `ResolvedSectionLayout` vivem em content/derive.ts
+// (task-017, A-12): correm também no browser da pré-visualização, sem arrastar o Zod.
 
 // ── HERO SLIDER (FR-1) ─────────────────────────────────────────────────────
 
