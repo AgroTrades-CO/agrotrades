@@ -25,34 +25,24 @@ const nextConfig = {
       { source: "/home", destination: "/", permanent: true },
     ];
   },
-  // /admin (sem barra final) e /admin/ não resolvem sozinhos ao ficheiro
-  // estático public/admin/index.html — o Next.js só serve ficheiros de
-  // public/ por caminho EXATO, sem resolução de "index" de diretório.
-  // Reescrita interna (não é redirect visível ao browser, não muda o URL)
-  // — Fase 5, Decap CMS.
-  async rewrites() {
-    return [{ source: "/admin", destination: "/admin/index.html" }];
-  },
   // Cabeçalhos de segurança (Fase 4) — migra a intenção do netlify.toml
   // antigo (X-Frame-Options/X-Content-Type-Options/Referrer-Policy) para
   // o Next.js/Vercel, e acrescenta CSP + HSTS.
   //
   // RESTRIÇÃO VINCULATIVA DA ARQUITETURA (v5, secção 9.9/12.36): esta CSP
-  // é estrita por defeito e serve TODO o site, incluindo `/admin` (Decap
-  // CMS, Fase 5). A Fase 5 acrescenta uma entrada de `headers()` própria
-  // com `source: "/admin/:path*"`, com a sua própria CSP mais permissiva
-  // (o Decap auto-hospedado exige `unsafe-eval`, e o backend `github`
-  // precisa de falar com api.github.com).
+  // é estrita por defeito e serve TODO o site. A entrada própria de
+  // `/admin/:path*` do Decap CMS (e o rewrite `/admin`) foi removida com o
+  // Decap (task-017-tina-cms-adoption, fase 1, SEC-T-09); `/admin` dá 404
+  // até o admin da TinaCMS ter a sua própria entrada (fase 4).
   //
-  // CORREÇÃO a este comentário (verificado contra a documentação do
-  // Next.js — "Header Overriding Behavior" em headers.md): entradas de
-  // `headers()` que fazem match no mesmo caminho e definem a MESMA chave
-  // de header NÃO se combinam/mesclam por diretiva — a última entrada do
-  // array que fizer match SUBSTITUI inteiramente o valor da anterior para
-  // essa chave. Por isso a entrada `/admin/:path*` abaixo é uma CSP
-  // COMPLETA e autossuficiente (repete `default-src`, `object-src`, etc.),
-  // não apenas as diretivas adicionais — e tem de vir DEPOIS da entrada
-  // global no array devolvido, para ser a que prevalece em `/admin`.
+  // Entradas de `headers()` que fazem match no mesmo caminho e definem a
+  // MESMA chave de header NÃO se combinam/mesclam por diretiva (verificado
+  // contra a documentação do Next.js — "Header Overriding Behavior" em
+  // headers.md) — a última entrada do array que fizer match SUBSTITUI
+  // inteiramente o valor da anterior para essa chave. Por isso qualquer
+  // entrada específica abaixo (ex.: `/images/uploads/:path*`) é uma CSP
+  // COMPLETA e autossuficiente, não apenas as diretivas adicionais — e tem
+  // de vir DEPOIS da entrada global no array devolvido, para prevalecer.
   //
   // Nota sobre `script-src 'self' 'unsafe-inline'`: o Next.js App Router
   // injeta, no próprio HTML, um `<script>` inline sem `src` com o payload
@@ -133,9 +123,9 @@ const nextConfig = {
         ],
       },
       {
-        // SEC-P5-03: media da media library do Decap (public/images/uploads/,
-        // ver public/admin/config.yml) é servida pela mesma origem que
-        // `/admin` mas NÃO deve herdar `script-src 'self' 'unsafe-inline'`
+        // SEC-P5-03: media carregada pelos editores do CMS
+        // (public/images/uploads/) é servida pela mesma origem que o
+        // resto do site mas NÃO deve herdar `script-src 'self' 'unsafe-inline'`
         // da CSP global — um ficheiro carregado por um editor não é
         // confiável como o resto do site. Entrada própria, autossuficiente
         // (mesma regra de "a última entrada vence" do comentário acima):
@@ -156,60 +146,6 @@ const nextConfig = {
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Content-Security-Policy", value: "sandbox; default-src 'none'" },
-        ],
-      },
-      {
-        // CSP PRÓPRIA de /admin (Fase 5, restrição vinculativa 36 / SEC-05
-        // do security-engineer). Autossuficiente — ver comentário acima
-        // sobre "Header Overriding Behavior": esta entrada SUBSTITUI a CSP
-        // global inteira para `/admin/:path*`, não a combina com ela.
-        //
-        // Diferenças face à CSP global, e a razão de cada uma:
-        //   - script-src 'unsafe-eval': o bundle auto-hospedado do Decap
-        //     CMS (webpack, restrição 36) usa-o internamente. Nunca
-        //     acrescentado à CSP global do resto do site.
-        //   - connect-src api.github.com / github.com / objects.githubusercontent.com:
-        //     o backend `github` do Decap fala DIRETAMENTE com a API do
-        //     GitHub a partir do browser (listar/gravar ficheiros, media);
-        //     `github.com` cobre a troca de código do próprio popup OAuth;
-        //     `objects.githubusercontent.com` é onde o GitHub redireciona
-        //     downloads de ficheiros grandes do repositório.
-        //   - connect-src blob:: o Decap faz `fetch()` de URLs blob: para
-        //     o backup local de rascunhos (`persistLocalDraftBackup`,
-        //     IndexedDB) — sem isto, guardar uma entrada com ficheiro
-        //     anexado falha em silêncio com "TypeError: Failed to fetch"
-        //     (só visível na consola, não no separador Network, porque a
-        //     CSP bloqueia antes do pedido sair). img-src já tinha blob:
-        //     para pré-visualização; connect-src faltava.
-        //   - img-src avatars.githubusercontent.com: avatar do utilizador
-        //     autenticado, mostrado pela UI do Decap.
-        //   - Continua SEM nenhum CDN de terceiros em script-src (nunca
-        //     unpkg/jsdelivr) — o bundle é servido de 'self'
-        //     (public/admin/vendor/, ver scripts/copy-decap-cms.mjs).
-        source: "/admin/:path*",
-        headers: [
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
-          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-          {
-            key: "Content-Security-Policy",
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-              "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://avatars.githubusercontent.com",
-              "font-src 'self' data:",
-              "connect-src 'self' blob: https://api.github.com https://github.com https://objects.githubusercontent.com",
-              "frame-src 'none'",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'none'",
-              "upgrade-insecure-requests",
-            ].join("; "),
-          },
         ],
       },
     ];

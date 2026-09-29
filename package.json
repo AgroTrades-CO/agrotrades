@@ -3,13 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/copy-decap-cms.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/copy-decap-cms.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
-    "postinstall": "node scripts/copy-decap-cms.mjs"
+    "lint": "eslint ."
   },
   "dependencies": {
     "decap-cms": "3.15.1",

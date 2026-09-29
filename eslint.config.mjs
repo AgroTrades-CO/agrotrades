@@ -15,8 +15,6 @@ const eslintConfig = defineConfig([
     'build/**',
     'next-env.d.ts',
     'node_modules/**',
-    // Decap CMS copiado para public/ por scripts/copy-decap-cms.mjs (código de terceiros).
-    'public/admin/vendor/**',
     // Versão alternativa do site estático usada apenas como referência.
     'AvaliacaoAgroTrades/**',
     // Site estático antigo na raiz (legado, a remover noutra tarefa).
