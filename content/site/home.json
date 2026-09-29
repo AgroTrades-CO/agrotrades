@@ -40,7 +40,7 @@
           }
         },
         {
-          "visible": true,
+          "visible": false,
           "type": "video",
           "youtubeId": "dQw4w9WgXcQ",
           "caption": {
@@ -54,7 +54,7 @@
   "stats": {
     "items": [
       { "visible": true, "value": "2+", "label": { "pt": "Anos de actividade", "en": "Years of activity" } },
-      { "visible": true, "value": "100", "label": { "pt": "Hectares cultivados", "en": "Hectares cultivated" } },
+      { "visible": true, "value": "20/100", "label": { "pt": "Hectares (cultivados/meta)", "en": "Hectares (cultivated/target)" } },
       { "visible": true, "value": "8", "label": { "pt": "Serviços agrícolas", "en": "Agricultural services" } },
       { "visible": true, "value": "MZ", "label": { "pt": "Distrito de Moma", "en": "Moma District" } }
     ]
