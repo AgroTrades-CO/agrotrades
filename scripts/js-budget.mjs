@@ -96,7 +96,8 @@ function buildBaseline() {
     const dir = join(work, "src");
     mkdirSync(dir);
     execFileSync("git", ["archive", "--format=tar", "-o", tar, baselineRef], { cwd: root, stdio: "inherit" });
-    execFileSync("tar", ["-xf", tar, "-C", dir], { stdio: "inherit" });
+    // Caminhos relativos: o tar do Git para Windows lê "C:" como anfitrião remoto.
+    execFileSync("tar", ["-xf", "baseline.tar", "-C", "src"], { cwd: work, stdio: "inherit" });
     // Dados atuais por cima (só JSON; os .ts de content/ ficam os da linha de base).
     for (const f of contentJson) {
       mkdirSync(dirname(join(dir, f)), { recursive: true });
