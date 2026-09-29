@@ -10,7 +10,18 @@ import { Icon } from "@/components/icon-map";
  * não duplicar markup/estilo entre os dois locais (recomendação do
  * ux-ui-designer, confirmada pelo software-architect no handoff-26).
  */
-export function ServiceCard({ service, lang }: { service: Service; lang: Lang }) {
+export function ServiceCard({
+  service,
+  lang,
+  href = serviceDetailPath(service.id, lang),
+  learnMore = servicesHeading.learnMore[lang],
+}: {
+  service: Service;
+  lang: Lang;
+  /** Destino do link; por omissão, a página do serviço. Os produtos passam o seu próprio caminho. */
+  href?: string;
+  learnMore?: string;
+}) {
   return (
     <div className="service-card service-card--with-cover">
       <div className="service-card-cover">
@@ -22,8 +33,8 @@ export function ServiceCard({ service, lang }: { service: Service; lang: Lang })
         </div>
         <h3>{service.title[lang]}</h3>
         <p>{service.summary[lang]}</p>
-        <Link href={serviceDetailPath(service.id, lang)} className="btn-saiba-mais">
-          {servicesHeading.learnMore[lang]} &rarr;
+        <Link href={href} className="btn-saiba-mais">
+          {learnMore} &rarr;
         </Link>
       </div>
     </div>

@@ -32,12 +32,24 @@ function SectionBullets({ bullets, lang }: { bullets: ServiceSection["bullets"];
   );
 }
 
-export function ServiceDetailContent({ service, lang }: { service: Service; lang: Lang }) {
+export function ServiceDetailContent({
+  service,
+  lang,
+  back = { href: path("services", lang), label: servicePage.backToServices[lang] },
+  showRelated = true,
+}: {
+  service: Service;
+  lang: Lang;
+  /** Link de volta no topo; por omissão, a listagem de serviços. Os produtos passam a sua listagem. */
+  back?: { href: string; label: string };
+  /** Bloco "Outros serviços" — só faz sentido nas páginas de serviço. */
+  showRelated?: boolean;
+}) {
   const sections = visibleSections(service);
   const gallery = visibleGallery(service);
   const hasSections = sections.length > 0;
   const hasGallery = gallery.length > 0;
-  const related = servicePage.relatedVisible ? relatedServices(service.id) : [];
+  const related = showRelated && servicePage.relatedVisible ? relatedServices(service.id) : [];
 
   // Alternância do lado da variante "split": conta-se só entre secções desta
   // variante, não entre todas as secções do serviço (design-spec-fase2 1b).
@@ -55,8 +67,8 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
         />
         <div className="sd-hero-overlay" />
         <div className="page-hero-content">
-          <Link href={path("services", lang)} className="sd-back" style={{ color: "rgba(255,255,255,0.7)" }}>
-            &larr; <span>{servicePage.backToServices[lang]}</span>
+          <Link href={back.href} className="sd-back" style={{ color: "rgba(255,255,255,0.7)" }}>
+            &larr; <span>{back.label}</span>
           </Link>
           <div style={{ marginBottom: 16, color: "white" }}>
             <Icon name={service.icon} width={44} height={44} />
@@ -202,7 +214,7 @@ export function ServiceDetailContent({ service, lang }: { service: Service; lang
             </div>
           )}
 
-          {servicePage.relatedVisible && related.length > 0 && (
+          {related.length > 0 && (
             <div className="sd-related-section">
               <h2 className="section-title sd-gallery-title">{servicePage.relatedHeading[lang]}</h2>
               <div className="services-grid">
