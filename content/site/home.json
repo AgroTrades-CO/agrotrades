@@ -50,30 +50,30 @@
       "slides": [
         {
           "visible": true,
-          "type": "image",
           "image": "/images/services/arroz/banner.svg",
           "alt": {
             "pt": "Campos de arroz da AGRO TRADES em Nampula",
             "en": "AGRO TRADES rice fields in Nampula"
-          }
+          },
+          "type": "image"
         },
         {
           "visible": true,
-          "type": "image",
           "image": "/images/services/mecanizacao/banner.svg",
           "alt": {
             "pt": "Mecanização agrícola da AGRO TRADES",
             "en": "AGRO TRADES agricultural mechanisation"
-          }
+          },
+          "type": "image"
         },
         {
           "visible": false,
-          "type": "video",
           "youtubeId": "dQw4w9WgXcQ",
           "caption": {
             "pt": "Vídeo institucional da AGRO TRADES (placeholder de teste — substituir por vídeo real)",
             "en": "AGRO TRADES institutional video (test placeholder — replace with real footage)"
-          }
+          },
+          "type": "video"
         }
       ]
     }

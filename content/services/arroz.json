@@ -1,8 +1,46 @@
 {
-  "galleryVisible": true,
+  "id": "arroz",
+  "icon": "wheat",
+  "title": {
+    "pt": "Produção de arroz",
+    "en": "Rice Production"
+  },
   "summary": {
     "pt": "Cultivo e produção de arroz de qualidade no Distrito de Moma, com técnicas modernas e sustentáveis para maximizar a colheita e contribuir para a segurança alimentar.",
     "en": "Quality rice cultivation in the Moma District using modern sustainable techniques to maximise harvests and contribute to food security."
+  },
+  "description": {
+    "pt": "A AGRO TRADES dedica-se ao cultivo intensivo de arroz no Distrito de Moma, Nampula, aproveitando as condições climáticas e hidrográficas favoráveis da região. Utilizamos variedades de alto rendimento combinadas com práticas agronómicas modernas, incluindo controlo rigoroso de água, fertilização adequada e gestão integrada de pragas. O nosso processo garante arroz de elevada qualidade, destinado tanto ao mercado local como ao abastecimento regional, contribuindo directamente para a soberania alimentar de Moçambique.",
+    "en": "AGRO TRADES focuses on intensive rice cultivation in the Moma District, Nampula, leveraging the region's favourable climatic and hydrographic conditions. We use high-yield varieties combined with modern agronomic practices, including strict water management, proper fertilisation and integrated pest control. Our process ensures high-quality rice destined for both local and regional markets, directly contributing to Mozambique's food sovereignty."
+  },
+  "highlights": {
+    "pt": [
+      "Variedades de alto rendimento adaptadas ao clima local",
+      "Gestão integrada de água e fertilização",
+      "Controlo de pragas com métodos sustentáveis",
+      "Colheita mecanizada para maior eficiência",
+      "Contribuição directa para a segurança alimentar nacional"
+    ],
+    "en": [
+      "High-yield varieties adapted to local climate",
+      "Integrated water and fertilisation management",
+      "Sustainable pest control methods",
+      "Mechanised harvesting for greater efficiency",
+      "Direct contribution to national food security"
+    ]
+  },
+  "homeTitle": {
+    "pt": "Produção de arroz",
+    "en": "Rice Production"
+  },
+  "homeBlurb": {
+    "pt": "Cultivo e produção de arroz de qualidade no Distrito de Moma, Província de Nampula",
+    "en": "Quality rice cultivation and production in the Moma District, Nampula Province."
+  },
+  "bannerImage": "/images/uploads/photo-1586201375761-83865001e31c.avif",
+  "bannerImageAlt": {
+    "pt": "Ilustração de campos de arroz da AGRO TRADES em tons de verde",
+    "en": "Illustration of AGRO TRADES rice fields in green tones"
   },
   "sections": [
     {
@@ -69,7 +107,7 @@
       "visible": true
     }
   ],
-  "bannerImage": "/images/uploads/photo-1586201375761-83865001e31c.avif",
+  "galleryVisible": true,
   "gallery": [
     {
       "image": "/images/services/arroz/gallery-1.svg",
@@ -95,43 +133,5 @@
       },
       "visible": true
     }
-  ],
-  "title": {
-    "pt": "Produção de arroz",
-    "en": "Rice Production"
-  },
-  "icon": "wheat",
-  "homeTitle": {
-    "pt": "Produção de arroz",
-    "en": "Rice Production"
-  },
-  "bannerImageAlt": {
-    "pt": "Ilustração de campos de arroz da AGRO TRADES em tons de verde",
-    "en": "Illustration of AGRO TRADES rice fields in green tones"
-  },
-  "id": "arroz",
-  "homeBlurb": {
-    "pt": "Cultivo e produção de arroz de qualidade no Distrito de Moma, Província de Nampula",
-    "en": "Quality rice cultivation and production in the Moma District, Nampula Province."
-  },
-  "description": {
-    "pt": "A AGRO TRADES dedica-se ao cultivo intensivo de arroz no Distrito de Moma, Nampula, aproveitando as condições climáticas e hidrográficas favoráveis da região. Utilizamos variedades de alto rendimento combinadas com práticas agronómicas modernas, incluindo controlo rigoroso de água, fertilização adequada e gestão integrada de pragas. O nosso processo garante arroz de elevada qualidade, destinado tanto ao mercado local como ao abastecimento regional, contribuindo directamente para a soberania alimentar de Moçambique.",
-    "en": "AGRO TRADES focuses on intensive rice cultivation in the Moma District, Nampula, leveraging the region's favourable climatic and hydrographic conditions. We use high-yield varieties combined with modern agronomic practices, including strict water management, proper fertilisation and integrated pest control. Our process ensures high-quality rice destined for both local and regional markets, directly contributing to Mozambique's food sovereignty."
-  },
-  "highlights": {
-    "pt": [
-      "Variedades de alto rendimento adaptadas ao clima local",
-      "Gestão integrada de água e fertilização",
-      "Controlo de pragas com métodos sustentáveis",
-      "Colheita mecanizada para maior eficiência",
-      "Contribuição directa para a segurança alimentar nacional"
-    ],
-    "en": [
-      "High-yield varieties adapted to local climate",
-      "Integrated water and fertilisation management",
-      "Sustainable pest control methods",
-      "Mechanised harvesting for greater efficiency",
-      "Direct contribution to national food security"
-    ]
-  }
+  ]
 }
