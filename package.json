@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/tina-build.mjs && node scripts/check-content-images.mjs && next build && node scripts/check-build-secrets.mjs",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "tina:dev": "node scripts/tina-dev.mjs"
   },
   "dependencies": {
     "next": "16.3.2",
