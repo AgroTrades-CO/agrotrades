@@ -1,0 +1,126 @@
+// Leitura do resultado de `next build` (.next/) para as verificações de AC-15 (task-017,
+// architecture.md 19.2 e 19.3): lista das páginas públicas, chunks JS de cada página,
+// manifestos de referências cliente e ids de módulos registados em cada chunk.
+//
+// Segurança (SEC-AC15-2): chunks e manifestos são código do próprio build, mas só são avaliados
+// num `vm` com contexto novo (sem require, process nem o globalThis do Node), com timeout, e as
+// fábricas dos módulos nunca são invocadas — só se recolhem os ids. Nada daqui imprime conteúdo
+// de chunks ou de HTML.
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
+import vm from "node:vm";
+
+const VM_TIMEOUT_MS = 2000;
+
+/** Rotas que não são páginas públicas (architecture 19.2.1). */
+export function isPublicRoute(route) {
+  if (route === "/_global-error" || route === "/robots.txt" || route === "/sitemap.xml") return false;
+  return !/editor-preview|\/api\/|\/admin/.test(route);
+}
+
+/** Base do ficheiro pré-renderizado de uma rota (`/` = `index`). */
+export function routeFileBase(nextDir, route) {
+  return join(nextDir, "server", "app", route === "/" ? "index" : route.slice(1));
+}
+
+/** Páginas públicas a partir de prerender-manifest.json (inclui /_not-found). */
+export function listPublicPages(nextDir) {
+  const manifest = JSON.parse(readFileSync(join(nextDir, "prerender-manifest.json"), "utf8"));
+  return Object.keys(manifest.routes).filter(isPublicRoute).sort();
+}
+
+/** URLs (caminhos) do sitemap gerado. */
+export function listSitemapPaths(nextDir) {
+  const body = readFileSync(join(nextDir, "server", "app", "sitemap.xml.body"), "utf8");
+  return [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
+}
+
+const CHUNK_IN_TEXT = /\/_next\/static\/chunks\/[^"'\s)\\]+\.js/g;
+const CHUNK_IN_RSC = /"(static\/chunks\/[^"\\]+\.js)"/g;
+
+/** Nomes dos chunks JS de uma página: <script src> e listas do payload RSC (HTML e .rsc). */
+export function pageChunks(nextDir, route) {
+  const base = routeFileBase(nextDir, route);
+  const names = new Set();
+  for (const file of [`${base}.html`, `${base}.rsc`]) {
+    if (!existsSync(file)) throw new Error(`falta ${file}`);
+    const text = readFileSync(file, "utf8");
+    for (const m of text.matchAll(CHUNK_IN_TEXT)) names.add(m[0].split("/").pop());
+    for (const m of text.matchAll(CHUNK_IN_RSC)) names.add(m[1].split("/").pop());
+  }
+  return [...names].sort();
+}
+
+/** Todos os ficheiros de texto pré-renderizados de uma página (HTML, .rsc, .segments/**). */
+export function pageTextFiles(nextDir, route) {
+  const base = routeFileBase(nextDir, route);
+  const files = [`${base}.html`, `${base}.rsc`];
+  const segDir = `${base}.segments`;
+  const walk = (dir) =>
+    readdirSync(dir).flatMap((n) => {
+      const p = join(dir, n);
+      return statSync(p).isDirectory() ? walk(p) : [p];
+    });
+  if (existsSync(segDir)) files.push(...walk(segDir));
+  return files;
+}
+
+/** Todos os manifestos de referências cliente de páginas: { rota da app -> clientModules }. */
+export function loadClientManifests(nextDir) {
+  const out = {};
+  const walk = (dir) => {
+    for (const n of readdirSync(dir)) {
+      const p = join(dir, n);
+      if (statSync(p).isDirectory()) walk(p);
+      else if (n === "page_client-reference-manifest.js") {
+        const context = vm.createContext({});
+        vm.runInContext(readFileSync(p, "utf8"), context, { timeout: VM_TIMEOUT_MS });
+        const manifests = context.__RSC_MANIFEST ?? {};
+        for (const [page, m] of Object.entries(manifests)) out[page] = m.clientModules ?? {};
+      }
+    }
+  };
+  walk(join(nextDir, "server", "app"));
+  return out;
+}
+
+/**
+ * Ids de módulos registados num chunk do Turbopack. `null` se o chunk não tiver o formato
+ * reconhecido (o chamador decide: a verificação C-A trata isso como falha).
+ */
+export function chunkModuleIds(code) {
+  // Script simples sem registo de módulos (ex.: polyfills do Next): não tem ids.
+  if (!code.includes("TURBOPACK")) return [];
+  const context = vm.createContext({ TURBOPACK: [], document: undefined });
+  try {
+    vm.runInContext(code, context, { timeout: VM_TIMEOUT_MS });
+  } catch {
+    // O chunk de runtime regista-se e depois tenta usar APIs do browser (ex.: `self`), que o
+    // contexto não expõe; o que interessa é o que ficou registado antes disso.
+  }
+  const entries = context.TURBOPACK;
+  if (!Array.isArray(entries) || entries.length === 0) return null;
+  const ids = [];
+  for (const entry of entries) {
+    if (!Array.isArray(entry)) return null;
+    // Formato: [script atual, (id... fábrica)*, {parâmetros do runtime}?]; vários ids seguidos
+    // partilham a fábrica seguinte.
+    let pending = 0;
+    for (let i = 1; i < entry.length; i++) {
+      const item = entry[i];
+      if (typeof item === "number") {
+        ids.push(item);
+        pending++;
+      } else if (typeof item === "function") {
+        if (pending === 0) return null;
+        pending = 0;
+      } else if (item && typeof item === "object") {
+        continue;
+      } else {
+        return null;
+      }
+    }
+    if (pending !== 0) return null;
+  }
+  return ids;
+}
