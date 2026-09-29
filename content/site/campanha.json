@@ -23,10 +23,10 @@
       "pt": "A AGRO TRADES, LDA deu início às operações da Campanha Agrícola 2025/2026, alinhada com o incentivo do Presidente da República, Daniel Chapo.",
       "en": "AGRO TRADES, LDA has started operations for the 2025/2026 Agricultural Campaign, aligned with the initiative of the President of the Republic, Daniel Chapo."
     },
-    "bannerImage": "/images/banners/campanha.svg",
+    "bannerImage": "/images/uploads/arroz-floracao-01.webp",
     "bannerImageAlt": {
-      "pt": "Campos agrícolas da Campanha 2025/2026 da AGRO TRADES",
-      "en": "AGRO TRADES 2025/2026 Campaign agricultural fields"
+      "pt": "Campo de arroz com espigas e árvores ao fundo",
+      "en": "Rice field with ears of rice and trees in the background"
     }
   },
   "quote": {

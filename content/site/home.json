@@ -50,10 +50,10 @@
       "slides": [
         {
           "visible": true,
-          "image": "/images/services/arroz/banner.svg",
+          "image": "/images/uploads/arroz-floracao-02.webp",
           "alt": {
-            "pt": "Campos de arroz da AGRO TRADES em Nampula",
-            "en": "AGRO TRADES rice fields in Nampula"
+            "pt": "Espigas de arroz em primeiro plano num campo de cultivo",
+            "en": "Ears of rice in the foreground of a cultivated field"
           },
           "type": "image"
         },

@@ -33,9 +33,9 @@
     "pt": "Campanha 2025/2026",
     "en": "Campaign 2025/2026"
   },
-  "bannerImage": "/images/services/campanha/banner.svg",
+  "bannerImage": "/images/uploads/arroz-floracao-01.webp",
   "bannerImageAlt": {
-    "pt": "Ilustração de calendário representando a campanha agrícola",
-    "en": "Illustration of a calendar representing the agricultural campaign"
+    "pt": "Campo de arroz com espigas e árvores ao fundo",
+    "en": "Rice field with ears of rice and trees in the background"
   }
 }
