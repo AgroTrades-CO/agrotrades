@@ -126,6 +126,18 @@ if (!existsSync(join(root, ".next", "BUILD_ID"))) {
   process.exit(mode === "report" ? 0 : 1);
 }
 
+// O .next/ medido tem de corresponder ao código commitado (19.3.2): alterações de código por
+// commitar recusam o modo --enforce. Dados (content/) e estado (project/) não são código.
+if (mode === "enforce" && !allowDirty) {
+  const dirty = execFileSync("git", ["status", "--porcelain"], { cwd: root, encoding: "utf8" })
+    .split("\n").filter(Boolean).filter((l) => !/^.. "?(content|project)\//.test(l));
+  if (dirty.length) {
+    console.error("[js-budget] há alterações de código por commitar (usar --allow-dirty só localmente):");
+    for (const l of dirty) console.error(`  ${l}`);
+    process.exit(1);
+  }
+}
+
 let baseline;
 if (existsSync(cacheFile)) {
   baseline = JSON.parse(readFileSync(cacheFile, "utf8")).pages;
@@ -133,15 +145,6 @@ if (existsSync(cacheFile)) {
   log(`sem linha de base em cache para os JSON atuais (${relative(root, cacheFile)}); relatório omitido. Correr \`npm run check:js-budget\`.`);
   process.exit(0);
 } else {
-  if (!allowDirty) {
-    const dirty = execFileSync("git", ["status", "--porcelain"], { cwd: root, encoding: "utf8" })
-      .split("\n").filter(Boolean).filter((l) => !/ content\//.test(l));
-    if (dirty.length) {
-      console.error("[js-budget] há alterações fora de content/ por commitar (usar --allow-dirty só localmente):");
-      for (const l of dirty) console.error(`  ${l}`);
-      process.exit(1);
-    }
-  }
   try {
     baseline = buildBaseline();
   } catch (err) {
