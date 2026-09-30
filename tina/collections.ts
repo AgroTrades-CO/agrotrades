@@ -184,6 +184,27 @@ const servicos: Collection = {
   ],
 } as Collection;
 
+// ── 1b. Produtos ────────────────────────────────────────────────────────────
+
+// Mesma estrutura dos serviços (content/schemas: productsSchema = serviços).
+// Sem pré-visualização: ainda não há rota /editor-preview para produtos.
+const produtos: Collection = {
+  ...servicos,
+  name: "produto",
+  label: "Produtos",
+  path: "content/products",
+  ui: { allowedActions: semCriarNemApagar },
+  fields: (servicos.fields ?? []).map((field) =>
+    field.name === "serviceId"
+      ? {
+          ...field,
+          name: "productId",
+          description: "Não alterar: liga o produto ao endereço /produtos/<identificador>.",
+        }
+      : field
+  ),
+} as Collection;
+
 // ── 2. Serviços: lista e textos comuns ──────────────────────────────────────
 
 const servicosLista = paginaUnica("servicosLista", "Serviços: página da lista", "servicesPage", [
@@ -211,6 +232,25 @@ const servicosTextos = paginaUnica("servicosTextos", "Serviços: textos comuns",
   bil("galleryHeading", "Título 'Galeria'"),
   bil("relatedHeading", "Título 'Outros serviços'"),
   visivel("relatedVisible", "Mostrar 'Outros serviços' nas páginas de serviço"),
+]);
+
+const produtosLista = paginaUnica("produtosLista", "Produtos: página da lista", "productsPage", [
+  imagem("bannerImage", "Imagem de topo", "Topo da página /produtos."),
+  bil("bannerImageAlt", "Descrição da imagem de topo"),
+  {
+    type: "object",
+    name: "sectionHeading",
+    label: "Cabeçalho da grelha de produtos",
+    fields: [
+      bil("tag", "Etiqueta"),
+      bil("title", "Título"),
+      bil("learnMore", "Texto do link 'Saiba mais'", { description: "Em cada cartão de produto." }),
+    ],
+  },
+  bilText("intro", "Introdução", { description: "Texto no topo da página /produtos." }),
+  bil("ctaTitle", "Chamada final: título"),
+  bilText("ctaText", "Chamada final: texto"),
+  bil("backToProducts", "Texto 'Voltar a Produtos'"),
 ]);
 
 // ── 3. Página inicial ───────────────────────────────────────────────────────
@@ -657,6 +697,7 @@ function itemMenu(name: string, label: string): TinaField {
 const menu = paginaUnica("menu", "Menu", "nav", [
   itemMenu("home", "Início"),
   itemMenu("services", "Serviços"),
+  itemMenu("products", "Produtos"),
   itemMenu("campaign", "Campanha"),
   itemMenu("contact", "Contactos"),
   itemMenu("about", "Quem Somos"),
@@ -732,6 +773,8 @@ export const collections: Collection[] = [
   servicos,
   servicosLista,
   servicosTextos,
+  produtos,
+  produtosLista,
   paginaInicial,
   quemSomos,
   campanha,

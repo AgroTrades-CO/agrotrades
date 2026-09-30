@@ -90,6 +90,10 @@ export type Query = {
   servicosListaConnection: ServicosListaConnection;
   servicosTextos: ServicosTextos;
   servicosTextosConnection: ServicosTextosConnection;
+  produto: Produto;
+  produtoConnection: ProdutoConnection;
+  produtosLista: ProdutosLista;
+  produtosListaConnection: ProdutosListaConnection;
   paginaInicial: PaginaInicial;
   paginaInicialConnection: PaginaInicialConnection;
   quemSomos: QuemSomos;
@@ -172,6 +176,36 @@ export type QueryServicosTextosConnectionArgs = {
   last?: InputMaybe<Scalars['Float']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<ServicosTextosFilter>;
+};
+
+
+export type QueryProdutoArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryProdutoConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ProdutoFilter>;
+};
+
+
+export type QueryProdutosListaArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryProdutosListaConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ProdutosListaFilter>;
 };
 
 
@@ -298,6 +332,8 @@ export type DocumentFilter = {
   servico?: InputMaybe<ServicoFilter>;
   servicosLista?: InputMaybe<ServicosListaFilter>;
   servicosTextos?: InputMaybe<ServicosTextosFilter>;
+  produto?: InputMaybe<ProdutoFilter>;
+  produtosLista?: InputMaybe<ProdutosListaFilter>;
   paginaInicial?: InputMaybe<PaginaInicialFilter>;
   quemSomos?: InputMaybe<QuemSomosFilter>;
   campanha?: InputMaybe<CampanhaFilter>;
@@ -345,7 +381,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Servico | ServicosLista | ServicosTextos | PaginaInicial | QuemSomos | Campanha | Contactos | Menu | Rodape | PaginaNaoEncontrada | Definicoes | Folder;
+export type DocumentNode = Servico | ServicosLista | ServicosTextos | Produto | ProdutosLista | PaginaInicial | QuemSomos | Campanha | Contactos | Menu | Rodape | PaginaNaoEncontrada | Definicoes | Folder;
 
 export type ServicoTitle = {
   __typename?: 'ServicoTitle';
@@ -792,6 +828,370 @@ export type ServicosTextosConnection = Connection & {
   pageInfo: PageInfo;
   totalCount: Scalars['Float']['output'];
   edges?: Maybe<Array<Maybe<ServicosTextosConnectionEdges>>>;
+};
+
+export type ProdutoTitle = {
+  __typename?: 'ProdutoTitle';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutoSummary = {
+  __typename?: 'ProdutoSummary';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutoDescription = {
+  __typename?: 'ProdutoDescription';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutoHighlights = {
+  __typename?: 'ProdutoHighlights';
+  pt?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  en?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type ProdutoHomeTitle = {
+  __typename?: 'ProdutoHomeTitle';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutoHomeBlurb = {
+  __typename?: 'ProdutoHomeBlurb';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutoBannerImageAlt = {
+  __typename?: 'ProdutoBannerImageAlt';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutoSectionsTitle = {
+  __typename?: 'ProdutoSectionsTitle';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutoSectionsText = {
+  __typename?: 'ProdutoSectionsText';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutoSectionsImageAlt = {
+  __typename?: 'ProdutoSectionsImageAlt';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutoSectionsImage = {
+  __typename?: 'ProdutoSectionsImage';
+  image: Scalars['String']['output'];
+  alt?: Maybe<ProdutoSectionsImageAlt>;
+};
+
+export type ProdutoSectionsBullets = {
+  __typename?: 'ProdutoSectionsBullets';
+  pt?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  en?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type ProdutoSections = {
+  __typename?: 'ProdutoSections';
+  icon?: Maybe<Scalars['String']['output']>;
+  title?: Maybe<ProdutoSectionsTitle>;
+  text?: Maybe<ProdutoSectionsText>;
+  image?: Maybe<ProdutoSectionsImage>;
+  layout?: Maybe<Scalars['String']['output']>;
+  bullets?: Maybe<ProdutoSectionsBullets>;
+  visible?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type ProdutoGalleryAlt = {
+  __typename?: 'ProdutoGalleryAlt';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutoGallery = {
+  __typename?: 'ProdutoGallery';
+  image: Scalars['String']['output'];
+  alt?: Maybe<ProdutoGalleryAlt>;
+  visible?: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type Produto = Node & Document & {
+  __typename?: 'Produto';
+  productId: Scalars['String']['output'];
+  icon: Scalars['String']['output'];
+  title?: Maybe<ProdutoTitle>;
+  summary?: Maybe<ProdutoSummary>;
+  description?: Maybe<ProdutoDescription>;
+  highlights?: Maybe<ProdutoHighlights>;
+  homeTitle?: Maybe<ProdutoHomeTitle>;
+  homeBlurb?: Maybe<ProdutoHomeBlurb>;
+  bannerImage: Scalars['String']['output'];
+  bannerImageAlt?: Maybe<ProdutoBannerImageAlt>;
+  sections?: Maybe<Array<Maybe<ProdutoSections>>>;
+  galleryVisible?: Maybe<Scalars['Boolean']['output']>;
+  gallery?: Maybe<Array<Maybe<ProdutoGallery>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type ProdutoTitleFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoSummaryFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoDescriptionFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoHighlightsFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoHomeTitleFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoHomeBlurbFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoBannerImageAltFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoSectionsTitleFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoSectionsTextFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoSectionsImageAltFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoSectionsImageFilter = {
+  image?: InputMaybe<ImageFilter>;
+  alt?: InputMaybe<ProdutoSectionsImageAltFilter>;
+};
+
+export type ProdutoSectionsBulletsFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoSectionsFilter = {
+  icon?: InputMaybe<StringFilter>;
+  title?: InputMaybe<ProdutoSectionsTitleFilter>;
+  text?: InputMaybe<ProdutoSectionsTextFilter>;
+  image?: InputMaybe<ProdutoSectionsImageFilter>;
+  layout?: InputMaybe<StringFilter>;
+  bullets?: InputMaybe<ProdutoSectionsBulletsFilter>;
+  visible?: InputMaybe<BooleanFilter>;
+};
+
+export type ProdutoGalleryAltFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutoGalleryFilter = {
+  image?: InputMaybe<ImageFilter>;
+  alt?: InputMaybe<ProdutoGalleryAltFilter>;
+  visible?: InputMaybe<BooleanFilter>;
+};
+
+export type ProdutoFilter = {
+  productId?: InputMaybe<StringFilter>;
+  icon?: InputMaybe<StringFilter>;
+  title?: InputMaybe<ProdutoTitleFilter>;
+  summary?: InputMaybe<ProdutoSummaryFilter>;
+  description?: InputMaybe<ProdutoDescriptionFilter>;
+  highlights?: InputMaybe<ProdutoHighlightsFilter>;
+  homeTitle?: InputMaybe<ProdutoHomeTitleFilter>;
+  homeBlurb?: InputMaybe<ProdutoHomeBlurbFilter>;
+  bannerImage?: InputMaybe<ImageFilter>;
+  bannerImageAlt?: InputMaybe<ProdutoBannerImageAltFilter>;
+  sections?: InputMaybe<ProdutoSectionsFilter>;
+  galleryVisible?: InputMaybe<BooleanFilter>;
+  gallery?: InputMaybe<ProdutoGalleryFilter>;
+};
+
+export type ProdutoConnectionEdges = {
+  __typename?: 'ProdutoConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Produto>;
+};
+
+export type ProdutoConnection = Connection & {
+  __typename?: 'ProdutoConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<ProdutoConnectionEdges>>>;
+};
+
+export type ProdutosListaBannerImageAlt = {
+  __typename?: 'ProdutosListaBannerImageAlt';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutosListaSectionHeadingTag = {
+  __typename?: 'ProdutosListaSectionHeadingTag';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutosListaSectionHeadingTitle = {
+  __typename?: 'ProdutosListaSectionHeadingTitle';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutosListaSectionHeadingLearnMore = {
+  __typename?: 'ProdutosListaSectionHeadingLearnMore';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutosListaSectionHeading = {
+  __typename?: 'ProdutosListaSectionHeading';
+  tag?: Maybe<ProdutosListaSectionHeadingTag>;
+  title?: Maybe<ProdutosListaSectionHeadingTitle>;
+  learnMore?: Maybe<ProdutosListaSectionHeadingLearnMore>;
+};
+
+export type ProdutosListaIntro = {
+  __typename?: 'ProdutosListaIntro';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutosListaCtaTitle = {
+  __typename?: 'ProdutosListaCtaTitle';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutosListaCtaText = {
+  __typename?: 'ProdutosListaCtaText';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutosListaBackToProducts = {
+  __typename?: 'ProdutosListaBackToProducts';
+  pt?: Maybe<Scalars['String']['output']>;
+  en?: Maybe<Scalars['String']['output']>;
+};
+
+export type ProdutosLista = Node & Document & {
+  __typename?: 'ProdutosLista';
+  bannerImage: Scalars['String']['output'];
+  bannerImageAlt?: Maybe<ProdutosListaBannerImageAlt>;
+  sectionHeading?: Maybe<ProdutosListaSectionHeading>;
+  intro?: Maybe<ProdutosListaIntro>;
+  ctaTitle?: Maybe<ProdutosListaCtaTitle>;
+  ctaText?: Maybe<ProdutosListaCtaText>;
+  backToProducts?: Maybe<ProdutosListaBackToProducts>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type ProdutosListaBannerImageAltFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutosListaSectionHeadingTagFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutosListaSectionHeadingTitleFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutosListaSectionHeadingLearnMoreFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutosListaSectionHeadingFilter = {
+  tag?: InputMaybe<ProdutosListaSectionHeadingTagFilter>;
+  title?: InputMaybe<ProdutosListaSectionHeadingTitleFilter>;
+  learnMore?: InputMaybe<ProdutosListaSectionHeadingLearnMoreFilter>;
+};
+
+export type ProdutosListaIntroFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutosListaCtaTitleFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutosListaCtaTextFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutosListaBackToProductsFilter = {
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type ProdutosListaFilter = {
+  bannerImage?: InputMaybe<ImageFilter>;
+  bannerImageAlt?: InputMaybe<ProdutosListaBannerImageAltFilter>;
+  sectionHeading?: InputMaybe<ProdutosListaSectionHeadingFilter>;
+  intro?: InputMaybe<ProdutosListaIntroFilter>;
+  ctaTitle?: InputMaybe<ProdutosListaCtaTitleFilter>;
+  ctaText?: InputMaybe<ProdutosListaCtaTextFilter>;
+  backToProducts?: InputMaybe<ProdutosListaBackToProductsFilter>;
+};
+
+export type ProdutosListaConnectionEdges = {
+  __typename?: 'ProdutosListaConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<ProdutosLista>;
+};
+
+export type ProdutosListaConnection = Connection & {
+  __typename?: 'ProdutosListaConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<ProdutosListaConnectionEdges>>>;
 };
 
 export type PaginaInicialHeroTag = {
@@ -2221,6 +2621,13 @@ export type MenuServices = {
   en: Scalars['String']['output'];
 };
 
+export type MenuProducts = {
+  __typename?: 'MenuProducts';
+  visible?: Maybe<Scalars['Boolean']['output']>;
+  pt: Scalars['String']['output'];
+  en: Scalars['String']['output'];
+};
+
 export type MenuCampaign = {
   __typename?: 'MenuCampaign';
   visible?: Maybe<Scalars['Boolean']['output']>;
@@ -2252,6 +2659,7 @@ export type Menu = Node & Document & {
   __typename?: 'Menu';
   home?: Maybe<MenuHome>;
   services?: Maybe<MenuServices>;
+  products?: Maybe<MenuProducts>;
   campaign?: Maybe<MenuCampaign>;
   contact?: Maybe<MenuContact>;
   about?: Maybe<MenuAbout>;
@@ -2268,6 +2676,12 @@ export type MenuHomeFilter = {
 };
 
 export type MenuServicesFilter = {
+  visible?: InputMaybe<BooleanFilter>;
+  pt?: InputMaybe<StringFilter>;
+  en?: InputMaybe<StringFilter>;
+};
+
+export type MenuProductsFilter = {
   visible?: InputMaybe<BooleanFilter>;
   pt?: InputMaybe<StringFilter>;
   en?: InputMaybe<StringFilter>;
@@ -2299,6 +2713,7 @@ export type MenuServicesViewAllFilter = {
 export type MenuFilter = {
   home?: InputMaybe<MenuHomeFilter>;
   services?: InputMaybe<MenuServicesFilter>;
+  products?: InputMaybe<MenuProductsFilter>;
   campaign?: InputMaybe<MenuCampaignFilter>;
   contact?: InputMaybe<MenuContactFilter>;
   about?: InputMaybe<MenuAboutFilter>;
@@ -2577,6 +2992,10 @@ export type Mutation = {
   createServicosLista: ServicosLista;
   updateServicosTextos: ServicosTextos;
   createServicosTextos: ServicosTextos;
+  updateProduto: Produto;
+  createProduto: Produto;
+  updateProdutosLista: ProdutosLista;
+  createProdutosLista: ProdutosLista;
   updatePaginaInicial: PaginaInicial;
   createPaginaInicial: PaginaInicial;
   updateQuemSomos: QuemSomos;
@@ -2662,6 +3081,30 @@ export type MutationUpdateServicosTextosArgs = {
 export type MutationCreateServicosTextosArgs = {
   relativePath: Scalars['String']['input'];
   params: ServicosTextosMutation;
+};
+
+
+export type MutationUpdateProdutoArgs = {
+  relativePath: Scalars['String']['input'];
+  params: ProdutoMutation;
+};
+
+
+export type MutationCreateProdutoArgs = {
+  relativePath: Scalars['String']['input'];
+  params: ProdutoMutation;
+};
+
+
+export type MutationUpdateProdutosListaArgs = {
+  relativePath: Scalars['String']['input'];
+  params: ProdutosListaMutation;
+};
+
+
+export type MutationCreateProdutosListaArgs = {
+  relativePath: Scalars['String']['input'];
+  params: ProdutosListaMutation;
 };
 
 
@@ -2764,6 +3207,8 @@ export type DocumentUpdateMutation = {
   servico?: InputMaybe<ServicoMutation>;
   servicosLista?: InputMaybe<ServicosListaMutation>;
   servicosTextos?: InputMaybe<ServicosTextosMutation>;
+  produto?: InputMaybe<ProdutoMutation>;
+  produtosLista?: InputMaybe<ProdutosListaMutation>;
   paginaInicial?: InputMaybe<PaginaInicialMutation>;
   quemSomos?: InputMaybe<QuemSomosMutation>;
   campanha?: InputMaybe<CampanhaMutation>;
@@ -2779,6 +3224,8 @@ export type DocumentMutation = {
   servico?: InputMaybe<ServicoMutation>;
   servicosLista?: InputMaybe<ServicosListaMutation>;
   servicosTextos?: InputMaybe<ServicosTextosMutation>;
+  produto?: InputMaybe<ProdutoMutation>;
+  produtosLista?: InputMaybe<ProdutosListaMutation>;
   paginaInicial?: InputMaybe<PaginaInicialMutation>;
   quemSomos?: InputMaybe<QuemSomosMutation>;
   campanha?: InputMaybe<CampanhaMutation>;
@@ -2962,6 +3409,159 @@ export type ServicosTextosMutation = {
   galleryHeading?: InputMaybe<ServicosTextosGalleryHeadingMutation>;
   relatedHeading?: InputMaybe<ServicosTextosRelatedHeadingMutation>;
   relatedVisible?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type ProdutoTitleMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutoSummaryMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutoDescriptionMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutoHighlightsMutation = {
+  pt?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  en?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ProdutoHomeTitleMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutoHomeBlurbMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutoBannerImageAltMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutoSectionsTitleMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutoSectionsTextMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutoSectionsImageAltMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutoSectionsImageMutation = {
+  image?: InputMaybe<Scalars['String']['input']>;
+  alt?: InputMaybe<ProdutoSectionsImageAltMutation>;
+};
+
+export type ProdutoSectionsBulletsMutation = {
+  pt?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  en?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ProdutoSectionsMutation = {
+  icon?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<ProdutoSectionsTitleMutation>;
+  text?: InputMaybe<ProdutoSectionsTextMutation>;
+  image?: InputMaybe<ProdutoSectionsImageMutation>;
+  layout?: InputMaybe<Scalars['String']['input']>;
+  bullets?: InputMaybe<ProdutoSectionsBulletsMutation>;
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type ProdutoGalleryAltMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutoGalleryMutation = {
+  image?: InputMaybe<Scalars['String']['input']>;
+  alt?: InputMaybe<ProdutoGalleryAltMutation>;
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type ProdutoMutation = {
+  productId?: InputMaybe<Scalars['String']['input']>;
+  icon?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<ProdutoTitleMutation>;
+  summary?: InputMaybe<ProdutoSummaryMutation>;
+  description?: InputMaybe<ProdutoDescriptionMutation>;
+  highlights?: InputMaybe<ProdutoHighlightsMutation>;
+  homeTitle?: InputMaybe<ProdutoHomeTitleMutation>;
+  homeBlurb?: InputMaybe<ProdutoHomeBlurbMutation>;
+  bannerImage?: InputMaybe<Scalars['String']['input']>;
+  bannerImageAlt?: InputMaybe<ProdutoBannerImageAltMutation>;
+  sections?: InputMaybe<Array<InputMaybe<ProdutoSectionsMutation>>>;
+  galleryVisible?: InputMaybe<Scalars['Boolean']['input']>;
+  gallery?: InputMaybe<Array<InputMaybe<ProdutoGalleryMutation>>>;
+};
+
+export type ProdutosListaBannerImageAltMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutosListaSectionHeadingTagMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutosListaSectionHeadingTitleMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutosListaSectionHeadingLearnMoreMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutosListaSectionHeadingMutation = {
+  tag?: InputMaybe<ProdutosListaSectionHeadingTagMutation>;
+  title?: InputMaybe<ProdutosListaSectionHeadingTitleMutation>;
+  learnMore?: InputMaybe<ProdutosListaSectionHeadingLearnMoreMutation>;
+};
+
+export type ProdutosListaIntroMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutosListaCtaTitleMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutosListaCtaTextMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutosListaBackToProductsMutation = {
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ProdutosListaMutation = {
+  bannerImage?: InputMaybe<Scalars['String']['input']>;
+  bannerImageAlt?: InputMaybe<ProdutosListaBannerImageAltMutation>;
+  sectionHeading?: InputMaybe<ProdutosListaSectionHeadingMutation>;
+  intro?: InputMaybe<ProdutosListaIntroMutation>;
+  ctaTitle?: InputMaybe<ProdutosListaCtaTitleMutation>;
+  ctaText?: InputMaybe<ProdutosListaCtaTextMutation>;
+  backToProducts?: InputMaybe<ProdutosListaBackToProductsMutation>;
 };
 
 export type PaginaInicialHeroTagMutation = {
@@ -3599,6 +4199,12 @@ export type MenuServicesMutation = {
   en?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MenuProductsMutation = {
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
+  pt?: InputMaybe<Scalars['String']['input']>;
+  en?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MenuCampaignMutation = {
   visible?: InputMaybe<Scalars['Boolean']['input']>;
   pt?: InputMaybe<Scalars['String']['input']>;
@@ -3625,6 +4231,7 @@ export type MenuServicesViewAllMutation = {
 export type MenuMutation = {
   home?: InputMaybe<MenuHomeMutation>;
   services?: InputMaybe<MenuServicesMutation>;
+  products?: InputMaybe<MenuProductsMutation>;
   campaign?: InputMaybe<MenuCampaignMutation>;
   contact?: InputMaybe<MenuContactMutation>;
   about?: InputMaybe<MenuAboutMutation>;
@@ -3914,6 +4521,159 @@ export type ServicosTextosFilter = {
   galleryHeading?: ServicosTextosGalleryHeadingFilter | null | undefined;
   relatedHeading?: ServicosTextosRelatedHeadingFilter | null | undefined;
   relatedVisible?: BooleanFilter | null | undefined;
+};
+
+export type ProdutoTitleFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoSummaryFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoDescriptionFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoHighlightsFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoHomeTitleFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoHomeBlurbFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoBannerImageAltFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoSectionsTitleFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoSectionsTextFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoSectionsImageAltFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoSectionsImageFilter = {
+  image?: ImageFilter | null | undefined;
+  alt?: ProdutoSectionsImageAltFilter | null | undefined;
+};
+
+export type ProdutoSectionsBulletsFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoSectionsFilter = {
+  icon?: StringFilter | null | undefined;
+  title?: ProdutoSectionsTitleFilter | null | undefined;
+  text?: ProdutoSectionsTextFilter | null | undefined;
+  image?: ProdutoSectionsImageFilter | null | undefined;
+  layout?: StringFilter | null | undefined;
+  bullets?: ProdutoSectionsBulletsFilter | null | undefined;
+  visible?: BooleanFilter | null | undefined;
+};
+
+export type ProdutoGalleryAltFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutoGalleryFilter = {
+  image?: ImageFilter | null | undefined;
+  alt?: ProdutoGalleryAltFilter | null | undefined;
+  visible?: BooleanFilter | null | undefined;
+};
+
+export type ProdutoFilter = {
+  productId?: StringFilter | null | undefined;
+  icon?: StringFilter | null | undefined;
+  title?: ProdutoTitleFilter | null | undefined;
+  summary?: ProdutoSummaryFilter | null | undefined;
+  description?: ProdutoDescriptionFilter | null | undefined;
+  highlights?: ProdutoHighlightsFilter | null | undefined;
+  homeTitle?: ProdutoHomeTitleFilter | null | undefined;
+  homeBlurb?: ProdutoHomeBlurbFilter | null | undefined;
+  bannerImage?: ImageFilter | null | undefined;
+  bannerImageAlt?: ProdutoBannerImageAltFilter | null | undefined;
+  sections?: ProdutoSectionsFilter | null | undefined;
+  galleryVisible?: BooleanFilter | null | undefined;
+  gallery?: ProdutoGalleryFilter | null | undefined;
+};
+
+export type ProdutosListaBannerImageAltFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutosListaSectionHeadingTagFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutosListaSectionHeadingTitleFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutosListaSectionHeadingLearnMoreFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutosListaSectionHeadingFilter = {
+  tag?: ProdutosListaSectionHeadingTagFilter | null | undefined;
+  title?: ProdutosListaSectionHeadingTitleFilter | null | undefined;
+  learnMore?: ProdutosListaSectionHeadingLearnMoreFilter | null | undefined;
+};
+
+export type ProdutosListaIntroFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutosListaCtaTitleFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutosListaCtaTextFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutosListaBackToProductsFilter = {
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
+export type ProdutosListaFilter = {
+  bannerImage?: ImageFilter | null | undefined;
+  bannerImageAlt?: ProdutosListaBannerImageAltFilter | null | undefined;
+  sectionHeading?: ProdutosListaSectionHeadingFilter | null | undefined;
+  intro?: ProdutosListaIntroFilter | null | undefined;
+  ctaTitle?: ProdutosListaCtaTitleFilter | null | undefined;
+  ctaText?: ProdutosListaCtaTextFilter | null | undefined;
+  backToProducts?: ProdutosListaBackToProductsFilter | null | undefined;
 };
 
 export type PaginaInicialHeroTagFilter = {
@@ -4551,6 +5311,12 @@ export type MenuServicesFilter = {
   en?: StringFilter | null | undefined;
 };
 
+export type MenuProductsFilter = {
+  visible?: BooleanFilter | null | undefined;
+  pt?: StringFilter | null | undefined;
+  en?: StringFilter | null | undefined;
+};
+
 export type MenuCampaignFilter = {
   visible?: BooleanFilter | null | undefined;
   pt?: StringFilter | null | undefined;
@@ -4577,6 +5343,7 @@ export type MenuServicesViewAllFilter = {
 export type MenuFilter = {
   home?: MenuHomeFilter | null | undefined;
   services?: MenuServicesFilter | null | undefined;
+  products?: MenuProductsFilter | null | undefined;
   campaign?: MenuCampaignFilter | null | undefined;
   contact?: MenuContactFilter | null | undefined;
   about?: MenuAboutFilter | null | undefined;
@@ -4688,6 +5455,10 @@ export type ServicosListaPartsFragment = { __typename: 'ServicosLista', bannerIm
 
 export type ServicosTextosPartsFragment = { __typename: 'ServicosTextos', relatedVisible: boolean | null, highlightsHeading: { __typename: 'ServicosTextosHighlightsHeading', pt: string | null, en: string | null } | null, backToServices: { __typename: 'ServicosTextosBackToServices', pt: string | null, en: string | null } | null, galleryHeading: { __typename: 'ServicosTextosGalleryHeading', pt: string | null, en: string | null } | null, relatedHeading: { __typename: 'ServicosTextosRelatedHeading', pt: string | null, en: string | null } | null };
 
+export type ProdutoPartsFragment = { __typename: 'Produto', productId: string, icon: string, bannerImage: string, galleryVisible: boolean | null, title: { __typename: 'ProdutoTitle', pt: string | null, en: string | null } | null, summary: { __typename: 'ProdutoSummary', pt: string | null, en: string | null } | null, description: { __typename: 'ProdutoDescription', pt: string | null, en: string | null } | null, highlights: { __typename: 'ProdutoHighlights', pt: Array<string | null> | null, en: Array<string | null> | null } | null, homeTitle: { __typename: 'ProdutoHomeTitle', pt: string | null, en: string | null } | null, homeBlurb: { __typename: 'ProdutoHomeBlurb', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'ProdutoBannerImageAlt', pt: string | null, en: string | null } | null, sections: Array<{ __typename: 'ProdutoSections', icon: string | null, layout: string | null, visible: boolean | null, title: { __typename: 'ProdutoSectionsTitle', pt: string | null, en: string | null } | null, text: { __typename: 'ProdutoSectionsText', pt: string | null, en: string | null } | null, image: { __typename: 'ProdutoSectionsImage', image: string, alt: { __typename: 'ProdutoSectionsImageAlt', pt: string | null, en: string | null } | null } | null, bullets: { __typename: 'ProdutoSectionsBullets', pt: Array<string | null> | null, en: Array<string | null> | null } | null } | null> | null, gallery: Array<{ __typename: 'ProdutoGallery', image: string, visible: boolean | null, alt: { __typename: 'ProdutoGalleryAlt', pt: string | null, en: string | null } | null } | null> | null };
+
+export type ProdutosListaPartsFragment = { __typename: 'ProdutosLista', bannerImage: string, bannerImageAlt: { __typename: 'ProdutosListaBannerImageAlt', pt: string | null, en: string | null } | null, sectionHeading: { __typename: 'ProdutosListaSectionHeading', tag: { __typename: 'ProdutosListaSectionHeadingTag', pt: string | null, en: string | null } | null, title: { __typename: 'ProdutosListaSectionHeadingTitle', pt: string | null, en: string | null } | null, learnMore: { __typename: 'ProdutosListaSectionHeadingLearnMore', pt: string | null, en: string | null } | null } | null, intro: { __typename: 'ProdutosListaIntro', pt: string | null, en: string | null } | null, ctaTitle: { __typename: 'ProdutosListaCtaTitle', pt: string | null, en: string | null } | null, ctaText: { __typename: 'ProdutosListaCtaText', pt: string | null, en: string | null } | null, backToProducts: { __typename: 'ProdutosListaBackToProducts', pt: string | null, en: string | null } | null };
+
 export type PaginaInicialPartsFragment = { __typename: 'PaginaInicial', hero: { __typename: 'PaginaInicialHero', tag: { __typename: 'PaginaInicialHeroTag', pt: string | null, en: string | null } | null, titleLine1: { __typename: 'PaginaInicialHeroTitleLine1', pt: string | null, en: string | null } | null, titleLine2: { __typename: 'PaginaInicialHeroTitleLine2', pt: string | null, en: string | null } | null, motto: { __typename: 'PaginaInicialHeroMotto', pt: string | null, en: string | null } | null, text: { __typename: 'PaginaInicialHeroText', pt: string | null, en: string | null } | null, buttons: { __typename: 'PaginaInicialHeroButtons', whatsapp: { __typename: 'PaginaInicialHeroButtonsWhatsapp', pt: string | null, en: string | null } | null, services: { __typename: 'PaginaInicialHeroButtonsServices', pt: string | null, en: string | null } | null } | null, slider: { __typename: 'PaginaInicialHeroSlider', label: { __typename: 'PaginaInicialHeroSliderLabel', pt: string | null, en: string | null } | null, previousLabel: { __typename: 'PaginaInicialHeroSliderPreviousLabel', pt: string | null, en: string | null } | null, nextLabel: { __typename: 'PaginaInicialHeroSliderNextLabel', pt: string | null, en: string | null } | null, goToSlideLabel: { __typename: 'PaginaInicialHeroSliderGoToSlideLabel', pt: string | null, en: string | null } | null, slides: Array<
         | { __typename: 'PaginaInicialHeroSliderSlidesImage', visible: boolean | null, image: string, alt: { __typename: 'PaginaInicialHeroSliderSlidesImageAlt', pt: string | null, en: string | null } | null }
         | { __typename: 'PaginaInicialHeroSliderSlidesVideo', visible: boolean | null, youtubeId: string, caption: { __typename: 'PaginaInicialHeroSliderSlidesVideoCaption', pt: string | null, en: string | null } | null }
@@ -4699,7 +5470,7 @@ export type CampanhaPartsFragment = { __typename: 'Campanha', timelineVisible: b
 
 export type ContactosPartsFragment = { __typename: 'Contactos', bannerImage: string, mapsLink: string, mapEmbedUrl: string, phones: Array<{ __typename: 'ContactosPhones', visible: boolean | null, number: string } | null> | null, phoneLabel: { __typename: 'ContactosPhoneLabel', pt: string | null, en: string | null } | null, intro: { __typename: 'ContactosIntro', pt: string | null, en: string | null } | null, ceo: { __typename: 'ContactosCeo', visible: boolean | null, name: string, initials: string, company: string, role: { __typename: 'ContactosCeoRole', pt: string | null, en: string | null } | null } | null, whatsapp: { __typename: 'ContactosWhatsapp', number: string, url: string, label: { __typename: 'ContactosWhatsappLabel', pt: string | null, en: string | null } | null } | null, emails: Array<{ __typename: 'ContactosEmails', visible: boolean | null, address: string } | null> | null, emailLabel: { __typename: 'ContactosEmailLabel', pt: string | null, en: string | null } | null, title: { __typename: 'ContactosTitle', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'ContactosBannerImageAlt', pt: string | null, en: string | null } | null, tag: { __typename: 'ContactosTag', pt: string | null, en: string | null } | null, locations: Array<{ __typename: 'ContactosLocations', visible: boolean | null, id: string, icon: string, name: string, address: Array<string>, type: { __typename: 'ContactosLocationsType', pt: string | null, en: string | null } | null } | null> | null, contactForm: { __typename: 'ContactosContactForm', visible: boolean | null, heading: { __typename: 'ContactosContactFormHeading', pt: string | null, en: string | null } | null, nameLabel: { __typename: 'ContactosContactFormNameLabel', pt: string | null, en: string | null } | null, emailLabel: { __typename: 'ContactosContactFormEmailLabel', pt: string | null, en: string | null } | null, phoneLabel: { __typename: 'ContactosContactFormPhoneLabel', pt: string | null, en: string | null } | null, subjectLabel: { __typename: 'ContactosContactFormSubjectLabel', pt: string | null, en: string | null } | null, messageLabel: { __typename: 'ContactosContactFormMessageLabel', pt: string | null, en: string | null } | null, submitLabel: { __typename: 'ContactosContactFormSubmitLabel', pt: string | null, en: string | null } | null, successMessage: { __typename: 'ContactosContactFormSuccessMessage', pt: string | null, en: string | null } | null, errorMessage: { __typename: 'ContactosContactFormErrorMessage', pt: string | null, en: string | null } | null, verificationErrorMessage: { __typename: 'ContactosContactFormVerificationErrorMessage', pt: string | null, en: string | null } | null, privacyNotice: { __typename: 'ContactosContactFormPrivacyNotice', pt: string | null, en: string | null } | null } | null };
 
-export type MenuPartsFragment = { __typename: 'Menu', home: { __typename: 'MenuHome', visible: boolean | null, pt: string, en: string } | null, services: { __typename: 'MenuServices', visible: boolean | null, pt: string, en: string } | null, campaign: { __typename: 'MenuCampaign', visible: boolean | null, pt: string, en: string } | null, contact: { __typename: 'MenuContact', visible: boolean | null, pt: string, en: string } | null, about: { __typename: 'MenuAbout', visible: boolean | null, pt: string, en: string } | null, servicesViewAll: { __typename: 'MenuServicesViewAll', pt: string | null, en: string | null } | null };
+export type MenuPartsFragment = { __typename: 'Menu', home: { __typename: 'MenuHome', visible: boolean | null, pt: string, en: string } | null, services: { __typename: 'MenuServices', visible: boolean | null, pt: string, en: string } | null, products: { __typename: 'MenuProducts', visible: boolean | null, pt: string, en: string } | null, campaign: { __typename: 'MenuCampaign', visible: boolean | null, pt: string, en: string } | null, contact: { __typename: 'MenuContact', visible: boolean | null, pt: string, en: string } | null, about: { __typename: 'MenuAbout', visible: boolean | null, pt: string, en: string } | null, servicesViewAll: { __typename: 'MenuServicesViewAll', pt: string | null, en: string | null } | null };
 
 export type RodapePartsFragment = { __typename: 'Rodape', servicesHeading: { __typename: 'RodapeServicesHeading', pt: string | null, en: string | null } | null, linksHeading: { __typename: 'RodapeLinksHeading', pt: string | null, en: string | null } | null, description: { __typename: 'RodapeDescription', pt: string | null, en: string | null } | null, serviceLinks: Array<{ __typename: 'RodapeServiceLinks', visible: boolean | null, serviceId: string } | null> | null, legalCopy: { __typename: 'RodapeLegalCopy', pt: string | null, en: string | null } | null, madeIn: { __typename: 'RodapeMadeIn', pt: string | null, en: string | null } | null, signature: { __typename: 'RodapeSignature', visible: boolean | null, name: string, whatsappNumber: string } | null };
 
@@ -4763,6 +5534,44 @@ export type ServicosTextosConnectionQueryVariables = Exact<{
 
 
 export type ServicosTextosConnectionQuery = { servicosTextosConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'ServicosTextos', id: string, relatedVisible: boolean | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, highlightsHeading: { __typename: 'ServicosTextosHighlightsHeading', pt: string | null, en: string | null } | null, backToServices: { __typename: 'ServicosTextosBackToServices', pt: string | null, en: string | null } | null, galleryHeading: { __typename: 'ServicosTextosGalleryHeading', pt: string | null, en: string | null } | null, relatedHeading: { __typename: 'ServicosTextosRelatedHeading', pt: string | null, en: string | null } | null } | null } | null> | null } };
+
+export type ProdutoQueryVariables = Exact<{
+  relativePath: string;
+}>;
+
+
+export type ProdutoQuery = { produto: { __typename: 'Produto', id: string, productId: string, icon: string, bannerImage: string, galleryVisible: boolean | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, title: { __typename: 'ProdutoTitle', pt: string | null, en: string | null } | null, summary: { __typename: 'ProdutoSummary', pt: string | null, en: string | null } | null, description: { __typename: 'ProdutoDescription', pt: string | null, en: string | null } | null, highlights: { __typename: 'ProdutoHighlights', pt: Array<string | null> | null, en: Array<string | null> | null } | null, homeTitle: { __typename: 'ProdutoHomeTitle', pt: string | null, en: string | null } | null, homeBlurb: { __typename: 'ProdutoHomeBlurb', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'ProdutoBannerImageAlt', pt: string | null, en: string | null } | null, sections: Array<{ __typename: 'ProdutoSections', icon: string | null, layout: string | null, visible: boolean | null, title: { __typename: 'ProdutoSectionsTitle', pt: string | null, en: string | null } | null, text: { __typename: 'ProdutoSectionsText', pt: string | null, en: string | null } | null, image: { __typename: 'ProdutoSectionsImage', image: string, alt: { __typename: 'ProdutoSectionsImageAlt', pt: string | null, en: string | null } | null } | null, bullets: { __typename: 'ProdutoSectionsBullets', pt: Array<string | null> | null, en: Array<string | null> | null } | null } | null> | null, gallery: Array<{ __typename: 'ProdutoGallery', image: string, visible: boolean | null, alt: { __typename: 'ProdutoGalleryAlt', pt: string | null, en: string | null } | null } | null> | null } };
+
+export type ProdutoConnectionQueryVariables = Exact<{
+  before?: string | null | undefined;
+  after?: string | null | undefined;
+  first?: number | null | undefined;
+  last?: number | null | undefined;
+  sort?: string | null | undefined;
+  filter?: ProdutoFilter | null | undefined;
+}>;
+
+
+export type ProdutoConnectionQuery = { produtoConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Produto', id: string, productId: string, icon: string, bannerImage: string, galleryVisible: boolean | null, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, title: { __typename: 'ProdutoTitle', pt: string | null, en: string | null } | null, summary: { __typename: 'ProdutoSummary', pt: string | null, en: string | null } | null, description: { __typename: 'ProdutoDescription', pt: string | null, en: string | null } | null, highlights: { __typename: 'ProdutoHighlights', pt: Array<string | null> | null, en: Array<string | null> | null } | null, homeTitle: { __typename: 'ProdutoHomeTitle', pt: string | null, en: string | null } | null, homeBlurb: { __typename: 'ProdutoHomeBlurb', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'ProdutoBannerImageAlt', pt: string | null, en: string | null } | null, sections: Array<{ __typename: 'ProdutoSections', icon: string | null, layout: string | null, visible: boolean | null, title: { __typename: 'ProdutoSectionsTitle', pt: string | null, en: string | null } | null, text: { __typename: 'ProdutoSectionsText', pt: string | null, en: string | null } | null, image: { __typename: 'ProdutoSectionsImage', image: string, alt: { __typename: 'ProdutoSectionsImageAlt', pt: string | null, en: string | null } | null } | null, bullets: { __typename: 'ProdutoSectionsBullets', pt: Array<string | null> | null, en: Array<string | null> | null } | null } | null> | null, gallery: Array<{ __typename: 'ProdutoGallery', image: string, visible: boolean | null, alt: { __typename: 'ProdutoGalleryAlt', pt: string | null, en: string | null } | null } | null> | null } | null } | null> | null } };
+
+export type ProdutosListaQueryVariables = Exact<{
+  relativePath: string;
+}>;
+
+
+export type ProdutosListaQuery = { produtosLista: { __typename: 'ProdutosLista', id: string, bannerImage: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, bannerImageAlt: { __typename: 'ProdutosListaBannerImageAlt', pt: string | null, en: string | null } | null, sectionHeading: { __typename: 'ProdutosListaSectionHeading', tag: { __typename: 'ProdutosListaSectionHeadingTag', pt: string | null, en: string | null } | null, title: { __typename: 'ProdutosListaSectionHeadingTitle', pt: string | null, en: string | null } | null, learnMore: { __typename: 'ProdutosListaSectionHeadingLearnMore', pt: string | null, en: string | null } | null } | null, intro: { __typename: 'ProdutosListaIntro', pt: string | null, en: string | null } | null, ctaTitle: { __typename: 'ProdutosListaCtaTitle', pt: string | null, en: string | null } | null, ctaText: { __typename: 'ProdutosListaCtaText', pt: string | null, en: string | null } | null, backToProducts: { __typename: 'ProdutosListaBackToProducts', pt: string | null, en: string | null } | null } };
+
+export type ProdutosListaConnectionQueryVariables = Exact<{
+  before?: string | null | undefined;
+  after?: string | null | undefined;
+  first?: number | null | undefined;
+  last?: number | null | undefined;
+  sort?: string | null | undefined;
+  filter?: ProdutosListaFilter | null | undefined;
+}>;
+
+
+export type ProdutosListaConnectionQuery = { produtosListaConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'ProdutosLista', id: string, bannerImage: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, bannerImageAlt: { __typename: 'ProdutosListaBannerImageAlt', pt: string | null, en: string | null } | null, sectionHeading: { __typename: 'ProdutosListaSectionHeading', tag: { __typename: 'ProdutosListaSectionHeadingTag', pt: string | null, en: string | null } | null, title: { __typename: 'ProdutosListaSectionHeadingTitle', pt: string | null, en: string | null } | null, learnMore: { __typename: 'ProdutosListaSectionHeadingLearnMore', pt: string | null, en: string | null } | null } | null, intro: { __typename: 'ProdutosListaIntro', pt: string | null, en: string | null } | null, ctaTitle: { __typename: 'ProdutosListaCtaTitle', pt: string | null, en: string | null } | null, ctaText: { __typename: 'ProdutosListaCtaText', pt: string | null, en: string | null } | null, backToProducts: { __typename: 'ProdutosListaBackToProducts', pt: string | null, en: string | null } | null } | null } | null> | null } };
 
 export type PaginaInicialQueryVariables = Exact<{
   relativePath: string;
@@ -4851,7 +5660,7 @@ export type MenuQueryVariables = Exact<{
 }>;
 
 
-export type MenuQuery = { menu: { __typename: 'Menu', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, home: { __typename: 'MenuHome', visible: boolean | null, pt: string, en: string } | null, services: { __typename: 'MenuServices', visible: boolean | null, pt: string, en: string } | null, campaign: { __typename: 'MenuCampaign', visible: boolean | null, pt: string, en: string } | null, contact: { __typename: 'MenuContact', visible: boolean | null, pt: string, en: string } | null, about: { __typename: 'MenuAbout', visible: boolean | null, pt: string, en: string } | null, servicesViewAll: { __typename: 'MenuServicesViewAll', pt: string | null, en: string | null } | null } };
+export type MenuQuery = { menu: { __typename: 'Menu', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, home: { __typename: 'MenuHome', visible: boolean | null, pt: string, en: string } | null, services: { __typename: 'MenuServices', visible: boolean | null, pt: string, en: string } | null, products: { __typename: 'MenuProducts', visible: boolean | null, pt: string, en: string } | null, campaign: { __typename: 'MenuCampaign', visible: boolean | null, pt: string, en: string } | null, contact: { __typename: 'MenuContact', visible: boolean | null, pt: string, en: string } | null, about: { __typename: 'MenuAbout', visible: boolean | null, pt: string, en: string } | null, servicesViewAll: { __typename: 'MenuServicesViewAll', pt: string | null, en: string | null } | null } };
 
 export type MenuConnectionQueryVariables = Exact<{
   before?: string | null | undefined;
@@ -4863,7 +5672,7 @@ export type MenuConnectionQueryVariables = Exact<{
 }>;
 
 
-export type MenuConnectionQuery = { menuConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Menu', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, home: { __typename: 'MenuHome', visible: boolean | null, pt: string, en: string } | null, services: { __typename: 'MenuServices', visible: boolean | null, pt: string, en: string } | null, campaign: { __typename: 'MenuCampaign', visible: boolean | null, pt: string, en: string } | null, contact: { __typename: 'MenuContact', visible: boolean | null, pt: string, en: string } | null, about: { __typename: 'MenuAbout', visible: boolean | null, pt: string, en: string } | null, servicesViewAll: { __typename: 'MenuServicesViewAll', pt: string | null, en: string | null } | null } | null } | null> | null } };
+export type MenuConnectionQuery = { menuConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Menu', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, home: { __typename: 'MenuHome', visible: boolean | null, pt: string, en: string } | null, services: { __typename: 'MenuServices', visible: boolean | null, pt: string, en: string } | null, products: { __typename: 'MenuProducts', visible: boolean | null, pt: string, en: string } | null, campaign: { __typename: 'MenuCampaign', visible: boolean | null, pt: string, en: string } | null, contact: { __typename: 'MenuContact', visible: boolean | null, pt: string, en: string } | null, about: { __typename: 'MenuAbout', visible: boolean | null, pt: string, en: string } | null, servicesViewAll: { __typename: 'MenuServicesViewAll', pt: string | null, en: string | null } | null } | null } | null> | null } };
 
 export type RodapeQueryVariables = Exact<{
   relativePath: string;
@@ -5074,6 +5883,139 @@ export const ServicosTextosPartsFragmentDoc = gql`
     en
   }
   relatedVisible
+}
+    `;
+export const ProdutoPartsFragmentDoc = gql`
+    fragment ProdutoParts on Produto {
+  __typename
+  productId
+  icon
+  title {
+    __typename
+    pt
+    en
+  }
+  summary {
+    __typename
+    pt
+    en
+  }
+  description {
+    __typename
+    pt
+    en
+  }
+  highlights {
+    __typename
+    pt
+    en
+  }
+  homeTitle {
+    __typename
+    pt
+    en
+  }
+  homeBlurb {
+    __typename
+    pt
+    en
+  }
+  bannerImage
+  bannerImageAlt {
+    __typename
+    pt
+    en
+  }
+  sections {
+    __typename
+    icon
+    title {
+      __typename
+      pt
+      en
+    }
+    text {
+      __typename
+      pt
+      en
+    }
+    image {
+      __typename
+      image
+      alt {
+        __typename
+        pt
+        en
+      }
+    }
+    layout
+    bullets {
+      __typename
+      pt
+      en
+    }
+    visible
+  }
+  galleryVisible
+  gallery {
+    __typename
+    image
+    alt {
+      __typename
+      pt
+      en
+    }
+    visible
+  }
+}
+    `;
+export const ProdutosListaPartsFragmentDoc = gql`
+    fragment ProdutosListaParts on ProdutosLista {
+  __typename
+  bannerImage
+  bannerImageAlt {
+    __typename
+    pt
+    en
+  }
+  sectionHeading {
+    __typename
+    tag {
+      __typename
+      pt
+      en
+    }
+    title {
+      __typename
+      pt
+      en
+    }
+    learnMore {
+      __typename
+      pt
+      en
+    }
+  }
+  intro {
+    __typename
+    pt
+    en
+  }
+  ctaTitle {
+    __typename
+    pt
+    en
+  }
+  ctaText {
+    __typename
+    pt
+    en
+  }
+  backToProducts {
+    __typename
+    pt
+    en
+  }
 }
     `;
 export const PaginaInicialPartsFragmentDoc = gql`
@@ -5617,6 +6559,12 @@ export const MenuPartsFragmentDoc = gql`
     pt
     en
   }
+  products {
+    __typename
+    visible
+    pt
+    en
+  }
   campaign {
     __typename
     visible
@@ -5908,6 +6856,120 @@ export const ServicosTextosConnectionDocument = gql`
   }
 }
     ${ServicosTextosPartsFragmentDoc}`;
+export const ProdutoDocument = gql`
+    query produto($relativePath: String!) {
+  produto(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...ProdutoParts
+  }
+}
+    ${ProdutoPartsFragmentDoc}`;
+export const ProdutoConnectionDocument = gql`
+    query produtoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ProdutoFilter) {
+  produtoConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...ProdutoParts
+      }
+    }
+  }
+}
+    ${ProdutoPartsFragmentDoc}`;
+export const ProdutosListaDocument = gql`
+    query produtosLista($relativePath: String!) {
+  produtosLista(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...ProdutosListaParts
+  }
+}
+    ${ProdutosListaPartsFragmentDoc}`;
+export const ProdutosListaConnectionDocument = gql`
+    query produtosListaConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ProdutosListaFilter) {
+  produtosListaConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...ProdutosListaParts
+      }
+    }
+  }
+}
+    ${ProdutosListaPartsFragmentDoc}`;
 export const PaginaInicialDocument = gql`
     query paginaInicial($relativePath: String!) {
   paginaInicial(relativePath: $relativePath) {
@@ -6387,6 +7449,18 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     servicosTextosConnection(variables?: ServicosTextosConnectionQueryVariables, options?: C): Promise<{data: ServicosTextosConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServicosTextosConnectionQueryVariables, query: string}> {
         return requester<{data: ServicosTextosConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServicosTextosConnectionQueryVariables, query: string}, ServicosTextosConnectionQueryVariables>(ServicosTextosConnectionDocument, variables, options);
+      },
+    produto(variables: ProdutoQueryVariables, options?: C): Promise<{data: ProdutoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProdutoQueryVariables, query: string}> {
+        return requester<{data: ProdutoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProdutoQueryVariables, query: string}, ProdutoQueryVariables>(ProdutoDocument, variables, options);
+      },
+    produtoConnection(variables?: ProdutoConnectionQueryVariables, options?: C): Promise<{data: ProdutoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProdutoConnectionQueryVariables, query: string}> {
+        return requester<{data: ProdutoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProdutoConnectionQueryVariables, query: string}, ProdutoConnectionQueryVariables>(ProdutoConnectionDocument, variables, options);
+      },
+    produtosLista(variables: ProdutosListaQueryVariables, options?: C): Promise<{data: ProdutosListaQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProdutosListaQueryVariables, query: string}> {
+        return requester<{data: ProdutosListaQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProdutosListaQueryVariables, query: string}, ProdutosListaQueryVariables>(ProdutosListaDocument, variables, options);
+      },
+    produtosListaConnection(variables?: ProdutosListaConnectionQueryVariables, options?: C): Promise<{data: ProdutosListaConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProdutosListaConnectionQueryVariables, query: string}> {
+        return requester<{data: ProdutosListaConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ProdutosListaConnectionQueryVariables, query: string}, ProdutosListaConnectionQueryVariables>(ProdutosListaConnectionDocument, variables, options);
       },
     paginaInicial(variables: PaginaInicialQueryVariables, options?: C): Promise<{data: PaginaInicialQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PaginaInicialQueryVariables, query: string}> {
         return requester<{data: PaginaInicialQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PaginaInicialQueryVariables, query: string}, PaginaInicialQueryVariables>(PaginaInicialDocument, variables, options);

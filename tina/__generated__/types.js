@@ -159,6 +159,139 @@ export const ServicosTextosPartsFragmentDoc = gql`
   relatedVisible
 }
     `;
+export const ProdutoPartsFragmentDoc = gql`
+    fragment ProdutoParts on Produto {
+  __typename
+  productId
+  icon
+  title {
+    __typename
+    pt
+    en
+  }
+  summary {
+    __typename
+    pt
+    en
+  }
+  description {
+    __typename
+    pt
+    en
+  }
+  highlights {
+    __typename
+    pt
+    en
+  }
+  homeTitle {
+    __typename
+    pt
+    en
+  }
+  homeBlurb {
+    __typename
+    pt
+    en
+  }
+  bannerImage
+  bannerImageAlt {
+    __typename
+    pt
+    en
+  }
+  sections {
+    __typename
+    icon
+    title {
+      __typename
+      pt
+      en
+    }
+    text {
+      __typename
+      pt
+      en
+    }
+    image {
+      __typename
+      image
+      alt {
+        __typename
+        pt
+        en
+      }
+    }
+    layout
+    bullets {
+      __typename
+      pt
+      en
+    }
+    visible
+  }
+  galleryVisible
+  gallery {
+    __typename
+    image
+    alt {
+      __typename
+      pt
+      en
+    }
+    visible
+  }
+}
+    `;
+export const ProdutosListaPartsFragmentDoc = gql`
+    fragment ProdutosListaParts on ProdutosLista {
+  __typename
+  bannerImage
+  bannerImageAlt {
+    __typename
+    pt
+    en
+  }
+  sectionHeading {
+    __typename
+    tag {
+      __typename
+      pt
+      en
+    }
+    title {
+      __typename
+      pt
+      en
+    }
+    learnMore {
+      __typename
+      pt
+      en
+    }
+  }
+  intro {
+    __typename
+    pt
+    en
+  }
+  ctaTitle {
+    __typename
+    pt
+    en
+  }
+  ctaText {
+    __typename
+    pt
+    en
+  }
+  backToProducts {
+    __typename
+    pt
+    en
+  }
+}
+    `;
 export const PaginaInicialPartsFragmentDoc = gql`
     fragment PaginaInicialParts on PaginaInicial {
   __typename
@@ -700,6 +833,12 @@ export const MenuPartsFragmentDoc = gql`
     pt
     en
   }
+  products {
+    __typename
+    visible
+    pt
+    en
+  }
   campaign {
     __typename
     visible
@@ -991,6 +1130,120 @@ export const ServicosTextosConnectionDocument = gql`
   }
 }
     ${ServicosTextosPartsFragmentDoc}`;
+export const ProdutoDocument = gql`
+    query produto($relativePath: String!) {
+  produto(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...ProdutoParts
+  }
+}
+    ${ProdutoPartsFragmentDoc}`;
+export const ProdutoConnectionDocument = gql`
+    query produtoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ProdutoFilter) {
+  produtoConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...ProdutoParts
+      }
+    }
+  }
+}
+    ${ProdutoPartsFragmentDoc}`;
+export const ProdutosListaDocument = gql`
+    query produtosLista($relativePath: String!) {
+  produtosLista(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...ProdutosListaParts
+  }
+}
+    ${ProdutosListaPartsFragmentDoc}`;
+export const ProdutosListaConnectionDocument = gql`
+    query produtosListaConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ProdutosListaFilter) {
+  produtosListaConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...ProdutosListaParts
+      }
+    }
+  }
+}
+    ${ProdutosListaPartsFragmentDoc}`;
 export const PaginaInicialDocument = gql`
     query paginaInicial($relativePath: String!) {
   paginaInicial(relativePath: $relativePath) {
@@ -1469,6 +1722,18 @@ export function getSdk(requester) {
     },
     servicosTextosConnection(variables, options) {
       return requester(ServicosTextosConnectionDocument, variables, options);
+    },
+    produto(variables, options) {
+      return requester(ProdutoDocument, variables, options);
+    },
+    produtoConnection(variables, options) {
+      return requester(ProdutoConnectionDocument, variables, options);
+    },
+    produtosLista(variables, options) {
+      return requester(ProdutosListaDocument, variables, options);
+    },
+    produtosListaConnection(variables, options) {
+      return requester(ProdutosListaConnectionDocument, variables, options);
     },
     paginaInicial(variables, options) {
       return requester(PaginaInicialDocument, variables, options);
