@@ -1,0 +1,25 @@
+{
+  "bannerImage": "/images/uploads/arroz-floracao-01.webp",
+  "bannerImageAlt": {
+    "pt": "Campo de arroz da AGRO TRADES",
+    "en": "AGRO TRADES rice field"
+  },
+  "sectionHeading": {
+    "tag": { "pt": "O que produzimos", "en": "What we produce" },
+    "title": { "pt": "Os nossos produtos", "en": "Our products" },
+    "learnMore": { "pt": "Saiba mais", "en": "Learn more" }
+  },
+  "intro": {
+    "pt": "Produtos cultivados e processados pela AGRO TRADES em Moçambique.",
+    "en": "Products grown and processed by AGRO TRADES in Mozambique."
+  },
+  "ctaTitle": {
+    "pt": "Quer comprar ou revender?",
+    "en": "Want to buy or resell?"
+  },
+  "ctaText": {
+    "pt": "Fale connosco pelo WhatsApp ou por email para saber a disponibilidade e as condições.",
+    "en": "Contact us via WhatsApp or email to check availability and terms."
+  },
+  "backToProducts": { "pt": "Produtos", "en": "Products" }
+}

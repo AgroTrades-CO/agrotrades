@@ -23,6 +23,7 @@ export function Footer({ lang }: { lang: Lang }) {
   const navLinks = [
     { key: "home", href: path("home", lang), label: nav.home[lang], visible: nav.home.visible },
     { key: "services", href: path("services", lang), label: nav.services[lang], visible: nav.services.visible },
+    { key: "products", href: path("products", lang), label: nav.products[lang], visible: nav.products.visible },
     { key: "campaign", href: path("campaign", lang), label: nav.campaign[lang], visible: nav.campaign.visible },
     { key: "contact", href: path("contact", lang), label: nav.contact[lang], visible: nav.contact.visible },
     { key: "about", href: path("about", lang), label: nav.about[lang], visible: nav.about.visible },

@@ -20,6 +20,7 @@ export function Header({ lang }: { lang: Lang }) {
   const servicesActive = pathname.startsWith(path("services", lang));
 
   const navLinksAfter = [
+    { href: path("products", lang), label: nav.products[lang], visible: nav.products.visible },
     { href: path("campaign", lang), label: nav.campaign[lang], visible: nav.campaign.visible },
     { href: path("contact", lang), label: nav.contact[lang], visible: nav.contact.visible },
     { href: path("about", lang), label: nav.about[lang], visible: nav.about.visible },
@@ -165,7 +166,10 @@ export function Header({ lang }: { lang: Lang }) {
 
         {navLinksAfter.map((link) => (
           <li key={link.href}>
-            <Link href={link.href} className={pathname === link.href ? "active" : undefined}>
+            <Link
+              href={link.href}
+              className={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "active" : undefined}
+            >
               {link.label}
             </Link>
           </li>

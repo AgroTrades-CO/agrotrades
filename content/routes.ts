@@ -13,7 +13,7 @@
 import type { Lang } from "./index";
 import { serviceEnSlug, serviceIdFromEnSlug } from "./service-slugs";
 
-export type PageKey = "home" | "services" | "campaign" | "contact" | "about";
+export type PageKey = "home" | "services" | "products" | "campaign" | "contact" | "about";
 
 /**
  * Todas as páginas fixas do site (exclui as páginas de serviço, que são
@@ -21,11 +21,12 @@ export type PageKey = "home" | "services" | "campaign" | "contact" | "about";
  * Usado por `app/sitemap.ts` para gerar as duas entradas por idioma sem
  * repetir esta lista à mão (Fase 4, AC-14).
  */
-export const PAGE_KEYS: PageKey[] = ["home", "services", "campaign", "contact", "about"];
+export const PAGE_KEYS: PageKey[] = ["home", "services", "products", "campaign", "contact", "about"];
 
 const PATHS: Record<PageKey, Record<Lang, string>> = {
   home: { pt: "/", en: "/en" },
   services: { pt: "/servicos", en: "/en/services" },
+  products: { pt: "/produtos", en: "/en/products" },
   campaign: { pt: "/campanha", en: "/en/campaign" },
   contact: { pt: "/contactos", en: "/en/contact" },
   about: { pt: "/quem-somos", en: "/en/about" },
@@ -39,6 +40,11 @@ export function path(page: PageKey, lang: Lang): string {
 /** Caminho da página de detalhe de um serviço, no idioma pedido. */
 export function serviceDetailPath(id: string, lang: Lang): string {
   return lang === "pt" ? `/servicos/${id}` : `/en/services/${serviceEnSlug(id)}`;
+}
+
+/** Caminho da página de detalhe de um produto. O id é o nome da marca, igual nos dois idiomas. */
+export function productDetailPath(id: string, lang: Lang): string {
+  return `${PATHS.products[lang]}/${id}`;
 }
 
 /**
@@ -62,6 +68,10 @@ export function alternatePath(pathname: string, currentLang: Lang): string {
       }
     }
 
+    if (pathname === "/produtos") return path("products", "en");
+    const productMatch = pathname.match(/^\/produtos\/([^/]+)\/?$/);
+    if (productMatch) return productDetailPath(productMatch[1], "en");
+
     if (pathname === "/campanha") return path("campaign", "en");
     if (pathname === "/contactos") return path("contact", "en");
     if (pathname === "/quem-somos") return path("about", "en");
@@ -78,6 +88,10 @@ export function alternatePath(pathname: string, currentLang: Lang): string {
     const id = serviceIdFromEnSlug(enServiceMatch[1]);
     return id ? `/servicos/${id}` : path("services", "pt");
   }
+
+  if (pathname === "/en/products") return path("products", "pt");
+  const enProductMatch = pathname.match(/^\/en\/products\/([^/]+)\/?$/);
+  if (enProductMatch) return productDetailPath(enProductMatch[1], "pt");
 
   if (pathname === "/en/campaign") return path("campaign", "pt");
   if (pathname === "/en/contact") return path("contact", "pt");

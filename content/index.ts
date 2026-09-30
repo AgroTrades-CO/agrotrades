@@ -28,6 +28,9 @@ import notFoundJson from "./site/notFound.json";
 import quemSomosJson from "./site/quemSomos.json";
 import servicePageJson from "./site/servicePage.json";
 import servicesPageJson from "./site/servicesPage.json";
+import productsPageJson from "./site/productsPage.json";
+
+import arrozAmakua from "./products/arroz-amakua.json";
 
 import apoioTecnico from "./services/apoio-tecnico.json";
 import arroz from "./services/arroz.json";
@@ -46,6 +49,8 @@ import {
   metaSchema,
   navSchema,
   notFoundSchema,
+  productsPageSchema,
+  productsSchema,
   quemSomosSchema,
   resolveSectionLayout,
   servicePageSchema,
@@ -85,6 +90,16 @@ export const services = parseContent(
   [arroz, cereais, moageira, terras, campanhaService, mecanizacao, apoioTecnico, comercializacao],
   "content/services/*.json"
 );
+
+export const products = parseContent(productsSchema, [arrozAmakua], "content/products/*.json");
+for (const product of products) {
+  if (services.some((s) => s.id === product.id)) {
+    throw new Error(
+      `content/products: o id "${product.id}" já é usado por um serviço — use um id diferente antes de repetir o build.`
+    );
+  }
+}
+export const productsPage = parseContent(productsPageSchema, productsPageJson, "content/site/productsPage.json");
 
 export const nav = parseContent(navSchema, navJson, "content/site/nav.json");
 
@@ -246,6 +261,8 @@ export type {
   NotFoundContent,
   Paragraph,
   PhoneEntry,
+  Product,
+  ProductsPage,
   EmailEntry,
   ResolvedSectionLayout,
   Service,

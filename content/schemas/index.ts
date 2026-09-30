@@ -252,6 +252,10 @@ export const servicesSchema = z
   .array(serviceSchema)
   .length(8, "têm de existir exactamente 8 serviços (contagem exibida em stats.json)");
 
+/** Produto (menu "Produtos") — mesma forma de um serviço, para reutilizar a página de detalhe. */
+export const productsSchema = z.array(serviceSchema).min(1, "tem de existir pelo menos 1 produto");
+export type Product = Service;
+
 // ── NAV ───────────────────────────────────────────────────────────────────
 
 /** Item de menu com visibilidade própria — usado tanto no cabeçalho como na
@@ -266,6 +270,7 @@ export const navSchema = z
   .object({
     home: navItemSchema,
     services: navItemSchema,
+    products: navItemSchema,
     campaign: navItemSchema,
     contact: navItemSchema,
     /** "Quem Somos" — conteúdo já preparado; a rota só é construída na Fase 3. */
@@ -275,7 +280,7 @@ export const navSchema = z
     servicesViewAll: bilingualString,
   })
   .refine(
-    (nav) => [nav.home, nav.services, nav.campaign, nav.contact, nav.about].some((item) => item.visible),
+    (nav) => [nav.home, nav.services, nav.products, nav.campaign, nav.contact, nav.about].some((item) => item.visible),
     "pelo menos um item do menu tem de estar visível — ligue 'Visível' em pelo menos um item de content/site/nav.json"
   );
 export type Nav = z.infer<typeof navSchema>;
@@ -673,6 +678,12 @@ export const servicesPageSchema = z.object({
   ctaText: bilingualString,
 });
 export type ServicesPage = z.infer<typeof servicesPageSchema>;
+
+/** Listagem `/produtos` — mesma forma da listagem de serviços, mais o rótulo do link de volta no detalhe. */
+export const productsPageSchema = servicesPageSchema.extend({
+  backToProducts: bilingualString,
+});
+export type ProductsPage = z.infer<typeof productsPageSchema>;
 
 // ── SERVICE PAGE (detalhe de cada serviço) ──────────────────────────────────
 
