@@ -176,7 +176,41 @@ const nextConfig = {
     // admin do servidor Vite do `tinacms dev` e fala com a API GraphQL local,
     // ambos em localhost:<TINA_LOCAL_PORT>. Nunca em produção: o build não
     // gera o admin (scripts/tina-build.mjs) e esta entrada não existe.
-    // A CSP do admin em produção (Tina Cloud, hosts enumerados) é da fase 4.
+    //
+    // Fase 4: admin da Tina Cloud em produção (gerado só em Production por
+    // scripts/tina-build.mjs). CSP própria, com os hosts da Tina Cloud
+    // enumerados (API de conteúdo, identidade/login e media) e nada mais. O
+    // login abre uma janela em identity.tinajs.io (navegação, fora da CSP).
+    // Sem pré-visualização em produção: `frame-src 'self'` basta.
+    if (!isDev) {
+      const tinaCloud = [
+        "https://content.tinajs.io",
+        "https://identity.tinajs.io",
+        "https://assets.tinajs.io",
+      ].join(" ");
+      entries.push({
+        source: "/admin/:path*",
+        headers: [
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline'",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' data: https://fonts.gstatic.com",
+              `img-src 'self' data: blob: ${tinaCloud}`,
+              `connect-src 'self' ${tinaCloud}`,
+              "frame-src 'self'",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'none'",
+            ].join("; "),
+          },
+        ],
+      });
+    }
     if (isDev) {
       const tinaOrigin = `http://localhost:${tinaLocalPort()}`;
       entries.push({
@@ -203,10 +237,10 @@ const nextConfig = {
     }
     return entries;
   },
-  // Admin da TinaCMS em modo local: `/admin` -> `/admin/index.html` só em
-  // `next dev` (fase 3). Em produção `/admin` continua 404 até à fase 4.
+  // Admin da TinaCMS: `/admin` -> `/admin/index.html`. Em modo local vem do
+  // `tinacms dev`; em produção só existe no build de Production (fase 4) —
+  // nos outros builds public/admin/ não existe e `/admin` dá 404.
   async rewrites() {
-    if (process.env.NODE_ENV === "production") return [];
     return [{ source: "/admin", destination: "/admin/index.html" }];
   },
 };

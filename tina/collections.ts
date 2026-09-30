@@ -43,9 +43,15 @@ import {
  * `next dev`: liga o Draft Mode e redireciona para a rota de pré-visualização
  * (sem Draft Mode as rotas /editor-preview dão 404). O caminho vai no URL e
  * não em query string porque o admin descarta a query string do `router`.
- * A entrada com autenticação da Tina Cloud é da fase 4.
+ *
+ * Fase 4: no admin de produção não há pré-visualização — a rota de entrada só
+ * existe em `next dev` e a entrada autenticada pela Tina Cloud precisa de
+ * revisão de segurança própria. scripts/tina-build.mjs define
+ * TINA_PUBLIC_NO_PREVIEW=1 (a CLI da Tina só passa ao admin variáveis
+ * TINA_PUBLIC_*); sem `router` a Tina mostra só o formulário de edição.
  */
-const previewUrl = (path: string) => `/api/editor-preview${path}`;
+const previewEnabled = process.env.TINA_PUBLIC_NO_PREVIEW !== "1";
+const previewUrl = (path: string) => (previewEnabled ? `/api/editor-preview${path}` : undefined);
 
 const semCriarNemApagar = { create: false, delete: false } as const;
 
@@ -55,7 +61,7 @@ function paginaUnica(
   label: string,
   ficheiro: string,
   fields: Collection["fields"],
-  router?: string
+  router?: string | undefined
 ): Collection {
   return {
     name,

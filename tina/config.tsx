@@ -1,16 +1,21 @@
 /**
  * TinaCMS — task-017-tina-cms-adoption (architecture.md secções 3, 4 e 8).
  *
- * Fase 3: só MODO LOCAL. `npm run tina:dev` (scripts/tina-dev.mjs) corre
+ * Fase 4: em Production o build gera o admin ligado à Tina Cloud
+ * (scripts/tina-build.mjs), com o TINA_PUBLIC_CLIENT_ID; sem pré-visualização.
+ *
+ * Fase 3: MODO LOCAL. `npm run tina:dev` (scripts/tina-dev.mjs) corre
  * `tinacms dev`, que serve a API GraphQL local e lê/grava diretamente os
  * ficheiros JSON de content/ no disco — sem Tina Cloud, sem login, sem
  * credenciais. O build do site (`npm run build`) não corre a Tina
  * (scripts/tina-build.mjs). A ligação à Tina Cloud é da fase 4.
  *
  * Segurança (security-review-design.md, SEC-T-07/SEC-T-12):
- *   - `token` NÃO é definido aqui: tudo o que este ficheiro importa vai para o
- *     JS do admin (browser) e a CLI escreve o token literalmente no cliente
- *     gerado. O token de leitura (fase 4) só é lido no servidor
+ *   - `token` NUNCA é o token real: tudo o que este ficheiro importa vai para
+ *     o JS do admin (browser) e a CLI escreve o token literalmente no cliente
+ *     gerado. A CLI exige um valor para construir o admin, por isso fica um
+ *     marcador público sem valor. O admin autentica cada editor pelo login
+ *     da Tina Cloud; o token de leitura real só é lido no servidor
  *     (lib/tina/client.ts).
  *   - O client id chama-se TINA_PUBLIC_CLIENT_ID: é público por construção
  *     (fica no JS do admin, injetado só pela CLI da Tina). Nunca NEXT_PUBLIC_*,
@@ -28,6 +33,8 @@ export default defineConfig({
   branch: "content",
   // Ignorado em modo local; na fase 4 vem das variáveis de Production.
   clientId: process.env.TINA_PUBLIC_CLIENT_ID ?? null,
+  // Marcador exigido pela CLI (ver comentário acima); não é um segredo.
+  token: "not-a-secret-placeholder",
   build: {
     // Admin em /admin (A-4), gerado no build e fora do Git (.gitignore).
     outputFolder: "admin",
