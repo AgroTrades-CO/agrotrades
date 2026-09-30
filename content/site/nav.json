@@ -9,6 +9,11 @@
     "pt": "Serviços",
     "en": "Services"
   },
+  "products": {
+    "visible": true,
+    "pt": "Produtos",
+    "en": "Products"
+  },
   "campaign": {
     "visible": true,
     "pt": "Campanha 2025/26",

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { meta, services } from "@/content";
-import { PAGE_KEYS, path, serviceDetailPath } from "@/content/routes";
+import { meta, products, services } from "@/content";
+import { PAGE_KEYS, path, productDetailPath, serviceDetailPath } from "@/content/routes";
 
 /**
  * `sitemap.xml` gerado no build (Fase 4, FR-14/AC-14) a partir das mesmas
@@ -28,6 +28,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   for (const service of services) {
     addPair(serviceDetailPath(service.id, "pt"), serviceDetailPath(service.id, "en"));
+  }
+
+  for (const product of products) {
+    addPair(productDetailPath(product.id, "pt"), productDetailPath(product.id, "en"));
   }
 
   return entries;

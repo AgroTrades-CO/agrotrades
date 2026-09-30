@@ -1,4 +1,5 @@
 import { servicesHeading, type Lang, type Service } from "@/content";
+import type { BilingualString } from "@/content/schemas";
 import { toServiceCardData } from "@/lib/view-data/service";
 import { ServiceCardView } from "@/components/ServiceCardView";
 
@@ -11,6 +12,17 @@ import { ServiceCardView } from "@/components/ServiceCardView";
  * Invólucro de servidor (task-017, A-12): lê @/content e entrega os dados à
  * vista `ServiceCardView`. Nunca importar a partir de um componente cliente.
  */
-export function ServiceCard({ service, lang }: { service: Service; lang: Lang }) {
-  return <ServiceCardView card={toServiceCardData(service, lang)} learnMore={servicesHeading.learnMore} lang={lang} />;
+export function ServiceCard({
+  service,
+  lang,
+  href,
+  learnMore = servicesHeading.learnMore,
+}: {
+  service: Service;
+  lang: Lang;
+  /** Destino do link; por omissão, a página do serviço. Os produtos passam o seu próprio caminho. */
+  href?: string;
+  learnMore?: BilingualString;
+}) {
+  return <ServiceCardView card={toServiceCardData(service, lang, href)} learnMore={learnMore} lang={lang} />;
 }

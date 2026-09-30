@@ -44,7 +44,9 @@ export type ServiceDetailViewData = {
   /** Vazio se `page.relatedVisible` for falso. */
   related: ServiceCardData[];
   learnMore: BilingualString;
-  hrefs: { services: string; contact: string };
+  /** Link de volta no topo (listagem de serviços, ou de produtos). */
+  back: { href: string; label: BilingualString };
+  hrefs: { contact: string };
 };
 
 /**
@@ -87,8 +89,8 @@ export function ServiceDetailView({
         />
         <div className="sd-hero-overlay" {...tinaAttr(tf, service, "bannerImage")} />
         <div className="page-hero-content">
-          <Link href={data.hrefs.services} className="sd-back" style={{ color: "rgba(255,255,255,0.7)" }}>
-            &larr; <span>{data.page.backToServices[lang]}</span>
+          <Link href={data.back.href} className="sd-back" style={{ color: "rgba(255,255,255,0.7)" }}>
+            &larr; <span>{data.back.label[lang]}</span>
           </Link>
           <div style={{ marginBottom: 16, color: "white" }} {...tinaAttr(tf, service, "icon")}>
             <Icon name={service.icon} width={44} height={44} />

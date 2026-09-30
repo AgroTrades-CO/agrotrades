@@ -47,3 +47,6 @@ Thumbs.db
 /tina/__generated__/*
 !/tina/__generated__/types.ts
 !/tina/__generated__/types.js
+
+# Documentação de trabalho (fica fora do repositório público)
+/project/

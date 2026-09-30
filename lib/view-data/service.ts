@@ -1,5 +1,6 @@
 import "server-only";
 import { contacts, relatedServices, servicePage, servicesHeading, type Lang, type Service } from "@/content";
+import type { BilingualString } from "@/content/schemas";
 import { path, serviceDetailPath } from "@/content/routes";
 import type { ServiceCardData } from "@/components/ServiceCardView";
 import type { ServiceDetailViewData } from "@/components/pages/ServiceDetailView";
@@ -11,8 +12,12 @@ import type { ServiceDetailViewData } from "@/components/pages/ServiceDetailView
  * importe este módulo faz o `next build` falhar (`server-only`).
  */
 
-/** Cartão de serviço já resolvido (endereço no idioma pedido). */
-export function toServiceCardData(service: Service, lang: Lang): ServiceCardData {
+/** Cartão de serviço já resolvido (endereço no idioma pedido; os produtos passam o seu). */
+export function toServiceCardData(
+  service: Service,
+  lang: Lang,
+  href = serviceDetailPath(service.id, lang)
+): ServiceCardData {
   return {
     id: service.id,
     bannerImage: service.bannerImage,
@@ -20,12 +25,22 @@ export function toServiceCardData(service: Service, lang: Lang): ServiceCardData
     icon: service.icon,
     title: service.title,
     summary: service.summary,
-    href: serviceDetailPath(service.id, lang),
+    href,
   };
 }
 
-/** Tudo o que a página de detalhe mostra além do próprio serviço. */
-export function getServiceDetailViewData(service: Service, lang: Lang): ServiceDetailViewData {
+/**
+ * Tudo o que a página de detalhe mostra além do próprio serviço. Os produtos
+ * reutilizam a vista com o seu link de volta e sem "Outros serviços".
+ */
+export function getServiceDetailViewData(
+  service: Service,
+  lang: Lang,
+  {
+    back = { href: path("services", lang), label: servicePage.backToServices },
+    showRelated = true,
+  }: { back?: { href: string; label: BilingualString }; showRelated?: boolean } = {}
+): ServiceDetailViewData {
   return {
     service,
     page: servicePage,
@@ -34,8 +49,12 @@ export function getServiceDetailViewData(service: Service, lang: Lang): ServiceD
       whatsappLabel: contacts.whatsapp.label,
       title: contacts.title,
     },
-    related: servicePage.relatedVisible ? relatedServices(service.id).map((s) => toServiceCardData(s, lang)) : [],
+    related:
+      showRelated && servicePage.relatedVisible
+        ? relatedServices(service.id).map((s) => toServiceCardData(s, lang))
+        : [],
     learnMore: servicesHeading.learnMore,
-    hrefs: { services: path("services", lang), contact: path("contact", lang) },
+    back,
+    hrefs: { contact: path("contact", lang) },
   };
 }
