@@ -1,8 +1,9 @@
 # media-guard — SEC-P5-03 / SEC-P5-09 (task-001-migracao-stack, Fase 5)
 #
-# Especificação: project/state/task-001-migracao-stack/handoff-42-architect-sec-p5-03-ci.md
+# Os handoffs citados abaixo estão no arquivo de documentação, fora deste repositório.
+# Especificação: handoff-42-architect-sec-p5-03-ci.md
 #   (secções 3.3 "regra de validação" e 3.4 "restrições de implementação")
-# Implementação: project/state/task-001-migracao-stack/handoff-43-devops-media-guard.md
+# Implementação: handoff-43-devops-media-guard.md
 # Correção SEC-P5-14 (comparação de prefixo case-insensitive): handoff-44-security-engineer-sec-p5-03-fechamento.md
 #
 # O QUE ISTO PROTEGE: um editor autenticado (token OAuth `public_repo` do Decap CMS) publica

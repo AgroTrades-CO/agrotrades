@@ -1,9 +1,10 @@
 # CODEOWNERS — SEC-P5-03 / SEC-P5-09 (task-001-migracao-stack, Fase 5)
 #
-# Especificação: project/state/task-001-migracao-stack/handoff-42-architect-sec-p5-03-ci.md
+# Os handoffs citados abaixo estão no arquivo de documentação, fora deste repositório.
+# Especificação: handoff-42-architect-sec-p5-03-ci.md
 #   (secções 3.2 "superfície e fronteira de confiança", 3.5 "configuração de P2/P3")
-# Implementação: project/state/task-001-migracao-stack/handoff-43-devops-media-guard.md
-# Correção de âmbito (SEC-P5-12): project/state/task-001-migracao-stack/handoff-44-security-engineer-sec-p5-03-fechamento.md
+# Implementação: handoff-43-devops-media-guard.md
+# Correção de âmbito (SEC-P5-12): handoff-44-security-engineer-sec-p5-03-fechamento.md
 #
 # Esta é a peça P3 do desenho: sem ela, o workflow P1 (.github/workflows/media-guard.yml)
 # é anulável por um único PR que reescreve o próprio workflow ao mesmo tempo que introduz o
