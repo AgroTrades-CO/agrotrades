@@ -1,7 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import { footer, nav, services, visibleFooterServiceLinks, waLink, type Lang } from "@/content";
+import {
+  contacts,
+  footer,
+  nav,
+  services,
+  visibleFooterServiceLinks,
+  visibleSocialLinks,
+  waLink,
+  type Lang,
+} from "@/content";
 import { path, type PageKey } from "@/content/routes";
+import { IconWhatsapp } from "./icons";
+import { SOCIAL_ICONS, SOCIAL_LABELS } from "./social";
 
 // Caso especial de routing: "campanha" é um serviço normal (content/services)
 // mas o link do rodapé aponta para a página dedicada /campanha, não para a
@@ -37,6 +48,32 @@ export function Footer({ lang }: { lang: Lang }) {
             <Image src="/images/logo.png" alt="AGRO TRADES LDA" width={48} height={48} />
           </div>
           <p className="footer-desc">{footer.description[lang]}</p>
+          <div className="footer-social">
+            <a
+              href={contacts.whatsapp.url}
+              target="_blank"
+              rel="noopener"
+              className="footer-social-btn social-wa"
+              aria-label="WhatsApp"
+            >
+              <IconWhatsapp />
+            </a>
+            {visibleSocialLinks.map(({ network, url }) => {
+              const Icon = SOCIAL_ICONS[network];
+              return (
+                <a
+                  key={network}
+                  href={url}
+                  target="_blank"
+                  rel="noopener"
+                  className={`footer-social-btn social-${network}`}
+                  aria-label={SOCIAL_LABELS[network]}
+                >
+                  <Icon />
+                </a>
+              );
+            })}
+          </div>
         </div>
         <div>
           <h4>{footer.servicesHeading[lang]}</h4>

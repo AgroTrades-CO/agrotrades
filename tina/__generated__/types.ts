@@ -2278,6 +2278,24 @@ export type ContactosWhatsapp = {
   label?: Maybe<ContactosWhatsappLabel>;
 };
 
+export type ContactosSocialFacebook = {
+  __typename?: 'ContactosSocialFacebook';
+  visible?: Maybe<Scalars['Boolean']['output']>;
+  url: Scalars['String']['output'];
+};
+
+export type ContactosSocialInstagram = {
+  __typename?: 'ContactosSocialInstagram';
+  visible?: Maybe<Scalars['Boolean']['output']>;
+  url: Scalars['String']['output'];
+};
+
+export type ContactosSocial = {
+  __typename?: 'ContactosSocial';
+  facebook?: Maybe<ContactosSocialFacebook>;
+  instagram?: Maybe<ContactosSocialInstagram>;
+};
+
 export type ContactosEmails = {
   __typename?: 'ContactosEmails';
   visible?: Maybe<Scalars['Boolean']['output']>;
@@ -2416,6 +2434,7 @@ export type Contactos = Node & Document & {
   mapsLink: Scalars['String']['output'];
   mapEmbedUrl: Scalars['String']['output'];
   whatsapp?: Maybe<ContactosWhatsapp>;
+  social?: Maybe<ContactosSocial>;
   emails?: Maybe<Array<Maybe<ContactosEmails>>>;
   emailLabel?: Maybe<ContactosEmailLabel>;
   title?: Maybe<ContactosTitle>;
@@ -2465,6 +2484,21 @@ export type ContactosWhatsappFilter = {
   number?: InputMaybe<StringFilter>;
   url?: InputMaybe<StringFilter>;
   label?: InputMaybe<ContactosWhatsappLabelFilter>;
+};
+
+export type ContactosSocialFacebookFilter = {
+  visible?: InputMaybe<BooleanFilter>;
+  url?: InputMaybe<StringFilter>;
+};
+
+export type ContactosSocialInstagramFilter = {
+  visible?: InputMaybe<BooleanFilter>;
+  url?: InputMaybe<StringFilter>;
+};
+
+export type ContactosSocialFilter = {
+  facebook?: InputMaybe<ContactosSocialFacebookFilter>;
+  instagram?: InputMaybe<ContactosSocialInstagramFilter>;
 };
 
 export type ContactosEmailsFilter = {
@@ -2585,6 +2619,7 @@ export type ContactosFilter = {
   mapsLink?: InputMaybe<StringFilter>;
   mapEmbedUrl?: InputMaybe<StringFilter>;
   whatsapp?: InputMaybe<ContactosWhatsappFilter>;
+  social?: InputMaybe<ContactosSocialFilter>;
   emails?: InputMaybe<ContactosEmailsFilter>;
   emailLabel?: InputMaybe<ContactosEmailLabelFilter>;
   title?: InputMaybe<ContactosTitleFilter>;
@@ -4060,6 +4095,21 @@ export type ContactosWhatsappMutation = {
   label?: InputMaybe<ContactosWhatsappLabelMutation>;
 };
 
+export type ContactosSocialFacebookMutation = {
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ContactosSocialInstagramMutation = {
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ContactosSocialMutation = {
+  facebook?: InputMaybe<ContactosSocialFacebookMutation>;
+  instagram?: InputMaybe<ContactosSocialInstagramMutation>;
+};
+
 export type ContactosEmailsMutation = {
   visible?: InputMaybe<Scalars['Boolean']['input']>;
   address?: InputMaybe<Scalars['String']['input']>;
@@ -4178,6 +4228,7 @@ export type ContactosMutation = {
   mapsLink?: InputMaybe<Scalars['String']['input']>;
   mapEmbedUrl?: InputMaybe<Scalars['String']['input']>;
   whatsapp?: InputMaybe<ContactosWhatsappMutation>;
+  social?: InputMaybe<ContactosSocialMutation>;
   emails?: InputMaybe<Array<InputMaybe<ContactosEmailsMutation>>>;
   emailLabel?: InputMaybe<ContactosEmailLabelMutation>;
   title?: InputMaybe<ContactosTitleMutation>;
@@ -5172,6 +5223,21 @@ export type ContactosWhatsappFilter = {
   label?: ContactosWhatsappLabelFilter | null | undefined;
 };
 
+export type ContactosSocialFacebookFilter = {
+  visible?: BooleanFilter | null | undefined;
+  url?: StringFilter | null | undefined;
+};
+
+export type ContactosSocialInstagramFilter = {
+  visible?: BooleanFilter | null | undefined;
+  url?: StringFilter | null | undefined;
+};
+
+export type ContactosSocialFilter = {
+  facebook?: ContactosSocialFacebookFilter | null | undefined;
+  instagram?: ContactosSocialInstagramFilter | null | undefined;
+};
+
 export type ContactosEmailsFilter = {
   visible?: BooleanFilter | null | undefined;
   address?: StringFilter | null | undefined;
@@ -5290,6 +5356,7 @@ export type ContactosFilter = {
   mapsLink?: StringFilter | null | undefined;
   mapEmbedUrl?: StringFilter | null | undefined;
   whatsapp?: ContactosWhatsappFilter | null | undefined;
+  social?: ContactosSocialFilter | null | undefined;
   emails?: ContactosEmailsFilter | null | undefined;
   emailLabel?: ContactosEmailLabelFilter | null | undefined;
   title?: ContactosTitleFilter | null | undefined;
@@ -5468,7 +5535,7 @@ export type QuemSomosPartsFragment = { __typename: 'QuemSomos', bannerImage: str
 
 export type CampanhaPartsFragment = { __typename: 'Campanha', timelineVisible: boolean | null, banner: { __typename: 'CampanhaBanner', tag: { __typename: 'CampanhaBannerTag', pt: string | null, en: string | null } | null, title: { __typename: 'CampanhaBannerTitle', pt: string | null, en: string | null } | null, text: { __typename: 'CampanhaBannerText', pt: string | null, en: string | null } | null, button: { __typename: 'CampanhaBannerButton', pt: string | null, en: string | null } | null } | null, hero: { __typename: 'CampanhaHero', tag: string, bannerImage: string, intro: { __typename: 'CampanhaHeroIntro', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'CampanhaHeroBannerImageAlt', pt: string | null, en: string | null } | null } | null, quote: { __typename: 'CampanhaQuote', author: string, citeSuffix: { __typename: 'CampanhaQuoteCiteSuffix', pt: string | null, en: string | null } | null } | null, vision: { __typename: 'CampanhaVision', visible: boolean | null, tag: { __typename: 'CampanhaVisionTag', pt: string | null, en: string | null } | null, title: { __typename: 'CampanhaVisionTitle', pt: string | null, en: string | null } | null, text: { __typename: 'CampanhaVisionText', pt: string | null, en: string | null } | null } | null, timelineHeading: { __typename: 'CampanhaTimelineHeading', tag: { __typename: 'CampanhaTimelineHeadingTag', pt: string | null, en: string | null } | null, title: { __typename: 'CampanhaTimelineHeadingTitle', pt: string | null, en: string | null } | null } | null, pillars: Array<{ __typename: 'CampanhaPillars', visible: boolean | null, icon: string, title: { __typename: 'CampanhaPillarsTitle', pt: string | null, en: string | null } | null, text: { __typename: 'CampanhaPillarsText', pt: string | null, en: string | null } | null } | null> | null, timeline: Array<{ __typename: 'CampanhaTimeline', visible: boolean | null, title: { __typename: 'CampanhaTimelineTitle', pt: string | null, en: string | null } | null, text: { __typename: 'CampanhaTimelineText', pt: string | null, en: string | null } | null } | null> | null, cta: { __typename: 'CampanhaCta', visible: boolean | null, title: { __typename: 'CampanhaCtaTitle', pt: string | null, en: string | null } | null, text: { __typename: 'CampanhaCtaText', pt: string | null, en: string | null } | null, button: { __typename: 'CampanhaCtaButton', pt: string | null, en: string | null } | null } | null };
 
-export type ContactosPartsFragment = { __typename: 'Contactos', bannerImage: string, mapsLink: string, mapEmbedUrl: string, phones: Array<{ __typename: 'ContactosPhones', visible: boolean | null, number: string } | null> | null, phoneLabel: { __typename: 'ContactosPhoneLabel', pt: string | null, en: string | null } | null, intro: { __typename: 'ContactosIntro', pt: string | null, en: string | null } | null, ceo: { __typename: 'ContactosCeo', visible: boolean | null, name: string, initials: string, company: string, role: { __typename: 'ContactosCeoRole', pt: string | null, en: string | null } | null } | null, whatsapp: { __typename: 'ContactosWhatsapp', number: string, url: string, label: { __typename: 'ContactosWhatsappLabel', pt: string | null, en: string | null } | null } | null, emails: Array<{ __typename: 'ContactosEmails', visible: boolean | null, address: string } | null> | null, emailLabel: { __typename: 'ContactosEmailLabel', pt: string | null, en: string | null } | null, title: { __typename: 'ContactosTitle', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'ContactosBannerImageAlt', pt: string | null, en: string | null } | null, tag: { __typename: 'ContactosTag', pt: string | null, en: string | null } | null, locations: Array<{ __typename: 'ContactosLocations', visible: boolean | null, id: string, icon: string, name: string, address: Array<string>, type: { __typename: 'ContactosLocationsType', pt: string | null, en: string | null } | null } | null> | null, contactForm: { __typename: 'ContactosContactForm', visible: boolean | null, heading: { __typename: 'ContactosContactFormHeading', pt: string | null, en: string | null } | null, nameLabel: { __typename: 'ContactosContactFormNameLabel', pt: string | null, en: string | null } | null, emailLabel: { __typename: 'ContactosContactFormEmailLabel', pt: string | null, en: string | null } | null, phoneLabel: { __typename: 'ContactosContactFormPhoneLabel', pt: string | null, en: string | null } | null, subjectLabel: { __typename: 'ContactosContactFormSubjectLabel', pt: string | null, en: string | null } | null, messageLabel: { __typename: 'ContactosContactFormMessageLabel', pt: string | null, en: string | null } | null, submitLabel: { __typename: 'ContactosContactFormSubmitLabel', pt: string | null, en: string | null } | null, successMessage: { __typename: 'ContactosContactFormSuccessMessage', pt: string | null, en: string | null } | null, errorMessage: { __typename: 'ContactosContactFormErrorMessage', pt: string | null, en: string | null } | null, verificationErrorMessage: { __typename: 'ContactosContactFormVerificationErrorMessage', pt: string | null, en: string | null } | null, privacyNotice: { __typename: 'ContactosContactFormPrivacyNotice', pt: string | null, en: string | null } | null } | null };
+export type ContactosPartsFragment = { __typename: 'Contactos', bannerImage: string, mapsLink: string, mapEmbedUrl: string, phones: Array<{ __typename: 'ContactosPhones', visible: boolean | null, number: string } | null> | null, phoneLabel: { __typename: 'ContactosPhoneLabel', pt: string | null, en: string | null } | null, intro: { __typename: 'ContactosIntro', pt: string | null, en: string | null } | null, ceo: { __typename: 'ContactosCeo', visible: boolean | null, name: string, initials: string, company: string, role: { __typename: 'ContactosCeoRole', pt: string | null, en: string | null } | null } | null, whatsapp: { __typename: 'ContactosWhatsapp', number: string, url: string, label: { __typename: 'ContactosWhatsappLabel', pt: string | null, en: string | null } | null } | null, social: { __typename: 'ContactosSocial', facebook: { __typename: 'ContactosSocialFacebook', visible: boolean | null, url: string } | null, instagram: { __typename: 'ContactosSocialInstagram', visible: boolean | null, url: string } | null } | null, emails: Array<{ __typename: 'ContactosEmails', visible: boolean | null, address: string } | null> | null, emailLabel: { __typename: 'ContactosEmailLabel', pt: string | null, en: string | null } | null, title: { __typename: 'ContactosTitle', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'ContactosBannerImageAlt', pt: string | null, en: string | null } | null, tag: { __typename: 'ContactosTag', pt: string | null, en: string | null } | null, locations: Array<{ __typename: 'ContactosLocations', visible: boolean | null, id: string, icon: string, name: string, address: Array<string>, type: { __typename: 'ContactosLocationsType', pt: string | null, en: string | null } | null } | null> | null, contactForm: { __typename: 'ContactosContactForm', visible: boolean | null, heading: { __typename: 'ContactosContactFormHeading', pt: string | null, en: string | null } | null, nameLabel: { __typename: 'ContactosContactFormNameLabel', pt: string | null, en: string | null } | null, emailLabel: { __typename: 'ContactosContactFormEmailLabel', pt: string | null, en: string | null } | null, phoneLabel: { __typename: 'ContactosContactFormPhoneLabel', pt: string | null, en: string | null } | null, subjectLabel: { __typename: 'ContactosContactFormSubjectLabel', pt: string | null, en: string | null } | null, messageLabel: { __typename: 'ContactosContactFormMessageLabel', pt: string | null, en: string | null } | null, submitLabel: { __typename: 'ContactosContactFormSubmitLabel', pt: string | null, en: string | null } | null, successMessage: { __typename: 'ContactosContactFormSuccessMessage', pt: string | null, en: string | null } | null, errorMessage: { __typename: 'ContactosContactFormErrorMessage', pt: string | null, en: string | null } | null, verificationErrorMessage: { __typename: 'ContactosContactFormVerificationErrorMessage', pt: string | null, en: string | null } | null, privacyNotice: { __typename: 'ContactosContactFormPrivacyNotice', pt: string | null, en: string | null } | null } | null };
 
 export type MenuPartsFragment = { __typename: 'Menu', home: { __typename: 'MenuHome', visible: boolean | null, pt: string, en: string } | null, services: { __typename: 'MenuServices', visible: boolean | null, pt: string, en: string } | null, products: { __typename: 'MenuProducts', visible: boolean | null, pt: string, en: string } | null, campaign: { __typename: 'MenuCampaign', visible: boolean | null, pt: string, en: string } | null, contact: { __typename: 'MenuContact', visible: boolean | null, pt: string, en: string } | null, about: { __typename: 'MenuAbout', visible: boolean | null, pt: string, en: string } | null, servicesViewAll: { __typename: 'MenuServicesViewAll', pt: string | null, en: string | null } | null };
 
@@ -5641,7 +5708,7 @@ export type ContactosQueryVariables = Exact<{
 }>;
 
 
-export type ContactosQuery = { contactos: { __typename: 'Contactos', id: string, bannerImage: string, mapsLink: string, mapEmbedUrl: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, phones: Array<{ __typename: 'ContactosPhones', visible: boolean | null, number: string } | null> | null, phoneLabel: { __typename: 'ContactosPhoneLabel', pt: string | null, en: string | null } | null, intro: { __typename: 'ContactosIntro', pt: string | null, en: string | null } | null, ceo: { __typename: 'ContactosCeo', visible: boolean | null, name: string, initials: string, company: string, role: { __typename: 'ContactosCeoRole', pt: string | null, en: string | null } | null } | null, whatsapp: { __typename: 'ContactosWhatsapp', number: string, url: string, label: { __typename: 'ContactosWhatsappLabel', pt: string | null, en: string | null } | null } | null, emails: Array<{ __typename: 'ContactosEmails', visible: boolean | null, address: string } | null> | null, emailLabel: { __typename: 'ContactosEmailLabel', pt: string | null, en: string | null } | null, title: { __typename: 'ContactosTitle', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'ContactosBannerImageAlt', pt: string | null, en: string | null } | null, tag: { __typename: 'ContactosTag', pt: string | null, en: string | null } | null, locations: Array<{ __typename: 'ContactosLocations', visible: boolean | null, id: string, icon: string, name: string, address: Array<string>, type: { __typename: 'ContactosLocationsType', pt: string | null, en: string | null } | null } | null> | null, contactForm: { __typename: 'ContactosContactForm', visible: boolean | null, heading: { __typename: 'ContactosContactFormHeading', pt: string | null, en: string | null } | null, nameLabel: { __typename: 'ContactosContactFormNameLabel', pt: string | null, en: string | null } | null, emailLabel: { __typename: 'ContactosContactFormEmailLabel', pt: string | null, en: string | null } | null, phoneLabel: { __typename: 'ContactosContactFormPhoneLabel', pt: string | null, en: string | null } | null, subjectLabel: { __typename: 'ContactosContactFormSubjectLabel', pt: string | null, en: string | null } | null, messageLabel: { __typename: 'ContactosContactFormMessageLabel', pt: string | null, en: string | null } | null, submitLabel: { __typename: 'ContactosContactFormSubmitLabel', pt: string | null, en: string | null } | null, successMessage: { __typename: 'ContactosContactFormSuccessMessage', pt: string | null, en: string | null } | null, errorMessage: { __typename: 'ContactosContactFormErrorMessage', pt: string | null, en: string | null } | null, verificationErrorMessage: { __typename: 'ContactosContactFormVerificationErrorMessage', pt: string | null, en: string | null } | null, privacyNotice: { __typename: 'ContactosContactFormPrivacyNotice', pt: string | null, en: string | null } | null } | null } };
+export type ContactosQuery = { contactos: { __typename: 'Contactos', id: string, bannerImage: string, mapsLink: string, mapEmbedUrl: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, phones: Array<{ __typename: 'ContactosPhones', visible: boolean | null, number: string } | null> | null, phoneLabel: { __typename: 'ContactosPhoneLabel', pt: string | null, en: string | null } | null, intro: { __typename: 'ContactosIntro', pt: string | null, en: string | null } | null, ceo: { __typename: 'ContactosCeo', visible: boolean | null, name: string, initials: string, company: string, role: { __typename: 'ContactosCeoRole', pt: string | null, en: string | null } | null } | null, whatsapp: { __typename: 'ContactosWhatsapp', number: string, url: string, label: { __typename: 'ContactosWhatsappLabel', pt: string | null, en: string | null } | null } | null, social: { __typename: 'ContactosSocial', facebook: { __typename: 'ContactosSocialFacebook', visible: boolean | null, url: string } | null, instagram: { __typename: 'ContactosSocialInstagram', visible: boolean | null, url: string } | null } | null, emails: Array<{ __typename: 'ContactosEmails', visible: boolean | null, address: string } | null> | null, emailLabel: { __typename: 'ContactosEmailLabel', pt: string | null, en: string | null } | null, title: { __typename: 'ContactosTitle', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'ContactosBannerImageAlt', pt: string | null, en: string | null } | null, tag: { __typename: 'ContactosTag', pt: string | null, en: string | null } | null, locations: Array<{ __typename: 'ContactosLocations', visible: boolean | null, id: string, icon: string, name: string, address: Array<string>, type: { __typename: 'ContactosLocationsType', pt: string | null, en: string | null } | null } | null> | null, contactForm: { __typename: 'ContactosContactForm', visible: boolean | null, heading: { __typename: 'ContactosContactFormHeading', pt: string | null, en: string | null } | null, nameLabel: { __typename: 'ContactosContactFormNameLabel', pt: string | null, en: string | null } | null, emailLabel: { __typename: 'ContactosContactFormEmailLabel', pt: string | null, en: string | null } | null, phoneLabel: { __typename: 'ContactosContactFormPhoneLabel', pt: string | null, en: string | null } | null, subjectLabel: { __typename: 'ContactosContactFormSubjectLabel', pt: string | null, en: string | null } | null, messageLabel: { __typename: 'ContactosContactFormMessageLabel', pt: string | null, en: string | null } | null, submitLabel: { __typename: 'ContactosContactFormSubmitLabel', pt: string | null, en: string | null } | null, successMessage: { __typename: 'ContactosContactFormSuccessMessage', pt: string | null, en: string | null } | null, errorMessage: { __typename: 'ContactosContactFormErrorMessage', pt: string | null, en: string | null } | null, verificationErrorMessage: { __typename: 'ContactosContactFormVerificationErrorMessage', pt: string | null, en: string | null } | null, privacyNotice: { __typename: 'ContactosContactFormPrivacyNotice', pt: string | null, en: string | null } | null } | null } };
 
 export type ContactosConnectionQueryVariables = Exact<{
   before?: string | null | undefined;
@@ -5653,7 +5720,7 @@ export type ContactosConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ContactosConnectionQuery = { contactosConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Contactos', id: string, bannerImage: string, mapsLink: string, mapEmbedUrl: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, phones: Array<{ __typename: 'ContactosPhones', visible: boolean | null, number: string } | null> | null, phoneLabel: { __typename: 'ContactosPhoneLabel', pt: string | null, en: string | null } | null, intro: { __typename: 'ContactosIntro', pt: string | null, en: string | null } | null, ceo: { __typename: 'ContactosCeo', visible: boolean | null, name: string, initials: string, company: string, role: { __typename: 'ContactosCeoRole', pt: string | null, en: string | null } | null } | null, whatsapp: { __typename: 'ContactosWhatsapp', number: string, url: string, label: { __typename: 'ContactosWhatsappLabel', pt: string | null, en: string | null } | null } | null, emails: Array<{ __typename: 'ContactosEmails', visible: boolean | null, address: string } | null> | null, emailLabel: { __typename: 'ContactosEmailLabel', pt: string | null, en: string | null } | null, title: { __typename: 'ContactosTitle', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'ContactosBannerImageAlt', pt: string | null, en: string | null } | null, tag: { __typename: 'ContactosTag', pt: string | null, en: string | null } | null, locations: Array<{ __typename: 'ContactosLocations', visible: boolean | null, id: string, icon: string, name: string, address: Array<string>, type: { __typename: 'ContactosLocationsType', pt: string | null, en: string | null } | null } | null> | null, contactForm: { __typename: 'ContactosContactForm', visible: boolean | null, heading: { __typename: 'ContactosContactFormHeading', pt: string | null, en: string | null } | null, nameLabel: { __typename: 'ContactosContactFormNameLabel', pt: string | null, en: string | null } | null, emailLabel: { __typename: 'ContactosContactFormEmailLabel', pt: string | null, en: string | null } | null, phoneLabel: { __typename: 'ContactosContactFormPhoneLabel', pt: string | null, en: string | null } | null, subjectLabel: { __typename: 'ContactosContactFormSubjectLabel', pt: string | null, en: string | null } | null, messageLabel: { __typename: 'ContactosContactFormMessageLabel', pt: string | null, en: string | null } | null, submitLabel: { __typename: 'ContactosContactFormSubmitLabel', pt: string | null, en: string | null } | null, successMessage: { __typename: 'ContactosContactFormSuccessMessage', pt: string | null, en: string | null } | null, errorMessage: { __typename: 'ContactosContactFormErrorMessage', pt: string | null, en: string | null } | null, verificationErrorMessage: { __typename: 'ContactosContactFormVerificationErrorMessage', pt: string | null, en: string | null } | null, privacyNotice: { __typename: 'ContactosContactFormPrivacyNotice', pt: string | null, en: string | null } | null } | null } | null } | null> | null } };
+export type ContactosConnectionQuery = { contactosConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Contactos', id: string, bannerImage: string, mapsLink: string, mapEmbedUrl: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, phones: Array<{ __typename: 'ContactosPhones', visible: boolean | null, number: string } | null> | null, phoneLabel: { __typename: 'ContactosPhoneLabel', pt: string | null, en: string | null } | null, intro: { __typename: 'ContactosIntro', pt: string | null, en: string | null } | null, ceo: { __typename: 'ContactosCeo', visible: boolean | null, name: string, initials: string, company: string, role: { __typename: 'ContactosCeoRole', pt: string | null, en: string | null } | null } | null, whatsapp: { __typename: 'ContactosWhatsapp', number: string, url: string, label: { __typename: 'ContactosWhatsappLabel', pt: string | null, en: string | null } | null } | null, social: { __typename: 'ContactosSocial', facebook: { __typename: 'ContactosSocialFacebook', visible: boolean | null, url: string } | null, instagram: { __typename: 'ContactosSocialInstagram', visible: boolean | null, url: string } | null } | null, emails: Array<{ __typename: 'ContactosEmails', visible: boolean | null, address: string } | null> | null, emailLabel: { __typename: 'ContactosEmailLabel', pt: string | null, en: string | null } | null, title: { __typename: 'ContactosTitle', pt: string | null, en: string | null } | null, bannerImageAlt: { __typename: 'ContactosBannerImageAlt', pt: string | null, en: string | null } | null, tag: { __typename: 'ContactosTag', pt: string | null, en: string | null } | null, locations: Array<{ __typename: 'ContactosLocations', visible: boolean | null, id: string, icon: string, name: string, address: Array<string>, type: { __typename: 'ContactosLocationsType', pt: string | null, en: string | null } | null } | null> | null, contactForm: { __typename: 'ContactosContactForm', visible: boolean | null, heading: { __typename: 'ContactosContactFormHeading', pt: string | null, en: string | null } | null, nameLabel: { __typename: 'ContactosContactFormNameLabel', pt: string | null, en: string | null } | null, emailLabel: { __typename: 'ContactosContactFormEmailLabel', pt: string | null, en: string | null } | null, phoneLabel: { __typename: 'ContactosContactFormPhoneLabel', pt: string | null, en: string | null } | null, subjectLabel: { __typename: 'ContactosContactFormSubjectLabel', pt: string | null, en: string | null } | null, messageLabel: { __typename: 'ContactosContactFormMessageLabel', pt: string | null, en: string | null } | null, submitLabel: { __typename: 'ContactosContactFormSubmitLabel', pt: string | null, en: string | null } | null, successMessage: { __typename: 'ContactosContactFormSuccessMessage', pt: string | null, en: string | null } | null, errorMessage: { __typename: 'ContactosContactFormErrorMessage', pt: string | null, en: string | null } | null, verificationErrorMessage: { __typename: 'ContactosContactFormVerificationErrorMessage', pt: string | null, en: string | null } | null, privacyNotice: { __typename: 'ContactosContactFormPrivacyNotice', pt: string | null, en: string | null } | null } | null } | null } | null> | null } };
 
 export type MenuQueryVariables = Exact<{
   relativePath: string;
@@ -6443,6 +6510,19 @@ export const ContactosPartsFragmentDoc = gql`
       __typename
       pt
       en
+    }
+  }
+  social {
+    __typename
+    facebook {
+      __typename
+      visible
+      url
+    }
+    instagram {
+      __typename
+      visible
+      url
     }
   }
   emails {

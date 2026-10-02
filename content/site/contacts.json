@@ -38,6 +38,16 @@
       "en": "Contact us on WhatsApp"
     }
   },
+  "social": {
+    "facebook": {
+      "visible": true,
+      "url": "https://facebook.com/agrotrades"
+    },
+    "instagram": {
+      "visible": true,
+      "url": "https://instagram.com/agrotrades"
+    }
+  },
   "emails": [
     {
       "visible": true,
