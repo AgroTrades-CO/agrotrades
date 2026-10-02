@@ -75,12 +75,6 @@ const eslintConfig = defineConfig([
     'build/**',
     'next-env.d.ts',
     'node_modules/**',
-    // Versão alternativa do site estático usada apenas como referência.
-    'AvaliacaoAgroTrades/**',
-    // Site estático antigo na raiz (legado, a remover noutra tarefa).
-    'js/**',
-    'css/**',
-    '*.html',
     // Worktrees de agentes Claude (incluem .next/ e node_modules/ próprios).
     '.claude/**',
     // TinaCMS (task-017): tipos/queries gerados e admin gerado em public/.
