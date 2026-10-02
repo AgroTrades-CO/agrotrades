@@ -63,6 +63,9 @@ export default function GlobalNotFound() {
         <span className="hero-tag">{notFoundContent.tag.pt}</span>
         <h1>{notFoundContent.title.pt}</h1>
         <p style={{ margin: "0 auto 28px" }}>{notFoundContent.text.pt}</p>
+        {/* Esta rota não tem root layout próprio: ir para "/" muda de root
+            layout e exige carregamento completo, por isso <a> e não <Link>. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a href="/" className="btn-primary" style={{ display: "inline-flex" }}>
           {notFoundContent.backHome.pt}
         </a>
