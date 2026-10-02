@@ -9,7 +9,7 @@
  *
  * A validação corre aqui, ao nível do módulo — isto é, na primeira vez que
  * qualquer componente importar algo deste ficheiro. Como o `app/layout.tsx`
- * (usado por todas as rotas) importa `Header`/`Footer`/`WhatsappFloat`, que
+ * (usado por todas as rotas) importa `Header`/`Footer`/`SocialFloat`, que
  * por sua vez importam este módulo, a validação corre sempre no build,
  * mesmo para coleções (como `team` ou `contacts`) ainda não renderizadas em
  * nenhuma página nesta fase. Se faltar `pt`/`en` num campo obrigatório, ou
@@ -207,6 +207,11 @@ export const visiblePhones = contacts.phones.filter((p) => p.visible);
 
 /** Emails visíveis da página de contactos. */
 export const visibleEmails = contacts.emails.filter((e) => e.visible);
+
+/** Redes sociais visíveis, pela ordem dos botões (rodapé e flutuantes). */
+export const visibleSocialLinks = (["facebook", "instagram"] as const)
+  .map((network) => ({ network, ...contacts.social[network] }))
+  .filter((link) => link.visible);
 
 /** Referências de serviço visíveis na lista "Serviços" do rodapé, na ordem do ficheiro. */
 export const visibleFooterServiceLinks = footer.serviceLinks.filter((l) => l.visible);

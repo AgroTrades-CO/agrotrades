@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { WhatsappFloat } from "@/components/WhatsappFloat";
+import { SocialFloat } from "@/components/SocialFloat";
 import { buildTitle, meta } from "@/content";
 import { siteIcons } from "@/content/seo";
 import "../globals.css";
@@ -34,7 +34,7 @@ export default function EnRootLayout({ children }: Readonly<{ children: React.Re
         <Header lang="en" />
         {children}
         <Footer lang="en" />
-        <WhatsappFloat />
+        <SocialFloat />
       </body>
     </html>
   );

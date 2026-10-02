@@ -719,6 +719,19 @@ export const ContactosPartsFragmentDoc = gql`
       en
     }
   }
+  social {
+    __typename
+    facebook {
+      __typename
+      visible
+      url
+    }
+    instagram {
+      __typename
+      visible
+      url
+    }
+  }
   emails {
     __typename
     visible

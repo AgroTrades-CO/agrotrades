@@ -614,6 +614,32 @@ const contactos = paginaUnica("contactos", "Contactos", "contacts", [
   },
   {
     type: "object",
+    name: "social",
+    label: "Redes sociais",
+    description: "Botões no rodapé e no canto do ecrã, em todas as páginas.",
+    fields: [
+      {
+        type: "object",
+        name: "facebook",
+        label: "Facebook",
+        fields: [
+          visivel(),
+          texto("url", "Endereço da página", { description: "Começa por https://www.facebook.com/" }),
+        ],
+      },
+      {
+        type: "object",
+        name: "instagram",
+        label: "Instagram",
+        fields: [
+          visivel(),
+          texto("url", "Endereço da página", { description: "Começa por https://www.instagram.com/" }),
+        ],
+      },
+    ],
+  },
+  {
+    type: "object",
     name: "emails",
     label: "Emails",
     list: true,

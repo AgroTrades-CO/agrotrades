@@ -538,6 +538,31 @@ export const emailEntrySchema = z.object({
 });
 export type EmailEntry = z.infer<typeof emailEntrySchema>;
 
+/**
+ * Link de uma rede social: só `https:` e só no domínio da própria rede, para
+ * um botão "Facebook" nunca poder apontar para outro site. `visible: false`
+ * esconde o botão do rodapé e dos botões flutuantes.
+ */
+function socialLinkSchema(domain: string) {
+  return z.object({
+    visible: visibleFlag,
+    url: httpUrl.refine((value) => {
+      try {
+        const { protocol, hostname } = new URL(value);
+        return protocol === "https:" && (hostname === domain || hostname.endsWith(`.${domain}`));
+      } catch {
+        return false;
+      }
+    }, `tem de ser um endereço https:// de ${domain}`),
+  });
+}
+
+export const socialSchema = z.object({
+  facebook: socialLinkSchema("facebook.com"),
+  instagram: socialLinkSchema("instagram.com"),
+});
+export type SocialNetwork = keyof z.infer<typeof socialSchema>;
+
 export const contactsSchema = z.object({
   tag: bilingualString,
   title: bilingualString,
@@ -550,6 +575,8 @@ export const contactsSchema = z.object({
     url: httpUrl,
     label: bilingualString,
   }),
+  /** Redes sociais — botões no rodapé e flutuantes, em todas as páginas. */
+  social: socialSchema,
   /** Título do bloco de telefones na página de contactos (ex. "Telefone / WhatsApp"). */
   phoneLabel: bilingualString,
   /** Título do bloco de emails na página de contactos. */
