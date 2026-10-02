@@ -1,7 +1,10 @@
 {
   "id": "terras",
   "icon": "landPlot",
-  "title": { "pt": "Preparação de terras", "en": "Land Preparation" },
+  "title": {
+    "pt": "Preparação de terras",
+    "en": "Land Preparation"
+  },
   "summary": {
     "pt": "Serviços completos de preparação e nivelamento de terrenos agrícolas, utilizando maquinaria especializada para optimizar as condições de cultivo.",
     "en": "Complete land preparation and levelling services using specialist machinery to optimise growing conditions."

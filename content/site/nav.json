@@ -1,9 +1,36 @@
 {
-  "home": { "visible": true, "pt": "Início", "en": "Home" },
-  "services": { "visible": true, "pt": "Serviços", "en": "Services" },
-  "products": { "visible": true, "pt": "Produtos", "en": "Products" },
-  "campaign": { "visible": true, "pt": "Campanha 2025/26", "en": "Campaign 2025/26" },
-  "contact": { "visible": true, "pt": "Contactos", "en": "Contacts" },
-  "about": { "visible": true, "pt": "Quem Somos", "en": "About Us" },
-  "servicesViewAll": { "pt": "Ver todos os serviços", "en": "View all services" }
+  "home": {
+    "visible": true,
+    "pt": "Início",
+    "en": "Home"
+  },
+  "services": {
+    "visible": true,
+    "pt": "Serviços",
+    "en": "Services"
+  },
+  "products": {
+    "visible": true,
+    "pt": "Produtos",
+    "en": "Products"
+  },
+  "campaign": {
+    "visible": true,
+    "pt": "Campanha 2025/26",
+    "en": "Campaign 2025/26"
+  },
+  "contact": {
+    "visible": true,
+    "pt": "Contactos",
+    "en": "Contacts"
+  },
+  "about": {
+    "visible": true,
+    "pt": "Quem Somos",
+    "en": "About Us"
+  },
+  "servicesViewAll": {
+    "pt": "Ver todos os serviços",
+    "en": "View all services"
+  }
 }

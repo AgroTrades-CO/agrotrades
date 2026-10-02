@@ -1,7 +1,10 @@
 {
   "id": "comercializacao",
   "icon": "handshake",
-  "title": { "pt": "Comercialização agrícola", "en": "Agricultural Marketing" },
+  "title": {
+    "pt": "Comercialização agrícola",
+    "en": "Agricultural Marketing"
+  },
   "summary": {
     "pt": "Apoio na comercialização da produção agrícola, ligando os produtores ao mercado e garantindo escoamento eficiente da produção a preços justos.",
     "en": "Support in marketing agricultural production, connecting producers to the market and ensuring efficient sale at fair prices."

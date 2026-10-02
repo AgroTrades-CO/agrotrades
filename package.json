@@ -3,23 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/copy-decap-cms.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/copy-decap-cms.mjs",
-    "build": "next build",
+    "build": "node scripts/tina-build.mjs && node scripts/check-content-images.mjs && next build && node scripts/check-build-secrets.mjs && node scripts/check-public-bundle.mjs && node scripts/js-budget.mjs --report",
     "start": "next start",
     "lint": "eslint .",
-    "postinstall": "node scripts/copy-decap-cms.mjs"
+    "check:js-budget": "node scripts/js-budget.mjs --enforce",
+    "tina:dev": "node scripts/tina-dev.mjs"
   },
   "dependencies": {
-    "decap-cms": "3.15.1",
     "next": "16.3.2",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "resend": "6.24.0",
+    "tinacms": "3.14.1",
     "zod": "4.4.3"
   },
   "devDependencies": {
+    "@tinacms/cli": "3.1.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",

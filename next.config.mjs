@@ -25,34 +25,24 @@ const nextConfig = {
       { source: "/home", destination: "/", permanent: true },
     ];
   },
-  // /admin (sem barra final) e /admin/ não resolvem sozinhos ao ficheiro
-  // estático public/admin/index.html — o Next.js só serve ficheiros de
-  // public/ por caminho EXATO, sem resolução de "index" de diretório.
-  // Reescrita interna (não é redirect visível ao browser, não muda o URL)
-  // — Fase 5, Decap CMS.
-  async rewrites() {
-    return [{ source: "/admin", destination: "/admin/index.html" }];
-  },
   // Cabeçalhos de segurança (Fase 4) — migra a intenção do netlify.toml
   // antigo (X-Frame-Options/X-Content-Type-Options/Referrer-Policy) para
   // o Next.js/Vercel, e acrescenta CSP + HSTS.
   //
   // RESTRIÇÃO VINCULATIVA DA ARQUITETURA (v5, secção 9.9/12.36): esta CSP
-  // é estrita por defeito e serve TODO o site, incluindo `/admin` (Decap
-  // CMS, Fase 5). A Fase 5 acrescenta uma entrada de `headers()` própria
-  // com `source: "/admin/:path*"`, com a sua própria CSP mais permissiva
-  // (o Decap auto-hospedado exige `unsafe-eval`, e o backend `github`
-  // precisa de falar com api.github.com).
+  // é estrita por defeito e serve TODO o site. A entrada própria de
+  // `/admin/:path*` do Decap CMS (e o rewrite `/admin`) foi removida com o
+  // Decap (task-017-tina-cms-adoption, fase 1, SEC-T-09); `/admin` dá 404
+  // até o admin da TinaCMS ter a sua própria entrada (fase 4).
   //
-  // CORREÇÃO a este comentário (verificado contra a documentação do
-  // Next.js — "Header Overriding Behavior" em headers.md): entradas de
-  // `headers()` que fazem match no mesmo caminho e definem a MESMA chave
-  // de header NÃO se combinam/mesclam por diretiva — a última entrada do
-  // array que fizer match SUBSTITUI inteiramente o valor da anterior para
-  // essa chave. Por isso a entrada `/admin/:path*` abaixo é uma CSP
-  // COMPLETA e autossuficiente (repete `default-src`, `object-src`, etc.),
-  // não apenas as diretivas adicionais — e tem de vir DEPOIS da entrada
-  // global no array devolvido, para ser a que prevalece em `/admin`.
+  // Entradas de `headers()` que fazem match no mesmo caminho e definem a
+  // MESMA chave de header NÃO se combinam/mesclam por diretiva (verificado
+  // contra a documentação do Next.js — "Header Overriding Behavior" em
+  // headers.md) — a última entrada do array que fizer match SUBSTITUI
+  // inteiramente o valor da anterior para essa chave. Por isso qualquer
+  // entrada específica abaixo (ex.: `/images/uploads/:path*`) é uma CSP
+  // COMPLETA e autossuficiente, não apenas as diretivas adicionais — e tem
+  // de vir DEPOIS da entrada global no array devolvido, para prevalecer.
   //
   // Nota sobre `script-src 'self' 'unsafe-inline'`: o Next.js App Router
   // injeta, no próprio HTML, um `<script>` inline sem `src` com o payload
@@ -65,7 +55,20 @@ const nextConfig = {
   // terceiros" do pedido. O mesmo raciocínio aplica-se a
   // `style-src 'unsafe-inline'`, necessário para os atributos `style`
   // inline usados pelos componentes de página (ex.: NotFoundContent).
+  //
+  // EXCEÇÃO APROVADA (task-006-contact-form-security, gates.md, "Confirmação
+  // humana do desenho", ponto 2, 2026-09-26): `https://challenges.cloudflare.com`
+  // entra em `script-src` e `frame-src` da CSP GLOBAL, para o Cloudflare
+  // Turnstile do formulário de contacto. Foi escolhida a CSP global (e não
+  // uma CSP só para /contactos e /en/contact) porque a CSP é do documento:
+  // numa navegação client-side (`next/link`) para as páginas de contacto o
+  // documento mantém a CSP da página de origem e o widget seria bloqueado.
+  // A CSP só AUTORIZA o host; o script só é efetivamente carregado em
+  // components/ContactForm.tsx (páginas de contacto, com site key). Não
+  // acrescentar outros hosts nem carregar este script noutras páginas sem
+  // nova revisão de arquitetura/segurança.
   async headers() {
+    const turnstileOrigin = "https://challenges.cloudflare.com";
     // Em desenvolvimento (`npm run dev`), o Next.js/Turbopack usa eval()
     // para Fast Refresh e outras funcionalidades de debugging (nunca em
     // produção — ver aviso do próprio React). Sem 'unsafe-eval' em
@@ -73,7 +76,37 @@ const nextConfig = {
     // um erro no console. Esta exceção aplica-se apenas quando
     // NODE_ENV !== 'production'; a CSP de produção mantém-se inalterada.
     const isDev = process.env.NODE_ENV !== "production";
-    return [
+    // Diretivas da CSP GLOBAL. A CSP da pré-visualização da TinaCMS (abaixo)
+    // é derivada desta mesma lista, para herdar qualquer correção futura sem
+    // cópia manual (task-017, architecture.md 16.5).
+    const globalCsp = [
+      "default-src 'self'",
+      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${turnstileOrigin}`,
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data:",
+      "connect-src 'self'",
+      // Fase 3 (handoff-34, secção F): abre `frame-src`, ausente até
+      // aqui (herdava `default-src 'self'`, bloqueando qualquer
+      // iframe de terceiros). Dois hosts nomeados, nada mais:
+      //   - youtube-nocookie.com: embed do slider do hero (FR-1),
+      //     domínio sem cookies de tracking; nunca youtube.com.
+      //   - www.google.com: corrige um bug pré-existente (RISCO-3 do
+      //     handoff-34) — o iframe do Google Maps em
+      //     ContactContent.tsx já existia e já estava bloqueado por
+      //     esta CSP não declarar `frame-src`.
+      // Qualquer alargamento a outros hosts exige nova revisão de
+      // arquitetura/segurança — não acrescentar hosts aqui de ânimo leve.
+      //   - challenges.cloudflare.com: iframe do Turnstile (task-006,
+      //     exceção aprovada, ver comentário antes de `headers()`).
+      `frame-src 'self' https://www.youtube-nocookie.com https://www.google.com ${turnstileOrigin}`,
+      "object-src 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "frame-ancestors 'none'",
+      "upgrade-insecure-requests",
+    ];
+    const entries = [
       {
         source: "/:path*",
         headers: [
@@ -87,40 +120,13 @@ const nextConfig = {
           // uma consequência silenciosa deste ficheiro.
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-          {
-            key: "Content-Security-Policy",
-            value: [
-              "default-src 'self'",
-              `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data:",
-              "connect-src 'self'",
-              // Fase 3 (handoff-34, secção F): abre `frame-src`, ausente até
-              // aqui (herdava `default-src 'self'`, bloqueando qualquer
-              // iframe de terceiros). Dois hosts nomeados, nada mais:
-              //   - youtube-nocookie.com: embed do slider do hero (FR-1),
-              //     domínio sem cookies de tracking; nunca youtube.com.
-              //   - www.google.com: corrige um bug pré-existente (RISCO-3 do
-              //     handoff-34) — o iframe do Google Maps em
-              //     ContactContent.tsx já existia e já estava bloqueado por
-              //     esta CSP não declarar `frame-src`.
-              // Qualquer alargamento a outros hosts exige nova revisão de
-              // arquitetura/segurança — não acrescentar hosts aqui de ânimo leve.
-              "frame-src 'self' https://www.youtube-nocookie.com https://www.google.com",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'none'",
-              "upgrade-insecure-requests",
-            ].join("; "),
-          },
+          { key: "Content-Security-Policy", value: globalCsp.join("; ") },
         ],
       },
       {
-        // SEC-P5-03: media da media library do Decap (public/images/uploads/,
-        // ver public/admin/config.yml) é servida pela mesma origem que
-        // `/admin` mas NÃO deve herdar `script-src 'self' 'unsafe-inline'`
+        // SEC-P5-03: media carregada pelos editores do CMS
+        // (public/images/uploads/) é servida pela mesma origem que o
+        // resto do site mas NÃO deve herdar `script-src 'self' 'unsafe-inline'`
         // da CSP global — um ficheiro carregado por um editor não é
         // confiável como o resto do site. Entrada própria, autossuficiente
         // (mesma regra de "a última entrada vence" do comentário acima):
@@ -143,62 +149,107 @@ const nextConfig = {
           { key: "Content-Security-Policy", value: "sandbox; default-src 'none'" },
         ],
       },
-      {
-        // CSP PRÓPRIA de /admin (Fase 5, restrição vinculativa 36 / SEC-05
-        // do security-engineer). Autossuficiente — ver comentário acima
-        // sobre "Header Overriding Behavior": esta entrada SUBSTITUI a CSP
-        // global inteira para `/admin/:path*`, não a combina com ela.
-        //
-        // Diferenças face à CSP global, e a razão de cada uma:
-        //   - script-src 'unsafe-eval': o bundle auto-hospedado do Decap
-        //     CMS (webpack, restrição 36) usa-o internamente. Nunca
-        //     acrescentado à CSP global do resto do site.
-        //   - connect-src api.github.com / github.com / objects.githubusercontent.com:
-        //     o backend `github` do Decap fala DIRETAMENTE com a API do
-        //     GitHub a partir do browser (listar/gravar ficheiros, media);
-        //     `github.com` cobre a troca de código do próprio popup OAuth;
-        //     `objects.githubusercontent.com` é onde o GitHub redireciona
-        //     downloads de ficheiros grandes do repositório.
-        //   - connect-src blob:: o Decap faz `fetch()` de URLs blob: para
-        //     o backup local de rascunhos (`persistLocalDraftBackup`,
-        //     IndexedDB) — sem isto, guardar uma entrada com ficheiro
-        //     anexado falha em silêncio com "TypeError: Failed to fetch"
-        //     (só visível na consola, não no separador Network, porque a
-        //     CSP bloqueia antes do pedido sair). img-src já tinha blob:
-        //     para pré-visualização; connect-src faltava.
-        //   - img-src avatars.githubusercontent.com: avatar do utilizador
-        //     autenticado, mostrado pela UI do Decap.
-        //   - Continua SEM nenhum CDN de terceiros em script-src (nunca
-        //     unpkg/jsdelivr) — o bundle é servido de 'self'
-        //     (public/admin/vendor/, ver scripts/copy-decap-cms.mjs).
+    ];
+
+    // Pré-visualização editável da TinaCMS (task-017, architecture 5.2/6,
+    // SEC-T-08/SEC-T-09): a CSP GLOBAL com uma única diferença,
+    // `frame-ancestors 'self'` (o admin mostra estas páginas num iframe da
+    // MESMA origem). `X-Frame-Options: SAMEORIGIN` já vem da entrada global
+    // (só a mesma chave é substituída, headers.md "Header Overriding
+    // Behavior"). `X-Robots-Tag` além do `robots` da página. Sem Draft Mode
+    // estas rotas dão 404; nenhuma página pública passa por aqui.
+    const previewCsp = globalCsp
+      .map((d) => (d === "frame-ancestors 'none'" ? "frame-ancestors 'self'" : d))
+      .join("; ");
+    for (const source of ["/editor-preview/:path*", "/en/editor-preview/:path*"]) {
+      entries.push({
+        source,
+        headers: [
+          { key: "Content-Security-Policy", value: previewCsp },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      });
+    }
+
+    // Admin da TinaCMS em MODO LOCAL (fase 3, só `next dev` via
+    // `npm run tina:dev`): o index.html gerado em public/admin/ carrega o
+    // admin do servidor Vite do `tinacms dev` e fala com a API GraphQL local,
+    // ambos em localhost:<TINA_LOCAL_PORT>. Nunca em produção: o build não
+    // gera o admin (scripts/tina-build.mjs) e esta entrada não existe.
+    //
+    // Fase 4: admin da Tina Cloud em produção (gerado só em Production por
+    // scripts/tina-build.mjs). CSP própria, com os hosts da Tina Cloud
+    // enumerados (API de conteúdo, identidade/login e media) e nada mais. O
+    // login abre uma janela em identity.tinajs.io (navegação, fora da CSP).
+    // Sem pré-visualização em produção: `frame-src 'self'` basta.
+    if (!isDev) {
+      const tinaCloud = [
+        "https://content.tinajs.io",
+        "https://identity.tinajs.io",
+        "https://assets.tinajs.io",
+      ].join(" ");
+      entries.push({
         source: "/admin/:path*",
         headers: [
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
-          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
           {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-              "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: blob: https://avatars.githubusercontent.com",
-              "font-src 'self' data:",
-              "connect-src 'self' blob: https://api.github.com https://github.com https://objects.githubusercontent.com",
-              "frame-src 'none'",
+              "script-src 'self' 'unsafe-inline'",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' data: https://fonts.gstatic.com",
+              `img-src 'self' data: blob: ${tinaCloud}`,
+              `connect-src 'self' ${tinaCloud}`,
+              "frame-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
               "frame-ancestors 'none'",
-              "upgrade-insecure-requests",
             ].join("; "),
           },
         ],
-      },
-    ];
+      });
+    }
+    if (isDev) {
+      const tinaOrigin = `http://localhost:${tinaLocalPort()}`;
+      entries.push({
+        source: "/admin/:path*",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              `script-src 'self' 'unsafe-inline' 'unsafe-eval' ${tinaOrigin}`,
+              `style-src 'self' 'unsafe-inline' ${tinaOrigin} https://fonts.googleapis.com`,
+              `font-src 'self' data: ${tinaOrigin} https://fonts.gstatic.com`,
+              `img-src 'self' data: blob: ${tinaOrigin}`,
+              `connect-src 'self' ${tinaOrigin} ws://localhost:${tinaLocalPort()}`,
+              "frame-src 'self'",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'none'",
+            ].join("; "),
+          },
+        ],
+      });
+    }
+    return entries;
+  },
+  // Admin da TinaCMS: `/admin` -> `/admin/index.html`. Em modo local vem do
+  // `tinacms dev`; em produção só existe no build de Production (fase 4) —
+  // nos outros builds public/admin/ não existe e `/admin` dá 404.
+  async rewrites() {
+    return [{ source: "/admin", destination: "/admin/index.html" }];
   },
 };
+
+/** Porta da API local do `tinacms dev` (definida por scripts/tina-dev.mjs). */
+function tinaLocalPort() {
+  const port = process.env.TINA_LOCAL_PORT ?? "4001";
+  if (!/^[0-9]{2,5}$/.test(port)) throw new Error("TINA_LOCAL_PORT inválida");
+  return port;
+}
 
 export default nextConfig;

@@ -709,6 +709,28 @@ section { padding: 80px 5%; }
   position: absolute; width: 1px; height: 1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
 }
+.contact-form-fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.contact-form-fieldset:disabled { opacity: 0.6; }
+/* Botão desativado (sem token do Turnstile, a enviar, ou formulário
+   indisponível): tem de parecer inativo (task-006, handoff-04 issue 4).
+   Dentro de um fieldset desativado só se neutraliza o hover, porque o
+   fieldset já tem opacidade própria (evita 0.6 x 0.5, CR-T6-07). */
+.contact-form-fieldset:disabled .btn-primary,
+.contact-form-fieldset:disabled .btn-primary:hover {
+  background: var(--orange); cursor: not-allowed; transform: none;
+}
+.contact-form-fieldset:not(:disabled) .btn-primary:disabled,
+.contact-form-fieldset:not(:disabled) .btn-primary:disabled:hover {
+  background: var(--orange); opacity: 0.5; cursor: not-allowed; transform: none;
+}
+/* Contentor do widget Cloudflare Turnstile (task-006). A altura mínima
+   evita saltos de layout enquanto o iframe carrega. */
+.contact-form-turnstile { margin-bottom: 16px; min-height: 65px; }
+/* Aviso de privacidade (task-006, B3): texto simples, quebras de linha do CMS preservadas. */
+.contact-form-privacy {
+  font-size: 12.5px; line-height: 1.55; color: var(--text-muted);
+  white-space: pre-line; margin: 0 0 16px;
+}
 .contact-form-status { margin-top: 14px; font-size: 14px; font-weight: 500; }
 .contact-form-status--success { color: var(--green-dark); }
 .contact-form-status--error { color: #b3261e; }

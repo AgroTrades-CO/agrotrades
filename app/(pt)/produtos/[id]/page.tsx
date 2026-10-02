@@ -36,7 +36,7 @@ export default async function ProdutoPage({ params }: { params: Params }) {
     <ServiceDetailContent
       service={product}
       lang="pt"
-      back={{ href: path("products", "pt"), label: productsPage.backToProducts.pt }}
+      back={{ href: path("products", "pt"), label: productsPage.backToProducts }}
       showRelated={false}
     />
   );

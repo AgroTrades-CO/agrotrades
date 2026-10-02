@@ -33,7 +33,7 @@ export function ProductsListContent({ lang }: { lang: Lang }) {
                 service={product}
                 lang={lang}
                 href={productDetailPath(product.id, lang)}
-                learnMore={productsPage.sectionHeading.learnMore[lang]}
+                learnMore={productsPage.sectionHeading.learnMore}
                 key={product.id}
               />
             ))}

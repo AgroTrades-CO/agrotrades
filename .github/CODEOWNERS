@@ -34,6 +34,11 @@
 # Alargar a superfície sem dono (as linhas finais) é uma decisão de arquitetura, não uma
 # configuração — não acrescentar novas exceções aqui sem passar pelo software-architect.
 #
+# task-017-tina-cms-adoption (fase 1): o Decap CMS e `public/admin/config.yml` foram removidos.
+# A fonte da lista de pastas que o CMS escreve passa a ser `tina/collections.ts` (TinaCMS,
+# fase 3); até lá, as três exceções abaixo mantêm-se exatamente como estão (SEC-T-03). As
+# referências ao Decap acima descrevem a origem histórica destas regras.
+#
 # 1. Regra geral — todo o repositório, dono do projeto.
 * @virgilio-24
 
