@@ -29,9 +29,9 @@
       "Monitoring from sowing to harvest"
     ]
   },
-  "bannerImage": "/images/services/apoio-tecnico/banner.svg",
+  "bannerImage": "/images/uploads/servico-apoio-tecnico.webp",
   "bannerImageAlt": {
-    "pt": "Ilustração de um símbolo de apoio técnico em tons de verde",
-    "en": "Illustration of a technical support symbol in green tones"
+    "pt": "Dois agricultores a colher hortícolas num campo, com milho ao fundo",
+    "en": "Two farmers harvesting vegetables in a field, with maize in the background"
   }
 }

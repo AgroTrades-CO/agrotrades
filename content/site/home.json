@@ -59,10 +59,10 @@
         },
         {
           "visible": true,
-          "image": "/images/services/mecanizacao/banner.svg",
+          "image": "/images/uploads/servico-mecanizacao.webp",
           "alt": {
-            "pt": "Mecanização agrícola da AGRO TRADES",
-            "en": "AGRO TRADES agricultural mechanisation"
+            "pt": "Trator a trabalhar num campo agrícola",
+            "en": "Tractor working in a farm field"
           },
           "type": "image"
         },

@@ -33,10 +33,10 @@
     "pt": "Serviços de mecanização e preparação de terras para agricultores e cooperativas.",
     "en": "Mechanisation and land preparation services for farmers and cooperatives."
   },
-  "bannerImage": "/images/services/mecanizacao/banner.svg",
+  "bannerImage": "/images/uploads/servico-mecanizacao.webp",
   "bannerImageAlt": {
-    "pt": "Ilustração de tratores e rodas de maquinaria agrícola em tons de verde",
-    "en": "Illustration of tractors and agricultural machinery wheels in green tones"
+    "pt": "Trator a trabalhar num campo agrícola",
+    "en": "Tractor working in a farm field"
   },
   "sections": [
     {
