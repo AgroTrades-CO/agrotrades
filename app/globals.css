@@ -19,7 +19,7 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body), sans-serif;
   color: var(--text);
   background: var(--off-white);
   overflow-x: hidden;
@@ -60,7 +60,7 @@ nav {
   font-size: 12px; font-weight: 600; padding: 5px 10px;
   border-radius: 6px; border: 1px solid var(--border);
   background: transparent; cursor: pointer; color: var(--text-muted);
-  transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s; font-family: var(--font-body), sans-serif;
 }
 .lang-btn.active {
   background: var(--green); color: white; border-color: var(--green);
@@ -78,7 +78,7 @@ nav {
 /* ── NAV: dropdown "Serviços" (Fase 2) ── */
 .nav-services-item { position: relative; }
 .nav-services-trigger {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body), sans-serif;
   font-size: 14px; font-weight: 500; color: var(--text-muted);
   background: none; border: none; cursor: pointer;
   display: inline-flex; align-items: center; gap: 4px;
@@ -185,7 +185,7 @@ iframe.hero-slide-media { width: 100%; height: 100%; border: 0; display: block; 
 }
 
 .hero h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display), serif;
   font-size: clamp(2.4rem, 5vw, 3.8rem);
   font-weight: 900; color: white; line-height: 1.15;
   margin-bottom: 12px;
@@ -214,7 +214,7 @@ iframe.hero-slide-media { width: 100%; height: 100%; border: 0; display: block; 
   padding: 14px 28px; border-radius: 10px;
   font-weight: 600; font-size: 15px; text-decoration: none;
   transition: all 0.2s; border: none; cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-body), sans-serif;
 }
 .btn-primary:hover { background: var(--orange-dark); transform: translateY(-2px); }
 
@@ -247,7 +247,7 @@ iframe.hero-slide-media { width: 100%; height: 100%; border: 0; display: block; 
 }
 .stat-item:last-child { border-right: none; }
 .stat-num {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display), serif;
   font-size: 2rem; font-weight: 700; color: var(--green);
   display: block;
 }
@@ -263,7 +263,7 @@ section { padding: 80px 5%; }
   margin-bottom: 12px;
 }
 .section-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display), serif;
   font-size: clamp(1.8rem, 3vw, 2.6rem);
   font-weight: 700; line-height: 1.2; margin-bottom: 16px;
 }
@@ -437,7 +437,7 @@ section { padding: 80px 5%; }
 .sd-section-feature-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .sd-section-feature-text { order: 1; }
 .sd-section-feature-title {
-  font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+  font-family: var(--font-display), serif; font-size: 1.3rem; font-weight: 700;
   color: var(--green-dark); margin-bottom: 10px;
 }
 .sd-section-feature-text p {
@@ -505,7 +505,7 @@ section { padding: 80px 5%; }
 }
 .team-featured-photo img { width: 100%; height: 100%; object-fit: cover; }
 .team-featured-name {
-  font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700;
+  font-family: var(--font-display), serif; font-size: 1.6rem; font-weight: 700;
 }
 .team-featured-bio {
   font-size: 15px; color: var(--text-muted); line-height: 1.8; margin: 14px 0 18px;
@@ -523,7 +523,7 @@ section { padding: 80px 5%; }
   border-radius: 20px; padding: 48px; margin: 48px 0; text-align: center;
 }
 .quote-block blockquote {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display), serif;
   font-size: clamp(1.3rem, 3vw, 2rem);
   color: white; font-style: italic; line-height: 1.5; margin-bottom: 16px;
 }
@@ -563,7 +563,7 @@ section { padding: 80px 5%; }
   gap: 40px; flex-wrap: wrap;
 }
 .campanha-banner h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display), serif;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   color: white; font-weight: 700; margin-bottom: 12px;
 }
@@ -586,11 +586,11 @@ section { padding: 80px 5%; }
 .about-card::after {
   content: '"';
   position: absolute; top: 16px; right: 24px;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display), serif;
   font-size: 80px; color: var(--green-light); line-height: 1;
 }
 .about-card blockquote {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display), serif;
   font-size: 1.2rem; font-style: italic;
   color: var(--green-dark); line-height: 1.6;
   position: relative; z-index: 1;
@@ -758,6 +758,8 @@ footer ul a:hover { color: var(--orange); }
   padding-top: 20px; display: flex;
   justify-content: space-between; align-items: center;
   font-size: 13px; flex-wrap: wrap; gap: 8px;
+  /* Espaço para os botões flutuantes (.social-float) no canto direito. */
+  padding-right: 76px;
 }
 .footer-signature { flex: 1; text-align: center; }
 .footer-signature a { color: inherit; text-decoration: none; }
@@ -776,7 +778,7 @@ footer ul a:hover { color: var(--orange); }
 }
 .page-hero-content { position: relative; z-index: 1; }
 .page-hero h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display), serif;
   font-size: clamp(2rem, 4vw, 3rem);
   color: white; font-weight: 900; margin-bottom: 12px;
 }
@@ -830,6 +832,7 @@ footer ul a:hover { color: var(--orange); }
   .stats-bar { grid-template-columns: repeat(2, 1fr); }
   .stat-item:nth-child(2) { border-right: none; }
   .social-float-btn { width: 46px; height: 46px; }
+  .footer-bottom { padding-right: 70px; }
 
   /* Dropdown "Serviços" vira expansão inline tipo acordeão dentro do menu
      hambúrguer — sem overlay, sem miniaturas (design-spec-fase2 3b). */

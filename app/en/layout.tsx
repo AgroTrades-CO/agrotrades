@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { SocialFloat } from "@/components/SocialFloat";
 import { buildTitle, meta } from "@/content";
 import { siteIcons } from "@/content/seo";
+import { fontVariables } from "../fonts";
 import "../globals.css";
 
 // Root layout EN — "en" é uma pasta real (não um grupo de rotas), logo
@@ -21,15 +22,7 @@ export const metadata: Metadata = {
 
 export default function EnRootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={fontVariables}>
       <body>
         <Header lang="en" />
         {children}
