@@ -75,7 +75,7 @@ export function ServiceDetailView({
 
   // Alternância do lado da variante "split": conta-se só entre secções desta
   // variante, não entre todas as secções do serviço (design-spec-fase2 1b).
-  let splitCount = 0;
+  const splitSections = sections.filter((section) => resolveSectionLayout(section) === "split");
 
   return (
     <>
@@ -160,8 +160,7 @@ export function ServiceDetailView({
                       }
 
                       // layout === "split"
-                      const isLeft = splitCount % 2 === 0;
-                      splitCount += 1;
+                      const isLeft = splitSections.indexOf(section) % 2 === 0;
                       return (
                         <div
                           className={`sd-section-split${isLeft ? "" : " sd-section-split--reverse"}`}

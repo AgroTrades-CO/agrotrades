@@ -51,12 +51,6 @@ export function Header({ lang }: { lang: Lang }) {
     return () => document.removeEventListener("mousedown", onDocMouseDown);
   }, [servicesOpen]);
 
-  // Fechar o menu hambúrguer principal reseta também a sublista de serviços,
-  // para não reabrir já expandida da próxima vez (design-spec-fase2 3b).
-  useEffect(() => {
-    if (!open) setServicesOpen(false);
-  }, [open]);
-
   return (
     <nav>
       <Link href={path("home", lang)} className="nav-logo">
@@ -197,7 +191,12 @@ export function Header({ lang }: { lang: Lang }) {
         className="nav-menu-btn"
         aria-label="Menu"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          // Fechar o menu hambúrguer principal reseta também a sublista de serviços,
+          // para não reabrir já expandida da próxima vez (design-spec-fase2 3b).
+          if (open) setServicesOpen(false);
+          setOpen((v) => !v);
+        }}
         style={{ display: open ? "flex" : undefined }}
       >
         <IconMenu width={22} height={22} />

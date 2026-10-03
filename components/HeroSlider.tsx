@@ -1,12 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { youtubeEmbedUrl, type Hero, type Lang } from "@/content";
 import { IconChevronLeft, IconChevronRight } from "@/components/icons";
 
 const AUTOPLAY_MS = 6000;
 const SWIPE_THRESHOLD_PX = 50;
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeReducedMotion(onChange: () => void) {
+  const mql = window.matchMedia?.(REDUCED_MOTION_QUERY);
+  mql?.addEventListener?.("change", onChange);
+  return () => mql?.removeEventListener?.("change", onChange);
+}
+
+function getReducedMotion() {
+  return window.matchMedia?.(REDUCED_MOTION_QUERY).matches ?? false;
+}
 
 /**
  * Slider do fundo do hero da homepage (FR-1, design-spec-fase3 secção 1).
@@ -27,22 +38,13 @@ export function HeroSlider({
 }) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const reducedMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotion, () => false);
   const touchStartX = useRef<number | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
   const total = slides.length;
   const hasMultiple = total > 1;
   const activeSlide = slides[current];
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mql.matches);
-    const onChange = () => setReducedMotion(mql.matches);
-    mql.addEventListener?.("change", onChange);
-    return () => mql.removeEventListener?.("change", onChange);
-  }, []);
 
   const goTo = useCallback(
     (index: number) => {
