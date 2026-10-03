@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildTitle, notFoundContent } from "@/content";
 import { siteIcons } from "@/content/seo";
+import { fontVariables } from "./fonts";
 import "./globals.css";
 
 /**
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
 
 export default function GlobalNotFound() {
   return (
-    <div className="page-hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center" }}>
+    <div className={`page-hero ${fontVariables}`} style={{ minHeight: "100vh", display: "flex", alignItems: "center" }}>
       <div className="page-hero-content" style={{ textAlign: "center", maxWidth: 600, margin: "0 auto" }}>
         <span className="hero-tag">{notFoundContent.tag.pt}</span>
         <h1>{notFoundContent.title.pt}</h1>
