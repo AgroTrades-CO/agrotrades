@@ -41,6 +41,11 @@ nav {
 }
 .nav-logo img { height: 52px; width: auto; }
 
+/* `display: contents` tira o invólucro da disposição: a lista e o seletor de
+   idioma continuam a ser itens flex de <nav>, como se não existisse. No
+   telemóvel passa a bloco e vira o painel do menu (ver MOBILE). */
+.nav-panel { display: contents; }
+
 .nav-links {
   display: flex; align-items: center; gap: 6px; list-style: none;
 }
@@ -836,8 +841,17 @@ footer ul a:hover { color: var(--orange); }
 /* ── MOBILE ── */
 @media (max-width: 768px) {
   .nav-links, .lang-switcher { display: none; }
-  .nav-links.open { display: flex; flex-direction: column; position: absolute; top: var(--nav-h); left: 0; right: 0; background: white; padding: 16px; border-bottom: 1px solid var(--border); gap: 4px; }
-  .lang-switcher.open { display: flex; padding: 0 16px 16px; position: absolute; top: calc(var(--nav-h) + 200px); left: 0; background: white; }
+  /* Um só painel: a lista e o seletor de idioma empilham-se no fluxo normal,
+     por isso o seletor acompanha a altura da lista (que cresce quando a
+     sublista de serviços abre) em vez de ficar numa posição fixa por cima. */
+  .nav-panel.open {
+    display: block;
+    position: absolute; top: var(--nav-h); left: 0; right: 0;
+    background: white; border-bottom: 1px solid var(--border);
+    padding: 16px;
+  }
+  .nav-links.open { display: flex; flex-direction: column; gap: 4px; }
+  .lang-switcher.open { display: flex; margin-left: 0; padding-top: 12px; }
   .nav-menu-btn { display: flex; }
   .about-grid, .contact-grid, .locations-grid, .footer-grid { grid-template-columns: 1fr; }
   .campanha-banner { padding: 32px 24px; }
