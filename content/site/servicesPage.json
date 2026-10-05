@@ -1,8 +1,8 @@
 {
-  "bannerImage": "/images/banners/servicos.svg",
+  "bannerImage": "/images/uploads/banner-servicos.webp",
   "bannerImageAlt": {
-    "pt": "Serviços agrícolas da AGRO TRADES",
-    "en": "AGRO TRADES agricultural services"
+    "pt": "Vista aérea de campos agrícolas divididos em talhões, com colinas ao fundo",
+    "en": "Aerial view of farmland divided into plots, with hills in the background"
   },
   "sectionHeading": {
     "tag": {
