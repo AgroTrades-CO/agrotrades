@@ -23,6 +23,7 @@ export const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: contacts.ceo.company,
+  taxID: contacts.nuit,
   url: meta.siteUrl,
   logo: `${meta.siteUrl}${meta.ogImage}`,
   telephone: visiblePhones[0]?.number ?? contacts.phones[0].number,

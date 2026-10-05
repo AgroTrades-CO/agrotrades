@@ -599,6 +599,9 @@ const contactos = paginaUnica("contactos", "Contactos", "contacts", [
       texto("company", "Empresa"),
     ],
   },
+  texto("nuit", "NUIT", {
+    description: "Não aparece na página; é enviado aos motores de busca nos dados da empresa.",
+  }),
   imagem("bannerImage", "Imagem de topo"),
   texto("mapsLink", "Mapa: link 'Abrir no Google Maps'"),
   texto("mapEmbedUrl", "Mapa: endereço do mapa embutido"),

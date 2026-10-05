@@ -567,6 +567,9 @@ export const contactsSchema = z.object({
   tag: bilingualString,
   title: bilingualString,
   intro: bilingualString,
+  /** NUIT da empresa. Não aparece na página; alimenta o `taxID` do JSON-LD
+   *  Organization (content/organization.ts). Dígitos, sem espaços. */
+  nuit: z.string().trim().regex(/^\d+$/, "o NUIT só pode ter dígitos"),
   /** Banner de imagem do topo da página (FR-2) — obrigatório, sem toggle. */
   bannerImage: localImagePath,
   bannerImageAlt: bilingualString,
