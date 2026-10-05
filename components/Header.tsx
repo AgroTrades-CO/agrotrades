@@ -199,7 +199,7 @@ export function Header({ lang }: { lang: Lang }) {
         aria-expanded={open}
         onClick={() => {
           // Fechar o menu hambúrguer principal reseta também a sublista de serviços,
-          // para não reabrir já expandida da próxima vez (design-spec-fase2 3b).
+          // para não reabrir já expandida da próxima vez.
           if (open) setServicesOpen(false);
           setOpen((v) => !v);
         }}

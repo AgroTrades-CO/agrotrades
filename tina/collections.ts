@@ -1,27 +1,26 @@
 /**
  * Coleções TinaCMS sobre o conteúdo ATUAL (content/services/*.json e
- * content/site/*.json, formato {pt, en} inalterado) — task-017, fase 3.
- * Vem do protótipo da task-009 (commit b8eb500).
+ * content/site/*.json, formato {pt, en} inalterado).
  *
  * Regras:
  *   - Regra de ouro: TODAS as chaves existentes nos ficheiros estão aqui — a
  *     Tina só grava os campos declarados; um campo em falta seria apagado do
- *     ficheiro ao gravar (FR-1.2).
+ *     ficheiro ao gravar.
  *   - ORDEM DOS CAMPOS = ORDEM DAS CHAVES NOS FICHEIROS. A Tina grava as chaves
  *     pela ordem dos campos do schema; declarar pela ordem atual evita que o
- *     primeiro commit da Tina reordene o ficheiro (AC-3, handoff-09 secção 6).
+ *     primeiro commit da Tina reordene o ficheiro.
  *     Onde os ficheiros não têm uma ordem única (serviços: arroz.json difere
  *     dos outros 7) ou a Tina impõe a sua (a chave `type` dos slides vai
  *     sempre para o fim), vale a ordem da maioria e os ficheiros foram
- *     normalizados uma vez (handoff-13).
- *   - Sem criar nem apagar documentos (FR-1.4): o site exige exatamente 8
- *     serviços importados à mão em content/index.ts (o modelo livre é a task-008).
+ *     normalizados uma vez.
+ *   - Sem criar nem apagar documentos: o site exige exatamente 8
+ *     serviços importados à mão em content/index.ts.
  *   - Imagens (`image`) só da pasta protegida images/uploads/ (config.tsx);
- *     os SVG provisórios fora dela mantêm o caminho (D-24; V-17b em modo local).
- *     `meta.ogImage` é `string` oculto, nunca `image` (architecture 17.3).
+ *     os SVG provisórios fora dela mantêm o caminho.
+ *     `meta.ogImage` é `string` oculto, nunca `image`.
  *
  * O Zod em content/schemas/index.ts continua a ser a fonte de validação; este
- * schema espelha-o (architecture 16.5).
+ * schema espelha-o.
  */
 import type { Collection, TinaField } from "tinacms";
 import {
@@ -38,13 +37,13 @@ import {
 } from "./fields";
 
 /**
- * Pré-visualização editável (architecture 5.2). Na fase 3 (modo local) o admin
+ * Pré-visualização editável. Em modo local o admin
  * abre as páginas através de /api/editor-preview/<caminho>, que só responde em
  * `next dev`: liga o Draft Mode e redireciona para a rota de pré-visualização
  * (sem Draft Mode as rotas /editor-preview dão 404). O caminho vai no URL e
  * não em query string porque o admin descarta a query string do `router`.
  *
- * Fase 4: no admin de produção não há pré-visualização — a rota de entrada só
+ * No admin de produção não há pré-visualização — a rota de entrada só
  * existe em `next dev` e a entrada autenticada pela Tina Cloud precisa de
  * revisão de segurança própria. scripts/tina-build.mjs define
  * TINA_PUBLIC_NO_PREVIEW=1 (a CLI da Tina só passa ao admin variáveis
@@ -681,8 +680,8 @@ const contactos = paginaUnica("contactos", "Contactos", "contacts", [
     type: "object",
     name: "contactForm",
     label: "Formulário de contacto",
-    // Espelha a task-006 (handoff-05 secção 6): sem `recipientEmail` — o
-    // destino é a variável de ambiente CONTACT_RECIPIENT_EMAIL (SEC-C-01).
+    // Sem `recipientEmail`: o destino é a variável de ambiente
+    // CONTACT_RECIPIENT_EMAIL.
     description:
       "Envia email através do Resend (app/api/contact). A aplicação não guarda as mensagens; ficam na caixa de destino e no registo do Resend. O email de destino é configurado pelo administrador no alojamento, não aqui.",
     fields: [
@@ -789,7 +788,7 @@ const definicoes = paginaUnica("definicoes", "Definições avançadas", "meta", 
   oculto("siteUrl", "Endereço do site", "Só o responsável técnico altera."),
   // `string` oculto e não `image`: é o logótipo (fora de images/uploads/) e
   // um campo `image` passaria pelo resolvedor de media da Tina Cloud, que
-  // reescreve caminhos fora de mediaRoot ao gravar (architecture 17.3).
+  // reescreve caminhos fora de mediaRoot ao gravar.
   oculto("ogImage", "Imagem de partilha", "Logótipo usado nas partilhas; só o responsável técnico altera."),
   bil("defaultTitle", "Título por defeito", { description: "Título para o Google e partilhas." }),
   bilText("defaultDescription", "Descrição por defeito", {
@@ -797,7 +796,7 @@ const definicoes = paginaUnica("definicoes", "Definições avançadas", "meta", 
   }),
 ]);
 
-/** Ordem do menu do admin = design-spec-editor.md secção 2. */
+/** Ordem do menu do admin. */
 export const collections: Collection[] = [
   servicos,
   servicosLista,

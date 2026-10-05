@@ -3,11 +3,11 @@ import { z } from "zod";
 /**
  * Todo o campo traduzível do site é um objeto { pt, en } no mesmo ficheiro
  * (nunca ficheiros/pastas paralelos por idioma) — restrição vinculativa da
- * arquitetura (architecture-proposal.md, secção 2.1 e 12.18).
+ * arquitetura do site.
  *
  * `pt` e `en` são ambos obrigatórios e não podem estar vazios: se faltar
  * uma tradução, o build falha aqui, de forma legível, antes de chegar a
- * produção (restrição 19).
+ * produção.
  */
 export const bilingualString = z.object({
   pt: z.string().trim().min(1, "o campo 'pt' é obrigatório e não pode estar vazio"),
@@ -22,8 +22,7 @@ export const bilingualStringList = z.object({
 export type BilingualStringList = z.infer<typeof bilingualStringList>;
 
 /**
- * URL absoluto restrito a `http:`/`https:` — reforço recomendado pelo
- * security-engineer (SEC-P5-11/SEC-P5-15): `z.string().url()` sozinho aceita
+ * URL absoluto restrito a `http:`/`https:`: `z.string().url()` sozinho aceita
  * esquemas como `javascript:`/`data:`. Aplicado aos campos que alimentam
  * `href`/`src`/JSON-LD (`whatsapp.url`, `mapEmbedUrl`, `mapsLink`,
  * `meta.siteUrl`). Defesa em profundidade — a garantia principal contra XSS
@@ -37,10 +36,10 @@ export const httpUrl = z
   .regex(/^https?:/, "tem de começar por http:// ou https://");
 
 /**
- * Nomes de ícones SVG já existentes em components/icons.tsx (Fase 1).
- * Nunca emojis — restrição vinculativa (context.md, architecture-proposal.md secção 12).
+ * Nomes de ícones SVG já existentes em components/icons.tsx.
+ * Nunca emojis — restrição vinculativa do projeto.
  *
- * "target"/"eye"/"bolt"/"trophy" acrescentados no redesign (handoff-19) para
+ * "target"/"eye"/"bolt"/"trophy" acrescentados no redesign para
  * os 6 valores institucionais da página Quem Somos.
  */
 export const iconName = z.enum([
@@ -65,7 +64,7 @@ export type IconName = z.infer<typeof iconName>;
 /**
  * Caminho de imagem local, root-relative a partir de public/ — mesmo padrão
  * já usado em team.foto e meta.ogImage. Bloqueia URLs externas (que exigiriam
- * alterar a CSP img-src, restrição vinculativa da Fase 4) e caminhos relativos.
+ * alterar a CSP img-src) e caminhos relativos.
  */
 export const localImagePath = z
   .string()
@@ -85,14 +84,13 @@ export const contentImageSchema = z.object({
 export type ContentImage = z.infer<typeof contentImageSchema>;
 
 /**
- * Campo de visibilidade transversal (FR-6, design-spec-fase3 secção 4).
+ * Campo de visibilidade transversal.
  * Convenção vinculativa desta arquitetura, a replicar em QUALQUER bloco
- * opcional futuro (AC-6.5):
+ * opcional futuro:
  *   - item de uma coleção  -> campo `visible` DENTRO do item;
  *   - bloco inteiro cujo conteúdo é um array irmão -> campo `<bloco>Visible`
  *     no objeto que contém esse array (ex.: `galleryVisible`, `valuesVisible`).
- * Sempre boolean, sempre default `true`, sempre o PRIMEIRO campo do objeto
- * (para o Decap o mostrar no topo do formulário — design-spec 4).
+ * Sempre boolean, sempre default `true`, sempre o PRIMEIRO campo do objeto.
  * `visible: false` => o bloco NÃO é renderizado (ausência total do DOM).
  * Nunca `display:none`, nunca placeholder.
  */
@@ -103,14 +101,14 @@ export const visibleFlag = z.boolean().default(true);
 export const serviceSectionLayout = z.enum(["split", "feature"]);
 export type ServiceSectionLayout = z.infer<typeof serviceSectionLayout>;
 
-/** Bloco temático opcional da descrição de um serviço (redesign FR-2, estendido na Fase 2). */
+/** Bloco temático opcional da descrição de um serviço. */
 export const serviceSectionSchema = z
   .object({
-    /** "Secção visível" (FR-6.2, design-spec-fase3 secção 4). Primeiro campo
+    /** "Secção visível". Primeiro campo
      *  do objeto por convenção. `visible: false` => secção ausente do DOM. */
     visible: visibleFlag,
-    /** Ausente = usar o `icon` do próprio serviço (fallback do design-spec 2b).
-     *  Ignorado na variante "feature" (decisão de UX, design-spec-fase2 1c). */
+    /** Ausente = usar o `icon` do próprio serviço (fallback).
+     *  Ignorado na variante "feature" (decisão de UX). */
     icon: iconName.optional(),
     title: bilingualString,
     text: bilingualString,
@@ -142,13 +140,13 @@ export const serviceSectionSchema = z
   });
 export type ServiceSection = z.infer<typeof serviceSectionSchema>;
 
-// `resolveSectionLayout` e o tipo `ResolvedSectionLayout` vivem em content/derive.ts
-// (task-017, A-12): correm também no browser da pré-visualização, sem arrastar o Zod.
+// `resolveSectionLayout` e o tipo `ResolvedSectionLayout` vivem em content/derive.ts:
+// correm também no browser da pré-visualização, sem arrastar o Zod.
 
-// ── HERO SLIDER (FR-1) ─────────────────────────────────────────────────────
+// ── HERO SLIDER ─────────────────────────────────────────────────────
 
 /** ID de vídeo do YouTube (11 caracteres). NUNCA um URL: o domínio e os
- *  parâmetros do embed são código, não conteúdo (handoff-34, VALIDATIONS 2). */
+ *  parâmetros do embed são código, não conteúdo. */
 export const youtubeVideoId = z
   .string()
   .trim()
@@ -171,7 +169,7 @@ export const heroVideoSlideSchema = z
     visible: visibleFlag,
     type: z.literal("video"),
     youtubeId: youtubeVideoId,
-    /** Equivalente textual do vídeo (FR-1.4): usado como aria-label do iframe. */
+    /** Equivalente textual do vídeo: usado como aria-label do iframe. */
     caption: bilingualString,
   })
   .strict();
@@ -191,8 +189,8 @@ export const heroSlidesSchema = z
     "pelo menos um slide do hero tem de estar visível — ligue 'Secção visível' em pelo menos um slide de content/site/home.json (Hero)"
   );
 
-/** Único sítio onde o URL do embed do YouTube é construído (handoff-34,
- *  secção B). `mute=1` é vinculativo — nunca construir este URL noutro sítio. */
+/** Único sítio onde o URL do embed do YouTube é construído.
+ *  `mute=1` é vinculativo — nunca construir este URL noutro sítio. */
 export function youtubeEmbedUrl(id: string): string {
   const params = new URLSearchParams({
     autoplay: "1",
@@ -210,7 +208,7 @@ export function youtubeEmbedUrl(id: string): string {
 
 // ── SERVICES ──────────────────────────────────────────────────────────────
 
-/** Item de galeria com visibilidade individual (FR-6.2). */
+/** Item de galeria com visibilidade individual. */
 export const galleryImageSchema = contentImageSchema.extend({ visible: visibleFlag });
 export type GalleryImage = z.infer<typeof galleryImageSchema>;
 
@@ -224,9 +222,9 @@ export const serviceSchema = z.object({
   /**
    * Override opcional, só para o cartão de pré-visualização da homepage,
    * quando o texto/título exibidos aí historicamente é mais curto do que o
-   * `title`/`summary` "canónicos" do serviço (usados nas páginas de detalhe
-   * da Fase 3). Ausente = usar `title`/`summary`. Existe apenas para
-   * preservar a paridade pixel-a-pixel exigida nesta fase sem duplicar
+   * `title`/`summary` "canónicos" do serviço (usados nas páginas de
+   * detalhe). Ausente = usar `title`/`summary`. Existe apenas para
+   * preservar a paridade pixel-a-pixel com o site antigo sem duplicar
    * texto igual em dois campos.
    */
   homeTitle: bilingualString.optional(),
@@ -268,9 +266,9 @@ export const navSchema = z
     products: navItemSchema,
     campaign: navItemSchema,
     contact: navItemSchema,
-    /** "Quem Somos" — conteúdo já preparado; a rota só é construída na Fase 3. */
+    /** "Quem Somos". */
     about: navItemSchema,
-    /** Rótulo do último item do dropdown "Serviços" (desktop) e da sublista mobile (Fase 2).
+    /** Rótulo do último item do dropdown "Serviços" (desktop) e da sublista mobile.
      *  Não é um item de menu por si só — não tem `visible` próprio. */
     servicesViewAll: bilingualString,
   })
@@ -293,10 +291,10 @@ export const heroSchema = z.object({
     whatsapp: bilingualString,
     services: bilingualString,
   }),
-  /** Carrossel do fundo do hero (FR-1). O texto acima (tag/título/motto/
+  /** Carrossel do fundo do hero. O texto acima (tag/título/motto/
    *  botões) fica fixo por cima de todos os slides — não varia por slide. */
   slider: z.object({
-    /** aria-label da região do carrossel (design-spec 1.5). */
+    /** aria-label da região do carrossel. */
     label: bilingualString,
     previousLabel: bilingualString,
     nextLabel: bilingualString,
@@ -333,7 +331,7 @@ export const aboutTagSchema = z.object({
   label: bilingualString,
 });
 
-/** Parágrafo individual de `about.fullText` (FR-6.2 estendido): `visible` por
+/** Parágrafo individual de `about.fullText`: `visible` por
  *  parágrafo, `pt`/`en` sempre emparelhados no mesmo item (não duas listas
  *  paralelas) para nunca desalinhar as traduções ao ativar/desativar. */
 export const paragraphSchema = z.object({
@@ -388,7 +386,7 @@ export const homeAboutSchema = z.object({
   }),
   /**
    * Rótulo do link "Saber mais" da secção "Sobre a empresa" da homepage,
-   * que aponta para a página "Quem Somos" (Fase 3). O destino em si é
+   * que aponta para a página "Quem Somos". O destino em si é
    * calculado por idioma em content/routes.ts (path("about", lang)), não
    * aqui, para não duplicar URLs traduzidas fora do routing central.
    */
@@ -461,13 +459,13 @@ export const campanhaSchema = z.object({
     text: bilingualString,
     button: bilingualString,
   }),
-  /** Conteúdo exclusivo da futura página /campanha (Fase 3). */
+  /** Conteúdo exclusivo da futura página /campanha. */
   hero: z.object({
     /** "2025 / 2026" — rótulo de período, não é texto traduzível. */
     tag: z.string().trim().min(1),
     intro: bilingualString,
-    /** Banner de imagem do topo da página (FR-2), mesmo par já usado em
-     *  serviceSchema — obrigatório, sem toggle (handoff-34, VALIDATIONS 4). */
+    /** Banner de imagem do topo da página, mesmo par já usado em
+     *  serviceSchema — obrigatório, sem toggle. */
     bannerImage: localImagePath,
     bannerImageAlt: bilingualString,
   }),
@@ -570,7 +568,7 @@ export const contactsSchema = z.object({
   /** NUIT da empresa. Não aparece na página; alimenta o `taxID` do JSON-LD
    *  Organization (content/organization.ts). Dígitos, sem espaços. */
   nuit: z.string().trim().regex(/^\d+$/, "o NUIT só pode ter dígitos"),
-  /** Banner de imagem do topo da página (FR-2) — obrigatório, sem toggle. */
+  /** Banner de imagem do topo da página — obrigatório, sem toggle. */
   bannerImage: localImagePath,
   bannerImageAlt: bilingualString,
   whatsapp: z.object({
@@ -602,7 +600,7 @@ export const contactsSchema = z.object({
    *  `visible: false` esconde o formulário do site E faz a rota recusar
    *  submissões diretas — nunca só um `display:none`.
    *
-   *  O email de destino NÃO vive aqui (task-006, SEC-C-01): `content/site/`
+   *  O email de destino NÃO vive aqui: `content/site/`
    *  é gravado pelo CMS sem revisão, por isso nenhum valor com efeito de
    *  segurança pode estar neste objeto. O destino é a variável de ambiente
    *  `CONTACT_RECIPIENT_EMAIL` (lib/contact/env.ts). */
@@ -618,9 +616,9 @@ export const contactsSchema = z.object({
     successMessage: bilingualString,
     errorMessage: bilingualString,
     /** Mensagem curta mostrada quando o widget anti-spam (Cloudflare
-     *  Turnstile) falha e o botão fica desativado (task-006). */
+     *  Turnstile) falha e o botão fica desativado. */
     verificationErrorMessage: bilingualString,
-    /** Aviso de privacidade mostrado antes do botão de envio (task-006, B3).
+    /** Aviso de privacidade mostrado antes do botão de envio.
      *  Obrigatório: sem ele o build falha. Texto simples (sem HTML/Markdown),
      *  curto — não é a política de privacidade completa. */
     privacyNotice: z.object({
@@ -668,27 +666,25 @@ export const footerSchema = z.object({
 });
 export type Footer = z.infer<typeof footerSchema>;
 
-// ── META (título/descrição por defeito, Fase 3 — routing por locale) ──────
+// ── META (título/descrição por defeito) ──────
 //
-// Corrige o achado do code-reviewer (handoff-08): metadata.title/description
-// deixam de estar hardcoded em app/layout.tsx e passam a vir de content/,
-// com par {pt,en}, consumidos via generateMetadata por página/locale.
+// metadata.title/description não estão hardcoded em app/layout.tsx: vêm de
+// content/, com par {pt,en}, consumidos via generateMetadata por
+// página/locale.
 
 export const metaSchema = z.object({
   /** Nome próprio da empresa — não é campo traduzível (ver Header/Footer). */
   titleSuffix: z.string().trim().min(1),
   /**
    * Origem canónica do site (sem barra final), usada como `metadataBase`
-   * (Fase 4) para resolver `canonical`, `alternates.languages`, `og:url` e
+   * para resolver `canonical`, `alternates.languages`, `og:url` e
    * `og:image` para URLs absolutos, e para construir `sitemap.xml`,
-   * `robots.txt` e o `url`/`logo` do JSON-LD `Organization`. FR-15 —
-   * domínio de produção atual, não é uma decisão nova desta fase.
+   * `robots.txt` e o `url`/`logo` do JSON-LD `Organization`.
    */
   siteUrl: httpUrl,
   /**
    * Imagem reutilizada para `og:image`/`twitter:card` em todas as páginas
-   * (secção 4 do requirements.md: não há imagem dedicada, reutiliza-se o
-   * logótipo existente — nenhuma imagem nova foi gerada nesta fase).
+   * (não há imagem dedicada: reutiliza-se o logótipo existente).
    * Caminho relativo a `public/`, resolvido para absoluto via `siteUrl`.
    */
   ogImage: z.string().trim().min(1),
@@ -697,7 +693,7 @@ export const metaSchema = z.object({
 });
 export type SiteMeta = z.infer<typeof metaSchema>;
 
-// ── NOT FOUND (página 404 por locale — FR-13/AC-07) ────────────────────────
+// ── NOT FOUND (página 404 por locale) ────────────────────────
 
 export const notFoundSchema = z.object({
   tag: bilingualString,
@@ -710,7 +706,7 @@ export type NotFoundContent = z.infer<typeof notFoundSchema>;
 // ── SERVICES PAGE (listagem /servicos, /en/services) ───────────────────────
 
 export const servicesPageSchema = z.object({
-  /** Banner de imagem do topo da listagem (FR-2) — obrigatório, sem toggle. */
+  /** Banner de imagem do topo da listagem — obrigatório, sem toggle. */
   bannerImage: localImagePath,
   bannerImageAlt: bilingualString,
   /** Também mostrado na Homepage e nos cartões de serviço (ServiceCard). */
@@ -737,12 +733,12 @@ export type ProductsPage = z.infer<typeof productsPageSchema>;
 export const servicePageSchema = z.object({
   highlightsHeading: bilingualString,
   backToServices: bilingualString,
-  /** Título da secção de galeria de imagens (redesign FR-3), quando `gallery` está preenchida. */
+  /** Título da secção de galeria de imagens, quando `gallery` está preenchida. */
   galleryHeading: bilingualString,
-  /** Título da secção de serviços relacionados no detalhe (Fase 2). */
+  /** Título da secção de serviços relacionados no detalhe. */
   relatedHeading: bilingualString,
   /** Interruptor do bloco "serviços relacionados" em TODAS as páginas de
-   *  detalhe (FR-6.2, handoff-34 secção D.4). */
+   *  detalhe. */
   relatedVisible: visibleFlag,
 });
 export type ServicePage = z.infer<typeof servicePageSchema>;
@@ -758,16 +754,16 @@ export const valueItemSchema = z.object({
 export type ValueItem = z.infer<typeof valueItemSchema>;
 
 export const aboutPageSchema = z.object({
-  /** Banner de imagem do topo da página "Quem Somos" (FR-2) — obrigatório, sem toggle. */
+  /** Banner de imagem do topo da página "Quem Somos" — obrigatório, sem toggle. */
   bannerImage: localImagePath,
   bannerImageAlt: bilingualString,
   teamTag: bilingualString,
   teamHeading: bilingualString,
-  /** Cabeçalho da secção de valores institucionais (redesign FR-5.2). */
+  /** Cabeçalho da secção de valores institucionais. */
   valuesTag: bilingualString,
   valuesHeading: bilingualString,
   /** Interruptor do bloco valores institucionais inteiro. A contagem
-   *  estrutural de 6 mantém-se independente da visibilidade (handoff-34 D.3). */
+   *  estrutural de 6 mantém-se independente da visibilidade. */
   valuesVisible: visibleFlag,
   /** Exactamente 6 blocos: Missão, Visão, Sustentabilidade, Parceria, Inovação, Excelência. */
   values: z.array(valueItemSchema).length(6, "têm de existir exactamente 6 valores institucionais"),

@@ -205,8 +205,8 @@ export function IconArrowRight(props: IconProps) {
 
 /**
  * Chrome de navegação (não é conteúdo editável via CMS) — export solto, fora
- * do enum `iconName`/`icon-map.tsx`, por decisão do software-architect
- * (handoff-26, Fase 2). Convenção do projeto: ícones de conteúdo -> enum
+ * do enum `iconName`/`icon-map.tsx`. Convenção do projeto: ícones de
+ * conteúdo -> enum
  * `iconName` + `icon-map.tsx`; ícones estruturais de UI -> export solto.
  */
 export function IconChevronDown(props: IconProps) {
@@ -217,7 +217,7 @@ export function IconChevronDown(props: IconProps) {
   );
 }
 
-/** Setas de navegação do slider do hero (FR-1, design-spec-fase3 1.3). */
+/** Setas de navegação do slider do hero. */
 export function IconChevronLeft(props: IconProps) {
   return (
     <Base width={20} height={20} {...props}>

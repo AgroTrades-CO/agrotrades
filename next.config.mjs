@@ -7,9 +7,8 @@ const nextConfig = {
     // user's home directory when resolving the workspace root.
     root: path.resolve(import.meta.dirname),
   },
-  // Redirects 301 do site estático antigo para as novas rotas (Fase 3,
-  // architecture-proposal.md secção D-5). "/home" já existia no
-  // netlify.toml e é preservado aqui.
+  // Redirects 301 do site estático antigo para as novas rotas. "/home" já
+  // existia no netlify.toml e é preservado aqui.
   async redirects() {
     return [
       { source: "/servicos.html", destination: "/servicos", permanent: true },
@@ -25,15 +24,14 @@ const nextConfig = {
       { source: "/home", destination: "/", permanent: true },
     ];
   },
-  // Cabeçalhos de segurança (Fase 4) — migra a intenção do netlify.toml
+  // Cabeçalhos de segurança — migra a intenção do netlify.toml
   // antigo (X-Frame-Options/X-Content-Type-Options/Referrer-Policy) para
   // o Next.js/Vercel, e acrescenta CSP + HSTS.
   //
-  // RESTRIÇÃO VINCULATIVA DA ARQUITETURA (v5, secção 9.9/12.36): esta CSP
-  // é estrita por defeito e serve TODO o site. A entrada própria de
-  // `/admin/:path*` do Decap CMS (e o rewrite `/admin`) foi removida com o
-  // Decap (task-017-tina-cms-adoption, fase 1, SEC-T-09); `/admin` dá 404
-  // até o admin da TinaCMS ter a sua própria entrada (fase 4).
+  // RESTRIÇÃO VINCULATIVA: esta CSP é estrita por defeito e serve TODO o
+  // site. A entrada própria de `/admin/:path*` do CMS antigo (e o rewrite
+  // `/admin`) foi removida com ele; `/admin` dá 404 até o admin da TinaCMS
+  // ter a sua própria entrada.
   //
   // Entradas de `headers()` que fazem match no mesmo caminho e definem a
   // MESMA chave de header NÃO se combinam/mesclam por diretiva (verificado
@@ -48,16 +46,15 @@ const nextConfig = {
   // injeta, no próprio HTML, um `<script>` inline sem `src` com o payload
   // de hidratação RSC (`self.__next_f.push(...)`) — confirmado por
   // inspeção do HTML gerado nesta fase. Não há nonce por pedido possível
-  // sem middleware, que está fora do âmbito desta fase (ver
-  // architecture-proposal.md D-1). `'unsafe-inline'` aqui é esse mínimo
+  // sem middleware, que está fora do âmbito. `'unsafe-inline'` aqui é esse
+  // mínimo
   // necessário do próprio framework, não um script de terceiros nem algo
   // introduzido por nós — não regride a exigência "sem scripts de
   // terceiros" do pedido. O mesmo raciocínio aplica-se a
   // `style-src 'unsafe-inline'`, necessário para os atributos `style`
   // inline usados pelos componentes de página (ex.: NotFoundContent).
   //
-  // EXCEÇÃO APROVADA (task-006-contact-form-security, gates.md, "Confirmação
-  // humana do desenho", ponto 2, 2026-09-26): `https://challenges.cloudflare.com`
+  // EXCEÇÃO APROVADA pelo responsável do projeto: `https://challenges.cloudflare.com`
   // entra em `script-src` e `frame-src` da CSP GLOBAL, para o Cloudflare
   // Turnstile do formulário de contacto. Foi escolhida a CSP global (e não
   // uma CSP só para /contactos e /en/contact) porque a CSP é do documento:
@@ -78,7 +75,7 @@ const nextConfig = {
     const isDev = process.env.NODE_ENV !== "production";
     // Diretivas da CSP GLOBAL. A CSP da pré-visualização da TinaCMS (abaixo)
     // é derivada desta mesma lista, para herdar qualquer correção futura sem
-    // cópia manual (task-017, architecture.md 16.5).
+    // cópia manual.
     const globalCsp = [
       "default-src 'self'",
       `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} ${turnstileOrigin}`,
@@ -86,19 +83,18 @@ const nextConfig = {
       "font-src 'self'",
       "img-src 'self' data:",
       "connect-src 'self'",
-      // Fase 3 (handoff-34, secção F): abre `frame-src`, ausente até
-      // aqui (herdava `default-src 'self'`, bloqueando qualquer
-      // iframe de terceiros). Dois hosts nomeados, nada mais:
-      //   - youtube-nocookie.com: embed do slider do hero (FR-1),
+      // `frame-src` abre-se aqui; sem esta diretiva herdava
+      // `default-src 'self'`, bloqueando qualquer iframe de terceiros.
+      // Dois hosts nomeados, nada mais:
+      //   - youtube-nocookie.com: embed do slider do hero,
       //     domínio sem cookies de tracking; nunca youtube.com.
-      //   - www.google.com: corrige um bug pré-existente (RISCO-3 do
-      //     handoff-34) — o iframe do Google Maps em
-      //     ContactContent.tsx já existia e já estava bloqueado por
-      //     esta CSP não declarar `frame-src`.
+      //   - www.google.com: corrige um bug pré-existente — o iframe do
+      //     Google Maps em ContactContent.tsx já existia e já estava
+      //     bloqueado por esta CSP não declarar `frame-src`.
       // Qualquer alargamento a outros hosts exige nova revisão de
       // arquitetura/segurança — não acrescentar hosts aqui de ânimo leve.
-      //   - challenges.cloudflare.com: iframe do Turnstile (task-006,
-      //     exceção aprovada, ver comentário antes de `headers()`).
+      //   - challenges.cloudflare.com: iframe do Turnstile (exceção
+      //     aprovada, ver comentário antes de `headers()`).
       `frame-src 'self' https://www.youtube-nocookie.com https://www.google.com ${turnstileOrigin}`,
       "object-src 'none'",
       "base-uri 'self'",
@@ -115,16 +111,16 @@ const nextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           // `preload` fica fora de propósito: é um compromisso
           // praticamente irreversível (submissão à lista de preload dos
-          // browsers) que deve ser uma decisão explícita do
-          // devops-engineer antes do cutover de produção (Fase 7), não
-          // uma consequência silenciosa deste ficheiro.
+          // browsers) que deve ser uma decisão explícita antes de passar
+          // o site para produção, não uma consequência silenciosa deste
+          // ficheiro.
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           { key: "Content-Security-Policy", value: globalCsp.join("; ") },
         ],
       },
       {
-        // SEC-P5-03: media carregada pelos editores do CMS
+        // Media carregada pelos editores do CMS
         // (public/images/uploads/) é servida pela mesma origem que o
         // resto do site mas NÃO deve herdar `script-src 'self' 'unsafe-inline'`
         // da CSP global — um ficheiro carregado por um editor não é
@@ -138,11 +134,9 @@ const nextConfig = {
         // Defesa em profundidade, não a única nem a completa camada: esta
         // CSP cobre o caminho canónico mas é contornável via %2F codificado
         // no URL (ex. /images/uploads%2Fficheiro.svg), que escapa a esta
-        // entrada e cai na CSP global — a qual permite scripts (achado
-        // SEC-P5-09, handoff-41-security-engineer-fase5-revalidacao.md). A
-        // mitigação real é um GitHub Action (required check) que recusa
-        // ficheiros não-raster nesta pasta, ainda por desenhar/adicionar —
-        // ver esse workflow quando existir (achado SEC-P5-10).
+        // entrada e cai na CSP global, a qual permite scripts. A mitigação
+        // real é o GitHub Action `media-guard` (required check), que recusa
+        // ficheiros não-raster nesta pasta.
         source: "/images/uploads/:path*",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
@@ -151,8 +145,8 @@ const nextConfig = {
       },
     ];
 
-    // Pré-visualização editável da TinaCMS (task-017, architecture 5.2/6,
-    // SEC-T-08/SEC-T-09): a CSP GLOBAL com uma única diferença,
+    // Pré-visualização editável da TinaCMS: a CSP GLOBAL com uma única
+    // diferença,
     // `frame-ancestors 'self'` (o admin mostra estas páginas num iframe da
     // MESMA origem). `X-Frame-Options: SAMEORIGIN` já vem da entrada global
     // (só a mesma chave é substituída, headers.md "Header Overriding
@@ -171,13 +165,13 @@ const nextConfig = {
       });
     }
 
-    // Admin da TinaCMS em MODO LOCAL (fase 3, só `next dev` via
+    // Admin da TinaCMS em MODO LOCAL (só `next dev` via
     // `npm run tina:dev`): o index.html gerado em public/admin/ carrega o
     // admin do servidor Vite do `tinacms dev` e fala com a API GraphQL local,
     // ambos em localhost:<TINA_LOCAL_PORT>. Nunca em produção: o build não
     // gera o admin (scripts/tina-build.mjs) e esta entrada não existe.
     //
-    // Fase 4: admin da Tina Cloud em produção (gerado só em Production por
+    // Admin da Tina Cloud em produção (gerado só em Production por
     // scripts/tina-build.mjs). CSP própria, com os hosts da Tina Cloud
     // enumerados (API de conteúdo, identidade/login e media) e nada mais. O
     // login abre uma janela em identity.tinajs.io (navegação, fora da CSP).
@@ -238,7 +232,7 @@ const nextConfig = {
     return entries;
   },
   // Admin da TinaCMS: `/admin` -> `/admin/index.html`. Em modo local vem do
-  // `tinacms dev`; em produção só existe no build de Production (fase 4) —
+  // `tinacms dev`; em produção só existe no build de Production —
   // nos outros builds public/admin/ não existe e `/admin` dá 404.
   async rewrites() {
     return [{ source: "/admin", destination: "/admin/index.html" }];

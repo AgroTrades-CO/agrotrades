@@ -1,11 +1,11 @@
-// AC-15b / C-B — orçamento de JS por página pública (task-017, architecture.md 19.3).
+// Orçamento de JS por página pública.
 //
 // JS da página = soma do gzip (nível da config) de cada chunk referido pela página (tags
 // <script src> e listas do payload RSC). Delta = HEAD − linha de base; aprovado se
 // delta ≤ budgetGzipBytes em todas as páginas públicas (26 do sitemap + 404).
 //
 // Linha de base = `baselineRef` (scripts/js-budget.config.json; só o architect a muda, 19.3.4)
-// reconstruída com os content/**/*.json ATUAIS (o conteúdo está no bundle, task-016), em cache
+// reconstruída com os content/**/*.json ATUAIS (o conteúdo está no bundle), em cache
 // em .next/cache/js-budget/<ref>-<hash dos JSON>.json.
 //
 // Modos:
@@ -16,7 +16,7 @@
 //                      instala nem constrói (é o modo do `npm run build`, 19.3.5).
 //   --write <ficheiro> grava o manifesto por página (evidência).
 //
-// Segurança (SEC-AC15-1): o build da linha de base corre numa pasta temporária fora do
+// Segurança: o build da linha de base corre numa pasta temporária fora do
 // repositório criada por `git archive` (sem .git nem hooks), apagada no fim mesmo em erro, com
 // `npm ci --ignore-scripts` e um ambiente mínimo por lista de permissão (nenhuma variável de
 // Production, Tina, Vercel ou GitHub passa). Nunca imprime conteúdo de chunks.
@@ -78,7 +78,7 @@ const contentHash = createHash("sha256");
 for (const f of contentJson) contentHash.update(f).update("\0").update(readFileSync(join(root, f))).update("\0");
 const cacheFile = join(root, ".next", "cache", "js-budget", `${baselineRef}-${contentHash.digest("hex").slice(0, 16)}.json`);
 
-/** Ambiente mínimo para o build da linha de base (SEC-AC15-1 b). */
+/** Ambiente mínimo para o build da linha de base. */
 function minimalEnv() {
   const allow = ["PATH", "Path", "SystemRoot", "SYSTEMROOT", "windir", "ComSpec", "PATHEXT", "HOME", "USERPROFILE",
     "TEMP", "TMP", "TMPDIR", "APPDATA", "LOCALAPPDATA"];

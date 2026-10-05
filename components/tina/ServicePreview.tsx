@@ -1,11 +1,11 @@
 "use client";
 
 /**
- * Pré-visualização editável da página de um serviço (TinaCMS, task-017).
+ * Pré-visualização editável da página de um serviço (TinaCMS).
  * Reutiliza a MESMA vista do site (`ServiceDetailView`). Só usado pelas rotas
  * /editor-preview/servicos/[id] e /en/editor-preview/services/[slug].
  *
- * R-VIEW (architecture.md 18.1.5): nenhum valor de @/content aqui — o
+ * Regra das vistas: nenhum valor de @/content aqui — o
  * conteúdo publicado (serviços relacionados, textos comuns, contactos) e os
  * endereços PT/EN chegam por props, construídos no servidor.
  */

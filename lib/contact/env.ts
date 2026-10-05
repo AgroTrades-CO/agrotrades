@@ -6,8 +6,8 @@ import {
 } from "@/lib/contact/constants";
 
 /**
- * Configuração de servidor do formulário de contacto (task-006,
- * architecture.md secção 3). Lida só aqui, nunca duplicada.
+ * Configuração de servidor do formulário de contacto. Lida só aqui, nunca
+ * duplicada.
  *
  * Restrições vinculativas:
  * - R1: destino, remetente, chaves e modo vivem APENAS em variáveis de
@@ -97,7 +97,7 @@ export function readContactConfig(): ContactConfigResult {
     return invalid("CONTACT_DELIVERY_MODE", mode === undefined ? "em falta" : "valor não suportado");
   }
 
-  // SEC-R-01: mesma regra que faz falhar o build (CR-T6-02).
+  // Mesma regra que faz falhar o build.
   const violation = productionDeployViolation();
   if (violation) return invalid(violation.variable, violation.reason);
 
@@ -111,7 +111,7 @@ export function readContactConfig(): ContactConfigResult {
       return invalid("TURNSTILE_SECRET_KEY", "não é uma secret de teste oficial em modo dry-run");
     }
     const warnings: string[] = [];
-    // Só presença, nunca o valor (R5, SEC-C-10).
+    // Só presença, nunca o valor.
     for (const name of ["RESEND_API_KEY", "CONTACT_RECIPIENT_EMAIL"]) {
       if (readVar(name) !== undefined) warnings.push(name);
     }
@@ -169,7 +169,7 @@ export function isProductionDeploy(): boolean {
 }
 
 /**
- * Quando é obrigatório usar chaves REAIS do Turnstile no build (SEC-R-02):
+ * Quando é obrigatório usar chaves REAIS do Turnstile no build:
  * deploy de produção na Vercel OU `next build`/`next start` (NODE_ENV=production)
  * com `CONTACT_DELIVERY_MODE=send`. O segundo caso cobre um projeto em que as
  * variáveis de sistema da Vercel (`VERCEL_ENV`) não estão expostas: as
@@ -184,8 +184,8 @@ function requiresRealTurnstileKeys(): boolean {
 }
 
 /**
- * Regra ÚNICA de configuração proibida num deploy de produção (SEC-R-01,
- * CR-T6-02), usada pelo runtime (`readContactConfig`, 503) e pelo build
+ * Regra ÚNICA de configuração proibida num deploy de produção, usada pelo
+ * runtime (`readContactConfig`, 503) e pelo build
  * (`assertProductionBuildConfig`, throw):
  * - `CONTACT_DELIVERY_MODE=dry-run`: os contactos reais seriam descartados
  *   em silêncio (ex.: valores de Preview copiados para Production);
@@ -215,14 +215,14 @@ function assertProductionBuildConfig(): void {
 
 /**
  * Site key pública do Turnstile, lida num Server Component durante o
- * prerender (architecture.md 3.3). Sem prefixo `NEXT_PUBLIC_` de propósito:
+ * prerender. Sem prefixo `NEXT_PUBLIC_` de propósito:
  * permite validar aqui e fazer falhar o build de produção.
  *
  * - Deploy de produção (`VERCEL_ENV=production`) ou NODE_ENV=production com
- *   `CONTACT_DELIVERY_MODE=send` (SEC-R-02): chave ausente, inválida ou de
+ *   `CONTACT_DELIVERY_MODE=send`: chave ausente, inválida ou de
  *   teste -> `throw` (o build falha e o deploy anterior continua no ar).
  * - Deploy de produção com `CONTACT_DELIVERY_MODE=dry-run` ou secret de teste
- *   -> `throw` (SEC-R-01).
+ *   -> `throw`.
  * - Fora de produção: chave ausente ou inválida -> `null` (formulário
  *   desativado com a mensagem de erro); chave de teste -> devolvida.
  *

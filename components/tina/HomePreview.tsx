@@ -1,16 +1,16 @@
 "use client";
 
 /**
- * Pré-visualização editável da página inicial (TinaCMS, task-017).
+ * Pré-visualização editável da página inicial (TinaCMS).
  * Reutiliza a MESMA vista do site (`HomeView`), com os dados em edição
  * (recebidos do admin por `useTina`, nunca saem do browser) e a ligação
  * clicar-para-editar. Só usado pelas rotas /editor-preview e
  * /en/editor-preview; nada disto entra no site público.
  *
- * R-VIEW (architecture.md 18.1.5): nenhum valor de @/content aqui — o
+ * Regra das vistas: nenhum valor de @/content aqui — o
  * conteúdo publicado que não se edita nesta página chega por `published`,
  * construído no servidor pela página de pré-visualização. Importar valores
- * de @/content no browser mudaria o bundle das páginas públicas (AC-15).
+ * de @/content no browser mudaria o bundle das páginas públicas.
  */
 import { useTina } from "tinacms/dist/react";
 import type { HomePreviewQuery, HomePreviewQueryVariables } from "@/tina/__generated__/types";

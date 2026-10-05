@@ -1,4 +1,4 @@
-// Arranca a TinaCMS em MODO LOCAL (task-017-tina-cms-adoption, fase 3).
+// Arranca a TinaCMS em MODO LOCAL.
 //
 //   npm run tina:dev   ->  admin em http://localhost:<TINA_NEXT_PORT>/admin
 //

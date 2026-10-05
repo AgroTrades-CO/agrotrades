@@ -8,7 +8,7 @@ import { fontVariables } from "../fonts";
 import "../globals.css";
 
 // Root layout EN — "en" é uma pasta real (não um grupo de rotas), logo
-// introduz o prefixo "/en" exigido pela decisão D-4. É um "root layout"
+// introduz o prefixo "/en" do idioma inglês. É um "root layout"
 // próprio (padrão "multiple root layouts" do App Router), irmão do grupo
 // "(pt)", para poder emitir <html lang="en">.
 export const metadata: Metadata = {

@@ -1,7 +1,7 @@
 /**
- * Pré-visualização editável da página inicial (PT) — TinaCMS, task-017
- * (architecture.md 5.2, SEC-T-08). Dentro do layout PT (cabeçalho e rodapé em
- * português). Sem Draft Mode dá 404 ANTES de qualquer pedido à Tina; nunca
+ * Pré-visualização editável da página inicial (PT) na TinaCMS, dentro do
+ * layout PT (cabeçalho e rodapé em português). Sem Draft Mode dá 404 ANTES
+ * de qualquer pedido à Tina; nunca
  * indexável (robots aqui + X-Robots-Tag em next.config.mjs). Nenhuma página
  * pública importa este ficheiro nem nada da Tina.
  */

@@ -86,7 +86,7 @@ a.lang-btn:hover {
   border-radius: 2px; transition: all 0.3s;
 }
 
-/* ── NAV: dropdown "Serviços" (Fase 2) ── */
+/* ── NAV: dropdown "Serviços" ── */
 .nav-services-item { position: relative; }
 .nav-services-trigger {
   font-family: var(--font-body), sans-serif;
@@ -136,11 +136,11 @@ a.lang-btn:hover {
   padding: var(--nav-h) 5% 0;
   position: relative; overflow: hidden;
   /* Fallback visível antes do 1º slide pintar / se o slider falhar por
-     algum motivo — mesmo gradiente usado no overlay (design-spec-fase3 1.2). */
+     algum motivo — mesmo gradiente usado no overlay. */
   background: linear-gradient(160deg, #0d3d06 0%, #1a5c10 40%, #2a7a1a 70%, #3d9e28 100%);
 }
 
-/* ── HERO SLIDER (FR-1, design-spec-fase3 secção 1) ── */
+/* ── HERO SLIDER ── */
 .hero-slider {
   position: absolute; inset: 0; z-index: 0;
 }
@@ -428,7 +428,7 @@ section { padding: 80px 5%; }
   font-size: 16px; color: var(--text-muted); line-height: 1.9;
 }
 
-/* ── SERVICE DETAIL: secções com imagem — "split"/"feature" (Fase 2) ── */
+/* ── SERVICE DETAIL: secções com imagem — "split"/"feature" ── */
 .sd-section-split {
   display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
 }
@@ -477,7 +477,7 @@ section { padding: 80px 5%; }
   .sd-section-feature-image, .sd-section-feature-text { order: 0; }
 }
 
-/* ── SERVICE DETAIL: outros serviços relacionados (Fase 2) ── */
+/* ── SERVICE DETAIL: outros serviços relacionados ── */
 .sd-related-section { margin-top: 56px; }
 
 /* ── SERVICE DETAIL: galeria de imagens (redesign) ── */
@@ -730,9 +730,9 @@ section { padding: 80px 5%; }
 .contact-form-fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .contact-form-fieldset:disabled { opacity: 0.6; }
 /* Botão desativado (sem token do Turnstile, a enviar, ou formulário
-   indisponível): tem de parecer inativo (task-006, handoff-04 issue 4).
+   indisponível): tem de parecer inativo.
    Dentro de um fieldset desativado só se neutraliza o hover, porque o
-   fieldset já tem opacidade própria (evita 0.6 x 0.5, CR-T6-07). */
+   fieldset já tem opacidade própria (evita 0.6 x 0.5). */
 .contact-form-fieldset:disabled .btn-primary,
 .contact-form-fieldset:disabled .btn-primary:hover {
   background: var(--orange); cursor: not-allowed; transform: none;
@@ -741,10 +741,10 @@ section { padding: 80px 5%; }
 .contact-form-fieldset:not(:disabled) .btn-primary:disabled:hover {
   background: var(--orange); opacity: 0.5; cursor: not-allowed; transform: none;
 }
-/* Contentor do widget Cloudflare Turnstile (task-006). A altura mínima
+/* Contentor do widget Cloudflare Turnstile. A altura mínima
    evita saltos de layout enquanto o iframe carrega. */
 .contact-form-turnstile { margin-bottom: 16px; min-height: 65px; }
-/* Aviso de privacidade (task-006, B3): texto simples, quebras de linha do CMS preservadas. */
+/* Aviso de privacidade: texto simples, quebras de linha do CMS preservadas. */
 .contact-form-privacy {
   font-size: 12.5px; line-height: 1.55; color: var(--text-muted);
   white-space: pre-line; margin: 0 0 16px;
@@ -862,7 +862,7 @@ footer ul a:hover { color: var(--orange); }
   .footer-bottom { padding-right: 70px; }
 
   /* Dropdown "Serviços" vira expansão inline tipo acordeão dentro do menu
-     hambúrguer — sem overlay, sem miniaturas (design-spec-fase2 3b). */
+     hambúrguer — sem overlay, sem miniaturas. */
   .nav-services-item { position: static; }
   .nav-services-trigger {
     width: 100%; justify-content: space-between; padding: 8px 14px;

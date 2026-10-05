@@ -1,16 +1,16 @@
 /**
- * TinaCMS — task-017-tina-cms-adoption (architecture.md secções 3, 4 e 8).
+ * Configuração da TinaCMS.
  *
- * Fase 4: em Production o build gera o admin ligado à Tina Cloud
+ * Em Production o build gera o admin ligado à Tina Cloud
  * (scripts/tina-build.mjs), com o TINA_PUBLIC_CLIENT_ID; sem pré-visualização.
  *
- * Fase 3: MODO LOCAL. `npm run tina:dev` (scripts/tina-dev.mjs) corre
+ * MODO LOCAL: `npm run tina:dev` (scripts/tina-dev.mjs) corre
  * `tinacms dev`, que serve a API GraphQL local e lê/grava diretamente os
  * ficheiros JSON de content/ no disco — sem Tina Cloud, sem login, sem
  * credenciais. O build do site (`npm run build`) não corre a Tina
- * (scripts/tina-build.mjs). A ligação à Tina Cloud é da fase 4.
+ * (scripts/tina-build.mjs).
  *
- * Segurança (security-review-design.md, SEC-T-07/SEC-T-12):
+ * Segurança:
  *   - `token` NUNCA é o token real: tudo o que este ficheiro importa vai para
  *     o JS do admin (browser) e a CLI escreve o token literalmente no cliente
  *     gerado. A CLI exige um valor para construir o admin, por isso fica um
@@ -28,15 +28,15 @@ import { defineConfig } from "tinacms";
 import { collections } from "./collections";
 
 export default defineConfig({
-  // Ramo constante (architecture 4.3): a Tina Cloud (fase 4/5) lê e grava só
+  // Ramo constante: a Tina Cloud lê e grava só
   // o ramo `content`. Ignorado em modo local.
   branch: "content",
-  // Ignorado em modo local; na fase 4 vem das variáveis de Production.
+  // Ignorado em modo local; em produção vem das variáveis de Production.
   clientId: process.env.TINA_PUBLIC_CLIENT_ID ?? null,
   // Marcador exigido pela CLI (ver comentário acima); não é um segredo.
   token: "not-a-secret-placeholder",
   build: {
-    // Admin em /admin (A-4), gerado no build e fora do Git (.gitignore).
+    // Admin em /admin, gerado no build e fora do Git (.gitignore).
     outputFolder: "admin",
     publicFolder: "public",
   },
@@ -44,10 +44,10 @@ export default defineConfig({
     tina: {
       publicFolder: "public",
       // Só a pasta protegida (media-guard, CSP sandbox, exceção do CODEOWNERS):
-      // o gestor de media não vê nem grava fora dela (FR-4.1, SEC-T-03).
+      // o gestor de media não vê nem grava fora dela.
       mediaRoot: "images/uploads",
     },
-    // Só raster, os mesmos formatos que o media-guard aceita (FR-4.3).
+    // Só raster, os mesmos formatos que o media-guard aceita.
     accept: "image/jpeg,image/png,image/webp,image/gif,image/avif",
   },
   telemetry: "disabled",

@@ -20,12 +20,12 @@ function getReducedMotion() {
 }
 
 /**
- * Slider do fundo do hero da homepage (FR-1, design-spec-fase3 secção 1).
+ * Slider do fundo do hero da homepage.
  * O texto do hero (tag/título/motto/botões) NÃO faz parte deste componente
- * — fica sempre fixo por cima, renderizado pelo `HomeContent` (design-spec 1.1).
+ * — fica sempre fixo por cima, renderizado pelo `HomeContent`.
  *
- * Consome exclusivamente `visibleHeroSlides` (já filtrado em content/index.ts,
- * handoff-34 secção D.5) — nunca filtra `visible` por si próprio.
+ * Consome exclusivamente `visibleHeroSlides` (já filtrado em
+ * content/index.ts) — nunca filtra `visible` por si próprio.
  */
 export function HeroSlider({
   slider,
@@ -56,7 +56,7 @@ export function HeroSlider({
   const prev = useCallback(() => goTo(current - 1), [current, goTo]);
 
   // Autoplay: só avança quando o slide activo é imagem, sem pausa (hover/
-  // foco) e sem prefers-reduced-motion (design-spec-fase3 1.4).
+  // foco) e sem prefers-reduced-motion.
   useEffect(() => {
     if (!hasMultiple) return;
     if (reducedMotion) return;

@@ -20,7 +20,7 @@ import { IconCalendar } from "@/components/icons";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
-/** Mapa de nome de ícone (conteúdo) -> componente SVG (Fase 1). Nunca emoji. */
+/** Mapa de nome de ícone (conteúdo) -> componente SVG. Nunca emoji. */
 export const iconMap: Record<IconName, (props: IconProps) => React.JSX.Element> = {
   wheat: IconWheat,
   corn: IconCorn,

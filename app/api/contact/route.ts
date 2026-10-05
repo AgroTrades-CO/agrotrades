@@ -12,18 +12,18 @@ import { contacts } from "@/content";
 
 /**
  * `/api/contact` — recebe o formulário de contacto de /contactos e
- * /en/contact e envia-o por email via Resend (task-006, architecture.md
- * secções 2 e 6).
+ * /en/contact e envia-o por email via Resend.
  *
  * Sem base de dados: a aplicação não guarda as mensagens. Ficam na caixa
  * de destino (`CONTACT_RECIPIENT_EMAIL`, variável de ambiente só de
- * Production — nunca no CMS, SEC-C-01) e no registo do Resend.
+ * Production — nunca no CMS) e no registo do Resend.
  *
  * Ordem vinculativa das verificações: as baratas e locais primeiro, depois
  * a Cloudflare (Turnstile), e só depois o Resend. Falha fechada em tudo
- * (R2). Respostas sempre `{ ok }` genérico com `Cache-Control: no-store`
- * (R11). Logs só com os eventos do tipo `ContactLogEvent` (lista fechada,
- * imposta pelo compilador; SEC-C-07, R6): nunca valores dos campos, IP,
+ * em qualquer erro. Respostas sempre `{ ok }` genérico com
+ * `Cache-Control: no-store`. Logs só com os eventos do tipo
+ * `ContactLogEvent` (lista fechada, imposta pelo compilador): nunca
+ * valores dos campos, IP,
  * User-Agent, token, secret, `error.message` de terceiros nem issues
  * completos do Zod.
  */
@@ -61,7 +61,7 @@ const contactFormSchema = z.object({
   [HONEYPOT_FIELD]: z.string().max(200).optional(),
 });
 
-/** Primeira linha fixa do corpo do email (SEC-C-06). Nunca no CMS. */
+/** Primeira linha fixa do corpo do email. Nunca no CMS. */
 const EMAIL_WARNING =
   "Mensagem enviada por um visitante através do formulário do site. O remetente não foi verificado: confirme por outro canal antes de abrir ligações ou efetuar pagamentos.";
 
@@ -101,7 +101,7 @@ function reply(ok: boolean, status: number, extraHeaders?: Record<string, string
 type BodyResult = { ok: true; text: string } | { ok: false; reason: "too_large" | "unreadable" };
 
 /**
- * Lê o corpo acumulando bytes e pára ao passar `limit` (SEC-C-09, R10).
+ * Lê o corpo acumulando bytes e pára ao passar `limit`.
  * Nunca `request.json()`/`request.text()` sem limite.
  */
 async function readBodyWithLimit(request: NextRequest, limit: number): Promise<BodyResult> {
@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
     return reply(false, 404);
   }
 
-  // 2. Configuração explícita e válida, ou 503 (R3).
+  // 2. Configuração explícita e válida, ou 503.
   const configResult = readContactConfig();
   if (!configResult.ok) {
     log(requestId, "config_invalid", `${configResult.variable} (${configResult.reason})`);
@@ -157,11 +157,11 @@ export async function POST(request: NextRequest) {
   }
   const { config } = configResult;
   if (configResult.warnings.length > 0) {
-    // Nome das variáveis, nunca o valor (SEC-C-10).
+    // Nome das variáveis, nunca o valor.
     log(requestId, "dry_run_secrets_present", configResult.warnings.join(","));
   }
 
-  // 3. Origem (SEC-C-04).
+  // 3. Origem.
   const secFetchSite = request.headers.get("sec-fetch-site");
   const origin = request.headers.get("origin");
   if ((secFetchSite !== null && secFetchSite !== "same-origin") || (origin !== null && origin !== expectedOrigin(config, request))) {
@@ -169,14 +169,14 @@ export async function POST(request: NextRequest) {
     return reply(false, 403);
   }
 
-  // 4. Content-Type (SEC-C-04).
+  // 4. Content-Type.
   const contentType = request.headers.get("content-type") ?? "";
   if (!contentType.toLowerCase().startsWith("application/json")) {
     log(requestId, "content_type_rejected");
     return reply(false, 415);
   }
 
-  // 5. Tamanho (SEC-C-09).
+  // 5. Tamanho.
   const contentLength = Number(request.headers.get("content-length"));
   if (Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES) {
     log(requestId, "body_too_large");
@@ -201,7 +201,7 @@ export async function POST(request: NextRequest) {
     return reply(false, 400);
   }
 
-  // 7. Validação (limites + caracteres de controlo, SEC-C-05).
+  // 7. Validação (limites + caracteres de controlo).
   const parsed = contactFormSchema.safeParse(json);
   if (!parsed.success) {
     // Só caminho e código de cada issue: no Zod 4 os issues podem trazer `input`.
@@ -211,7 +211,7 @@ export async function POST(request: NextRequest) {
   }
   const { name, email, phone, subject, message, turnstileToken, [HONEYPOT_FIELD]: honeypot } = parsed.data;
 
-  // 8. Honeypot (SEC-C-08): OK sem denunciar a deteção, sem envio.
+  // 8. Honeypot: OK sem denunciar a deteção, sem envio.
   if (honeypot) {
     log(requestId, "honeypot");
     return reply(true, 200);
@@ -235,7 +235,7 @@ export async function POST(request: NextRequest) {
 
   // 10. Entrega.
   if (config.mode === "dry-run") {
-    // Nunca importa nem instancia o Resend (R5).
+    // Nunca importa nem instancia o Resend.
     log(requestId, "dry_run");
     return reply(true, 200, { "X-Contact-Delivery": "dry-run" });
   }
@@ -263,7 +263,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (error) {
-      // Nunca `error.message`: texto livre do fornecedor, pode repetir endereços (SEC-C-07).
+      // Nunca `error.message`: texto livre do fornecedor, pode repetir endereços.
       log(requestId, "send_failed", `${error.name} ${error.statusCode ?? "-"}`);
       return reply(false, 502);
     }

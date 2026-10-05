@@ -1,4 +1,4 @@
-// Guarda de build R-IMG (task-017, architecture.md 17.3): falha o build se
+// Guarda de build das imagens: falha o build se
 // algum caminho de imagem em content/**/*.json não corresponder a um ficheiro
 // existente em public/.
 //
@@ -7,7 +7,7 @@
 // inexistente) e o Zod (`localImagePath`) aceita-o. Sem esta guarda, uma
 // gravação publicaria imagens partidas; com ela, o build falha e o deploy
 // anterior fica no ar. Fica fora de content/schemas (esse módulo vai para o
-// bundle do cliente, task-016).
+// bundle do cliente).
 //
 // Caminho de imagem = qualquer string que comece por "/images/" (é o único
 // formato que o Zod aceita para imagens de conteúdo e para meta.ogImage).

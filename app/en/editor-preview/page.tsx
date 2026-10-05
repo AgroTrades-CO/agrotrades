@@ -1,7 +1,7 @@
 /**
- * Pré-visualização editável da página inicial (EN) — TinaCMS, task-017.
+ * Pré-visualização editável da página inicial (EN) na TinaCMS.
  * Igual a app/(pt)/editor-preview/page.tsx, dentro do layout EN (cabeçalho e
- * rodapé em inglês, FR-3.4).
+ * rodapé em inglês).
  */
 import type { Metadata } from "next";
 import { draftMode } from "next/headers";

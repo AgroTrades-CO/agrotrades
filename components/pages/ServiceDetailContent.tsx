@@ -4,8 +4,8 @@ import { getServiceDetailViewData } from "@/lib/view-data/service";
 import { ServiceDetailView } from "@/components/pages/ServiceDetailView";
 
 /**
- * Detalhe de serviço do site público — invólucro de servidor (task-017,
- * A-12): lê o conteúdo publicado (lib/view-data/service.ts) e entrega-o à
+ * Detalhe de serviço do site público — invólucro de servidor: lê o
+ * conteúdo publicado (lib/view-data/service.ts) e entrega-o à
  * vista `ServiceDetailView`. A pré-visualização da TinaCMS usa a mesma vista
  * com os dados em edição. As páginas de produto passam `back` e
  * `showRelated={false}`.

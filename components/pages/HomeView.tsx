@@ -18,7 +18,7 @@ import { ServiceCardView, type ServiceCardData } from "@/components/ServiceCardV
 import { tinaAttr, type TinaFieldFn } from "@/components/tina/edit-binding";
 
 /**
- * Dados da vista da homepage (task-017, A-12; architecture.md 18.1.3).
+ * Dados da vista da homepage.
  * JSON simples, construído no servidor por lib/view-data/home.ts; na
  * pré-visualização da TinaCMS os campos editáveis vêm do `useTina`.
  */
@@ -41,7 +41,7 @@ export type HomeViewData = {
 };
 
 /**
- * Vista da homepage (R-VIEW): só dados por props e só `import type` de
+ * Vista da homepage: só dados por props e só `import type` de
  * @/content — usada pelo invólucro de servidor `HomeContent` (site público)
  * e pela pré-visualização da TinaCMS (`HomePreview`, no browser). `tf` só é
  * passada pela pré-visualização; sem ela nenhum atributo `data-tina-field`

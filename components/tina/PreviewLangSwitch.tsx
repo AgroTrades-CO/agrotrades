@@ -1,10 +1,10 @@
 import type { Lang } from "@/content";
 
 /**
- * Seletor de idioma SÓ da pré-visualização da TinaCMS (task-017): o painel
+ * Seletor de idioma SÓ da pré-visualização da TinaCMS: o painel
  * da Tina mostra sempre Português e Inglês; aqui escolhe-se em que idioma se
  * vê a página. Cada idioma é uma rota própria, dentro do layout desse idioma
- * (cabeçalho e rodapé no idioma certo, FR-3.4): este seletor é só a ligação
+ * (cabeçalho e rodapé no idioma certo): este seletor é só a ligação
  * entre as duas rotas. Não existe no site público.
  */
 export function PreviewLangSwitch({ lang, hrefPt, hrefEn }: { lang: Lang; hrefPt: string; hrefEn: string }) {

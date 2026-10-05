@@ -10,11 +10,11 @@ export type ServiceCardData = Pick<Service, "id" | "bannerImage" | "bannerImageA
 };
 
 /**
- * Vista do cartão de serviço (task-017, A-12/R-VIEW): só recebe dados por
+ * Vista do cartão de serviço: só recebe dados por
  * props e só importa tipos de @/content — pode correr no browser da
- * pré-visualização sem mudar o bundle das páginas públicas (AC-15).
+ * pré-visualização sem mudar o bundle das páginas públicas.
  * Markup igual ao do antigo `ServiceCard` (listagem `/servicos`, "Outros
- * serviços" do detalhe e pré-visualização da homepage; design-spec-fase2 2b).
+ * serviços" do detalhe e pré-visualização da homepage).
  */
 export function ServiceCardView({ card, learnMore, lang }: { card: ServiceCardData; learnMore: BilingualString; lang: Lang }) {
   return (

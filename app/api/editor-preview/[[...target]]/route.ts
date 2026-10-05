@@ -4,17 +4,17 @@ import { services } from "@/content";
 import { serviceEnSlug, serviceIdFromEnSlug } from "@/content/service-slugs";
 
 /**
- * Entrada na pré-visualização da TinaCMS em MODO LOCAL (task-017, fase 3;
- * architecture.md secção 12: "rota de desenvolvimento só com
- * NODE_ENV=development"). O admin local (`npm run tina:dev`) abre
+ * Entrada na pré-visualização da TinaCMS em MODO LOCAL (rota de
+ * desenvolvimento, só com NODE_ENV=development). O admin local
+ * (`npm run tina:dev`) abre
  * `/api/editor-preview/<caminho da pré-visualização>` no iframe (ex.:
  * `/api/editor-preview/editor-preview/servicos/arroz`): liga o Draft Mode e
  * redireciona para essa rota. O caminho vai no URL e não numa query string
  * porque o admin da Tina descarta a query string do URL do `router`.
  *
  * Fora de `next dev` responde sempre 404, sem ler o pedido. A entrada em
- * produção (POST com o token da Tina Cloud validado no servidor) é da fase 4
- * e passa por revisão própria de segurança.
+ * produção (POST com o token da Tina Cloud validado no servidor) ainda não
+ * existe e passa por revisão própria de segurança.
  *
  * O destino do redirect é reconstruído a partir da lista de serviços
  * conhecida, nunca copiado do URL (sem open redirect).

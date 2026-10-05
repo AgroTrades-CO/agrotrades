@@ -8,8 +8,8 @@ import { IconWhatsapp } from "@/components/icons";
 import { ServiceCardView, type ServiceCardData } from "@/components/ServiceCardView";
 import { tinaAttr, type TinaAttr, type TinaFieldFn } from "@/components/tina/edit-binding";
 
-/** Lista de bullets opcional, partilhada pelas variantes "split"/"feature"
- *  (design-spec-fase2 1d) — nunca lida em secções sem imagem. */
+/** Lista de bullets opcional, partilhada pelas variantes "split"/"feature";
+ *  nunca lida em secções sem imagem. */
 function SectionBullets({
   bullets,
   lang,
@@ -33,8 +33,8 @@ function SectionBullets({
 }
 
 /**
- * Dados da vista de detalhe de serviço (task-017, A-12; architecture.md
- * 18.1.3). JSON simples, construído no servidor por lib/view-data/service.ts;
+ * Dados da vista de detalhe de serviço. JSON simples, construído no servidor
+ * por lib/view-data/service.ts;
  * na pré-visualização da TinaCMS `service` vem do `useTina`.
  */
 export type ServiceDetailViewData = {
@@ -50,7 +50,7 @@ export type ServiceDetailViewData = {
 };
 
 /**
- * Vista do detalhe de serviço (R-VIEW): só dados por props e só `import
+ * Vista do detalhe de serviço: só dados por props e só `import
  * type` de @/content — usada pelo invólucro de servidor
  * `ServiceDetailContent` (site público) e pela pré-visualização da TinaCMS
  * (`ServicePreview`, no browser). `tf` só é passada pela pré-visualização;
@@ -74,7 +74,7 @@ export function ServiceDetailView({
   const related = data.related;
 
   // Alternância do lado da variante "split": conta-se só entre secções desta
-  // variante, não entre todas as secções do serviço (design-spec-fase2 1b).
+  // variante, não entre todas as secções do serviço.
   const splitSections = sections.filter((section) => resolveSectionLayout(section) === "split");
 
   return (

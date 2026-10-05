@@ -4,23 +4,24 @@ import { queries } from "@/tina/__generated__/types";
 
 /**
  * Cliente de leitura da TinaCMS para as rotas de pré-visualização
- * (/editor-preview, /en/editor-preview) — task-017, architecture.md secção 3.
+ * (/editor-preview, /en/editor-preview).
  *
- * Só servidor (`server-only`): na fase 4 este módulo lê o token de leitura da
- * Tina Cloud, que nunca pode ir para o browser (SEC-T-07 (2)). Não usa o
+ * Só servidor (`server-only`): em modo cloud este módulo lê o token de leitura
+ * da Tina Cloud, que nunca pode ir para o browser. Não usa o
  * cliente gerado em tina/__generated__/client.ts (fora do Git: a CLI escreve lá
  * o token literalmente); usa só as queries geradas (types.ts, versionado).
  *
- * Fase 3: só MODO LOCAL — a API GraphQL do `tinacms dev` (npm run tina:dev),
+ * Por agora só há MODO LOCAL: a API GraphQL do `tinacms dev`
+ * (npm run tina:dev),
  * que lê os ficheiros de content/ no disco. Fora de `next dev` lança erro: as
  * rotas de pré-visualização já dão 404 antes de chegarem aqui (sem Draft Mode),
  * e a leitura da Tina Cloud (ramo `content`, TINA_PUBLIC_CLIENT_ID/TINA_TOKEN)
- * é da fase 4.
+ * ainda não está ligada.
  */
 export function getTinaClient() {
   if (process.env.NODE_ENV !== "development") {
     throw new Error(
-      "Cliente da TinaCMS não configurado: na fase 3 só existe o modo local (npm run tina:dev)."
+      "Cliente da TinaCMS não configurado: por agora só existe o modo local (npm run tina:dev)."
     );
   }
   // Porta da API local; scripts/tina-dev.mjs passa o mesmo valor ao `tinacms dev`.

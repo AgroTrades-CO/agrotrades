@@ -1,11 +1,10 @@
 /**
- * Camada de conteúdo — Fase 2 da migração.
+ * Camada de conteúdo do site.
  *
  * Carrega os ficheiros JSON de `content/services` e `content/site`,
  * valida-os contra os schemas Zod de `content/schemas`, e exporta objetos
- * já tipados para os componentes consumirem. Só a versão PT é servida
- * nesta fase (i18n real é Fase 3), mas a estrutura de dados guarda sempre
- * `{ pt, en }`.
+ * já tipados para os componentes consumirem. A estrutura de dados guarda
+ * sempre `{ pt, en }`.
  *
  * A validação corre aqui, ao nível do módulo — isto é, na primeira vez que
  * qualquer componente importar algo deste ficheiro. Como o `app/layout.tsx`
@@ -61,7 +60,7 @@ import {
   type Service,
 } from "./schemas";
 
-/** Idioma servido pelo site — PT na raiz, EN sob /en (Fase 3, D-4). */
+/** Idioma servido pelo site — PT na raiz, EN sob /en. */
 export type Lang = "pt" | "en";
 
 /** Devolve o texto no idioma pedido. */
@@ -162,7 +161,7 @@ export { youtubeEmbedUrl };
 export type { ResolvedSectionLayout } from "./derive";
 
 /**
- * Derivações únicas de visibilidade (FR-6, handoff-34 secção D.5) — a regra
+ * Derivações únicas de visibilidade — a regra
  * de filtragem por `visible`/`<bloco>Visible` existe UMA VEZ aqui, nunca nos
  * componentes. Proibido `.filter(x => x.visible)` dentro de um componente.
  */
@@ -174,7 +173,7 @@ export const heroSlides = hero.slider.slides;
  *  pelo `.refine` do schema (pelo menos 1 slide `visible: true`). */
 export const visibleHeroSlides = heroSlides.filter((s) => s.visible);
 
-// `visibleSections` e `visibleGallery` vivem em content/derive.ts (task-017, A-12).
+// `visibleSections` e `visibleGallery` vivem em content/derive.ts.
 
 /** Valores institucionais visíveis, só se o bloco valores estiver ligado. */
 export function visibleValues(page: AboutPage) {
@@ -223,7 +222,7 @@ export function waLink(number: string): string {
 }
 
 /**
- * Serviços relacionados no detalhe (Fase 2, design-spec-fase2 secção 2a):
+ * Serviços relacionados no detalhe:
  * os 3 próximos serviços na ORDEM CANÓNICA deste array `services` (definida
  * acima, herdada do antigo SERVICES de js/main.js), com wrap-around, nunca
  * incluindo o próprio serviço. A ordem deste array tem, portanto, significado

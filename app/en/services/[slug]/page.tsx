@@ -13,8 +13,8 @@ export function generateStaticParams() {
 }
 
 // Ver comentário equivalente e detalhado em
-// app/(pt)/servicos/[id]/page.tsx — mesma correção do bug reportado no
-// handoff-10 do Tester (corpo vazio nos 404 desta rota dinâmica).
+// app/(pt)/servicos/[id]/page.tsx — mesma correção do corpo vazio nos 404
+// desta rota dinâmica.
 export const dynamicParams = false;
 
 function findService(slug: string) {

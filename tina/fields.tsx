@@ -1,19 +1,19 @@
 /**
- * Blocos de construção do schema TinaCMS (task-017-tina-cms-adoption, fase 3).
+ * Blocos de construção do schema TinaCMS.
  *
- * Vem do protótipo da task-009 (commit b8eb500), endurecido:
+ * Regras:
  *   - cada campo traduzível é UM grupo com "Português" e "Inglês" empilhados
  *     (componente `BilingualField`), com validação PT/EN no próprio campo
  *     ("Preencha "X" em Inglês."), espelho do Zod de content/schemas — o
- *     build continua a ser a garantia final (FR-2.2);
- *   - rótulos PT curtos + ajuda "Aparece em ..." (design-spec-editor, task-008);
+ *     build continua a ser a garantia final;
+ *   - rótulos PT curtos + ajuda "Aparece em ...";
  *   - seletor de ícones com nomes PT, pela ordem por temas;
  *   - imagens só raster e só da pasta protegida (mediaRoot em config.tsx).
  *
  * Os NOMES dos campos são exatamente as chaves atuais dos ficheiros JSON em
  * content/ (formato {pt, en} inalterado). Só os rótulos mudam.
  *
- * Segurança (SEC-T-07 (3), SEC-T-12): este ficheiro vai para o bundle do admin
+ * Segurança: este ficheiro vai para o bundle do admin
  * (browser). Não importa nada de lib/, app/ nem lê process.env. Sem campos
  * `rich-text` (a superfície Plate da Tina fica inativa).
  */
@@ -91,8 +91,7 @@ function bilingualValidate(label: string, maxLength?: number) {
 /**
  * Sub-campo `pt`/`en`. Clicar num texto da pré-visualização abre estes
  * sub-campos diretamente (sem passar pelo `BilingualField` do objeto), por
- * isso a validação também vive aqui — senão "Save" gravaria um idioma vazio
- * (AC-5).
+ * isso a validação também vive aqui — senão "Save" gravaria um idioma vazio.
  */
 function subCampo(lang: "pt" | "en", label: string, required: boolean, multiline: boolean, maxLength?: number) {
   const idioma = lang === "pt" ? "Português" : "Inglês";
@@ -133,8 +132,7 @@ export function bil(name: string, label: string, opts: FieldOpts = {}, multiline
       ...(required ? { validate: bilingualValidate(label, opts.maxLength) } : {}),
     },
     // O tipo de `ui.component` da Tina para objetos não prevê um componente
-    // próprio que receba o objeto inteiro; em runtime é suportado (verificado
-    // no protótipo da task-009).
+    // próprio que receba o objeto inteiro; em runtime é suportado.
   } as unknown as TinaField;
 }
 
@@ -179,7 +177,7 @@ export function texto(name: string, label: string, opts: FieldOpts = {}): TinaFi
 }
 
 /** Campo técnico: mantém-se no ficheiro (a Tina só grava campos declarados)
- *  mas não aparece ao editor (FR-1.5). */
+ *  mas não aparece ao editor. */
 export function oculto(name: string, label: string, description?: string): TinaField {
   return {
     type: "string",
@@ -193,8 +191,8 @@ export function oculto(name: string, label: string, description?: string): TinaF
 
 /**
  * Formatos que o editor pode carregar/escolher: só raster, os mesmos que o
- * `media-guard` aceita em public/images/uploads/ (FR-4.3). É só conforto do
- * editor — o controlo real continua a ser o `media-guard` (AC-7).
+ * `media-guard` aceita em public/images/uploads/. É só conforto do
+ * editor — o controlo real continua a ser o `media-guard`.
  */
 export const RASTER_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "gif", "avif"] as const;
 
@@ -209,7 +207,7 @@ export function imagem(name: string, label: string, description?: string): TinaF
   } as TinaField;
 }
 
-/** Ícones com nomes PT, pela ordem por temas (design-spec secção 8). */
+/** Ícones com nomes PT, pela ordem por temas. */
 export const ICON_OPTIONS = [
   { value: "wheat", label: "Espiga (arroz, cereais)" },
   { value: "corn", label: "Maçaroca de milho" },
