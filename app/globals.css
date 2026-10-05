@@ -56,11 +56,17 @@ nav {
 .lang-switcher {
   display: flex; gap: 4px; margin-left: 16px;
 }
+/* O idioma ativo é um <span> e o outro é um <a>; sem isto só o <a> ficava
+   sublinhado pelo estilo do browser e os dois botões não combinavam. */
 .lang-btn {
   font-size: 12px; font-weight: 600; padding: 5px 10px;
   border-radius: 6px; border: 1px solid var(--border);
   background: transparent; cursor: pointer; color: var(--text-muted);
   transition: all 0.2s; font-family: var(--font-body), sans-serif;
+  text-decoration: none; line-height: 1.4;
+}
+a.lang-btn:hover {
+  color: var(--green); border-color: var(--green); background: var(--green-light);
 }
 .lang-btn.active {
   background: var(--green); color: white; border-color: var(--green);
