@@ -80,10 +80,10 @@
       }
     }
   ],
-  "bannerImage": "/images/banners/quem-somos.svg",
+  "bannerImage": "/images/uploads/quem-somos-equipa.webp",
   "bannerImageAlt": {
-    "pt": "Equipa e terras da AGRO TRADES",
-    "en": "AGRO TRADES team and land"
+    "pt": "Equipa da AGRO TRADES junto a um trator, num terreno agrícola",
+    "en": "The AGRO TRADES team beside a tractor on farmland"
   },
   "teamTag": {
     "pt": "A nossa gente",
