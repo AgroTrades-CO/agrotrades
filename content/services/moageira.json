@@ -37,9 +37,9 @@
     "pt": "Moageira e processamento industrial de cereais para o mercado moçambicano.",
     "en": "Milling and industrial cereal processing for the Mozambican market."
   },
-  "bannerImage": "/images/services/moageira/banner.svg",
+  "bannerImage": "/images/uploads/servico-moageira.webp",
   "bannerImageAlt": {
-    "pt": "Ilustração de silos e estrutura industrial de uma moageira",
-    "en": "Illustration of silos and industrial milling structure"
+    "pt": "Máquina de moagem de cereais em funcionamento",
+    "en": "Grain milling machine in operation"
   }
 }

@@ -29,9 +29,9 @@
       "Service available for individuals and cooperatives"
     ]
   },
-  "bannerImage": "/images/services/terras/banner.svg",
+  "bannerImage": "/images/uploads/servico-terras.webp",
   "bannerImageAlt": {
-    "pt": "Ilustração de terreno nivelado com linhas de sulcos em tons de terra",
-    "en": "Illustration of levelled land with furrow lines in earth tones"
+    "pt": "Campo preparado em sulcos, com plantas jovens a nascer",
+    "en": "Field prepared in furrows, with young plants emerging"
   }
 }
