@@ -11,26 +11,26 @@ import {
   type TeamMember,
 } from "@/content";
 import { Icon } from "@/components/icon-map";
-import { IconWhatsapp } from "@/components/icons";
+import { IconMail, IconPhone, IconWhatsapp } from "@/components/icons";
 
 // Só aparece se pelo menos um contacto tiver sido preenchido no admin.
 function TeamContacts({ member }: { member: TeamMember }) {
   if (!member.phone && !member.whatsapp && !member.email) return null;
   return (
-    <div style={{ display: "flex", gap: 12, marginTop: 8 }}>
+    <div className="team-contacts">
       {member.phone && (
         <a href={`tel:${member.phone}`} aria-label="Telefone">
-          <Icon name="handshake" width={16} height={16} />
+          <IconPhone width={18} height={18} />
         </a>
       )}
       {member.whatsapp && (
         <a href={waLink(member.whatsapp)} target="_blank" rel="noopener" aria-label="WhatsApp">
-          <IconWhatsapp width={16} height={16} />
+          <IconWhatsapp width={18} height={18} />
         </a>
       )}
       {member.email && (
         <a href={`mailto:${member.email}`} aria-label="Email">
-          <Icon name="mapPin" width={16} height={16} />
+          <IconMail width={18} height={18} />
         </a>
       )}
     </div>

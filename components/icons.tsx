@@ -244,6 +244,24 @@ export function IconMenu(props: IconProps) {
   );
 }
 
+/** Contactos de um membro da equipa — export solto, fora do enum `iconName`. */
+export function IconPhone(props: IconProps) {
+  return (
+    <Base {...props}>
+      <path d="M6.5 3h3l1.5 4-2 1.3a12 12 0 0 0 5.7 5.7L16 12l4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 6.2 2 2 0 0 1 6 4Z" />
+    </Base>
+  );
+}
+
+export function IconMail(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3.5 6.5 12 13l8.5-6.5" />
+    </Base>
+  );
+}
+
 export function IconFacebook(props: IconProps) {
   return (
     <svg width={18} height={18} viewBox="0 0 24 24" fill="currentColor" {...props}>
