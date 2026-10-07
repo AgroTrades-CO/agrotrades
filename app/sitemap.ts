@@ -3,7 +3,7 @@ import { meta, products, services } from "@/content";
 import { PAGE_KEYS, path, productDetailPath, serviceDetailPath } from "@/content/routes";
 
 /**
- * `sitemap.xml` gerado no build (Fase 4, FR-14/AC-14) a partir das mesmas
+ * `sitemap.xml` gerado no build a partir das mesmas
  * fontes que geram as rotas — `content/routes.ts` (páginas fixas) e
  * `content/index.ts` `services` (8 serviços) — nunca uma lista de URLs
  * escrita à mão, para não divergir da estrutura real do site.

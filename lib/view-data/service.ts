@@ -6,8 +6,8 @@ import type { ServiceCardData } from "@/components/ServiceCardView";
 import type { ServiceDetailViewData } from "@/components/pages/ServiceDetailView";
 
 /**
- * Construtores dos dados das vistas de serviço (task-017, A-12;
- * architecture.md 18.1.2). Só servidor: leem @/content (com a validação
+ * Construtores dos dados das vistas de serviço. Só servidor: leem
+ * @/content (com a validação
  * Zod) e devolvem JSON simples para as vistas. Um componente cliente que
  * importe este módulo faz o `next build` falhar (`server-only`).
  */

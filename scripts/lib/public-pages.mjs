@@ -1,8 +1,8 @@
-// Leitura do resultado de `next build` (.next/) para as verificações de AC-15 (task-017,
-// architecture.md 19.2 e 19.3): lista das páginas públicas, chunks JS de cada página,
+// Leitura do resultado de `next build` (.next/) para as verificações do bundle
+// público: lista das páginas públicas, chunks JS de cada página,
 // manifestos de referências cliente e ids de módulos registados em cada chunk.
 //
-// Segurança (SEC-AC15-2): chunks e manifestos são código do próprio build, mas só são avaliados
+// Segurança: chunks e manifestos são código do próprio build, mas só são avaliados
 // num `vm` com contexto novo (sem require, process nem o globalThis do Node), com timeout, e as
 // fábricas dos módulos nunca são invocadas — só se recolhem os ids. Nada daqui imprime conteúdo
 // de chunks ou de HTML.
@@ -12,7 +12,7 @@ import vm from "node:vm";
 
 const VM_TIMEOUT_MS = 2000;
 
-/** Rotas que não são páginas públicas (architecture 19.2.1). */
+/** Rotas que não são páginas públicas. */
 export function isPublicRoute(route) {
   if (route === "/_global-error" || route === "/robots.txt" || route === "/sitemap.xml") return false;
   return !/editor-preview|\/api\/|\/admin/.test(route);

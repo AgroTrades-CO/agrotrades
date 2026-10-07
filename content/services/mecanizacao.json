@@ -50,10 +50,10 @@
         "en": "We provide tractors, combine harvesters and high-performance implements for hire, with regular maintenance to ensure availability throughout the campaign."
       },
       "image": {
-        "image": "/images/services/mecanizacao/gallery-1.svg",
+        "image": "/images/uploads/servico-mecanizacao-galeria-1.webp",
         "alt": {
-          "pt": "Ilustração de trator com alfaia acoplada",
-          "en": "Illustration of a tractor with an attached implement"
+          "pt": "Trator a puxar um reboque carregado de cana num campo de terra vermelha",
+          "en": "Tractor pulling a trailer loaded with cane across a red-earth field"
         }
       },
       "bullets": {
@@ -92,24 +92,24 @@
   ],
   "gallery": [
     {
-      "image": "/images/services/mecanizacao/gallery-1.svg",
+      "image": "/images/uploads/servico-mecanizacao-galeria-1.webp",
       "alt": {
-        "pt": "Ilustração de trator com alfaia acoplada",
-        "en": "Illustration of a tractor with an attached implement"
+        "pt": "Trator a puxar um reboque carregado de cana num campo de terra vermelha",
+        "en": "Tractor pulling a trailer loaded with cane across a red-earth field"
       }
     },
     {
-      "image": "/images/services/mecanizacao/gallery-2.svg",
+      "image": "/images/uploads/servico-mecanizacao-galeria-2.webp",
       "alt": {
-        "pt": "Ilustração de máquina agrícola em manutenção",
-        "en": "Illustration of agricultural machinery under maintenance"
+        "pt": "Cabina e rolos de uma ceifeira-debulhadora vistos de perto",
+        "en": "Close view of a combine harvester cab and header rollers"
       }
     },
     {
-      "image": "/images/services/mecanizacao/gallery-3.svg",
+      "image": "/images/uploads/servico-mecanizacao-galeria-3.webp",
       "alt": {
-        "pt": "Ilustração de equipamento agrícola em campo preparado",
-        "en": "Illustration of agricultural equipment on prepared land"
+        "pt": "Campo lavrado em sulcos regulares, pronto para a sementeira",
+        "en": "Field ploughed into even furrows, ready for sowing"
       }
     }
   ]

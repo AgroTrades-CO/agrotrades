@@ -1,8 +1,8 @@
 /**
- * Slugs em inglês para as páginas de serviço EN (Fase 3, decisão da tarefa:
- * `/en/services/rice/` em vez de `/en/services/arroz/`).
+ * Slugs em inglês para as páginas de serviço EN: `/en/services/rice/` em
+ * vez de `/en/services/arroz/`.
  *
- * Isto não é texto visível/traduzível gerido pelo Decap — é um identificador
+ * Isto não é texto visível/traduzível gerido pelo CMS — é um identificador
  * de URL derivado do `id` do serviço, tal como o próprio `id` já é. Fica em
  * código, não em content/, pelo mesmo motivo por que o `id` também não é
  * "conteúdo": mudar aqui é uma decisão de routing, não uma edição de texto.

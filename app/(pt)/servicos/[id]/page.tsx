@@ -11,7 +11,7 @@ export function generateStaticParams() {
   return services.map((service) => ({ id: service.id }));
 }
 
-// CORREÇÃO (handoff-10 do Tester): a lista de serviços é finita e
+// A lista de serviços é finita e
 // conhecida em build-time (8 serviços em content/index.ts) — não há
 // necessidade de negócio de suportar "ids" fora desta lista. Sem esta
 // linha (dynamicParams volta ao valor implícito "true"), o Next.js 16
@@ -24,8 +24,8 @@ export function generateStaticParams() {
 // payload RSC do <script>, nunca como HTML estático visível sem
 // JavaScript. `dynamicParams = false` resolve este 404 em build-time
 // (mesmo mecanismo, sem streaming, que já funciona para /servicos/arroz
-// etc.), eliminando a shell. Ver NOTA no handoff sobre o efeito colateral
-// desta decisão para o título/idioma deste caso específico.
+// etc.), eliminando a shell. Em troca, o 404 de um "id" desconhecido usa o
+// título e o idioma desta rota, não os do pedido.
 export const dynamicParams = false;
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {

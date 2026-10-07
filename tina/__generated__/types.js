@@ -706,6 +706,7 @@ export const ContactosPartsFragmentDoc = gql`
     }
     company
   }
+  nuit
   bannerImage
   mapsLink
   mapEmbedUrl

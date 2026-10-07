@@ -1,9 +1,9 @@
 /**
- * Routing i18n — Fase 3.
+ * Routing i18n: PT na raiz, EN sob `/en`.
  *
  * PT vive na raiz, sem prefixo (`/`, `/servicos`, ...); EN vive sob `/en`
  * (`/en`, `/en/services`, ...), com slugs de serviço traduzidos
- * (`content/service-slugs.ts`). Ver architecture-proposal.md secção D-4.
+ * (`content/service-slugs.ts`).
  *
  * Todas as rotas do site devem ser construídas a partir daqui — nunca com
  * caminhos escritos à mão em componentes — para que o seletor de idioma
@@ -19,7 +19,7 @@ export type PageKey = "home" | "services" | "products" | "campaign" | "contact" 
  * Todas as páginas fixas do site (exclui as páginas de serviço, que são
  * dinâmicas — ver `content/index.ts` `services` e `serviceDetailPath`).
  * Usado por `app/sitemap.ts` para gerar as duas entradas por idioma sem
- * repetir esta lista à mão (Fase 4, AC-14).
+ * repetir esta lista à mão.
  */
 export const PAGE_KEYS: PageKey[] = ["home", "services", "products", "campaign", "contact", "about"];
 

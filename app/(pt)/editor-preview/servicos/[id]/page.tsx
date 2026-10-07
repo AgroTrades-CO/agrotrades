@@ -1,5 +1,5 @@
 /**
- * Pré-visualização editável da página de um serviço (PT) — TinaCMS, task-017.
+ * Pré-visualização editável da página de um serviço (PT) na TinaCMS.
  * Mesmas regras de app/(pt)/editor-preview/page.tsx. O ficheiro lido é
  * sempre um dos serviços conhecidos (nunca um caminho vindo do URL).
  */

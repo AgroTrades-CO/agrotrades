@@ -7,7 +7,7 @@ import { HONEYPOT_FIELD, TURNSTILE_ACTION, TURNSTILE_SCRIPT_URL } from "@/lib/co
 
 type Status = "idle" | "sending" | "success" | "error";
 
-/** Tipo mínimo da API global do Turnstile (sem dependência npm, R14). */
+/** Tipo mínimo da API global do Turnstile (sem dependência npm). */
 interface TurnstileRenderOptions {
   sitekey: string;
   action: string;
@@ -39,12 +39,12 @@ declare global {
  * reencaminha por email via Resend). Os rótulos, mensagens e o aviso de
  * privacidade vêm de content/site/contacts.json (`contactForm`), editáveis
  * no admin — nada de texto fixo aqui, com duas exceções deliberadas: o
- * rótulo "Não preencher" do honeypot (invisível, SEC-C-08) e o "…" do botão
+ * rótulo "Não preencher" do honeypot (invisível) e o "…" do botão
  * durante o envio.
  *
- * Anti-spam (task-006, architecture.md 4.2): Cloudflare Turnstile em
+ * Anti-spam: Cloudflare Turnstile em
  * renderização explícita. O script oficial só é carregado aqui e só quando
- * há `siteKey` (R7). O token é de uso único: o widget é reiniciado depois
+ * há `siteKey`. O token é de uso único: o widget é reiniciado depois
  * de cada resposta do servidor.
  *
  * `siteKey === null` (fora de produção, sem configuração): o script não é
@@ -71,7 +71,7 @@ export function ContactForm({
 
   /**
    * Cria o widget se o script já estiver carregado. Idempotente: nunca cria
-   * dois widgets (sai se já houver um `widgetId`). Chamado em dois sítios (CR-T6-01):
+   * dois widgets (sai se já houver um `widgetId`). Chamado em dois sítios:
    * - `onReady` do next/script: primeiro carregamento do script;
    * - efeito de montagem abaixo: script já carregado (regresso à página por
    *   navegação client-side, Strict Mode em dev, Fast Refresh). O `onReady`
@@ -191,7 +191,7 @@ export function ContactForm({
 
       {/* Honeypot: escondido visualmente (não display:none — alguns bots ignoram
           isso), sem tabindex, aria-hidden — um visitante real nunca o preenche.
-          Nome e rótulo sem semântica de autopreenchimento (SEC-C-08). */}
+          Nome e rótulo sem semântica de autopreenchimento. */}
       <div className="contact-form-honeypot" aria-hidden="true">
         <label htmlFor={`${formId}-${HONEYPOT_FIELD}`}>Não preencher</label>
         <input id={`${formId}-${HONEYPOT_FIELD}`} name={HONEYPOT_FIELD} type="text" tabIndex={-1} autoComplete="off" />
@@ -227,7 +227,7 @@ export function ContactForm({
 
         {siteKey !== null && <div ref={containerRef} className="contact-form-turnstile" />}
 
-        {/* Aviso de privacidade (B3): texto simples, nunca HTML/Markdown (R13). */}
+        {/* Aviso de privacidade: texto simples, nunca HTML nem Markdown. */}
         <p className="contact-form-privacy" id={privacyId}>
           {form.privacyNotice[lang]}
         </p>

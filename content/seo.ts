@@ -1,11 +1,11 @@
 /**
- * Metadados por página e idioma — Fase 4 (SEO, hreflang, Open Graph).
+ * Metadados por página e idioma (SEO, hreflang, Open Graph).
  *
  * Centraliza a construção do objeto `Metadata` do Next.js para que cada
  * `page.tsx` só declare o que lhe é próprio (título, descrição, caminhos
  * PT/EN), sem repetir a estrutura de `canonical`/`alternates.languages`/
  * `openGraph`/`twitter` em cada ficheiro — e sem risco de uma página
- * esquecer um campo que outra tem (FR-12/AC-05).
+ * esquecer um campo que outra tem.
  *
  * `metadataBase` (definido nos root layouts a partir de `meta.siteUrl`)
  * resolve os caminhos relativos usados aqui para URLs absolutos na saída
@@ -23,7 +23,7 @@ import { meta } from "./index";
  *
  * Gerados a partir de `public/images/logo-square.png` (logótipo com fundo
  * removido, versão quadrada com padding). Substitui o `public/favicon.svg`
- * genérico herdado da variante AvaliacaoAgroTrades (Fase 4): esse SVG não
+ * genérico do site antigo: esse SVG não
  * era a marca da AgroTrades, por isso foi removido de `public/` para não
  * haver dois favicons conflituosos — este conjunto de PNGs (+ `favicon.ico`
  * na raiz de `public/`, servido automaticamente pelo Next.js em
@@ -57,10 +57,9 @@ interface PageSeoInput {
 
 /**
  * Constrói o `Metadata` completo de uma página: `title`, `description`,
- * `canonical` (a própria URL — FR-12), `alternates.languages` (hreflang
- * PT<->EN — D-4), `openGraph` e `twitter:card`, reutilizando
- * `meta.ogImage` (o logótipo existente — não há imagem dedicada, secção 4
- * do requirements.md).
+ * `canonical` (a própria URL), `alternates.languages` (hreflang
+ * PT<->EN), `openGraph` e `twitter:card`, reutilizando
+ * `meta.ogImage` (o logótipo existente — não há imagem dedicada).
  */
 export function buildPageMetadata({
   lang,
@@ -80,7 +79,7 @@ export function buildPageMetadata({
       languages: {
         pt: pathPt,
         en: pathEn,
-        // PT é o idioma por defeito, servido sem prefixo na raiz (D-4) —
+        // PT é o idioma por defeito, servido sem prefixo na raiz —
         // é também o destino razoável de "x-default" para visitantes sem
         // preferência de idioma detetável pelo motor de busca.
         "x-default": pathPt,

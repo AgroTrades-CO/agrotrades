@@ -24,8 +24,8 @@
     },
     {
       "visible": true,
-      "pt": "Sedeada no Distrito de Moma, Província de Nampula, a AGRO TRADES combina o conhecimento local do território com práticas agronómicas modernas, cobrindo toda a cadeia de valor agrícola — desde a preparação do terreno até à comercialização do produto final.",
-      "en": "Headquartered in the Moma District, Nampula Province, AGRO TRADES combines local knowledge of the territory with modern agronomic practices, covering the entire agricultural value chain — from land preparation to marketing the final product."
+      "pt": "Sedeada no Distrito de Moma, Província de Nampula, e registada em Moçambique com o NUIT 401828011, a AGRO TRADES combina o conhecimento local do território com práticas agronómicas modernas, cobrindo toda a cadeia de valor agrícola — desde a preparação do terreno até à comercialização do produto final.",
+      "en": "Headquartered in the Moma District, Nampula Province, and registered in Mozambique under NUIT 401828011, AGRO TRADES combines local knowledge of the territory with modern agronomic practices, covering the entire agricultural value chain — from land preparation to marketing the final product."
     },
     {
       "visible": true,
@@ -80,10 +80,10 @@
       }
     }
   ],
-  "bannerImage": "/images/banners/quem-somos.svg",
+  "bannerImage": "/images/uploads/quem-somos-equipa.webp",
   "bannerImageAlt": {
-    "pt": "Equipa e terras da AGRO TRADES",
-    "en": "AGRO TRADES team and land"
+    "pt": "Equipa da AGRO TRADES junto a um trator, num terreno agrícola",
+    "en": "The AGRO TRADES team beside a tractor on farmland"
   },
   "teamTag": {
     "pt": "A nossa gente",
@@ -179,7 +179,7 @@
           "pt": "CEO",
           "en": "CEO"
         },
-        "foto": "/images/team/placeholder.svg",
+        "foto": "/images/uploads/equipa-ceo.webp",
         "frase": {
           "pt": "Frase inspiradora de exemplo.",
           "en": "Example inspiring quote."

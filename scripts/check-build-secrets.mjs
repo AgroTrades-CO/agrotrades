@@ -1,11 +1,11 @@
-// Varrimento de segredos no resultado do build (task-017, SEC-T-07 (5), V-16).
+// Varrimento de segredos no resultado do build.
 // Corre depois do `next build`: falha o build se o valor literal de alguma
 // variável de Production não pública aparecer em JavaScript/HTML servido ao
 // browser — public/admin/** (admin da TinaCMS) ou .next/static/** (bundles do
 // site). Nunca imprime o valor, só o nome da variável e o ficheiro.
 //
 // Variáveis sem valor (Preview, CI, local) não são verificadas.
-// CONTACT_RECIPIENT_EMAIL não é segredo (SEC-N-01): se o mesmo endereço já
+// CONTACT_RECIPIENT_EMAIL não é segredo: se o mesmo endereço já
 // estiver publicado em content/ (ex.: lista de emails de contacto), a sua
 // presença no bundle não é uma fuga e não é verificado.
 import { readdirSync, readFileSync, existsSync } from "node:fs";

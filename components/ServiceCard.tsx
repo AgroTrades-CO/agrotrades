@@ -5,11 +5,10 @@ import { ServiceCardView } from "@/components/ServiceCardView";
 
 /**
  * Cartão de serviço partilhado — usado na listagem `/servicos` e na secção
- * "Outros serviços" do detalhe (Fase 2, design-spec-fase2 secção 2b), para
- * não duplicar markup/estilo entre os dois locais (recomendação do
- * ux-ui-designer, confirmada pelo software-architect no handoff-26).
+ * "Outros serviços" do detalhe, para não duplicar markup nem estilo entre
+ * os dois locais.
  *
- * Invólucro de servidor (task-017, A-12): lê @/content e entrega os dados à
+ * Invólucro de servidor: lê @/content e entrega os dados à
  * vista `ServiceCardView`. Nunca importar a partir de um componente cliente.
  */
 export function ServiceCard({

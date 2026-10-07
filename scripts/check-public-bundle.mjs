@@ -1,8 +1,8 @@
-// AC-15a / C-A — "zero Tina" nas páginas públicas (task-017, architecture.md 19.2).
+// Verificação "zero Tina" nas páginas públicas.
 //
 // Corre no fim de CADA `npm run build` (local, CI, Vercel), depois de `next build`, sobre .next/.
-// Falha fechada e sem interruptor (SEC-AC15-3): nenhuma variável nem argumento a desliga.
-// Alterar MARKS ou TINA_MODULE ou a lista de exclusões exige revisão do security-engineer.
+// Falha fechada e sem interruptor: nenhuma variável nem argumento a desliga.
+// Alterar MARKS ou TINA_MODULE ou a lista de exclusões exige revisão de segurança.
 //
 // 1. Páginas públicas = prerender-manifest.json (sem /_global-error, /robots.txt, /sitemap.xml,
 //    editor-preview, /api/, /admin); todas as URLs do sitemap têm de estar nessa lista.

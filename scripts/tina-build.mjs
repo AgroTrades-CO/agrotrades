@@ -1,6 +1,6 @@
-// Passo TinaCMS do `npm run build` (task-017-tina-cms-adoption, architecture.md 4.1).
+// Passo TinaCMS do `npm run build`.
 //
-// Fase 4: o admin da Tina Cloud (/admin) só é construído em Production
+// O admin da Tina Cloud (/admin) só é construído em Production
 // (VERCEL_ENV=production). Aí o TINA_PUBLIC_CLIENT_ID é obrigatório: sem ele o
 // build falha, para nunca publicar um site sem admin por engano. Nos restantes
 // ambientes (Preview, CI, build local) a Tina não é construída e public/admin/
@@ -8,7 +8,7 @@
 // localmente pelo `npm run tina:dev`.
 //
 // O TINA_TOKEN nunca é passado à CLI da Tina: a CLI escreve-o literalmente no
-// cliente gerado e no JS do admin (SEC-T-07). A `--skip-cloud-checks` evita que
+// cliente gerado e no JS do admin. A `--skip-cloud-checks` evita que
 // o build dependa da disponibilidade da Tina Cloud.
 //
 // Só regista no log se a Tina foi ou não construída (nunca valores de variáveis).

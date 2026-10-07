@@ -1,9 +1,7 @@
 /**
- * JSON-LD `Organization` (Fase 4, FR-12/AC-06) — dados de contacto vindos
- * de `content/site/contacts.json` e `content/site/contacts.json (campo "locations")`, nunca
- * hardcoded aqui, conforme pedido. Corresponde ao bloco existente na
- * variante `AvaliacaoAgroTrades` (ver `index.html` dessa pasta), migrado
- * para dados estruturados em vez de JSON escrito à mão no HTML.
+ * JSON-LD `Organization` — os dados de contacto vêm de
+ * `content/site/contacts.json` (incluindo o campo "locations"), nunca
+ * escritos à mão aqui.
  */
 
 import { contacts, locations, meta, visibleEmails, visiblePhones } from "./index";
@@ -23,6 +21,7 @@ export const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: contacts.ceo.company,
+  taxID: contacts.nuit,
   url: meta.siteUrl,
   logo: `${meta.siteUrl}${meta.ogImage}`,
   telephone: visiblePhones[0]?.number ?? contacts.phones[0].number,

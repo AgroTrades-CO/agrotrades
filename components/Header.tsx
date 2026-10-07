@@ -57,133 +57,139 @@ export function Header({ lang }: { lang: Lang }) {
         <Image src="/images/logo.png" alt="AGRO TRADES LDA" width={52} height={52} priority />
       </Link>
 
-      <ul className={`nav-links${open ? " open" : ""}`}>
-        {nav.home.visible && (
-          <li>
-            <Link href={path("home", lang)} className={pathname === path("home", lang) ? "active" : undefined}>
-              {nav.home[lang]}
-            </Link>
-          </li>
-        )}
+      {/* No telemóvel este invólucro é o painel do menu: a lista e o seletor de
+          idioma empilham-se dentro dele, em vez de serem posicionados cada um
+          por si. No ecrã grande tem `display: contents`, por isso desaparece da
+          disposição e os dois filhos continuam a ser itens flex de <nav>. */}
+      <div className={`nav-panel${open ? " open" : ""}`}>
+        <ul className={`nav-links${open ? " open" : ""}`}>
+          {nav.home.visible && (
+            <li>
+              <Link href={path("home", lang)} className={pathname === path("home", lang) ? "active" : undefined}>
+                {nav.home[lang]}
+              </Link>
+            </li>
+          )}
 
-        {nav.services.visible && (
-          <li
-            className="nav-services-item"
-            ref={servicesLiRef}
-            onMouseEnter={() => setServicesOpen(true)}
-            onMouseLeave={() => setServicesOpen(false)}
-          >
-          <button
-            type="button"
-            ref={servicesTriggerRef}
-            className={`nav-services-trigger${servicesActive ? " active" : ""}`}
-            aria-haspopup="true"
-            aria-expanded={servicesOpen}
-            aria-controls="services-dropdown"
-            onClick={() => setServicesOpen((v) => !v)}
-            onKeyDown={(event) => {
-              if (event.key === "ArrowDown") {
-                event.preventDefault();
-                setServicesOpen(true);
-                focusItem(0);
-              }
-              if (event.key === "Escape" && servicesOpen) {
-                closeServices();
-              }
-            }}
-          >
-            <span>{nav.services[lang]}</span>
-            <IconChevronDown
-              width={12}
-              height={12}
-              className="nav-services-chevron"
-              style={{ transform: servicesOpen ? "rotate(180deg)" : undefined }}
-              aria-hidden="true"
-            />
-          </button>
-
-          <div
-            id="services-dropdown"
-            className={`nav-services-panel${servicesOpen ? " open" : ""}`}
-            onKeyDown={(event) => {
-              if (event.key === "Escape") {
-                closeServices();
-                servicesTriggerRef.current?.focus();
-              }
-              if (event.key === "ArrowDown") {
-                event.preventDefault();
-                const current = itemRefs.current.findIndex((el) => el === document.activeElement);
-                focusItem(current + 1);
-              }
-              if (event.key === "ArrowUp") {
-                event.preventDefault();
-                const current = itemRefs.current.findIndex((el) => el === document.activeElement);
-                focusItem(current - 1);
-              }
-            }}
-          >
-            <div className="nav-services-grid">
-              {services.map((service, index) => (
-                <Link
-                  key={service.id}
-                  href={serviceDetailPath(service.id, lang)}
-                  className="nav-services-link"
-                  ref={(el) => {
-                    itemRefs.current[index] = el;
-                  }}
-                  onClick={closeServices}
-                >
-                  <Image
-                    src={service.bannerImage}
-                    alt=""
-                    width={36}
-                    height={36}
-                    className="nav-services-thumb"
-                  />
-                  <span>{service.title[lang]}</span>
-                </Link>
-              ))}
-            </div>
-            <Link
-              href={path("services", lang)}
-              className="nav-services-viewall"
-              ref={(el) => {
-                itemRefs.current[services.length] = el;
+          {nav.services.visible && (
+            <li
+              className="nav-services-item"
+              ref={servicesLiRef}
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+            <button
+              type="button"
+              ref={servicesTriggerRef}
+              className={`nav-services-trigger${servicesActive ? " active" : ""}`}
+              aria-haspopup="true"
+              aria-expanded={servicesOpen}
+              aria-controls="services-dropdown"
+              onClick={() => setServicesOpen((v) => !v)}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowDown") {
+                  event.preventDefault();
+                  setServicesOpen(true);
+                  focusItem(0);
+                }
+                if (event.key === "Escape" && servicesOpen) {
+                  closeServices();
+                }
               }}
-              onClick={closeServices}
             >
-              {nav.servicesViewAll[lang]} &rarr;
-            </Link>
-          </div>
-        </li>
-        )}
+              <span>{nav.services[lang]}</span>
+              <IconChevronDown
+                width={12}
+                height={12}
+                className="nav-services-chevron"
+                style={{ transform: servicesOpen ? "rotate(180deg)" : undefined }}
+                aria-hidden="true"
+              />
+            </button>
 
-        {navLinksAfter.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              className={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "active" : undefined}
+            <div
+              id="services-dropdown"
+              className={`nav-services-panel${servicesOpen ? " open" : ""}`}
+              onKeyDown={(event) => {
+                if (event.key === "Escape") {
+                  closeServices();
+                  servicesTriggerRef.current?.focus();
+                }
+                if (event.key === "ArrowDown") {
+                  event.preventDefault();
+                  const current = itemRefs.current.findIndex((el) => el === document.activeElement);
+                  focusItem(current + 1);
+                }
+                if (event.key === "ArrowUp") {
+                  event.preventDefault();
+                  const current = itemRefs.current.findIndex((el) => el === document.activeElement);
+                  focusItem(current - 1);
+                }
+              }}
             >
-              {link.label}
-            </Link>
+              <div className="nav-services-grid">
+                {services.map((service, index) => (
+                  <Link
+                    key={service.id}
+                    href={serviceDetailPath(service.id, lang)}
+                    className="nav-services-link"
+                    ref={(el) => {
+                      itemRefs.current[index] = el;
+                    }}
+                    onClick={closeServices}
+                  >
+                    <Image
+                      src={service.bannerImage}
+                      alt=""
+                      width={36}
+                      height={36}
+                      className="nav-services-thumb"
+                    />
+                    <span>{service.title[lang]}</span>
+                  </Link>
+                ))}
+              </div>
+              <Link
+                href={path("services", lang)}
+                className="nav-services-viewall"
+                ref={(el) => {
+                  itemRefs.current[services.length] = el;
+                }}
+                onClick={closeServices}
+              >
+                {nav.servicesViewAll[lang]} &rarr;
+              </Link>
+            </div>
           </li>
-        ))}
-      </ul>
+          )}
 
-      {/* Seletor de idioma: navegação para a página equivalente no outro
-          idioma (nunca troca client-side), preservando a página atual. */}
-      <div className={`lang-switcher${open ? " open" : ""}`}>
-        {(["pt", "en"] as const).map((candidate) =>
-          candidate === lang ? (
-            <span key={candidate} className="lang-btn active" aria-current="true">
-              {candidate.toUpperCase()}
-            </span>
-          ) : (
-            <Link key={candidate} href={otherLangHref} className="lang-btn">
-              {candidate.toUpperCase()}
-            </Link>
-          )
-        )}
+          {navLinksAfter.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className={pathname === link.href || pathname.startsWith(`${link.href}/`) ? "active" : undefined}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* Seletor de idioma: navegação para a página equivalente no outro
+            idioma (nunca troca client-side), preservando a página atual. */}
+        <div className={`lang-switcher${open ? " open" : ""}`}>
+          {(["pt", "en"] as const).map((candidate) =>
+            candidate === lang ? (
+              <span key={candidate} className="lang-btn active" aria-current="true">
+                {candidate.toUpperCase()}
+              </span>
+            ) : (
+              <Link key={candidate} href={otherLangHref} className="lang-btn">
+                {candidate.toUpperCase()}
+              </Link>
+            )
+          )}
+        </div>
       </div>
 
       <button
@@ -193,7 +199,7 @@ export function Header({ lang }: { lang: Lang }) {
         aria-expanded={open}
         onClick={() => {
           // Fechar o menu hambúrguer principal reseta também a sublista de serviços,
-          // para não reabrir já expandida da próxima vez (design-spec-fase2 3b).
+          // para não reabrir já expandida da próxima vez.
           if (open) setServicesOpen(false);
           setOpen((v) => !v);
         }}

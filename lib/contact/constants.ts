@@ -1,13 +1,12 @@
 /**
- * Constantes partilhadas do formulário de contacto (task-006,
- * architecture.md secção 10, ponto 14). Importadas pelo cliente
+ * Constantes partilhadas do formulário de contacto. Importadas pelo cliente
  * (components/ContactForm.tsx) e pelo servidor (app/api/contact/route.ts,
  * lib/contact/*). NUNCA colocar aqui segredos nem leituras de `process.env`:
  * este ficheiro acaba no bundle do browser.
  */
 
 /**
- * Nome do campo honeypot (SEC-C-08). Sem semântica de preenchimento
+ * Nome do campo honeypot. Sem semântica de preenchimento
  * automático: nomes como "empresa"/"company" são preenchidos pelos
  * gestores de autopreenchimento e descartavam mensagens reais.
  */
@@ -19,14 +18,14 @@ export const TURNSTILE_ACTION = "contact-form";
 /**
  * Script oficial da Cloudflare em renderização explícita. Tem de vir
  * deste URL exato: não pode ser copiado para `public/`, servido por CDN
- * intermédia nem guardado em cache (restrição R7).
+ * intermédia nem guardado em cache.
  */
 export const TURNSTILE_SCRIPT_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 
 /** Endpoint de verificação servidor-a-servidor. */
 export const TURNSTILE_SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
-/** Limite do corpo do pedido em bytes (SEC-C-09), aplicado antes do parse. */
+/** Limite do corpo do pedido em bytes, aplicado antes do parse. */
 export const MAX_BODY_BYTES = 16384;
 
 /** Comprimento máximo de um token Turnstile (documentação da Cloudflare). */
@@ -48,7 +47,7 @@ export const TURNSTILE_TEST_SECRET_KEYS: readonly string[] = [
  * e dois caracteres finais (ex.: `1x00000000000000000000AA`). As chaves
  * reais começam por `0x`. O padrão é deliberadamente largo para que
  * qualquer chave de teste, mesmo uma que não esteja listada aqui, faça
- * falhar o build de produção (architecture.md 3.3).
+ * falhar o build de produção.
  */
 const TURNSTILE_TEST_KEY_PATTERN = /^[123]x0+[A-Z]{2}$/;
 

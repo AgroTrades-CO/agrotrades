@@ -2,11 +2,11 @@ import { z } from "zod";
 import { TURNSTILE_SITEVERIFY_URL, looksLikeTurnstileTestSecret } from "@/lib/contact/constants";
 
 /**
- * Verificação servidor-a-servidor do token Cloudflare Turnstile (task-006,
- * architecture.md 4.3). Falha fechada: só `success === true` (e, com
+ * Verificação servidor-a-servidor do token Cloudflare Turnstile. Falha
+ * fechada: só `success === true` (e, com
  * secret real, `hostname` e `action` corretos) conta como aceite.
  *
- * - Timeout de 5 s, sem novas tentativas (R12).
+ * - Timeout de 5 s, sem novas tentativas.
  * - Sem `remoteip`: não se envia o IP do visitante à Cloudflare.
  * - A secret nunca é registada nem incluída em mensagens de erro.
  * - `errorCodes` só contém os códigos enumerados da Cloudflare (filtrados)

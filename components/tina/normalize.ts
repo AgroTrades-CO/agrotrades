@@ -2,8 +2,7 @@
  * Converte a resposta GraphQL da Tina para a forma que os componentes do
  * site já esperam (a mesma dos ficheiros JSON), SEM perder os metadados
  * `_content_source` que o `useTina` acrescenta (necessários ao clicar-para-
- * editar). Só usado nas rotas de pré-visualização (task-017; vem do
- * protótipo da task-009).
+ * editar). Só usado nas rotas de pré-visualização.
  *
  * Diferenças tratadas:
  *   - a Tina devolve `null` para campos ausentes; o site espera `undefined`;
