@@ -534,6 +534,25 @@ section { padding: 80px 5%; }
 .team-card .about-tag {
   font-size: 12px; padding: 4px 10px;
 }
+/* Contactos de um membro: só aparecem se forem preenchidos no admin. No
+   cartão grande ficam alinhados à esquerda com o texto; nos cartões da
+   grelha, centrados como o resto do cartão. */
+.team-contacts {
+  display: flex; gap: 6px; margin-top: 10px; margin-left: -8px;
+}
+.team-card .team-contacts { justify-content: center; margin-left: 0; }
+@media (max-width: 640px) {
+  .team-featured .team-contacts { justify-content: center; margin-left: 0; }
+}
+/* 32px de área clicável à volta de um ícone de 18px: num telemóvel o alvo
+   tem de ser maior do que o desenho. */
+.team-contacts a {
+  color: var(--text-muted);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 8px;
+  transition: color 0.2s, background 0.2s;
+}
+.team-contacts a:hover { color: var(--green); background: var(--green-light); }
 
 /* ── CAMPANHA (página /campanha) ── */
 .quote-block {
