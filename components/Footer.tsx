@@ -100,7 +100,7 @@ export function Footer({ lang }: { lang: Lang }) {
       </div>
       <div className="footer-bottom">
         <span>
-          &copy; {year} {footer.legalCopy[lang]}
+          &copy; {year} {footer.legalCopy[lang]} &middot; NUIT {contacts.nuit}
         </span>
         {footer.signature.visible && (
           <span className="footer-signature">

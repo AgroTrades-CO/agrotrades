@@ -599,7 +599,7 @@ const contactos = paginaUnica("contactos", "Contactos", "contacts", [
     ],
   },
   texto("nuit", "NUIT", {
-    description: "Não aparece na página; é enviado aos motores de busca nos dados da empresa.",
+    description: "Aparece no rodapé e é enviado aos motores de busca nos dados da empresa.",
   }),
   imagem("bannerImage", "Imagem de topo"),
   texto("mapsLink", "Mapa: link 'Abrir no Google Maps'"),
@@ -766,7 +766,9 @@ const rodape = paginaUnica("rodape", "Rodapé", "footer", [
       },
     ],
   },
-  bil("legalCopy", "Texto legal"),
+  bil("legalCopy", "Texto legal", {
+    description: "Sem o ano nem o NUIT — ambos são acrescentados automaticamente.",
+  }),
   bil("madeIn", "'Feito em'"),
   {
     type: "object",
