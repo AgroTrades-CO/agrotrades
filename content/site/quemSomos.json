@@ -203,38 +203,6 @@
           }
         ],
         "email": "ceo@agrotrades.co.mz"
-      },
-      {
-        "visible": true,
-        "nome": "Nome Exemplo 2",
-        "cargo": {
-          "pt": "Maquinista",
-          "en": "Worker"
-        },
-        "foto": "/images/team/placeholder.svg",
-        "frase": {
-          "pt": "Frase inspiradora de exemplo.",
-          "en": "Example inspiring quote."
-        },
-        "badges": [
-          {
-            "pt": "Mecanização",
-            "en": "Mechanisation"
-          },
-          {
-            "pt": "Operações de Campo",
-            "en": "Field Operations"
-          }
-        ]
-      },
-      {
-        "visible": true,
-        "nome": "Nome Exemplo 3",
-        "cargo": {
-          "pt": "Vendedor",
-          "en": "Saler"
-        },
-        "foto": "/images/team/placeholder.svg"
       }
     ]
   }
