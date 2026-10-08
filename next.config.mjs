@@ -66,6 +66,17 @@ const nextConfig = {
   // nova revisão de arquitetura/segurança.
   async headers() {
     const turnstileOrigin = "https://challenges.cloudflare.com";
+    // Interruptor de indexação (SITE_INDEXING). Enquanto o site não tiver o
+    // conteúdo real, todas as rotas respondem com
+    // `X-Robots-Tag: noindex, nofollow` e não aparecem nas pesquisas; o site
+    // continua acessível a quem tiver o endereço — isto não é controlo de
+    // acesso. Por omissão BLOQUEIA: esquecer a variável deixa o site fora das
+    // pesquisas, nunca o contrário. O robots.txt continua a permitir o
+    // rastreio de propósito (app/robots.ts) — sem rastreio o motor de busca
+    // não chega a ler este cabeçalho e o URL pode mesmo assim aparecer, sem
+    // descrição, se estiver referido noutro sítio.
+    const indexingAllowed = indexingIsAllowed();
+    const noindex = { key: "X-Robots-Tag", value: "noindex, nofollow" };
     // Em desenvolvimento (`npm run dev`), o Next.js/Turbopack usa eval()
     // para Fast Refresh e outras funcionalidades de debugging (nunca em
     // produção — ver aviso do próprio React). Sem 'unsafe-eval' em
@@ -117,6 +128,7 @@ const nextConfig = {
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           { key: "Content-Security-Policy", value: globalCsp.join("; ") },
+          ...(indexingAllowed ? [] : [noindex]),
         ],
       },
       {
@@ -141,6 +153,10 @@ const nextConfig = {
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Content-Security-Policy", value: "sandbox; default-src 'none'" },
+          // Repetido: esta entrada SUBSTITUI integralmente os headers de
+          // `/:path*` para este caminho (regra "a última entrada vence"
+          // explicada acima), por isso não herda o noindex da entrada global.
+          ...(indexingAllowed ? [] : [noindex]),
         ],
       },
     ];
@@ -238,6 +254,21 @@ const nextConfig = {
     return [{ source: "/admin", destination: "/admin/index.html" }];
   },
 };
+
+/**
+ * Interruptor de indexação, lido no build: só o valor exato "allow" abre o
+ * site aos motores de busca; "block" (ou a variável ausente) mantém o
+ * `X-Robots-Tag: noindex, nofollow` em todas as rotas. Qualquer outro valor
+ * é erro de build — um "alow" mal escrito tem de falhar à vista, não ficar
+ * silenciosamente a bloquear.
+ */
+function indexingIsAllowed() {
+  const value = process.env.SITE_INDEXING?.trim() ?? "block";
+  if (value !== "allow" && value !== "block") {
+    throw new Error('SITE_INDEXING inválida: use "allow" ou "block"');
+  }
+  return value === "allow";
+}
 
 /** Porta da API local do `tinacms dev` (definida por scripts/tina-dev.mjs). */
 function tinaLocalPort() {

@@ -7,6 +7,12 @@ import { meta } from "@/content";
  * pré-visualização do editor e as rotas de API — preparação de indexação,
  * não controlo de acesso (esse vive no servidor: Draft Mode nas rotas de
  * pré-visualização).
+ *
+ * Não muda com `SITE_INDEXING` (next.config.mjs), de propósito: quem bloqueia
+ * a indexação é o `X-Robots-Tag: noindex, nofollow`, e para o motor de busca
+ * o ler tem de poder rastrear as páginas. Um `Disallow: /` faria o contrário
+ * do pretendido — o URL continuaria elegível para aparecer nas pesquisas, sem
+ * descrição, bastando estar referido noutro sítio.
  */
 export default function robots(): MetadataRoute.Robots {
   return {
