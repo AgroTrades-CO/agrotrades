@@ -565,8 +565,8 @@ export const contactsSchema = z.object({
   tag: bilingualString,
   title: bilingualString,
   intro: bilingualString,
-  /** NUIT da empresa. Não aparece na página; alimenta o `taxID` do JSON-LD
-   *  Organization (content/organization.ts). Dígitos, sem espaços. */
+  /** NUIT da empresa. Aparece no rodapé (components/Footer.tsx) e alimenta o
+   *  `taxID` do JSON-LD Organization (content/organization.ts). Dígitos, sem espaços. */
   nuit: z.string().trim().regex(/^\d+$/, "o NUIT só pode ter dígitos"),
   /** Banner de imagem do topo da página — obrigatório, sem toggle. */
   bannerImage: localImagePath,
@@ -654,7 +654,8 @@ export const footerSchema = z.object({
   /** Parágrafo por baixo do logótipo — próprio, não reutiliza `hero.text`. */
   description: bilingualString,
   serviceLinks: z.array(footerServiceLinkSchema),
-  /** Texto legal, sem o "© <ano>" — o ano é calculado em runtime. */
+  /** Texto legal, sem o "© <ano>" nem o NUIT — o ano é calculado em runtime
+   *  e o NUIT vem de `contacts.nuit`. */
   legalCopy: bilingualString,
   madeIn: bilingualString,
   /** Assinatura "by <nome>" a seguir aos direitos reservados, com link de WhatsApp. */
