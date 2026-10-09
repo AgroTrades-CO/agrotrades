@@ -92,34 +92,54 @@ export function chunkModuleIds(code) {
   // Script simples sem registo de módulos (ex.: polyfills do Next): não tem ids.
   if (!code.includes("TURBOPACK")) return [];
   const context = vm.createContext({ TURBOPACK: [], document: undefined });
+  // Os chunks escrevem em `globalThis.TURBOPACK` e o runtime sonda
+  // `self.TURBOPACK_ASSET_SUFFIX` logo na primeira instrução; sem `self` o chunk abortava antes
+  // de registar o que quer que fosse. Ambos apontam para o próprio contexto do vm, que não expõe
+  // nada do Node. As fábricas continuam a NÃO ser executadas: só se lê o que foi registado.
+  context.globalThis = context;
+  context.self = context;
   try {
     vm.runInContext(code, context, { timeout: VM_TIMEOUT_MS });
   } catch {
-    // O chunk de runtime regista-se e depois tenta usar APIs do browser (ex.: `self`), que o
-    // contexto não expõe; o que interessa é o que ficou registado antes disso.
+    // O chunk de runtime regista-se e depois tenta usar outras APIs do browser (ex.: `URL`), que
+    // o contexto não expõe; o que interessa é o que ficou registado antes disso.
   }
   const entries = context.TURBOPACK;
-  if (!Array.isArray(entries) || entries.length === 0) return null;
+  if (!Array.isArray(entries) || entries.length === 0) {
+    // O chunk de runtime do Turbopack não regista módulos nenhuns: consome a fila e substitui
+    // `globalThis.TURBOPACK` pelo seu próprio `{ push }`. Zero ids é o resultado correto para
+    // ele — e SÓ para ele. Qualquer outro chunk que não registe nada continua a ser "formato
+    // não reconhecido" (null), para a verificação falhar fechada em vez de ficar cega.
+    return /globalThis\.TURBOPACK\s*=\s*\{\s*push\s*:/.test(code) ? [] : null;
+  }
   const ids = [];
-  for (const entry of entries) {
-    if (!Array.isArray(entry)) return null;
-    // Formato: [script atual, (id... fábrica)*, {parâmetros do runtime}?]; vários ids seguidos
-    // partilham a fábrica seguinte.
-    let pending = 0;
-    for (let i = 1; i < entry.length; i++) {
-      const item = entry[i];
+  // Formato (Next 16.4): [script atual, [(id... fábrica)*], {parâmetros do runtime}?]. Até ao
+  // 16.3 os pares id/fábrica vinham no mesmo nível do script, sem o array intermédio; aceitam-se
+  // os dois, daí a recursão. Vários ids seguidos partilham a fábrica seguinte.
+  let pending = 0;
+  const visit = (items, from) => {
+    for (let i = from; i < items.length; i++) {
+      const item = items[i];
       if (typeof item === "number") {
         ids.push(item);
         pending++;
       } else if (typeof item === "function") {
-        if (pending === 0) return null;
+        if (pending === 0) return false;
         pending = 0;
+      } else if (Array.isArray(item)) {
+        if (!visit(item, 0)) return false;
       } else if (item && typeof item === "object") {
         continue;
       } else {
-        return null;
+        return false;
       }
     }
+    return true;
+  };
+  for (const entry of entries) {
+    if (!Array.isArray(entry)) return null;
+    pending = 0;
+    if (!visit(entry, 1)) return null;
     if (pending !== 0) return null;
   }
   return ids;

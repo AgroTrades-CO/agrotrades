@@ -584,6 +584,9 @@ export const contactsSchema = z.object({
   emailLabel: bilingualString,
   phones: z.array(phoneEntrySchema).min(1),
   emails: z.array(emailEntrySchema).min(1),
+  /** Mapa embutido em `/contactos`. Forma sem chave de API, a mesma morada do `mapsLink`:
+   *  `https://www.google.com/maps?q=<morada>&output=embed`. O host tem de continuar a ser
+   *  `www.google.com` — é o único autorizado em `frame-src` (next.config.mjs). */
   mapEmbedUrl: httpUrl,
   mapsLink: httpUrl,
   ceo: z.object({
