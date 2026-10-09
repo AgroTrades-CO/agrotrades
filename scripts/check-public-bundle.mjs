@@ -11,8 +11,8 @@
 // 4. Módulos: nenhum módulo Tina nos manifestos de referências cliente das rotas públicas, e
 //    nenhum chunk público regista um id de módulo Tina (ids recolhidos dos manifestos das rotas
 //    editor-preview; chunks lidos num vm restrito, fábricas nunca executadas).
-// 5. Controlo positivo: havendo rotas editor-preview, pelo menos um dos seus chunks contém
-//    `useTina` (senão as marcas estão desatualizadas e a verificação ficou cega).
+// 5. Controlo positivo: havendo rotas editor-preview, pelo menos um dos seus chunks contém uma
+//    marca literal da Tina (senão as marcas estão desatualizadas e a verificação ficou cega).
 // 6. Saída: uma linha por página (chunks, bytes brutos, gzip) e OK/FALHA; nunca imprime conteúdo.
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -115,8 +115,14 @@ for (const route of pages) {
 // 5. Controlo positivo.
 const hasPreviewRoutes = Object.keys(manifests).some((p) => /editor-preview/.test(p));
 if (hasPreviewRoutes) {
-  const found = [...previewChunks].some((name) => readChunk(name)?.text.includes("useTina"));
-  if (!found) fail("controlo positivo: nenhum chunk da pré-visualização contém `useTina` (marcas desatualizadas?)");
+  // `useTina` era a marca deste controlo até ao Next 16.3; no 16.4 o minificador renomeia o
+  // identificador e a marca deixou de aparecer nos chunks — o controlo passava a estar cego em
+  // vez de a falhar. Usam-se agora literais de texto, que a minificação não pode renomear:
+  // `data-tina-field` (atributo e seletores de CSS da pré-visualização) e `_content_source`.
+  // Ambos constam de MARKS, por isso a sua presença num chunk público continua a ser falha.
+  const POSITIVE_CONTROL = /data-tina-field|_content_source/;
+  const found = [...previewChunks].some((name) => POSITIVE_CONTROL.test(readChunk(name)?.text ?? ""));
+  if (!found) fail("controlo positivo: nenhum chunk da pré-visualização contém marcas da Tina (marcas desatualizadas?)");
   if (forbiddenIds.size === 0) fail("controlo positivo: nenhum módulo Tina encontrado nos manifestos da pré-visualização");
 }
 
