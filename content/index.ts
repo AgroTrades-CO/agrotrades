@@ -54,7 +54,6 @@ import {
   servicePageSchema,
   servicesPageSchema,
   servicesSchema,
-  youtubeEmbedUrl,
   type AboutPage,
   type BilingualString,
   type Service,
@@ -157,7 +156,10 @@ export const servicesPage = parseContent(servicesPageSchema, servicesPageJson, "
 export const servicesHeading = servicesPage.sectionHeading;
 export const servicePage = parseContent(servicePageSchema, servicePageJson, "content/site/servicePage.json");
 
-export { youtubeEmbedUrl };
+// Reexportado de `content/youtube.ts` por conveniência dos componentes de
+// servidor. O `HeroSlider` (cliente) importa de lá diretamente, para não
+// arrastar o Zod e os JSON deste módulo para o browser.
+export { youtubeEmbedUrl } from "./youtube";
 export type { ResolvedSectionLayout } from "./derive";
 
 /**

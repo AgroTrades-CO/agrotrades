@@ -16,12 +16,13 @@ const MSG_VISTA =
   'Uma vista só recebe dados por props; valores de @/content, lib/ e da Tina ficam no invólucro de servidor ou em lib/view-data/*. Tipos: `import type`.'
 const MSG_PREVIEW =
   'A pré-visualização recebe o conteúdo publicado por props da página de servidor; não importar valores de @/content nem de lib/. Tipos: `import type`.'
-const MSG_DERIVE =
-  'content/derive.ts corre no browser; só `import type` (nunca Zod, JSON, ./schemas ou ./index como valor).'
+const MSG_PURO =
+  'Este módulo de content/ corre no browser; só `import type` (nunca Zod, JSON, ./schemas ou ./index como valor).'
 
 const conteudoOuLib = (message) => [
-  // @/content e @/content/* exceto @/content/derive (as derivações puras).
-  { regex: '^@/content(/(?!derive$).*)?$', allowTypeImports: true, message },
+  // @/content e @/content/* exceto os módulos puros (derive, routes, youtube):
+  // não carregam Zod nem JSON e o bloco PUROS abaixo garante que continuam assim.
+  { regex: '^@/content(/(?!derive$|routes$|youtube$).*)?$', allowTypeImports: true, message },
   { group: ['@/lib/*', '@/lib/**'], message },
 ]
 
@@ -51,18 +52,19 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    files: ['content/derive.ts'],
+    // PUROS: módulos de content/ que podem ir para o browser.
+    files: ['content/derive.ts', 'content/routes.ts', 'content/youtube.ts'],
     rules: {
       '@typescript-eslint/no-restricted-imports': [
         'error',
         {
           paths: [
-            { name: './schemas', allowTypeImports: true, message: MSG_DERIVE },
-            { name: './index', allowTypeImports: true, message: MSG_DERIVE },
-            { name: '.', allowTypeImports: true, message: MSG_DERIVE },
-            { name: 'zod', allowTypeImports: true, message: MSG_DERIVE },
+            { name: './schemas', allowTypeImports: true, message: MSG_PURO },
+            { name: './index', allowTypeImports: true, message: MSG_PURO },
+            { name: '.', allowTypeImports: true, message: MSG_PURO },
+            { name: 'zod', allowTypeImports: true, message: MSG_PURO },
           ],
-          patterns: [{ group: ['*.json'], allowTypeImports: true, message: MSG_DERIVE }],
+          patterns: [{ group: ['*.json'], allowTypeImports: true, message: MSG_PURO }],
         },
       ],
       '@typescript-eslint/no-import-type-side-effects': 'error',
