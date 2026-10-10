@@ -52,8 +52,10 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    // PUROS: módulos de content/ que podem ir para o browser.
-    files: ['content/derive.ts', 'content/routes.ts', 'content/youtube.ts'],
+    // PUROS: módulos de content/ que podem ir para o browser. `service-slugs`
+    // não é importado por nenhuma vista, mas o `routes` importa-o como valor —
+    // sem ele na lista, o Zod e os JSON voltavam ao bundle por essa porta.
+    files: ['content/derive.ts', 'content/routes.ts', 'content/service-slugs.ts', 'content/youtube.ts'],
     rules: {
       '@typescript-eslint/no-restricted-imports': [
         'error',
