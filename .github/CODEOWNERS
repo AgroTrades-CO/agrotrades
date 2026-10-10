@@ -7,9 +7,8 @@
 #
 # Vale sempre a ÚLTIMA regra que faz match do caminho, por isso a ordem é um contrato:
 #   1. Regra geral `*`: todo o repositório exige revisão do dono.
-#   2. Exceções sem dono, depois da regra geral: `content/services/`, `content/site/` e os
-#      uploads de imagens. `content/products/` (também escrita pela TinaCMS) continua a exigir
-#      revisão.
+#   2. Exceções sem dono, depois da regra geral: as pastas de conteúdo escritas pela TinaCMS
+#      (`content/services/`, `content/site/`, `content/products/`) e os uploads de imagens.
 # Todos os módulos TypeScript em `content/` (index.ts, schemas/, etc.) ficam na regra geral:
 # são código compilado para o bundle, não dados.
 #
@@ -19,8 +18,13 @@
 * @virgilio-24
 
 # 2. Exceções sem dono.
-#    `content/services/` e `content/site/`: validadas por schema no build (content/schemas/index.ts).
+#    `content/services/`, `content/site/` e `content/products/`: validadas por schema no build
+#    (content/schemas/index.ts; `productsSchema` é o mesmo `serviceSchema`).
+#    `content/products/` é exceção porque na Fase 5 a automação do CMS abre o PR em nome do
+#    dono do projeto e o GitHub não deixa o autor aprovar o próprio PR — com dono, a edição de
+#    produtos pelo CMS ficava presa à espera de um segundo revisor que não existe.
 #    `public/images/uploads/`: validada pelo required check "media-guard".
 /content/services/
 /content/site/
+/content/products/
 /public/images/uploads/
