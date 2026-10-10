@@ -161,11 +161,20 @@ export async function POST(request: NextRequest) {
     log(requestId, "dry_run_secrets_present", configResult.warnings.join(","));
   }
 
-  // 3. Origem.
+  // 3. Origem. Um cabeçalho presente tem de bater certo; em `send` exige-se
+  //    ainda que pelo menos um dos dois exista — um pedido sem
+  //    `sec-fetch-site` e sem `origin` não vem de um browser (os browsers
+  //    atuais enviam sempre o primeiro), vem de um cliente feito à mão.
+  //    Em `dry-run` continua permissivo, para se poder chamar a rota à mão
+  //    em desenvolvimento.
   const secFetchSite = request.headers.get("sec-fetch-site");
   const origin = request.headers.get("origin");
-  if ((secFetchSite !== null && secFetchSite !== "same-origin") || (origin !== null && origin !== expectedOrigin(config, request))) {
-    log(requestId, "origin_rejected");
+  const headerMismatch =
+    (secFetchSite !== null && secFetchSite !== "same-origin") ||
+    (origin !== null && origin !== expectedOrigin(config, request));
+  const headersMissing = config.mode === "send" && secFetchSite === null && origin === null;
+  if (headerMismatch || headersMissing) {
+    log(requestId, "origin_rejected", headersMissing ? "missing" : undefined);
     return reply(false, 403);
   }
 
