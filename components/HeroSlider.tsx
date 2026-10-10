@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { youtubeEmbedUrl, type Hero, type Lang } from "@/content";
+import type { Hero, Lang } from "@/content";
+import { youtubeEmbedUrl } from "@/content/youtube";
 import { IconChevronLeft, IconChevronRight } from "@/components/icons";
 
 const AUTOPLAY_MS = 6000;

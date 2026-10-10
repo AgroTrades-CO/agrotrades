@@ -189,23 +189,6 @@ export const heroSlidesSchema = z
     "pelo menos um slide do hero tem de estar visível — ligue 'Secção visível' em pelo menos um slide de content/site/home.json (Hero)"
   );
 
-/** Único sítio onde o URL do embed do YouTube é construído.
- *  `mute=1` é vinculativo — nunca construir este URL noutro sítio. */
-export function youtubeEmbedUrl(id: string): string {
-  const params = new URLSearchParams({
-    autoplay: "1",
-    mute: "1",
-    loop: "1",
-    playlist: id,
-    controls: "0",
-    modestbranding: "1",
-    rel: "0",
-    playsinline: "1",
-    disablekb: "1",
-  });
-  return `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
-}
-
 // ── SERVICES ──────────────────────────────────────────────────────────────
 
 /** Item de galeria com visibilidade individual. */
