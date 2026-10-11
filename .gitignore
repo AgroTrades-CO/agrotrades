@@ -50,3 +50,10 @@ Thumbs.db
 
 # Documentação de trabalho (fica fora do repositório público)
 /project/
+
+# Ferramentas locais de agentes IDE (skills/agentes/hooks instalados na máquina,
+# incluindo binários de dezenas de MB). Não são código do site e não vão para o
+# repositório público.
+/.github/agents/
+/.github/hooks/
+/.github/skills/
