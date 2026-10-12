@@ -1,7 +1,15 @@
 // Verificação "zero Tina" nas páginas públicas.
 //
-// Corre no fim de CADA `npm run build` (local, CI, Vercel), depois de `next build`, sobre .next/.
+// Corre no fim de CADA `npm run build` (local e CI), depois de `next build`, sobre .next/.
 // Falha fechada e sem interruptor: nenhuma variável nem argumento a desliga.
+//
+// NÃO corre no build da Vercel: lá o `vercel build` aplica configuração própria
+// (`Applying modifyConfig from Vercel`) e o resultado pré-renderizado não fica em
+// .next/server/app/ como fica localmente — o primeiro ficheiro que falta é
+// `sitemap.xml.body`. Por isso o `package.json` tem um script `vercel-build` sem este
+// passo (a Vercel prefere-o ao `build`), e a verificação passou a ser um check
+// obrigatório do GitHub Actions (.github/workflows/bundle-guard.yml), que constrói
+// com o `next build` normal. Nunca desligar os dois ao mesmo tempo.
 // Alterar MARKS ou TINA_MODULE ou a lista de exclusões exige revisão de segurança.
 //
 // 1. Páginas públicas = prerender-manifest.json (sem /_global-error, /robots.txt, /sitemap.xml,

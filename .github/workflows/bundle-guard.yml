@@ -1,0 +1,66 @@
+# bundle-guard
+#
+# O QUE ISTO PROTEGE: `scripts/check-public-bundle.mjs` é a verificação "zero Tina" nas páginas
+# públicas — nenhum módulo, marca de texto ou chunk da TinaCMS pode chegar ao bundle de uma
+# página pública. Lê o resultado de `next build` em `.next/server/app/`.
+#
+# PORQUE EXISTE ESTE WORKFLOW: no build da Vercel esses ficheiros não ficam em disco como ficam
+# localmente (`vercel build` aplica configuração própria e leva o resultado para o formato dele);
+# o primeiro que falta é `sitemap.xml.body`. Por isso o `package.json` tem um script
+# `vercel-build` sem esse passo — a Vercel prefere-o ao `build` — e a verificação passou a correr
+# aqui, com o `next build` normal.
+#
+# NOME DO JOB — CONTRATO, NÃO RENOMEAR:
+#   job: bundle-guard
+# É esta string que se regista como required status check em `main`, tal como `media-guard`.
+# Renomear o job desliga o controlo.
+#
+# AO CONTRÁRIO DO media-guard, ESTE JOB EXECUTA CÓDIGO DO REPOSITÓRIO (`npm ci` e o build, com os
+# scripts do PR). Daí as regras:
+#   - evento `pull_request`, NUNCA `pull_request_target`;
+#   - `permissions: contents: read` e nada mais;
+#   - nenhum segredo no ambiente do job — o build não precisa de nenhum: `tina-build.mjs` só
+#     constrói o admin com VERCEL_ENV=production, e sem as variáveis de contacto o formulário
+#     fica desativado sem falhar o build;
+#   - só a ação `actions/checkout`, fixada por SHA; o Node é o do runner.
+#
+# Não desligar este job e o passo do `build` ao mesmo tempo: ficavam as duas pontas sem rede.
+
+name: bundle-guard
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  bundle-guard:
+    name: bundle-guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Versões
+        run: |
+          node -v
+          npm -v
+
+      - name: Instalar dependências
+        run: npm ci
+
+      # `npm run build` corre, por esta ordem: tina-build (não constrói fora de Production),
+      # check-content-images, next build, check-build-secrets, check-public-bundle e js-budget
+      # --report. É o check-public-bundle que dá sentido a este job.
+      - name: Build e verificação do bundle público
+        run: npm run build
