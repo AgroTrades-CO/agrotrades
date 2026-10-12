@@ -15,7 +15,10 @@
 # Não alargar as exceções sem rever a segurança.
 #
 # 1. Regra geral — todo o repositório, dono do projeto.
-* @virgilio-24
+#    Tem de ser uma conta que exista e tenha pelo menos acesso de escrita a este
+#    repositório; o GitHub ignora a linha em silêncio se não tiver, e a proteção
+#    deixa de valer (ver o endpoint /codeowners/errors).
+* @AgroTrades
 
 # 2. Exceções sem dono.
 #    `content/services/`, `content/site/` e `content/products/`: validadas por schema no build
