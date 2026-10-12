@@ -5,7 +5,18 @@
 # PR que leva ao ar o que o editor escreveu. Quem edita no CMS não precisa de tocar no GitHub
 # além de aprovar e fazer merge.
 #
-# NÃO FAZ MERGE. `main` é protegido e a aprovação é humana, de propósito.
+# PEDE AUTO-MERGE, NÃO FAZ MERGE À FORÇA. O PR fica marcado para se integrar sozinho QUANDO os
+# checks obrigatórios passarem (`media-guard` e `bundle-guard`, que corre o `npm run build`
+# inteiro). Se algum falhar — por exemplo conteúdo que não passa na validação Zod — o PR fica
+# aberto à espera de uma pessoa. A proteção do ramo `main` continua a mandar: isto não a
+# contorna, usa-a.
+#
+# Porque é que isto não precisa de aprovação humana: no ruleset do `main`,
+# `required_approving_review_count` é 0 e a única exigência de revisão vem do `CODEOWNERS`, que
+# isenta `content/`. Um PR que toque noutra coisa continua a precisar de revisão do dono e o
+# auto-merge fica à espera dela.
+#
+# Precisa de "Allow auto-merge" ligado em Settings > General.
 #
 # PORQUE PRECISA DE UM TOKEN PRÓPRIO (`CMS_PR_TOKEN`):
 # um pull request aberto com o `GITHUB_TOKEN` não dispara os workflows de `pull_request` — é
@@ -60,9 +71,17 @@ jobs:
           # `gh pr list` devolve vazio quando não há nenhum aberto para este par de ramos.
           existing=$(gh pr list --repo "$REPO" --base main --head content --state open --json number --jq '.[0].number // empty')
 
+          # Marca o PR para se integrar sozinho quando os checks obrigatórios passarem. O
+          # `--auto` é recusado quando já não há nada por que esperar; nesse caso integra-se já,
+          # e a proteção do ramo recusa à mesma se algum check tiver falhado.
+          auto_merge() {
+            gh pr merge --repo "$REPO" --merge --auto "$1" || gh pr merge --repo "$REPO" --merge "$1"
+          }
+
           if [ -n "$existing" ]; then
-            # O GitHub já atualiza sozinho o PR aberto quando o ramo avança: nada a fazer.
+            # O GitHub já atualiza sozinho o PR aberto quando o ramo avança.
             echo "PR #$existing já está aberto para content -> main; o novo commit entra nele."
+            auto_merge "$existing"
             exit 0
           fi
 
@@ -85,3 +104,7 @@ jobs:
           estiver aberto, novas gravações no CMS entram nele; não é aberto um por cada edição.
           CORPO
           )"
+
+          numero=$(gh pr list --repo "$REPO" --base main --head content --state open --json number --jq '.[0].number')
+          echo "PR #$numero aberto para content -> main."
+          auto_merge "$numero"
