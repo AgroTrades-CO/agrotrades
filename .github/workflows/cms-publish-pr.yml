@@ -1,0 +1,87 @@
+# cms-publish-pr
+#
+# O QUE FAZ: sempre que a TinaCMS grava no ramo `content`, abre (ou reaproveita) um pull request
+# de `content` para `main`. O site de produção é construído a partir do `main`, por isso é este
+# PR que leva ao ar o que o editor escreveu. Quem edita no CMS não precisa de tocar no GitHub
+# além de aprovar e fazer merge.
+#
+# NÃO FAZ MERGE. `main` é protegido e a aprovação é humana, de propósito.
+#
+# PORQUE PRECISA DE UM TOKEN PRÓPRIO (`CMS_PR_TOKEN`):
+# um pull request aberto com o `GITHUB_TOKEN` não dispara os workflows de `pull_request` — é
+# regra do GitHub para evitar ciclos. O `media-guard` é um required status check: se nunca
+# reportar nesse PR, o merge fica bloqueado para sempre. Com um token de utilizador, o PR conta
+# como aberto por essa conta e os checks correm normalmente.
+#
+# Criar o segredo (conta com admin no repositório):
+#   GitHub > Settings > Developer settings > Personal access tokens > Fine-grained tokens
+#   Repository access: só `AgroTrades-CO/agrotrades`
+#   Permissions: Pull requests = Read and write; Contents = Read
+#   Guardar em: repositório > Settings > Secrets and variables > Actions > New repository secret
+#   Nome: CMS_PR_TOKEN
+# Sem o segredo este job falha de propósito, com a explicação — é melhor do que criar em silêncio
+# um PR que nunca poderá ser integrado.
+#
+# Regras que este ficheiro não pode violar:
+#   - só corre em `push` ao ramo `content`, nunca noutro ramo;
+#   - `permissions: contents: read` e nada mais para o GITHUB_TOKEN (o trabalho é feito com o
+#     CMS_PR_TOKEN);
+#   - não executa código do repositório: nem `npm ci`, nem scripts, nem checkout da árvore;
+#   - nenhuma ação de terceiros: só o `gh`, que já vem no runner.
+
+name: cms-publish-pr
+
+on:
+  push:
+    branches:
+      - content
+
+permissions:
+  contents: read
+
+jobs:
+  cms-publish-pr:
+    name: cms-publish-pr
+    runs-on: ubuntu-latest
+    steps:
+      - name: Abrir ou reaproveitar o PR de content para main
+        env:
+          GH_TOKEN: ${{ secrets.CMS_PR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "Falta o segredo CMS_PR_TOKEN. Ver o cabeçalho de .github/workflows/cms-publish-pr.yml:"
+            echo "com o GITHUB_TOKEN o PR não dispara o media-guard, que é required, e ficaria por integrar."
+            exit 1
+          fi
+
+          # `gh pr list` devolve vazio quando não há nenhum aberto para este par de ramos.
+          existing=$(gh pr list --repo "$REPO" --base main --head content --state open --json number --jq '.[0].number // empty')
+
+          if [ -n "$existing" ]; then
+            # O GitHub já atualiza sozinho o PR aberto quando o ramo avança: nada a fazer.
+            echo "PR #$existing já está aberto para content -> main; o novo commit entra nele."
+            exit 0
+          fi
+
+          gh pr create \
+            --repo "$REPO" \
+            --base main \
+            --head content \
+            --title "content: publish the edits made in the CMS" \
+            --body "$(cat <<'CORPO'
+          Conteúdo escrito pela TinaCMS no ramo `content`, para publicação no `main`.
+
+          O site de produção é construído a partir do `main`, por isso o que é editado no CMS só
+          fica visível depois de este pull request ser integrado. O merge dispara um novo
+          deployment na Vercel.
+
+          Só ficheiros de `content/`, validados pelo mesmo schema Zod que o build corre: um campo
+          malformado faz falhar o build antes de chegar ao site.
+
+          Aberto automaticamente por `.github/workflows/cms-publish-pr.yml`. Enquanto este PR
+          estiver aberto, novas gravações no CMS entram nele; não é aberto um por cada edição.
+          CORPO
+          )"
