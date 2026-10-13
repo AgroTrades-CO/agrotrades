@@ -8,11 +8,22 @@
 // CONTACT_RECIPIENT_EMAIL não é segredo: se o mesmo endereço já
 // estiver publicado em content/ (ex.: lista de emails de contacto), a sua
 // presença no bundle não é uma fuga e não é verificado.
+//
+// CLOUDINARY_CLOUD_NAME e CLOUDINARY_API_KEY não estão na lista de propósito:
+// o primeiro aparece em todos os URLs de imagem e o segundo vai no formulário
+// de upload que o browser envia (são públicos por construção na Cloudinary).
+// O segredo é o CLOUDINARY_API_SECRET, que nunca sai do servidor.
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const root = process.cwd();
-const NAMES = ["TINA_TOKEN", "RESEND_API_KEY", "TURNSTILE_SECRET_KEY", "CONTACT_RECIPIENT_EMAIL"];
+const NAMES = [
+  "TINA_TOKEN",
+  "RESEND_API_KEY",
+  "TURNSTILE_SECRET_KEY",
+  "CLOUDINARY_API_SECRET",
+  "CONTACT_RECIPIENT_EMAIL",
+];
 const DIRS = [join(root, "public", "admin"), join(root, ".next", "static")];
 const MIN_LENGTH = 8; // valores curtos dariam falsos positivos
 
