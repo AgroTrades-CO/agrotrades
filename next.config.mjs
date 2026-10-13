@@ -1,7 +1,42 @@
 import path from "node:path";
 
+/**
+ * Client id do projeto na Tina Cloud, quando definido. Serve para apertar o
+ * caminho das imagens remotas da pré-visualização ao projeto, em vez de abrir
+ * o otimizador a todo o host.
+ */
+const tinaClientId = (() => {
+  const value = process.env.TINA_PUBLIC_CLIENT_ID?.trim();
+  return value && /^[A-Za-z0-9-]{8,64}$/.test(value) ? value : null;
+})();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Imagens remotas: SÓ as da pré-visualização da TinaCMS.
+  //
+  // Em modo cloud a Tina devolve os campos de imagem como URLs absolutos no
+  // CDN dela (`https://assets.tina.io/<clientId>/...`), não como
+  // `/images/uploads/...`. O <Image> do Next passa-os pelo otimizador, que
+  // recusa com 400 qualquer host fora desta lista — era por isso que as
+  // imagens apareciam partidas na pré-visualização.
+  //
+  // Não afeta o site público: o conteúdo em content/ é validado por Zod e os
+  // caminhos são sempre locais. Sem TINA_PUBLIC_CLIENT_ID a lista fica vazia,
+  // que é o que se quer em builds sem CMS.
+  //
+  // Acrescentar hosts aqui é alargar o que o otimizador vai buscar à internet
+  // em nome do site: exige a mesma ponderação que alargar a CSP.
+  images: tinaClientId
+    ? {
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "assets.tina.io",
+            pathname: `/${tinaClientId}/**`,
+          },
+        ],
+      }
+    : undefined,
   turbopack: {
     // Avoids Next.js picking up the unrelated package-lock.json in the
     // user's home directory when resolving the workspace root.
@@ -195,10 +230,15 @@ const nextConfig = {
     // /editor-preview/entrada e as rotas /editor-preview), por isso
     // `frame-src 'self'` chega para o iframe do admin.
     if (!isDev) {
+      // `assets.tina.io` e `assets.tinajs.io` são hosts DIFERENTES e ambos são
+      // precisos: o conteúdo devolvido pela Tina Cloud aponta as imagens a
+      // assets.tina.io (é de lá que o Media Manager mostra as miniaturas),
+      // enquanto o endpoint de upload do cliente é assets.tinajs.io.
       const tinaCloud = [
         "https://content.tinajs.io",
         "https://identity.tinajs.io",
         "https://assets.tinajs.io",
+        "https://assets.tina.io",
       ].join(" ");
       entries.push({
         source: "/admin/:path*",
