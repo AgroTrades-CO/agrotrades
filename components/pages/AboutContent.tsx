@@ -14,26 +14,44 @@ import { Icon } from "@/components/icon-map";
 import { IconMail, IconPhone, IconWhatsapp } from "@/components/icons";
 
 // Só aparece se pelo menos um contacto tiver sido preenchido no admin.
+//
+// Cada contacto é mostrado por extenso ao lado do ícone: um ícone sozinho
+// obriga a clicar para descobrir o que está lá, e num cartão de responsável o
+// que interessa é poder ler e copiar o número ou o email. O ícone fica
+// decorativo (`aria-hidden`), porque o texto já diz o que o link é.
+//
+// Os números aparecem como estão no conteúdo, sem formatação, igual à página
+// de contactos.
 function TeamContacts({ member }: { member: TeamMember }) {
-  if (!member.phone && !member.whatsapp && !member.email) return null;
+  const phones = member.phones ?? [];
+  if (phones.length === 0 && !member.whatsapp && !member.email) return null;
   return (
-    <div className="team-contacts">
-      {member.phone && (
-        <a href={`tel:${member.phone}`} aria-label="Telefone">
-          <IconPhone width={18} height={18} />
-        </a>
-      )}
+    <ul className="team-contacts">
+      {phones.map((phone) => (
+        <li key={phone}>
+          <a href={`tel:${phone}`}>
+            <IconPhone width={18} height={18} aria-hidden="true" />
+            <span>{phone}</span>
+          </a>
+        </li>
+      ))}
       {member.whatsapp && (
-        <a href={waLink(member.whatsapp)} target="_blank" rel="noopener" aria-label="WhatsApp">
-          <IconWhatsapp width={18} height={18} />
-        </a>
+        <li>
+          <a href={waLink(member.whatsapp)} target="_blank" rel="noopener">
+            <IconWhatsapp width={18} height={18} aria-hidden="true" />
+            <span>{member.whatsapp}</span>
+          </a>
+        </li>
       )}
       {member.email && (
-        <a href={`mailto:${member.email}`} aria-label="Email">
-          <IconMail width={18} height={18} />
-        </a>
+        <li>
+          <a href={`mailto:${member.email}`}>
+            <IconMail width={18} height={18} aria-hidden="true" />
+            <span>{member.email}</span>
+          </a>
+        </li>
       )}
-    </div>
+    </ul>
   );
 }
 
