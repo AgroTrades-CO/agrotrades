@@ -37,8 +37,10 @@ const require = createRequire(import.meta.url);
 const cliBin = join(dirname(require.resolve("@tinacms/cli/package.json")), "bin", "tinacms");
 
 // Sem shell e sem o token: a CLI corre com o ambiente do build menos TINA_TOKEN.
-// TINA_PUBLIC_NO_PREVIEW desliga a pré-visualização no admin (tina/collections.ts).
-const env = { ...process.env, NODE_ENV: "production", TINA_PUBLIC_NO_PREVIEW: "1" };
+// A pré-visualização fica ligada; a entrada valida a sessão do editor contra a
+// Tina Cloud (app/api/editor-preview/route.ts). Para a desligar em emergência,
+// definir TINA_PUBLIC_NO_PREVIEW=1 nas variáveis de Production e reconstruir.
+const env = { ...process.env, NODE_ENV: "production" };
 delete env.TINA_TOKEN;
 const result = spawnSync(process.execPath, [cliBin, "build", "--skip-cloud-checks", "--noTelemetry"], {
   stdio: "inherit",
