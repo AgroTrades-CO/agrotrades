@@ -536,7 +536,7 @@ export const QuemSomosPartsFragmentDoc = gql`
         pt
         en
       }
-      phone
+      phones
       whatsapp
       email
     }
