@@ -44,6 +44,12 @@ import { RASTER_ACCEPT } from "./media-formats";
  * fazer deploy — correr `npm run tina:dev` com TINA_PUBLIC_MEDIA=cloudinary e
  * as variáveis CLOUDINARY_* em .env.local. Tem de ser um nome TINA_PUBLIC_*:
  * a CLI da Tina só passa essas ao admin.
+ *
+ * NÃO É BUG: com `loadCustomStore` a Tina só registra os plugins dos campos
+ * depois de o módulo da loja carregar, por isso num arranque frio o formulário
+ * pode mostrar "Unrecognized field type" durante um instante. Resolve-se
+ * sozinho quando o `import()` dinâmico termina. Com `media.tina` não acontece,
+ * porque não há nada a carregar.
  */
 const cloudinaryMedia =
   process.env.TINA_PUBLIC_MEDIA === "cloudinary" || process.env.NODE_ENV === "production";

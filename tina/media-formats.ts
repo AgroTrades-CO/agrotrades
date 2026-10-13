@@ -43,5 +43,9 @@ export const CLOUDINARY_FOLDER = "agrotrades";
  * "dynamic folders" a pasta vive num campo à parte e o prefixo não encontra
  * nada. A listagem por tag (`/resources/image/tags/<tag>`) funciona nos dois
  * modos.
+ *
+ * A conta deste projeto está em "dynamic folders": a resposta de um upload
+ * traz `folder: null` e `asset_folder: "agrotrades"`. Não mudar a listagem
+ * para prefixo sem confirmar isso primeiro.
  */
 export const CLOUDINARY_TAG = "agrotrades-cms";
