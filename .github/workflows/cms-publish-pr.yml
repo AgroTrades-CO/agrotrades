@@ -27,7 +27,9 @@
 # Criar o segredo (conta com admin no repositório):
 #   GitHub > Settings > Developer settings > Personal access tokens > Fine-grained tokens
 #   Repository access: só `AgroTrades-CO/agrotrades`
-#   Permissions: Pull requests = Read and write; Contents = Read
+#   Permissions: Pull requests = Read and write; Contents = Read and write
+#   `Contents: Read` não chega: ligar o auto-merge conta como merge e a mutação
+#   `enablePullRequestAutoMerge` responde `Resource not accessible by personal access token`.
 #   Guardar em: repositório > Settings > Secrets and variables > Actions > New repository secret
 #   Nome: CMS_PR_TOKEN
 # Sem o segredo este job falha de propósito, com a explicação — é melhor do que criar em silêncio
@@ -71,11 +73,13 @@ jobs:
           # `gh pr list` devolve vazio quando não há nenhum aberto para este par de ramos.
           existing=$(gh pr list --repo "$REPO" --base main --head content --state open --json number --jq '.[0].number // empty')
 
-          # Marca o PR para se integrar sozinho quando os checks obrigatórios passarem. O
-          # `--auto` é recusado quando já não há nada por que esperar; nesse caso integra-se já,
-          # e a proteção do ramo recusa à mesma se algum check tiver falhado.
+          # Marca o PR para se integrar sozinho quando os checks obrigatórios passarem. Sem
+          # alternativa: um `gh pr merge` sem `--auto` pediria a integração imediata, antes de os
+          # checks reportarem, e passaria a depender só da proteção do ramo para ser travado. Se
+          # o `--auto` falhar, o job falha com a mensagem do GitHub e o PR fica à espera de uma
+          # pessoa — que é o comportamento seguro.
           auto_merge() {
-            gh pr merge --repo "$REPO" --merge --auto "$1" || gh pr merge --repo "$REPO" --merge "$1"
+            gh pr merge --repo "$REPO" --merge --auto "$1"
           }
 
           if [ -n "$existing" ]; then
