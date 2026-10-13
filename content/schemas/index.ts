@@ -404,8 +404,9 @@ export const teamMemberSchema = z.object({
   bio: bilingualString.optional(),
   /** Badges de especialidade (.about-tag). Traduzíveis, para consistência com o resto do schema. */
   badges: z.array(bilingualString).min(1).max(5).optional(),
-  /** Contactos opcionais — só aparecem no cartão se preenchidos no admin. */
-  phone: z.string().trim().min(1).optional(),
+  /** Contactos opcionais — só aparecem no cartão se preenchidos no admin.
+   *  `phones` é lista: um responsável pode ter mais do que um número. */
+  phones: z.array(z.string().trim().min(1)).min(1).max(4).optional(),
   whatsapp: z.string().trim().min(1).optional(),
   email: z.string().trim().email().optional(),
 });
