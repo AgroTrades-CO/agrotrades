@@ -57,3 +57,10 @@ Thumbs.db
 /.github/agents/
 /.github/hooks/
 /.github/skills/
+
+# Instruções para agentes de IA escritas pelo `next dev` do Next 16 quando
+# deteta um agente a trabalhar no projeto (writeAgentFiles em
+# node_modules/next/dist/server/lib/generate-agent-files.js). É o mesmo bloco
+# que a Next acrescenta ao CLAUDE.md, não é código do site, e volta a ser
+# criado a cada `npm run dev`.
+/AGENTS.md
