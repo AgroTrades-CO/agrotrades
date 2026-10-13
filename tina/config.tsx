@@ -25,12 +25,13 @@
  *     *.tinajs.io a partir do admin em modo local).
  */
 import { defineConfig } from "tinacms";
+import { CONTENT_BRANCH } from "./branch";
 import { collections } from "./collections";
 
 export default defineConfig({
-  // Ramo constante: a Tina Cloud lê e grava só
-  // o ramo `content`. Ignorado em modo local.
-  branch: "content",
+  // Ramo constante: a Tina Cloud lê e grava só o ramo `content`. Ignorado em
+  // modo local. O mesmo valor serve a leitura em lib/tina/client.ts.
+  branch: CONTENT_BRANCH,
   // Ignorado em modo local; em produção vem das variáveis de Production.
   clientId: process.env.TINA_PUBLIC_CLIENT_ID ?? null,
   // Marcador exigido pela CLI (ver comentário acima); não é um segredo.
