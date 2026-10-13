@@ -2,7 +2,7 @@
  * Configuração da TinaCMS.
  *
  * Em Production o build gera o admin ligado à Tina Cloud
- * (scripts/tina-build.mjs), com o TINA_PUBLIC_CLIENT_ID; sem pré-visualização.
+ * (scripts/tina-build.mjs), com o TINA_PUBLIC_CLIENT_ID.
  *
  * MODO LOCAL: `npm run tina:dev` (scripts/tina-dev.mjs) corre
  * `tinacms dev`, que serve a API GraphQL local e lê/grava diretamente os
@@ -27,6 +27,26 @@
 import { defineConfig } from "tinacms";
 import { CONTENT_BRANCH } from "./branch";
 import { collections } from "./collections";
+import { RASTER_ACCEPT } from "./media-formats";
+
+/**
+ * Onde fica o media.
+ *
+ * CLOUDINARY (produção): os uploads vão do browser direto para a Cloudinary
+ * (tina/media-store.ts e app/api/cms-media/route.ts) e os campos de imagem
+ * guardam o URL do CDN. Nada de imagens no repositório.
+ *
+ * FICHEIROS NO REPOSITÓRIO (modo local): o `tinacms dev` grava em
+ * public/images/uploads/ no disco, sem rede e sem credenciais. É o que se quer
+ * a trabalhar offline, e não gasta a quota da Cloudinary com testes.
+ *
+ * Para exercitar a Cloudinary em local — a única forma de testar a rota sem
+ * fazer deploy — correr `npm run tina:dev` com TINA_PUBLIC_MEDIA=cloudinary e
+ * as variáveis CLOUDINARY_* em .env.local. Tem de ser um nome TINA_PUBLIC_*:
+ * a CLI da Tina só passa essas ao admin.
+ */
+const cloudinaryMedia =
+  process.env.TINA_PUBLIC_MEDIA === "cloudinary" || process.env.NODE_ENV === "production";
 
 export default defineConfig({
   // Ramo constante: a Tina Cloud lê e grava só o ramo `content`. Ignorado em
@@ -41,16 +61,21 @@ export default defineConfig({
     outputFolder: "admin",
     publicFolder: "public",
   },
-  media: {
-    tina: {
-      publicFolder: "public",
-      // Só a pasta protegida (media-guard, CSP sandbox, exceção do CODEOWNERS):
-      // o gestor de media não vê nem grava fora dela.
-      mediaRoot: "images/uploads",
-    },
-    // Só raster, os mesmos formatos que o media-guard aceita.
-    accept: "image/jpeg,image/png,image/webp,image/gif,image/avif",
-  },
+  media: cloudinaryMedia
+    ? {
+        loadCustomStore: async () => (await import("./media-store")).CloudinaryMediaStore,
+        // Só raster, os mesmos formatos que a autorização de upload assina.
+        accept: RASTER_ACCEPT,
+      }
+    : {
+        tina: {
+          publicFolder: "public",
+          // Só a pasta protegida (media-guard, CSP sandbox, exceção do
+          // CODEOWNERS): o gestor de media não vê nem grava fora dela.
+          mediaRoot: "images/uploads",
+        },
+        accept: RASTER_ACCEPT,
+      },
   telemetry: "disabled",
   ui: { optOutOfUpdateCheck: true },
   schema: { collections },

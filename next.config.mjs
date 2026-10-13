@@ -240,6 +240,13 @@ const nextConfig = {
         "https://assets.tinajs.io",
         "https://assets.tina.io",
       ].join(" ");
+      // Media na Cloudinary (tina/media-store.ts): as miniaturas e a
+      // pré-visualização do campo vêm do CDN (`res`), e o upload vai do
+      // browser direto para a API (`api`), com uma autorização assinada pelo
+      // nosso servidor. Isto abre SÓ o /admin, que existe apenas em Production
+      // e é noindex; o site público não ganha hosts aqui.
+      const cloudinaryCdn = "https://res.cloudinary.com";
+      const cloudinaryApi = "https://api.cloudinary.com";
       entries.push({
         source: "/admin/:path*",
         headers: [
@@ -251,8 +258,8 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline'",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' data: https://fonts.gstatic.com",
-              `img-src 'self' data: blob: ${tinaCloud}`,
-              `connect-src 'self' ${tinaCloud}`,
+              `img-src 'self' data: blob: ${tinaCloud} ${cloudinaryCdn}`,
+              `connect-src 'self' ${tinaCloud} ${cloudinaryApi}`,
               "frame-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",
@@ -275,8 +282,10 @@ const nextConfig = {
               `script-src 'self' 'unsafe-inline' 'unsafe-eval' ${tinaOrigin}`,
               `style-src 'self' 'unsafe-inline' ${tinaOrigin} https://fonts.googleapis.com`,
               `font-src 'self' data: ${tinaOrigin} https://fonts.gstatic.com`,
-              `img-src 'self' data: blob: ${tinaOrigin}`,
-              `connect-src 'self' ${tinaOrigin} ws://localhost:${tinaLocalPort()}`,
+              // `res`/`api` da Cloudinary: só para poder testar o media em
+              // local com TINA_PUBLIC_MEDIA=cloudinary (ver tina/config.tsx).
+              `img-src 'self' data: blob: ${tinaOrigin} https://res.cloudinary.com`,
+              `connect-src 'self' ${tinaOrigin} ws://localhost:${tinaLocalPort()} https://api.cloudinary.com`,
               "frame-src 'self'",
               "object-src 'none'",
               "base-uri 'self'",

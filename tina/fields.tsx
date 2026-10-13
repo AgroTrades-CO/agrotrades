@@ -20,6 +20,7 @@
 import React from "react";
 import { wrapFieldsWithMeta } from "tinacms";
 import type { TinaField } from "tinacms";
+import { RASTER_EXTENSIONS } from "./media-formats";
 
 type FieldOpts = { description?: string; required?: boolean; maxLength?: number };
 
@@ -188,13 +189,6 @@ export function oculto(name: string, label: string, description?: string): TinaF
     ui: { component: "hidden" },
   } as TinaField;
 }
-
-/**
- * Formatos que o editor pode carregar/escolher: só raster, os mesmos que o
- * `media-guard` aceita em public/images/uploads/. É só conforto do
- * editor — o controlo real continua a ser o `media-guard`.
- */
-export const RASTER_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "gif", "avif"] as const;
 
 export function imagem(name: string, label: string, description?: string): TinaField {
   return {
