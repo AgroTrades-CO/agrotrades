@@ -191,7 +191,9 @@ const nextConfig = {
     // scripts/tina-build.mjs). CSP própria, com os hosts da Tina Cloud
     // enumerados (API de conteúdo, identidade/login e media) e nada mais. O
     // login abre uma janela em identity.tinajs.io (navegação, fora da CSP).
-    // Sem pré-visualização em produção: `frame-src 'self'` basta.
+    // A pré-visualização é servida pela própria origem (a entrada em
+    // /editor-preview/entrada e as rotas /editor-preview), por isso
+    // `frame-src 'self'` chega para o iframe do admin.
     if (!isDev) {
       const tinaCloud = [
         "https://content.tinajs.io",

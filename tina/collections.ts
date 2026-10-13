@@ -37,20 +37,18 @@ import {
 } from "./fields";
 
 /**
- * Pré-visualização editável. Em modo local o admin
- * abre as páginas através de /api/editor-preview/<caminho>, que só responde em
- * `next dev`: liga o Draft Mode e redireciona para a rota de pré-visualização
- * (sem Draft Mode as rotas /editor-preview dão 404). O caminho vai no URL e
- * não em query string porque o admin descarta a query string do `router`.
+ * Pré-visualização editável, igual em local e em produção. O admin abre
+ * /editor-preview/entrada/<caminho>, que valida a sessão do editor, liga o
+ * Draft Mode e navega para a rota de pré-visualização (sem Draft Mode as rotas
+ * /editor-preview dão 404). O caminho vai no URL e não em query string porque
+ * o admin descarta a query string do `router`.
  *
- * No admin de produção não há pré-visualização — a rota de entrada só
- * existe em `next dev` e a entrada autenticada pela Tina Cloud precisa de
- * revisão de segurança própria. scripts/tina-build.mjs define
- * TINA_PUBLIC_NO_PREVIEW=1 (a CLI da Tina só passa ao admin variáveis
- * TINA_PUBLIC_*); sem `router` a Tina mostra só o formulário de edição.
+ * TINA_PUBLIC_NO_PREVIEW=1 desliga o `router` e deixa a Tina mostrar só o
+ * formulário de edição (a CLI da Tina só passa ao admin variáveis
+ * TINA_PUBLIC_*). Serve de interruptor de emergência; nenhum build o define.
  */
 const previewEnabled = process.env.TINA_PUBLIC_NO_PREVIEW !== "1";
-const previewUrl = (path: string) => (previewEnabled ? `/api/editor-preview${path}` : undefined);
+const previewUrl = (path: string) => (previewEnabled ? `/editor-preview/entrada${path}` : undefined);
 
 const semCriarNemApagar = { create: false, delete: false } as const;
 
