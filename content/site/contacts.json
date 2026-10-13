@@ -29,8 +29,8 @@
   },
   "nuit": "401828011",
   "bannerImage": "/images/uploads/banner-contactos.webp",
-  "mapsLink": "https://maps.google.com/?q=Rua+de+Tete+370+Nampula+Mocambique",
-  "mapEmbedUrl": "https://www.google.com/maps?q=Rua+de+Tete+370+Nampula+Mocambique&output=embed",
+  "mapsLink": "https://maps.google.com/?q=-15.122832,39.259367",
+  "mapEmbedUrl": "https://www.google.com/maps?q=-15.122832,39.259367&z=17&output=embed",
   "whatsapp": {
     "number": "+258841031220",
     "url": "https://wa.me/258841031220",
