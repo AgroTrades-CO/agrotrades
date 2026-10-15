@@ -779,7 +779,11 @@ const rodape = paginaUnica("rodape", "Rodapé", "footer", [
     type: "object",
     name: "signature",
     label: "Assinatura",
-    fields: [visivel(), texto("name", "Nome"), texto("whatsappNumber", "Número de WhatsApp")],
+    fields: [
+      visivel(),
+      texto("name", "Nome"),
+      texto("url", "Endereço do site", { description: "Começa por https://" }),
+    ],
   },
 ]);
 
