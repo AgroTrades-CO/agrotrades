@@ -34,8 +34,9 @@ Thumbs.db
 # Vercel
 .vercel
 
-# Claude Code local config
+# Configuração local de ferramentas de agentes IDE
 .claude/
+CLAUDE.md
 
 # TinaCMS (task-017). O admin é gerado em public/admin/ (código de terceiros,
 # sempre regenerado; nunca versionado nem servido a partir do Git). De
@@ -60,7 +61,6 @@ Thumbs.db
 
 # Instruções para agentes de IA escritas pelo `next dev` do Next 16 quando
 # deteta um agente a trabalhar no projeto (writeAgentFiles em
-# node_modules/next/dist/server/lib/generate-agent-files.js). É o mesmo bloco
-# que a Next acrescenta ao CLAUDE.md, não é código do site, e volta a ser
-# criado a cada `npm run dev`.
+# node_modules/next/dist/server/lib/generate-agent-files.js). Não é código do
+# site e volta a ser criado a cada `npm run dev`.
 /AGENTS.md
