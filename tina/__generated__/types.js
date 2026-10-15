@@ -915,7 +915,7 @@ export const RodapePartsFragmentDoc = gql`
     __typename
     visible
     name
-    whatsappNumber
+    url
   }
 }
     `;

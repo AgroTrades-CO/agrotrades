@@ -7,7 +7,6 @@ import {
   services,
   visibleFooterServiceLinks,
   visibleSocialLinks,
-  waLink,
   type Lang,
 } from "@/content";
 import { path, type PageKey } from "@/content/routes";
@@ -105,7 +104,7 @@ export function Footer({ lang }: { lang: Lang }) {
         {footer.signature.visible && (
           <span className="footer-signature">
             by{" "}
-            <a href={waLink(footer.signature.whatsappNumber)} target="_blank" rel="noopener">
+            <a href={footer.signature.url} target="_blank" rel="noopener noreferrer">
               {footer.signature.name}
             </a>
           </span>

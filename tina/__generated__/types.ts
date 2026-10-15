@@ -2810,7 +2810,7 @@ export type RodapeSignature = {
   __typename?: 'RodapeSignature';
   visible?: Maybe<Scalars['Boolean']['output']>;
   name: Scalars['String']['output'];
-  whatsappNumber: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type Rodape = Node & Document & {
@@ -2860,7 +2860,7 @@ export type RodapeMadeInFilter = {
 export type RodapeSignatureFilter = {
   visible?: InputMaybe<BooleanFilter>;
   name?: InputMaybe<StringFilter>;
-  whatsappNumber?: InputMaybe<StringFilter>;
+  url?: InputMaybe<StringFilter>;
 };
 
 export type RodapeFilter = {
@@ -4325,7 +4325,7 @@ export type RodapeMadeInMutation = {
 export type RodapeSignatureMutation = {
   visible?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
-  whatsappNumber?: InputMaybe<Scalars['String']['input']>;
+  url?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type RodapeMutation = {
@@ -5454,7 +5454,7 @@ export type RodapeMadeInFilter = {
 export type RodapeSignatureFilter = {
   visible?: BooleanFilter | null | undefined;
   name?: StringFilter | null | undefined;
-  whatsappNumber?: StringFilter | null | undefined;
+  url?: StringFilter | null | undefined;
 };
 
 export type RodapeFilter = {
@@ -5543,7 +5543,7 @@ export type ContactosPartsFragment = { __typename: 'Contactos', nuit: string, ba
 
 export type MenuPartsFragment = { __typename: 'Menu', home: { __typename: 'MenuHome', visible: boolean | null, pt: string, en: string } | null, services: { __typename: 'MenuServices', visible: boolean | null, pt: string, en: string } | null, products: { __typename: 'MenuProducts', visible: boolean | null, pt: string, en: string } | null, campaign: { __typename: 'MenuCampaign', visible: boolean | null, pt: string, en: string } | null, contact: { __typename: 'MenuContact', visible: boolean | null, pt: string, en: string } | null, about: { __typename: 'MenuAbout', visible: boolean | null, pt: string, en: string } | null, servicesViewAll: { __typename: 'MenuServicesViewAll', pt: string | null, en: string | null } | null };
 
-export type RodapePartsFragment = { __typename: 'Rodape', servicesHeading: { __typename: 'RodapeServicesHeading', pt: string | null, en: string | null } | null, linksHeading: { __typename: 'RodapeLinksHeading', pt: string | null, en: string | null } | null, description: { __typename: 'RodapeDescription', pt: string | null, en: string | null } | null, serviceLinks: Array<{ __typename: 'RodapeServiceLinks', visible: boolean | null, serviceId: string } | null> | null, legalCopy: { __typename: 'RodapeLegalCopy', pt: string | null, en: string | null } | null, madeIn: { __typename: 'RodapeMadeIn', pt: string | null, en: string | null } | null, signature: { __typename: 'RodapeSignature', visible: boolean | null, name: string, whatsappNumber: string } | null };
+export type RodapePartsFragment = { __typename: 'Rodape', servicesHeading: { __typename: 'RodapeServicesHeading', pt: string | null, en: string | null } | null, linksHeading: { __typename: 'RodapeLinksHeading', pt: string | null, en: string | null } | null, description: { __typename: 'RodapeDescription', pt: string | null, en: string | null } | null, serviceLinks: Array<{ __typename: 'RodapeServiceLinks', visible: boolean | null, serviceId: string } | null> | null, legalCopy: { __typename: 'RodapeLegalCopy', pt: string | null, en: string | null } | null, madeIn: { __typename: 'RodapeMadeIn', pt: string | null, en: string | null } | null, signature: { __typename: 'RodapeSignature', visible: boolean | null, name: string, url: string } | null };
 
 export type PaginaNaoEncontradaPartsFragment = { __typename: 'PaginaNaoEncontrada', tag: { __typename: 'PaginaNaoEncontradaTag', pt: string | null, en: string | null } | null, title: { __typename: 'PaginaNaoEncontradaTitle', pt: string | null, en: string | null } | null, text: { __typename: 'PaginaNaoEncontradaText', pt: string | null, en: string | null } | null, backHome: { __typename: 'PaginaNaoEncontradaBackHome', pt: string | null, en: string | null } | null };
 
@@ -5750,7 +5750,7 @@ export type RodapeQueryVariables = Exact<{
 }>;
 
 
-export type RodapeQuery = { rodape: { __typename: 'Rodape', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, servicesHeading: { __typename: 'RodapeServicesHeading', pt: string | null, en: string | null } | null, linksHeading: { __typename: 'RodapeLinksHeading', pt: string | null, en: string | null } | null, description: { __typename: 'RodapeDescription', pt: string | null, en: string | null } | null, serviceLinks: Array<{ __typename: 'RodapeServiceLinks', visible: boolean | null, serviceId: string } | null> | null, legalCopy: { __typename: 'RodapeLegalCopy', pt: string | null, en: string | null } | null, madeIn: { __typename: 'RodapeMadeIn', pt: string | null, en: string | null } | null, signature: { __typename: 'RodapeSignature', visible: boolean | null, name: string, whatsappNumber: string } | null } };
+export type RodapeQuery = { rodape: { __typename: 'Rodape', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, servicesHeading: { __typename: 'RodapeServicesHeading', pt: string | null, en: string | null } | null, linksHeading: { __typename: 'RodapeLinksHeading', pt: string | null, en: string | null } | null, description: { __typename: 'RodapeDescription', pt: string | null, en: string | null } | null, serviceLinks: Array<{ __typename: 'RodapeServiceLinks', visible: boolean | null, serviceId: string } | null> | null, legalCopy: { __typename: 'RodapeLegalCopy', pt: string | null, en: string | null } | null, madeIn: { __typename: 'RodapeMadeIn', pt: string | null, en: string | null } | null, signature: { __typename: 'RodapeSignature', visible: boolean | null, name: string, url: string } | null } };
 
 export type RodapeConnectionQueryVariables = Exact<{
   before?: string | null | undefined;
@@ -5762,7 +5762,7 @@ export type RodapeConnectionQueryVariables = Exact<{
 }>;
 
 
-export type RodapeConnectionQuery = { rodapeConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Rodape', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, servicesHeading: { __typename: 'RodapeServicesHeading', pt: string | null, en: string | null } | null, linksHeading: { __typename: 'RodapeLinksHeading', pt: string | null, en: string | null } | null, description: { __typename: 'RodapeDescription', pt: string | null, en: string | null } | null, serviceLinks: Array<{ __typename: 'RodapeServiceLinks', visible: boolean | null, serviceId: string } | null> | null, legalCopy: { __typename: 'RodapeLegalCopy', pt: string | null, en: string | null } | null, madeIn: { __typename: 'RodapeMadeIn', pt: string | null, en: string | null } | null, signature: { __typename: 'RodapeSignature', visible: boolean | null, name: string, whatsappNumber: string } | null } | null } | null> | null } };
+export type RodapeConnectionQuery = { rodapeConnection: { totalCount: number, pageInfo: { hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges: Array<{ cursor: string, node: { __typename: 'Rodape', id: string, _sys: { filename: string, basename: string, hasReferences: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, servicesHeading: { __typename: 'RodapeServicesHeading', pt: string | null, en: string | null } | null, linksHeading: { __typename: 'RodapeLinksHeading', pt: string | null, en: string | null } | null, description: { __typename: 'RodapeDescription', pt: string | null, en: string | null } | null, serviceLinks: Array<{ __typename: 'RodapeServiceLinks', visible: boolean | null, serviceId: string } | null> | null, legalCopy: { __typename: 'RodapeLegalCopy', pt: string | null, en: string | null } | null, madeIn: { __typename: 'RodapeMadeIn', pt: string | null, en: string | null } | null, signature: { __typename: 'RodapeSignature', visible: boolean | null, name: string, url: string } | null } | null } | null> | null } };
 
 export type PaginaNaoEncontradaQueryVariables = Exact<{
   relativePath: string;
@@ -6712,7 +6712,7 @@ export const RodapePartsFragmentDoc = gql`
     __typename
     visible
     name
-    whatsappNumber
+    url
   }
 }
     `;

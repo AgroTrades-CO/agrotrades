@@ -645,11 +645,12 @@ export const footerSchema = z.object({
    *  e o NUIT vem de `contacts.nuit`. */
   legalCopy: bilingualString,
   madeIn: bilingualString,
-  /** Assinatura "by <nome>" a seguir aos direitos reservados, com link de WhatsApp. */
+  /** Assinatura "by <nome>" a seguir aos direitos reservados, com link para o
+   *  site de quem fez o site. */
   signature: z.object({
     visible: visibleFlag,
     name: z.string().trim().min(1),
-    whatsappNumber: z.string().trim().min(1),
+    url: httpUrl,
   }),
 });
 export type Footer = z.infer<typeof footerSchema>;
